@@ -1,6 +1,8 @@
 function App() {
   return (
-    <div>Sushka shop</div>
+    <div>
+      Sushka shop DEPLOY TEST
+    </div>
   );
 }
 
