@@ -1,6 +1,12 @@
+import {Routes, Route, Link} from "react-router-dom"
+import MainPage from "./conteiners/MainPage/MainPage";
+import './style.scss';
+
 function App() {
   return (
-    <div>Sushka shop TEST123</div>
+    <Routes>
+      <Route path="/" element={<MainPage/>}/>
+    </Routes>
   )
 };
 
