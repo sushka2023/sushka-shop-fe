@@ -1,12 +1,17 @@
-import {Routes, Route, Link} from "react-router-dom"
-import MainPage from "./conteiners/MainPage/MainPage";
-import './style.scss';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import MainPage from './pages/main-page/MainPage';
+
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<MainPage/>}/>
-    </Routes>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<MainPage/>}/>
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   )
 };
 

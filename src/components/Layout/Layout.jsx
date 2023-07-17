@@ -1,11 +1,12 @@
-import './style.scss';
 
-const Layout = () => {
+const Layout = ({ children }) => {
     return (
       <div>
-        Layout
+        <header>HEADER</header>
+        <div>{children}</div>
+        <footer>FOOTER</footer>
       </div>
-    )
+  )
 };
   
 export default Layout;
