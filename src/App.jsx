@@ -1,16 +1,18 @@
-import { ReactSVG } from "react-svg";
-import svgSprite from "./icons/symbol-defs.svg";
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import MainPage from './pages/main-page/MainPage';
+
 
 function App() {
   return (
-    <div className="test-container">
-      <ReactSVG src={svgSprite} />
-      <svg width={30} height={30}>
-        <use xlinkHref="#icon-inst" />
-      </svg>
-      <h1 className="test">Sushka shop TEST123</h1>
-    </div>
-  );
-}
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<MainPage/>}/>
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  )
+};
 
 export default App;
