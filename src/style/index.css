@@ -1,0 +1,35 @@
+@import '/node_modules/modern-normalize/modern-normalize.css';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.test-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.test {
+  font-family: Nunito;
+  font-weight: 800;
+  color: #567343;
+  display: inline;
+}/*# sourceMappingURL=index.css.map */

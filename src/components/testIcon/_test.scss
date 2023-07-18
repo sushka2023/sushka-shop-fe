@@ -1,0 +1,10 @@
+.test-container {
+    @include page-container;
+};
+
+.test {
+    font-family: $nunito;
+    font-weight: $font-weight-800;
+    color: $green-dark-200;
+    display: inline;
+}
