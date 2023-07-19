@@ -8,11 +8,11 @@ function App() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<MainPage/>}/>
+          <Route path="/" element={<MainPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
-  )
+  );
 };
 
 export default App;
