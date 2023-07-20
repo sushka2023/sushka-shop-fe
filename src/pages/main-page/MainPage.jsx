@@ -1,8 +1,9 @@
-
 const MainPage = () => {
-    return (
-      <div>Main page</div>
-  )
+  return (
+    <div>
+      <h1>Sushka shop TEST123</h1>
+    </div>
+  );
 };
-  
+
 export default MainPage;
