@@ -4,5 +4,5 @@
 @import './base/base-fonts';
 @import './base/base-container';
 // components style
-@import '../components/Layout/header/header';
-@import '../components/Layout/footer/footer';
+@import '../components/Layout/header/header.module';
+@import '../components/Layout/footer/footer.module';

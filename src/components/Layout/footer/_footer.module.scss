@@ -1,7 +1,11 @@
-footer {
+@import '../../../styles/base/base-color';
+@import '../../../styles/base/base-container';
+@import '../../../styles/base/base-fonts';
+
+.footer {
     position: relative;
     background-color: $light-200;
-};
+}
 
 .border {
     background-image: url(/src/icons/border.svg);
@@ -10,13 +14,14 @@ footer {
     height: 154px;
     z-index: -1;
     width: 100%;
-};
+}
 
 .footer-container {
-    @include page-container;
+    @include page-container;  
+    padding: 10px 40px;
     display: flex;
     justify-content: space-between;
-};
+}
 
 .footer-wrapper {
     display: flex;
@@ -27,30 +32,36 @@ footer {
     margin-right: 203px;
 }
 
-.footer-nav-list, .footer-legal-list, .footer-contact-list {
+.footer-nav-list,
+.footer-legal-list,
+.footer-contact-list {
     display: flex;
     gap: 18px;
     flex-direction: column;
-};
+}
 
 .footer-nav-list {
     margin-right: 118px;
-};
+}
 
-.footer-nav-list__line, .footer-legal-list__line, .footer-contact-list__line {
+.footer-nav-list__line,
+.footer-legal-list__line,
+.footer-contact-list__line {
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 18px;
     font-style: normal;
     font-weight: $font-weight-400;
     line-height: 140%;
-};
+}
 
 .footer-contact-list__icon {
     fill: $green-dark-200;
 }
 
-.footer-contact-list__link, .footer-legal-list__link, .footer-list-nav__link  {
+.footer-contact-list__link,
+.footer-legal-list__link,
+.footer-list-nav__link {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -61,17 +72,14 @@ footer {
         color: $yellow-200;
         fill: $yellow-200;
     }
-};
+}
 
 .footer-border {
-    @include page-container;
     margin-top: 44px;
-    padding-top: 23px;
-    padding-bottom: 95px;
-    border-top: 1px solid $yellow-200;
-    display: flex;
-    justify-content: space-between;
-};
+    margin-bottom: 23px;
+    height: 1px;
+    background-color: $yellow-200;
+}
 
 .footer-legal-paragraph {
     color: $black-200;
@@ -83,8 +91,16 @@ footer {
     line-height: 130%;
 }
 
-
 .list-payment {
     display: flex;
     gap: 5px;
-};
+}
+
+.footer-legal-block {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 100px;
+}

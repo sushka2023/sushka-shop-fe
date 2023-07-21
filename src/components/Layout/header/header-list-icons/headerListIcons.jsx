@@ -2,21 +2,22 @@ import { ReactComponent as IconSearch } from '../../../../icons/search.svg';
 import { ReactComponent as IconAccount } from '../../../../icons/account.svg';
 import { ReactComponent as IconFavorite } from '../../../../icons/favorite.svg';
 import { ReactComponent as IconCart } from '../../../../icons/cart.svg';
+import styles from '../_header.module.scss'; 
 
 const HeaderListIcons = () => {
   return (
-    <ul className="list-icons">
-      <li className="list-icons__line">
-        <IconSearch className="icons-nav__search" />
+    <ul className={styles["list-icons"]}>
+      <li className={styles["list-icons__line"]}>
+        <IconSearch className={styles["icons-nav__search"]} />
       </li>
-      <li className="list-icons__line">
-        <IconAccount className="icons-nav" />
+      <li className={styles["list-icons__line"]}>
+        <IconAccount className={styles["icons-nav"]} />
       </li>
-      <li className="list-icons__line">
-        <IconFavorite className="icons-nav" />
+      <li className={styles["list-icons__line"]}>
+        <IconFavorite className={styles["icons-nav"]} />
       </li>
-      <li className="list-icons__line">
-        <IconCart className="icons-nav" />
+      <li className={styles["list-icons__line"]}>
+        <IconCart className={styles["icons-nav"]} />
       </li>
     </ul>
   );

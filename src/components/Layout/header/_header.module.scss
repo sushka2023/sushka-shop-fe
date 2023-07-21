@@ -1,3 +1,7 @@
+@import '../../../styles/base/base-color';
+@import '../../../styles/base/base-container';
+@import '../../../styles/base/base-fonts';
+
 .container-header {
     @include page-container;
 };
