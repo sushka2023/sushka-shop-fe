@@ -1,7 +1,7 @@
-import { ReactComponent as IconSearch } from '../../../../icons/icon-search.svg';
-import { ReactComponent as IconAccount } from '../../../../icons/icon-account.svg';
-import { ReactComponent as IconFavorite } from '../../../../icons/icon-favorite.svg';
-import { ReactComponent as IconCart } from '../../../../icons/icon-cart.svg';
+import { ReactComponent as IconSearch } from '../../../../icons/search.svg';
+import { ReactComponent as IconAccount } from '../../../../icons/account.svg';
+import { ReactComponent as IconFavorite } from '../../../../icons/favorite.svg';
+import { ReactComponent as IconCart } from '../../../../icons/cart.svg';
 
 const HeaderListIcons = () => {
   return (

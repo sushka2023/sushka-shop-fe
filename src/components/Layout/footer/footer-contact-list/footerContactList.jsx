@@ -1,7 +1,7 @@
-import { ReactComponent as IconInst } from '../../../../icons/icon-inst.svg';
-import { ReactComponent as IconTg } from '../../../../icons/icon-tg.svg';
-import { ReactComponent as IconMail } from '../../../../icons/icon-mail.svg';
-import { ReactComponent as IconPhone } from '../../../../icons/icon-phone.svg';
+import { ReactComponent as IconInst } from '../../../../icons/inst.svg';
+import { ReactComponent as IconTg } from '../../../../icons/tg.svg';
+import { ReactComponent as IconMail } from '../../../../icons/mail.svg';
+import { ReactComponent as IconPhone } from '../../../../icons/phone.svg';
 
 const FooterContactList = () => {
   return (

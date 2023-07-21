@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as IconLogo } from '../../../icons/icon-logo.svg';
+import { ReactComponent as IconLogo } from '../../../icons/logo.svg';
 import HeaderNav from './header-nav/headerNav';
 import HeaderListIcons from './header-list-icons/headerListIcons';
 
