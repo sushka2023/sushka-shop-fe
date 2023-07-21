@@ -14,7 +14,11 @@ main {
 a {
     background-color: transparent;
     text-decoration: none;
-}
+
+    &:visited {
+        color: inherit;
+    }
+};
 
 
 abbr[title] {

@@ -1,0 +1,129 @@
+.container-header {
+    @include page-container;
+};
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 73px;
+};
+
+.nav-block {
+    display: flex;
+    width: 1360px;
+    justify-content: space-between;
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 454px;
+}
+
+.list-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.list-icons {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+};
+
+.list-nav__line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85px;
+    height: 40px;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: $font-weight-600;
+    line-height: normal;
+    text-transform: uppercase;
+};
+
+.list-nav__link:hover {
+    color: $yellow-200;
+}
+.list-nav__link:active {
+    padding: 10px;
+    color: $white-200;
+    border-radius: 10px;
+    background: $yellow-200;
+}
+
+
+.icons-nav {
+    fill: $green-dark-200;
+
+    &:hover {
+      cursor: pointer;
+      fill: $yellow-200;
+    };
+};
+
+.icons-nav__search {
+    fill: $green-dark-200;
+    stroke: $green-dark-200;
+
+    &:hover {
+        cursor: pointer;
+        fill: $yellow-200;
+        stroke: $yellow-200;
+    }
+};
+
+// dropdawn
+
+.dropdown {
+    position: relative;
+};
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    left: -10px;
+    width: 200px;
+    padding: 10px;
+    border-radius: 0px 20px 20px 20px;
+    background: var(--white, #FFF);
+    box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 10%), 
+    1px 0px 2px 0px rgb(0 0 0 / 10%), 
+    4px 2px 4px 0px rgb(0 0 0 / 9%), 
+    9px 4px 6px 0px rgb(0 0 0 / 5%), 
+    17px 7px 7px 0px rgb(0 0 0 / 1%), 
+    26px 11px 8px 0px rgb(0 0 0 / 0%);
+};
+
+.dropdown:hover .dropdown-list {
+    display: flex;
+    flex-direction: column;
+    top: 37px;
+};
+
+.dropdawn-list__line {
+    height: 40px;
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    &:hover {
+        cursor: pointer;
+        border-radius: 10px;
+        background: rgba(86, 115, 67, 0.10);
+    }
+
+    &:active {
+        color: $white-200;
+        border-radius: 10px;
+        background: var(--dark-green, #567343);
+    }
+};
+
+.dropdawn-list__link {
+    padding: 0px 14px;
+};
