@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as IconLogoFooter } from '../../../icons/logofooter.svg';
+import { ReactComponent as IconLogoFooter } from '../../../icons/logoFooter.svg';
 import { ReactComponent as IconMastercard } from '../../../icons/mastercard.svg';
 import { ReactComponent as IconVisa } from '../../../icons/visa.svg';
 import { ReactComponent as IconLiqpay } from '../../../icons/liqpay.svg';
-import styles from '../footer/_footer.module.scss'
+import styles from '../footer/Footer.module.scss'
 import FooterNavList from './footer-nav-list/footerNavList';
 import FooterLegalList from './footer-legal-list/footerLegalList';
 import FooterContactList from './footer-contact-list/footerContactList';
@@ -12,9 +12,9 @@ const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.border}></div>
-      <div className={styles["footer-container"]}>
-        <div className={styles["footer-wrapper"]}>
-          <Link className={styles["footer-logo"]}>
+      <div className={styles.footerContainer}>
+        <div className={styles.footerWrapper}>
+          <Link className={styles.footerLogo}>
             <IconLogoFooter />
           </Link>
           <FooterNavList />
@@ -22,15 +22,15 @@ const Footer = () => {
         </div>
         <FooterContactList />
       </div>
-      <div className={styles["footer-border"]}></div>
-      <div className={styles["footer-legal-block"]}>
+      <div className={styles.footerBorder}></div>
+      <div className={styles.footerLegalBlock}>
         <div>
-          <p className={styles["footer-legal-paragraph"]}>
+          <p className={styles.footerLegalParagraph}>
             &copy; 2023, Sushka
           </p>
-          <p className={styles["footer-legal-paragraph"]}>Усі права захищені</p>
+          <p className={styles.footerLegalParagraph}>Усі права захищені</p>
         </div>
-        <ul className={styles["list-payment"]}>
+        <ul className={styles.listPayment}>
           <li>
             <IconMastercard />
           </li>

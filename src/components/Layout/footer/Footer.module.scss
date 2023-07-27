@@ -1,6 +1,4 @@
-@import '../../../styles/base/base-color';
-@import '../../../styles/base/base-container';
-@import '../../../styles/base/base-fonts';
+@import '../../../styles/base/base.scss';
 
 .footer {
     position: relative;
@@ -10,43 +8,45 @@
 .border {
     background-image: url(/src/icons/border.svg);
     position: absolute;
-    bottom: 387px;
+    bottom: 326px;
     height: 154px;
     z-index: -1;
+    background-repeat: repeat;
     width: 100%;
+    background-size: cover;
 }
 
-.footer-container {
+.footerContainer {
     @include page-container;  
     padding: 10px 40px;
     display: flex;
     justify-content: space-between;
 }
 
-.footer-wrapper {
+.footerWrapper {
     display: flex;
 }
 
-.footer-logo {
+.footerLogo {
     height: 60px;
     margin-right: 203px;
 }
 
-.footer-nav-list,
-.footer-legal-list,
-.footer-contact-list {
+.footerNavList,
+.footerLegalList,
+.footerContactList {
     display: flex;
     gap: 18px;
     flex-direction: column;
 }
 
-.footer-nav-list {
+.footerNavList {
     margin-right: 118px;
 }
 
-.footer-nav-list__line,
-.footer-legal-list__line,
-.footer-contact-list__line {
+.footerNavListLine,
+.footerLegalListLine,
+.footerContactListLine {
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 18px;
@@ -55,33 +55,33 @@
     line-height: 140%;
 }
 
-.footer-contact-list__icon {
+.footerContactListIcon {
     fill: $green-dark-200;
 }
 
-.footer-contact-list__link,
-.footer-legal-list__link,
-.footer-list-nav__link {
+.footerContactListLink,
+.footerLegalListLink,
+.footerListNavLink {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     color: inherit;
 
     &:hover,
-    &:hover .footer-contact-list__icon {
+    &:hover .footerContactListIcon {
         color: $yellow-200;
         fill: $yellow-200;
     }
 }
 
-.footer-border {
+.footerBorder {
     margin-top: 44px;
     margin-bottom: 23px;
     height: 1px;
     background-color: $yellow-200;
 }
 
-.footer-legal-paragraph {
+.footerLegalParagraph {
     color: $black-200;
     text-align: center;
     font-family: $open-sans;
@@ -91,17 +91,16 @@
     line-height: 130%;
 }
 
-.list-payment {
+.listPayment {
     display: flex;
     gap: 5px;
 }
 
-.footer-legal-block {
+.footerLegalBlock {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0px 40px;
+    padding: 0px 40px 35px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 100px;
 }

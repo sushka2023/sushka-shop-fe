@@ -1,20 +1,20 @@
-import styles from '../_footer.module.scss'; 
+import styles from '../Footer.module.scss'; 
 
 const FooterLegalList = () => {
   return (
-    <ul className={styles["footer-legal-list"]}>
-      <li className={styles["footer-legal-list__line"]}>
-        <a className={styles["footer-legal-list__link"]} href="/">
+    <ul className={styles.footerLegalList}>
+      <li className={styles.footerLegalListLine}>
+        <a className={styles.footerLegalListLink} href="#">
           Умови надання послуг
         </a>
       </li>
-      <li className={styles["footer-legal-list__line"]}>
-        <a className={styles["footer-legal-list__link"]} href="/">
+      <li className={styles.footerLegalListLine}>
+        <a className={styles.footerLegalListLink} href="#">
           Terms & Conditions
         </a>
       </li>
-      <li className={styles["footer-legal-list__line"]}>
-        <a className={styles["footer-legal-list__link"]} href="/">
+      <li className={styles.footerLegalListLine}>
+        <a className={styles.footerLegalListLink} href="#">
           Політика конфіденційності
         </a>
       </li>
