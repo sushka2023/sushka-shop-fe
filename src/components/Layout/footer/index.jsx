@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as IconLogoFooter } from '../../../icons/logoFooter.svg';
+import { ReactComponent as IconLogoFooter } from '../../../icons/logofooter.svg';
 import { ReactComponent as IconMastercard } from '../../../icons/mastercard.svg';
 import { ReactComponent as IconVisa } from '../../../icons/visa.svg';
 import { ReactComponent as IconLiqpay } from '../../../icons/liqpay.svg';
