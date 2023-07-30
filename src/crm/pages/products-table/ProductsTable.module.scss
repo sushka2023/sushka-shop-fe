@@ -1,0 +1,21 @@
+.mainContainer {
+    height: 100vh;
+    width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+    
+    &ProductPageContainer {
+        max-width: 1360px;
+        height: 926px;
+        background-color: #F2F2F2;
+        margin: 0 auto;
+        padding: 52px 40px 46px;
+        
+        &TableTitle {
+            font-size: 48px;
+            margin-bottom: 55px;
+        }
+    }
+}
+
+

@@ -1,0 +1,125 @@
+
+.btn {
+    width: 30px;
+    background-color: #FFFFFF;
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.container {
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 31px;
+
+        &Title {
+            font-size: 32px;
+        }
+
+        &Btn {
+            width: 245px;
+            height: 50px;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 20px;
+            background-color: #567343;
+            color: #FFFFFF;
+            border: none;
+            cursor: pointer;
+        }
+    }
+
+    &TableHeaders {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #F2F2F2;
+        padding: 20px 10px;
+
+        &ColumnHeader {
+            &:first-of-type {
+                width: 140px;
+            }
+            &:nth-of-type(2) {
+                width: 277px;
+            }
+            &:nth-of-type(3) {
+                width: 890px;
+            }
+            &:last-of-type {
+                width: 70px;
+            }
+        }
+    }
+
+    &TableRows {
+        &Row {
+            display: block;
+            font-size: 18px;
+            font-weight: 400;
+            background-color: #fff;
+            padding: 22px 10px;
+            border-bottom: 1px solid #D9D9D9;
+
+            &RowCell {
+                &:first-of-type {
+                    width: 150px;
+                }
+                &:nth-of-type(2) {
+                    width: 283px;
+                }
+                &:nth-of-type(3) {
+                    width: 890px;
+                }
+                &:last-of-type {
+                    width: 90px;
+                }
+            }
+        }
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+
+    &Btn {
+        width: 200px;
+        height: 52px;
+        font-size: 16px;
+        font-weight: 700;
+        border: 1px solid #FCC812;
+        border-radius: 20px;
+        color: #FCC812;
+        background-color: White;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px 0;
+        display: flex;
+        cursor: pointer;
+
+        &PrevArrow {
+            margin: 0 10px 5px  0;
+            transform: rotate(180deg);
+        }
+        
+        &NextArrow {
+            margin: 5px 0 0 10px;
+        }
+    }     
+    
+    &Disable {
+        width: 200px;
+        height: 52px;
+        font-size: 16px;
+        font-weight: 700;
+        border: 1px solid #E0E0E0;
+        border-radius: 20px;
+        color: #E0E0E0;
+        background-color: White;
+        align-items: center;
+        justify-content: center;
+        margin: 0 10px 0;
+        cursor: pointer;
+    }       
+}
+
