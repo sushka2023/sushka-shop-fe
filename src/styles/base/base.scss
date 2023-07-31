@@ -53,3 +53,24 @@ $red: #FD6769;
 $light-pink: #FED9DB;
 $light-yellow: #F6ECC8;
 $dark-blue: #100174;
+
+// container
+
+@mixin page-container($max-width: 1440px) {
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 10px 40px;
+}
+
+// fonts
+$nunito: Nunito;
+$open-sans: Open Sans;
+$comfortaa: Comfortaa;
+
+// font-weigth
+$font-weight-800: 800;
+$font-weight-700: 700;
+$font-weight-600: 600;
+$font-weight-500: 500;
+$font-weight-400: 400;
+$font-weight-300: 300;

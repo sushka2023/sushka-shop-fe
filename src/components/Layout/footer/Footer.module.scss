@@ -1,0 +1,106 @@
+@import '../../../styles/base/base.scss';
+
+.footer {
+    position: relative;
+    background-color: $light-200;
+}
+
+.border {
+    background-image: url(/src/icons/border.svg);
+    position: absolute;
+    bottom: 326px;
+    height: 154px;
+    z-index: -1;
+    background-repeat: repeat;
+    width: 100%;
+    background-size: cover;
+}
+
+.footerContainer {
+    @include page-container;  
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerWrapper {
+    display: flex;
+}
+
+.footerLogo {
+    height: 60px;
+    margin-right: 203px;
+}
+
+.footerNavList,
+.footerLegalList,
+.footerContactList {
+    display: flex;
+    gap: 18px;
+    flex-direction: column;
+}
+
+.footerNavList {
+    margin-right: 118px;
+}
+
+.footerNavListLine,
+.footerLegalListLine,
+.footerContactListLine {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: $font-weight-400;
+    line-height: 140%;
+}
+
+.footerContactListIcon {
+    fill: $green-dark-200;
+}
+
+.footerContactListLink,
+.footerLegalListLink,
+.footerListNavLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: inherit;
+
+    &:hover,
+    &:hover .footerContactListIcon {
+        color: $yellow-200;
+        fill: $yellow-200;
+    }
+}
+
+.footerBorder {
+    margin-top: 44px;
+    margin-bottom: 23px;
+    height: 1px;
+    background-color: $yellow-200;
+}
+
+.footerLegalParagraph {
+    color: $black-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: $font-weight-400;
+    line-height: 130%;
+}
+
+.listPayment {
+    display: flex;
+    gap: 5px;
+}
+
+.footerLegalBlock {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0px 40px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
