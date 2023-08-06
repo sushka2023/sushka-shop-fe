@@ -1,0 +1,70 @@
+@import '../../styles/base/base.scss';
+
+
+
+.mainBlock {
+    display: flex;
+    justify-content: space-between;
+    @include page-container;
+    padding-top: 0;
+    margin-top: 50px;
+};
+
+.slogan {
+    width: 555px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+};
+
+.sloganHeader {
+    color: $green-dark-200;
+    font-family: $nunito;
+    font-size: 52px;
+    font-weight: $font-weight-800;
+    line-height: 120%;
+
+    &Italic {
+        font-style: italic;
+    }
+};
+
+.sloganParagraph {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: $font-weight-400;
+    line-height: 140%;
+};
+
+.sloganButton {
+    cursor: pointer;
+    display: flex;
+    width: 300px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+    background-color: $yellow-200;
+    color: $white-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: $font-weight-700;
+    line-height: 130%;
+    text-transform: uppercase;
+
+    &:hover {
+        color: $pink-200;
+        background-color: $light-200;
+    };
+
+    &:active {
+        color: $white-200;
+        background-color: $yellow-200;
+    }
+}

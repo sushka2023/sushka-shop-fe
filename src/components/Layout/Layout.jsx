@@ -1,14 +1,19 @@
-import Header from './header/index';
-import Footer from './footer/index';
+import PropTypes from "prop-types";
+import Header from "./header/index";
+import Footer from "./footer/index";
 
 const Layout = ({ children }) => {
-    return (
-      <>
-        <Header/>
-        <div style={{height:'1000px'}}>{children}</div>
-        <Footer/>
-      </>
-  )
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  );
 };
-  
+
+Layout.propTypes = {
+  children: PropTypes.node,
+};
+
 export default Layout;

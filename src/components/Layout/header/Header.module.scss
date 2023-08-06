@@ -51,25 +51,78 @@
 
 .listNavLink:hover {
     color: $yellow-200;
-}
+};
+
 .listNavLink:active {
     padding: 10px;
     color: $white-200;
     border-radius: 10px;
     background: $yellow-200;
-}
+};
 
 
-.iconsNav {
-    fill: $green-dark-200;
+@keyframes slideIn {
+    0% {
+        width: 30px;
+        height: 33px;
+        opacity: 0;
+    }
 
-    &:hover {
-      cursor: pointer;
-      fill: $yellow-200;
-    };
+    100% {
+        width: 203px;
+        height: 50px;
+        opacity: 1;
+    }
+};
+
+.searchContainer {
+    width: 30px;
+    height: 33px;
+    position: relative;
+
+    &IsActive {
+        animation: slideIn 0.3s forwards;
+        position: relative;
+        width: 203px;
+        height: 50px;
+    }
+};
+
+.searchInput {
+    display: none;
+};
+
+
+.searchInputIsActive {
+    animation: slideIn 0.3s forwards;
+    border-radius: 10px;
+    background: #D5DBD1;
+    border: none;
+    cursor: pointer;
+    text-indent: 50px;
+    caret-color: $green-dark-200;
+
+    &::placeholder {
+        color: $green-dark-200;
+        font-family: $open-sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: $font-weight-400;
+        line-height: 130%;
+    }
+    &:focus {
+        border: none;
+        outline: none;
+    }
+    &:focus::placeholder {
+        content: '';
+    }
 };
 
 .iconsNavSearch {
+    position: absolute;
+    top: 0;
+    left: 0;
     fill: $green-dark-200;
     stroke: $green-dark-200;
 
@@ -78,6 +131,30 @@
         fill: $yellow-200;
         stroke: $yellow-200;
     }
+};
+
+.iconsNavSearchIsActive {
+    left: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    position: absolute;
+    fill: $green-dark-200;
+    stroke: $green-dark-200;
+        
+    &:hover {
+        cursor: pointer;
+        fill: $yellow-200;
+        stroke: $yellow-200;
+    }
+}
+
+.iconsNav {
+    fill: $green-dark-200;
+
+    &:hover {
+      cursor: pointer;
+      fill: $yellow-200;
+    };
 };
 
 // dropdown
