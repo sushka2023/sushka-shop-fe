@@ -24,6 +24,10 @@ const HeaderListIcons = () => {
     };
 
     window.addEventListener("click", handleClick);
+
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
   }, []);
     
   return (

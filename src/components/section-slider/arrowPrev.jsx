@@ -5,7 +5,7 @@ const ArrowPrev = (props) => {
     const { onClick } = props;
     return (
       <div className={styles.ArrowPrevStyle} onClick={onClick}>
-        <ArowIcon />
+        <ArowIcon className={styles.arrow} />
       </div>
     );
 };

@@ -147,6 +147,56 @@
     }
 };
 
+.customButton {
+    width: 300px;
+    height: 50px;
+    border-radius: 20px;
+    background: $white-200;
+    border: none;
+    cursor: pointer;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-700;
+    line-height: 130%;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    &.customLink {
+        color: $green-dark-200;
+    }
+
+    &:hover {
+        border: 2px solid $green-dark-200;
+    }
+
+    &:active {
+        background: $green-dark-200;
+
+        &.customLink {
+            color: $white-200;
+        }
+
+        .arrowBtn {
+            fill: $white-200;
+        }
+    }
+}
+
+.lastSlider {
+    max-width: 400px;
+    height: 595px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrowBtn {
+    fill: $green-dark-200;
+}
+
 .cardHeader {
     margin-bottom: 18px;
     color: $green-dark-200;
@@ -172,6 +222,10 @@
     font-size: 18px;
     font-weight: $font-weight-600;
     line-height: 130%;
+};
+
+.arrow {
+    fill: $white-200;
 }
 
 

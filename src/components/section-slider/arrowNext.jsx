@@ -5,7 +5,7 @@ const ArrowNext = (props) => {
   const { onClick } = props;
   return (
     <div className={styles.ArrowNextStyle} onClick={onClick}>
-      <ArowIcon />
+      <ArowIcon className={styles.arrow} />
     </div>
   );
 };
