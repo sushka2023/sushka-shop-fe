@@ -42,9 +42,8 @@ const SlideSection = () => {
     if (index === 4) {
       return (
         <div className={styles.lastSlider}>
-          <Link
+          <Link to="catalog"
             className={`${styles.customButton} ${styles.customLink}`}
-            onClick={handleButtonClick}
           >
             переглянути каталог
             <ArrowBtn className={styles.arrowBtn} width={10} height={17} />
@@ -56,9 +55,6 @@ const SlideSection = () => {
     }
   };
 
-  const handleButtonClick = () => {
-    // Обработка действия при клике на кнопку под индексом 6
-  };
 
   return (
     <section className={styles.sectionBg}>

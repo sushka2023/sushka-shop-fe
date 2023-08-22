@@ -5,7 +5,7 @@ const FooterNavList = () => {
   return (
     <ul className={styles.footerNavList}>
       <li className={styles.footerNavListLine}>
-        <Link className={styles.footerListNavLink}>Каталог</Link>
+        <Link to="catalog" className={styles.footerListNavLink}>Каталог</Link>
       </li>
       <li className={styles.footerNavListLine}>
         <a className={styles.footerListNavLink} href="#">
@@ -18,7 +18,7 @@ const FooterNavList = () => {
         </a>
       </li>
       <li className={styles.footerNavListLine}>
-        <Link className={styles.footerListNavLink}>Відгуки</Link>
+        <a href='#' className={styles.footerListNavLink}>Відгуки</a>
       </li>
       <li className={styles.footerNavListLine}>
         <a className={styles.footerListNavLink} href="#">

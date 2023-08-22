@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ReactComponent as IconSearch } from "../../../../icons/search.svg";
 import { ReactComponent as IconAccount } from "../../../../icons/account.svg";
@@ -42,7 +43,7 @@ const HeaderListIcons = () => {
         >
           <input
             ref={inputRef}
-            type="search"
+            type="text"
             placeholder="Пошук"
             className={
               isActive
@@ -59,13 +60,19 @@ const HeaderListIcons = () => {
         </div>
       </li>
       <li className={styles.listIconsLine}>
-        <IconAccount className={styles.iconsNav} />
+        <Link to="account">
+          <IconAccount className={styles.iconsNav} />
+        </Link>
       </li>
       <li className={styles.listIconsLine}>
-        <IconFavorite className={styles.iconsNav} />
+        <Link to="favorite">
+          <IconFavorite className={styles.iconsNav} />
+        </Link>
       </li>
       <li className={styles.listIconsLine}>
-        <IconCart className={styles.iconsNav} />
+        <Link to="cart">
+          <IconCart className={styles.iconsNav} />
+        </Link>
       </li>
     </ul>
   );

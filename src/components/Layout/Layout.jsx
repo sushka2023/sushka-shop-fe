@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import Header from "./header/index";
 import Footer from "./footer/index";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <>
       <Header />
-      {children}
+      <Suspense>
+        <Outlet />
+      </Suspense>
       <Footer />
     </>
   );

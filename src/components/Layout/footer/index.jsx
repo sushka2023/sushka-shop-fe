@@ -17,7 +17,7 @@ const Footer = () => {
       </div>
       <div className={styles.footerContainer}>
         <div className={styles.footerWrapper}>
-          <Link className={styles.footerLogo}>
+          <Link to="/" className={styles.footerLogo}>
             <IconLogoFooter />
           </Link>
           <FooterNavList />
