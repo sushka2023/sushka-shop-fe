@@ -1,4 +1,6 @@
+import FruitMix from '../../images/fruit-mix-1.jpg'
 import styles from './sectionAboutUs.module.scss';
+
 
 const SectionAboutUs = () => {
     return (
@@ -13,7 +15,11 @@ const SectionAboutUs = () => {
           <br />
           <p className={styles.aboutUsParagraph}>
             Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо
-            <span className={styles.aboutUsParagraphItalic}> і обожнюємо Україну</span>. Наша продукція зростає і покращується, оскільки все більше людей
+            <span className={styles.aboutUsParagraphItalic}>
+              {" "}
+              і обожнюємо Україну
+            </span>
+            . Наша продукція зростає і покращується, оскільки все більше людей
             обирають наші натуральні смаколики замість цукерок зі складними
             компонентами
           </p>
@@ -25,7 +31,7 @@ const SectionAboutUs = () => {
           <br />
         </div>
         <div>
-          <img src="/src/images/fruit-mix-1.jpg" alt="" width={670} />
+          <img src={FruitMix} alt="fruit mix" width={670} />
         </div>
       </section>
     );

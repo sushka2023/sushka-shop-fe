@@ -3,6 +3,7 @@ import { ReactComponent as IconApple } from "../../icons/apple.svg";
 import { ReactComponent as IconBowl } from "../../icons/bowl.svg";
 import { ReactComponent as IconBox } from "../../icons/box.svg";
 import ApllePic from '../../images/aplle-pic.jpg'
+import FruitMixSecond from '../../images/fruit-mix-2.jpg'
 import styles from './sectionYourChoice.module.scss'
 
 
@@ -56,8 +57,7 @@ const SectionYourChoice = () => {
           <p className={styles.yourChoiceLastBlockPararaph}>
             Тут знайдеш близько
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
-              {" "}
-              30 смаків{" "}
+              30 смаків
             </span>
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
@@ -74,12 +74,11 @@ const SectionYourChoice = () => {
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
             фантазіям і обов’язково скажеш:
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
-              {" "}
-              «Це смачно!»{" "}
+              «Це смачно!»
             </span>
           </p>
         </div>
-        <img src="/src/images/fruit-mix-2.jpg" alt="" width={555} />
+        <img src={FruitMixSecond} alt="fruit mix" width={555} />
       </div>
     </section>
   );
