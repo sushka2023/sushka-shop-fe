@@ -49,8 +49,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const SectionFaq = () => {
   return (
-      <section className={styles.accordionSection}>
-    <div className={styles.border}></div>
+    <section className={styles.accordionSection}>
+      <div className={styles.border}></div>
       <div className={styles.accordionWrapper}>
         <h2 className={styles.accordionHeader}>Найчастіші запитання</h2>
         <Accordion>
@@ -76,11 +76,10 @@ const SectionFaq = () => {
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Так, але, це природній цукор, який міститься у фруктах та ягодах.
+              Ми не додаємо жодних барвників чи консервантів. У складі тільки
+              фрукти та ягоди. В деяких видах пастили присутні додатки - горіхи,
+              кокос, м'ята та ін..
             </p>
           </AccordionDetails>
         </Accordion>
@@ -92,11 +91,9 @@ const SectionFaq = () => {
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Йогуртові цукерки - це та сама пастила, але з додаванням у склад
+              білого йогурту. Має ніжний молочний смак. Скручена у зручні
+              рогалики-цукерки.
             </p>
           </AccordionDetails>
         </Accordion>
@@ -106,11 +103,15 @@ const SectionFaq = () => {
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Наші продукти не люблять вологи! Термін зберігання класичної
+              пастили на основі яблука – 6 місяців, йогуртової пастили – 3
+              місяці, фріпсів до 12 місяців. Краще за все для зберігання
+              підходить темне місце при кімнатній температурі 16-22 градусів.
+              Уникайте потрапляння прямих сонячних променів. Для прикладу це
+              може бути закрита поличка, або шафа на вашій кухні. Для тари
+              підійде скляна банка, лоток, чи відерко з щільною кришкою. Для
+              збереження початкового смаку краще зберігати кожен смак в окремій
+              тарі.
             </p>
           </AccordionDetails>
         </Accordion>
@@ -120,11 +121,9 @@ const SectionFaq = () => {
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Все залежить від вибору служби доставки. В середньому 2-5 днів без
+              урахування святкових та вихідних. Потурбуйтесь про завчасне
+              замовлення, якщо бажаєте отримати товари до конкретної дати.
             </p>
           </AccordionDetails>
         </Accordion>
@@ -134,11 +133,15 @@ const SectionFaq = () => {
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
+              Чому ми? Тому, що у нас домашнє крафтове виробництво, в якому ми
+              використовуємо домашні та органічні фрукти та ягоди. Саме це дає
+              змогу споживати наші смаколики дітям від 6 місяців, дорослим, що
+              слідкують за вагою, спортсменам, вагітним та мамам на ГВ, і всім
+              хто полюбляє солоденьке. У складі немає - цукру, барвників та
+              консервантів, натомість, є усі необхідні вітаміни для якісного
+              функціонування організсу. Більш ніж за рік нашої праці ми отримали
+              сотні позитивних відгуків про наші продукти, що надають ще більше
+              мотивації.
             </p>
           </AccordionDetails>
         </Accordion>
