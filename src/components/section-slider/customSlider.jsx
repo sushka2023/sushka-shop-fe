@@ -1,5 +1,6 @@
 import styles from "./sliderSection.module.scss";
 import { ReactComponent as IconFavorite } from "../../icons/favorite.svg";
+import ShopItem from '../../images/shop-item.jpg'
 
 const CustomSlider = ({ ...props }) => {
   return (
@@ -7,7 +8,12 @@ const CustomSlider = ({ ...props }) => {
       <div {...props} className={styles.slideElement}>
         <div className={styles.cardContent}>
           <div className={styles.slideImage}>
-            <img width={350} height={228} src="/src/images/shop-item.jpg" alt="" />
+            <img
+              width={350}
+              height={228}
+              src={ShopItem}
+              alt="mandarin pastille"
+            />
             <IconFavorite className={styles.cardFavorite} />
           </div>
           <div className={styles.cardTitle}>

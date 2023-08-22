@@ -5,6 +5,9 @@ import { useState } from "react";
 import styles from "./sectionReviews.module.scss";
 import { ReactComponent as IconCherry } from '../../icons/cherry.svg';
 import { ReactComponent as IconBanana } from "../../icons/banana.svg";
+import FirstReview from '../../images/review1.png';
+import SecondReview from "../../images/review2.png";
+import ThirdReview from "../../images/review3.png";
 
 const SectionReviews = () => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -52,8 +55,8 @@ const SectionReviews = () => {
               <img
                 width={400}
                 height={390}
-                src="/src/images/review1.png"
-                alt=""
+                src={FirstReview}
+                alt="good product review"
               />
             </div>
           </div>
@@ -62,8 +65,8 @@ const SectionReviews = () => {
               <img
                 width={400}
                 height={390}
-                src="/src/images/review2.png"
-                alt=""
+                src={SecondReview}
+                alt="good product review"
               />
             </div>
           </div>
@@ -72,8 +75,8 @@ const SectionReviews = () => {
               <img
                 width={400}
                 height={390}
-                src="/src/images/review3.png"
-                alt=""
+                src={ThirdReview}
+                alt="good product review"
               />
             </div>
           </div>
@@ -82,8 +85,8 @@ const SectionReviews = () => {
               <img
                 width={400}
                 height={390}
-                src="/src/images/review1.png"
-                alt=""
+                src={FirstReview}
+                alt="good product review"
               />
             </div>
           </div>
@@ -92,8 +95,8 @@ const SectionReviews = () => {
               <img
                 width={400}
                 height={390}
-                src="/src/images/review2.png"
-                alt=""
+                src={SecondReview}
+                alt="good product review"
               />
             </div>
           </div>

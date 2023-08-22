@@ -8,7 +8,7 @@ const HeroSection = () => {
         <main className={styles.mainBlock}>
           <div className={styles.slogan}>
             <h1 className={styles.sloganHeader}>
-              Найсолодші ласощі <br />{" "}
+              Найсолодші ласощі <br />
               <span className={styles.sloganHeaderItalic}>від природи,</span>{" "}
               <br /> зроблені з любов`ю
             </h1>
