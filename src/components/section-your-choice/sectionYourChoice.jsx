@@ -2,6 +2,7 @@ import { ReactComponent as IconMix } from '../../icons/mix.svg';
 import { ReactComponent as IconApple } from "../../icons/apple.svg";
 import { ReactComponent as IconBowl } from "../../icons/bowl.svg";
 import { ReactComponent as IconBox } from "../../icons/box.svg";
+import ApllePic from '../../images/aplle-pic.jpg'
 import styles from './sectionYourChoice.module.scss'
 
 
@@ -9,7 +10,7 @@ const SectionYourChoice = () => {
   return (
     <section className={styles.sectionYourChoice}>
       <div className={styles.yourChoiceWrapper}>
-        <img src="/src/images/aplle-pic.jpg" alt="" width={555} />
+        <img src={ApllePic} alt="falling apples" width={555} />
         <div className={styles.yourChoiceWrapperDescription}>
           <h3 className={styles.yourChoiceHeader}>Твій свідомий вибір</h3>
           <div className={styles.paragraphWrapper}>
@@ -26,8 +27,8 @@ const SectionYourChoice = () => {
             <p className={styles.yourChoiceParagraph}>
               Як юзати ці смаколики знає навіть дитина: жуй, кусай, ламай,
               хрусти, відривай, облизуй та отримуй
-              <span className={styles.paragraphItalic}> природню користь </span>в
-              результаті.
+              <span className={styles.paragraphItalic}> природню користь </span>
+              в результаті.
             </p>
           </div>
         </div>
@@ -53,8 +54,11 @@ const SectionYourChoice = () => {
       <div className={styles.yourChoiceLastBlock}>
         <div className={styles.yourChoiceLastBlockWrapper}>
           <p className={styles.yourChoiceLastBlockPararaph}>
-            Тут знайдеш близько 
-            <span className={styles.yourChoiceLastBlockPararaphItalic}> 30 смаків </span>
+            Тут знайдеш близько
+            <span className={styles.yourChoiceLastBlockPararaphItalic}>
+              {" "}
+              30 смаків{" "}
+            </span>
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </p>
@@ -68,8 +72,11 @@ const SectionYourChoice = () => {
           <p className={styles.yourChoiceLastBlockPararaph}>
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
-            фантазіям і обов’язково скажеш: 
-            <span className={styles.yourChoiceLastBlockPararaphItalic}> «Це смачно!» </span>
+            фантазіям і обов’язково скажеш:
+            <span className={styles.yourChoiceLastBlockPararaphItalic}>
+              {" "}
+              «Це смачно!»{" "}
+            </span>
           </p>
         </div>
         <img src="/src/images/fruit-mix-2.jpg" alt="" width={555} />
