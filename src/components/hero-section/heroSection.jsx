@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HeroPic } from '../../images/hero-pic.jpg';
+import HeroPic from '../../images/hero-pic.jpg';
 import styles from './HeroSection.module.scss';
 
 const HeroSection = () => {
@@ -23,7 +23,8 @@ const HeroSection = () => {
               Переглянути каталог
             </Link>
           </div>
-          <HeroPic
+          <img
+            src={HeroPic}
             alt="dried fruits in plastic bags"
             width={760}
             height={730}
