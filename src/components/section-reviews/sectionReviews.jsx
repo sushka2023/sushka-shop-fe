@@ -53,8 +53,6 @@ const SectionReviews = () => {
           <div className={styles.slideWrapper}>
             <div className={styles.slideElement}>
               <img
-                width={400}
-                height={390}
                 src={FirstReview}
                 alt="good product review"
               />
@@ -63,8 +61,6 @@ const SectionReviews = () => {
           <div className={styles.slideWrapper}>
             <div className={styles.slideElement}>
               <img
-                width={400}
-                height={390}
                 src={SecondReview}
                 alt="good product review"
               />
@@ -73,8 +69,6 @@ const SectionReviews = () => {
           <div className={styles.slideWrapper}>
             <div className={styles.slideElement}>
               <img
-                width={400}
-                height={390}
                 src={ThirdReview}
                 alt="good product review"
               />
@@ -83,8 +77,6 @@ const SectionReviews = () => {
           <div className={styles.slideWrapper}>
             <div className={styles.slideElement}>
               <img
-                width={400}
-                height={390}
                 src={FirstReview}
                 alt="good product review"
               />
@@ -93,8 +85,6 @@ const SectionReviews = () => {
           <div className={styles.slideWrapper}>
             <div className={styles.slideElement}>
               <img
-                width={400}
-                height={390}
                 src={SecondReview}
                 alt="good product review"
               />

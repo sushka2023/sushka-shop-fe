@@ -5,7 +5,7 @@ const CustomSlider = ({ ...props }) => {
   return (
     <div className={styles.slideWrapper}>
       <div {...props} className={styles.slideElement}>
-            <img width={400} height={390} src="/src/images/review.svg" alt="" />
+            <img src="/src/images/review.svg" alt="" />
             <IconFavorite className={styles.cardFavorite} />
       </div>
     </div>

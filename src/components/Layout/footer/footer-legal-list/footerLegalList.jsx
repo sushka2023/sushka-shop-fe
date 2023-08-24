@@ -6,7 +6,7 @@ const FooterLegalList = () => {
     <ul className={styles.footerLegalList}>
       <li className={styles.footerLegalListLine}>
         <Link to="conditions" className={styles.footerLegalListLink}>
-          Умови та Положенн
+          Умови та Положення
         </Link>
       </li>
       <li className={styles.footerLegalListLine}>

@@ -9,7 +9,7 @@ const HeroSection = () => {
           <div className={styles.slogan}>
             <h1 className={styles.sloganHeader}>
               Найсолодші ласощі <br />
-              <span className={styles.sloganHeaderItalic}>від природи,</span>{" "}
+              <span className={styles.sloganHeaderItalic}> від природи, </span>
               <br /> зроблені з любов`ю
             </h1>
             <p className={styles.sloganParagraph}>

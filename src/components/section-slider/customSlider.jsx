@@ -9,8 +9,6 @@ const CustomSlider = ({ ...props }) => {
         <div className={styles.cardContent}>
           <div className={styles.slideImage}>
             <img
-              width={350}
-              height={228}
               src={ShopItem}
               alt="mandarin pastille"
             />

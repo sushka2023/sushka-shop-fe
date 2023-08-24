@@ -56,9 +56,11 @@ const SectionYourChoice = () => {
         <div className={styles.yourChoiceLastBlockWrapper}>
           <p className={styles.yourChoiceLastBlockPararaph}>
             Тут знайдеш близько
+            {" "}
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
               30 смаків
             </span>
+            {" "}
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </p>
@@ -73,6 +75,7 @@ const SectionYourChoice = () => {
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
             фантазіям і обов’язково скажеш:
+            {" "}
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
               «Це смачно!»
             </span>

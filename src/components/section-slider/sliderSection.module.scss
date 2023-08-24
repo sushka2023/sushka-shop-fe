@@ -95,6 +95,15 @@
 .slideImage {
     position: relative;
     padding: 40px 20px 32px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+
+    & img {
+        max-width: 100%;
+        height: auto;
+    }
 };
 
 .cardTitle {
@@ -207,7 +216,7 @@
 };
 
 .cardPararaph {
-    width: 320px;
+    max-width: 320px;
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 17px;

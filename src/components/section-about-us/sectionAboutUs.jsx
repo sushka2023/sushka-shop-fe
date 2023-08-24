@@ -10,23 +10,23 @@ const SectionAboutUs = () => {
           <p className={styles.aboutUsParagraph}>
             Відверто кажучи, ми маленьке крафтове виробництво корисних
             смаколиків. Любимо усе, що дає нам матінка природа, а ще сильніше
-            <span className={styles.aboutUsParagraphItalic}> яблука!</span>
+            <span className={styles.aboutUsParagraphItalic}> яблука! </span>
           </p>
           <br />
           <p className={styles.aboutUsParagraph}>
             Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо
+            {" "}
             <span className={styles.aboutUsParagraphItalic}>
-              {" "}
               і обожнюємо Україну
             </span>
             . Наша продукція зростає і покращується, оскільки все більше людей
             обирають наші натуральні смаколики замість цукерок зі складними
-            компонентами
+            компонентами.
           </p>
           <br />
           <p className={styles.aboutUsParagraph}>
             Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну
-            пастилу та фріпси
+            пастилу та фріпси.
           </p>
           <br />
         </div>
