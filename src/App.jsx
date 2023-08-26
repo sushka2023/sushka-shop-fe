@@ -1,8 +1,12 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 
 function App() {
+
+   const location = useLocation();
+   const cameBack = location.state?.from ?? "/";
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -44,6 +48,11 @@ function App() {
           element={<div style={{ marginBottom: "500px" }}>policy</div>}
         />
       </Route>
+
+      <Route
+        path="crm"
+        element={<div style={{ marginBottom: "500px" }}><Link to={cameBack} style={{border: "1px solid black"}}>GO BACK</Link> crm</div>}
+      />
     </Routes>
   );
 }

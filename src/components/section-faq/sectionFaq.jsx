@@ -49,7 +49,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const SectionFaq = () => {
   return (
-    <section className={styles.accordionSection}>
+    <section className={styles.accordionSection} id='faq'>
       <div className={styles.border}></div>
       <div className={styles.accordionWrapper}>
         <h2 className={styles.accordionHeader}>Найчастіші запитання</h2>

@@ -9,7 +9,7 @@ import styles from './sectionYourChoice.module.scss'
 
 const SectionYourChoice = () => {
   return (
-    <section className={styles.sectionYourChoice}>
+    <section className={styles.sectionYourChoice} id='aboutProduct'>
       <div className={styles.yourChoiceWrapper}>
         <img src={ApllePic} alt="falling apples" width={555} />
         <div className={styles.yourChoiceWrapperDescription}>

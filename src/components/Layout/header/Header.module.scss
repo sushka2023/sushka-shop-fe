@@ -47,6 +47,7 @@
     font-weight: $font-weight-600;
     line-height: normal;
     text-transform: uppercase;
+    cursor: pointer;
 };
 
 .listNavLink:hover {
@@ -59,6 +60,20 @@
     border-radius: 10px;
     background: $yellow-200;
 };
+
+.navLinkCrm {
+    width: 101px;
+    height: 40px;
+    border-radius: 10px;
+    background: $green-dark-200;
+
+    &.linkCrm {
+       color: $white-200;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+    }
+}
 
 
 @keyframes slideIn {

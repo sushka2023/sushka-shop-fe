@@ -41,7 +41,7 @@ const SectionReviews = () => {
   };
 
   return (
-    <section className={styles.sectionBg}>
+    <section className={styles.sectionBg} id='review'>
       <div className={styles.border}>
         <div className={styles.iconWrapper}>
           <IconCherry />

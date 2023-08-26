@@ -1,10 +1,11 @@
 import FruitMix from '../../images/fruit-mix-1.jpg'
 import styles from './sectionAboutUs.module.scss';
+import { Element } from "react-scroll";
 
 
 const SectionAboutUs = () => {
     return (
-      <section className={styles.sectionAboutUs}>
+      <Element className={styles.sectionAboutUs} name='aboutUs'>
         <div className={styles.aboutUsWrapper}>
           <h2 className={styles.aboutUsHeader}>Про нас</h2>
           <p className={styles.aboutUsParagraph}>
@@ -33,7 +34,7 @@ const SectionAboutUs = () => {
         <div>
           <img src={FruitMix} alt="fruit mix" width={670} />
         </div>
-      </section>
+      </Element>
     );
 };
 

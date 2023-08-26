@@ -55,6 +55,7 @@
 .footerNavListLine,
 .footerLegalListLine,
 .footerContactListLine {
+    cursor: pointer;
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 18px;

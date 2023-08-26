@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import styles from '../Header.module.scss'; 
 
 const HeaderNav = () => {
@@ -40,14 +41,33 @@ const HeaderNav = () => {
           </ul>
         </li>
         <li className={styles.listNavLine}>
-          <Link className={styles.listNavLink}>Відгуки</Link>
+          <ScrollLink
+            to="review"
+            smooth={true}
+            duration={500}
+            className={styles.listNavLink}
+          >
+            Відгуки
+          </ScrollLink>
         </li>
         <li className={styles.listNavLine}>
-          <Link className={styles.listNavLink}>Про нас</Link>
+          <ScrollLink
+            to="aboutUs"
+            className={styles.listNavLink}
+            smooth={true}
+            duration={500}
+          >
+            Про нас
+          </ScrollLink>
         </li>
         <li className={styles.listNavLine}>
           <Link to="cooperation" className={styles.listNavLink}>
             Співпраця
+          </Link>
+        </li>
+        <li className={styles.listNavLine}>
+          <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
+            CRM
           </Link>
         </li>
       </ul>
