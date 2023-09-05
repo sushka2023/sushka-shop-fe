@@ -116,8 +116,9 @@
     background: #D5DBD1;
     border: none;
     cursor: pointer;
-    text-indent: 50px;
     caret-color: $green-dark-200;
+    padding-left: 51px;
+    box-sizing: border-box;
 
     &::placeholder {
         color: $green-dark-200;
