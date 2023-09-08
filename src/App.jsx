@@ -1,6 +1,7 @@
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
+import CatalogPage from "./pages/catalog-page/CatalogPage";
 
 function App() {
 
@@ -11,10 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
-        <Route
-          path="catalog"
-          element={<div style={{ marginBottom: "500px" }}>Каталог</div>}
-        />
+        <Route path="catalog" element={<CatalogPage />} />
         <Route
           path="catalog/:params"
           element={<div style={{ marginBottom: "500px" }}>catalog params</div>}
@@ -51,7 +49,14 @@ function App() {
 
       <Route
         path="crm"
-        element={<div style={{ marginBottom: "500px" }}><Link to={cameBack} style={{border: "1px solid black"}}>GO BACK</Link> crm</div>}
+        element={
+          <div style={{ marginBottom: "500px" }}>
+            <Link to={cameBack} style={{ border: "1px solid black" }}>
+              GO BACK
+            </Link>{" "}
+            crm
+          </div>
+        }
       />
     </Routes>
   );

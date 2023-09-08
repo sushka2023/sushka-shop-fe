@@ -43,7 +43,7 @@ const HeaderListIcons = () => {
         >
           <input
             ref={inputRef}
-            type="text"
+            type="search"
             placeholder="Пошук"
             className={
               isActive
