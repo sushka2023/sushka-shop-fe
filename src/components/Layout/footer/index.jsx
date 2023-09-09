@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link as ScrollLink } from "react-scroll";
 import { ReactComponent as IconLogoFooter } from '../../../icons/logofooter.svg';
 import { ReactComponent as IconMastercard } from '../../../icons/mastercard.svg';
 import { ReactComponent as IconVisa } from '../../../icons/visa.svg';
@@ -17,9 +17,14 @@ const Footer = () => {
       </div>
       <div className={styles.footerContainer}>
         <div className={styles.footerWrapper}>
-          <Link to="/" className={styles.footerLogo}>
+          <ScrollLink
+            to="nav"
+            smooth={true}
+            duration={500}
+            className={styles.footerLogo}
+          >
             <IconLogoFooter />
-          </Link>
+          </ScrollLink>
           <FooterNavList />
           <FooterLegalList />
         </div>
