@@ -1,29 +1,54 @@
 import { Link } from 'react-router-dom';
+import { Link as ScrollLink } from "react-scroll";
 import styles from '../Footer.module.scss';
 
 const FooterNavList = () => {
   return (
     <ul className={styles.footerNavList}>
       <li className={styles.footerNavListLine}>
-        <Link className={styles.footerListNavLink}>Каталог</Link>
+        <Link to="catalog" className={styles.footerListNavLink}>
+          Каталог
+        </Link>
       </li>
       <li className={styles.footerNavListLine}>
-        <a className={styles.footerListNavLink} href="#">
+        <ScrollLink
+          className={styles.footerListNavLink}
+          to="aboutUs"
+          smooth={true}
+          duration={500}
+        >
           Про нас
-        </a>
+        </ScrollLink>
       </li>
       <li className={styles.footerNavListLine}>
-        <a className={styles.footerListNavLink} href="#">
+        <ScrollLink
+          className={styles.footerListNavLink}
+          to="aboutProduct"
+          smooth={true}
+          duration={500}
+        >
           Про продукт
-        </a>
+        </ScrollLink>
       </li>
       <li className={styles.footerNavListLine}>
-        <Link className={styles.footerListNavLink}>Відгуки</Link>
+        <ScrollLink
+          to="review"
+          className={styles.footerListNavLink}
+          smooth={true}
+          duration={500}
+        >
+          Відгуки
+        </ScrollLink>
       </li>
       <li className={styles.footerNavListLine}>
-        <a className={styles.footerListNavLink} href="#">
+        <ScrollLink
+          className={styles.footerListNavLink}
+          to="faq"
+          smooth={true}
+          duration={500}
+        >
           F.A.Q
-        </a>
+        </ScrollLink>
       </li>
     </ul>
   );

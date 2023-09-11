@@ -3,6 +3,11 @@
 .footer {
     position: relative;
     background-color: $light-200;
+    z-index: 1;
+}
+
+.footerLogo {
+    cursor: pointer;
 }
 
 .border {
@@ -14,6 +19,13 @@
     background-repeat: repeat;
     width: 100%;
     background-size: cover;
+};
+
+.iconStrawberry {
+    position: absolute;
+    right: 120px;
+    transform: rotate(355deg);
+    top: -53px;
 }
 
 .footerContainer {
@@ -47,6 +59,7 @@
 .footerNavListLine,
 .footerLegalListLine,
 .footerContactListLine {
+    cursor: pointer;
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 18px;

@@ -1,22 +1,18 @@
+import { Link } from 'react-router-dom';
 import styles from '../Footer.module.scss'; 
 
 const FooterLegalList = () => {
   return (
     <ul className={styles.footerLegalList}>
       <li className={styles.footerLegalListLine}>
-        <a className={styles.footerLegalListLink} href="#">
-          Умови надання послуг
-        </a>
+        <Link to="conditions" className={styles.footerLegalListLink}>
+          Умови та Положення
+        </Link>
       </li>
       <li className={styles.footerLegalListLine}>
-        <a className={styles.footerLegalListLink} href="#">
-          Terms & Conditions
-        </a>
-      </li>
-      <li className={styles.footerLegalListLine}>
-        <a className={styles.footerLegalListLink} href="#">
+        <Link to="policy" className={styles.footerLegalListLink}>
           Політика конфіденційності
-        </a>
+        </Link>
       </li>
     </ul>
   );

@@ -10,13 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.3",
     "@reduxjs/toolkit": "^1.9.5",
     "modern-normalize": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
-    "sass": "^1.63.6"
+    "react-scroll": "^1.8.9",
+    "react-slick": "^0.29.0",
+    "sass": "^1.63.6",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^10.1.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
