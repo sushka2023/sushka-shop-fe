@@ -52,7 +52,14 @@ function App() {
 
       <Route
         path="crm"
-        element={<div style={{ marginBottom: "500px" }}><Link to={cameBack} style={{border: "1px solid black"}}>GO BACK</Link> crm</div>}
+        element={
+          <div style={{ marginBottom: "500px" }}>
+            <Link to={cameBack} style={{ border: "1px solid black" }}>
+              GO BACK
+            </Link>{" "}
+            crm
+          </div>
+        }
       />
     </Routes>
   );

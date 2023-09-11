@@ -118,6 +118,7 @@
     cursor: pointer;
     caret-color: $green-dark-200;
     padding-left: 51px;
+    padding-right: 12.25px;
     box-sizing: border-box;
 
     &::placeholder {
@@ -136,6 +137,16 @@
         content: '';
     }
 };
+
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    background-image: url(/src/icons/clear.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+}
 
 .iconsNavSearch {
     position: absolute;
