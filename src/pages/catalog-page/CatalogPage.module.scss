@@ -1,0 +1,16 @@
+@import '../../styles/base/base.scss';
+
+.container {
+    @include page-container;
+}
+
+.catalogBg {
+    background-color: $pink-200;
+}
+
+.catalogList {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

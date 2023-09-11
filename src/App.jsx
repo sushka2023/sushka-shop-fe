@@ -1,6 +1,7 @@
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
+import CatalogPage from "./pages/catalog-page/CatalogPage";
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
         <Route index element={<MainPage />} />
         <Route
           path="catalog"
-          element={<div style={{ marginBottom: "500px" }}>Каталог</div>}
+          element={<CatalogPage />}
         />
         <Route
           path="catalog/:params"

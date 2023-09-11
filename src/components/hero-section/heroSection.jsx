@@ -5,7 +5,7 @@ import styles from './HeroSection.module.scss';
 const HeroSection = () => {
     return (
       <section className={styles.mainContainer}>
-        <main className={styles.mainBlock}>
+        <div className={styles.mainBlock}>
           <div className={styles.slogan}>
             <h1 className={styles.sloganHeader}>
               Найсолодші ласощі <br />
@@ -29,7 +29,7 @@ const HeroSection = () => {
             width={760}
             height={730}
           />
-        </main>
+        </div>
       </section>
     );
 };
