@@ -6,7 +6,7 @@ import { ReactComponent as IconFavorite } from "../../../../icons/favorite.svg";
 import { ReactComponent as IconCart } from "../../../../icons/cart.svg";
 import styles from "../Header.module.scss";
 
-const HeaderListIcons = () => {
+const HeaderListIcons = ({ onLogin }) => {
   const [isActive, setIsActive] = useState(false);
   const iconRef = useRef();
   const inputRef = useRef();
@@ -30,7 +30,7 @@ const HeaderListIcons = () => {
       window.removeEventListener("click", handleClick);
     };
   }, []);
-    
+  
   return (
     <ul className={styles.listIcons}>
       <li className={styles.listIconsLineContainer}>
@@ -59,7 +59,7 @@ const HeaderListIcons = () => {
           />
         </div>
       </li>
-      <li className={styles.listIconsLine}>
+      <li className={styles.listIconsLine} onClick={onLogin}>
         <Link to="account">
           <IconAccount className={styles.iconsNav} />
         </Link>

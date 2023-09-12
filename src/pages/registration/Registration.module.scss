@@ -1,0 +1,35 @@
+@import '../../styles/base/base.scss';
+
+
+.confirm {
+    font-size: 22px;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-weight: $font-weight-600;
+}
+
+.header {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-weight: $font-weight-600;
+    font-size: 22px;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.text {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-weight: $font-weight-400;
+
+    &Link {
+        font-weight: $font-weight-600;
+        color: $green-dark-200;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+}

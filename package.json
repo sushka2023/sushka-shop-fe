@@ -14,6 +14,9 @@
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.3",
     "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.5.0",
+    "classnames": "^2.3.2",
+    "formik": "^2.4.3",
     "modern-normalize": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,7 +26,8 @@
     "react-slick": "^0.29.0",
     "sass": "^1.63.6",
     "slick-carousel": "^1.8.1",
-    "swiper": "^10.1.0"
+    "swiper": "^10.1.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
