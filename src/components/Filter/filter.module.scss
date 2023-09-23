@@ -1,0 +1,90 @@
+@import '../../styles/base/base.scss';
+
+.itemWrapp {
+    padding: 10px 20px 10px 20px;
+
+    &:hover {
+        background-color: $light-200;
+    }
+}
+
+.applyBtnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 23px;
+}
+
+.applyIcon {
+    height: 8px;
+    transform: rotate(270deg);
+}
+
+.applyDropdown {
+    border-radius: 20px;
+    background: $green-dark-200;
+    border: none;
+    width: 200px;
+    height: 44px;
+    color: $white-200;
+    font-family: $open-sans;
+    font-size: 13px;
+    font-weight: $font-weight-500;
+    line-height: 100%;
+    cursor: pointer;
+}
+
+.checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.checkbox + label {
+    position: relative;
+    padding: 0 0 0 40px;
+    cursor: pointer;
+}
+
+.checkbox + label:before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: inherit;
+    border: 2px solid $green-dark-200;
+    left: 0;
+    top: -4px;
+}
+
+.checkbox:checked + label:before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../icons/checkbox.svg');
+    border: 2px solid $green-dark-200;
+}
+
+.title {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 130%;
+    padding: 10px 20px 10px 20px;
+}
+
+.label {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 13px;
+    font-weight: $font-weight-600;
+    line-height: 100%;
+}
+
+
+
+
