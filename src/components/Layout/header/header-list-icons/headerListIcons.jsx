@@ -6,7 +6,7 @@ import { ReactComponent as IconFavorite } from "../../../../icons/favorite.svg";
 import { ReactComponent as IconCart } from "../../../../icons/cart.svg";
 import styles from "../Header.module.scss";
 
-const HeaderListIcons = ({ onLogin }) => {
+const HeaderListIcons = ({ onLogin, isLogged }) => {
   const [isActive, setIsActive] = useState(false);
   const iconRef = useRef();
   const inputRef = useRef();
@@ -59,10 +59,12 @@ const HeaderListIcons = ({ onLogin }) => {
           />
         </div>
       </li>
-      <li className={styles.listIconsLine} onClick={onLogin}>
+      <li className={styles.listIconsLine}>
+        {!isLogged ? (<IconAccount className={styles.iconsNav} onClick={onLogin}/>) : (
         <Link to="account">
-          <IconAccount className={styles.iconsNav} />
-        </Link>
+        <IconAccount className={styles.iconsNav} />
+       </Link>
+        )}
       </li>
       <li className={styles.listIconsLine}>
         <Link to="favorite">

@@ -31,7 +31,7 @@ function validatePassword(value) {
     return error;
 }
 
-const LogForm = () => (
+const LogForm = ({ onLog }) => (
     // const [login, setLogin] = useState('');
     // const [password, setPassword] = useState('');
 
@@ -43,10 +43,7 @@ const LogForm = () => (
         toggle: 'Запам’ятати пароль',
         checked: [],
       }}
-      onSubmit={async (values) => {
-        await new Promise((r) => setTimeout(r, 500));
-        alert(JSON.stringify(values, null, 2));
-      }}
+      onSubmit={onLog}
     >
         {({ errors, touched, validateField, validateForm }) => (
             <Form className={styles.form}>
@@ -70,7 +67,7 @@ const LogForm = () => (
                     name="password" 
                     placeholder="Пароль" 
                     type="password"
-                    validate={validatePassword}
+                    // validate={validatePassword}
                 />
                 {errors.password && touched.email && <div className={styles.formError}>{errors.password}</div>}
 

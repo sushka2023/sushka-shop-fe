@@ -4,7 +4,6 @@ import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
 
 function App() {
-
    const location = useLocation();
    const cameBack = location.state?.from ?? "/";
 
@@ -46,6 +45,10 @@ function App() {
           element={<div style={{ marginBottom: "500px" }}>policy</div>}
         />
       </Route>
+      <Route
+          path="/api/auth/confirmed_email/:token"
+          element={<div style={{ marginBottom: "500px" }}>policy</div>}
+        />
 
       <Route
         path="crm"
