@@ -2,6 +2,7 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
+import FavoritePage from "./pages/favorite-page/FavoritePage";
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
         />
         <Route
           path="favorite"
-          element={<div style={{ marginBottom: "500px" }}>Улюблене</div>}
+          element={<FavoritePage/>}
         />
         <Route
           path="account"
