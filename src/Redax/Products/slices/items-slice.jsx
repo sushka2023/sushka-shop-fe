@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchItems } from "../operation/Operation";
+import { addToFavorite } from "./favoriteSlice";
 
 const handleRejected = (state, action) => {
   state.operation = null;
@@ -7,10 +8,25 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
+const toggleItemInFavorite = (favorite, itemToAddOrRemove) => {
+  const existingIndex = favorite.findIndex(
+    (item) => item.product.id === itemToAddOrRemove.product.id
+  );
+
+  if (existingIndex === -1) {
+    return [...favorite, itemToAddOrRemove];
+  }
+
+  else {
+    return favorite.filter((item) => item.product.id !== itemToAddOrRemove.product.id);
+  }
+}
+
 export const itemsSlice = createSlice({
   name: "AllItems",
   initialState: {
     items: [],
+    favorite: [],
     isLoading: false,
     operation: null,
     error: null,
@@ -36,6 +52,10 @@ export const itemsSlice = createSlice({
       if (action.payload.operationType === "fatch") {
         state.items = action.payload.data;
       }
+    },
+    [addToFavorite](state, action) {
+      const updatedFavorite = toggleItemInFavorite(state.favorite, action.payload);
+      state.favorite = updatedFavorite;
     },
   },
 });

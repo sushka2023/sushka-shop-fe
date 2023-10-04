@@ -31,6 +31,10 @@
 
 .list {
     margin: 45px 0px 173px;
+    display: flex;
+    row-gap: 50px;
+    column-gap: 80px;
+    flex-wrap: wrap;
 }
 
 .link {
