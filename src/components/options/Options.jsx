@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
+import { ReactComponent as SettingsIcon } from "../../icons/settings.svg";
 import styles from "./Options.module.scss";
 
 const Options = ({ children, value }) => {
@@ -38,7 +38,7 @@ const Options = ({ children, value }) => {
       <div className={styles.dropdown}>
         <button className={styles.dropdownToggle} ref={containerRef}>
           {value}
-          <ArowIcon />
+          <SettingsIcon />
         </button>
         {isOpen && (
           <div className={styles.dropdownContent} onClick={applyDropDown}>

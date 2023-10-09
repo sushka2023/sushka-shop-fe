@@ -63,7 +63,6 @@ const CatalogPage = () => {
           <h2 className={styles.catalogTitle}>Каталог</h2>
           <div className={styles.optionsWrapper}>
             <Filter />
-            <Sort />
           </div>
         </div>
         <div>

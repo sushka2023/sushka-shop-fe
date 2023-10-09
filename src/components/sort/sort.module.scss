@@ -1,5 +1,14 @@
 @import "../../styles/base/base.scss";
 
+.title {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+    padding: 10px 20px;
+}
+
 .sortInput {
     position: absolute;
     z-index: -1;
@@ -10,13 +19,44 @@ label {
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 16px;
-    font-weight: $font-weight-600;
+    font-weight: $font-weight-400;
     line-height: 130%;
     cursor: pointer;
 }
 
-.sortInput:checked + label {
-    color: $yellow-200;
+.radio {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.radio+label {
+    position: relative;
+    padding: 0 0 0 30px;
+    cursor: pointer;
+}
+
+.radio:checked + label {
+   color: $yellow-200;
+   font-weight: $font-weight-600;
+}
+
+.radio+label:before {
+    content: '';
+    position: absolute;
+    width: 19px;
+    height: 19px;
+}
+
+.radio:checked+label:before {
+    content: "";
+    position: absolute;
+    background-image: url(/src/icons/checked.svg);
+    width: 19px;
+    background-repeat: no-repeat;
+    left: 0%;
+    top: 60%;
+    transform: translate(0, -60%);
 }
 
 .inputWrapper {

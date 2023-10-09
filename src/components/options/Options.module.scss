@@ -1,35 +1,41 @@
 @import '../../styles/base/base.scss';
 
+.dropdown {
+    position: relative;
+}
+
 .dropdownToggle {
     display: inline-flex;
     height: 48px;
-    padding: 10px 20px;
+    padding: 10px 16px;
     align-items: center;
-    gap: 10px;
-    border-radius: 15px;
-    background: $yellow-200;
+    gap: 8px;
+    border-radius: 10px;
+    background: $white-200;
     border: none;
-    color: $white-200;
+    color: $green-dark-200;
     text-align: center;
     font-family: $open-sans;
     font-size: 16px;
-    font-weight: $font-weight-400;
+    font-weight: $font-weight-600;
     line-height: 130%;
     cursor: pointer;
 }
 
 .dropdownContent {
     display: flex;
-    width: 315px;
+    width: 250px;
     padding: 10px 0px 10px;
     flex-direction: column;
     justify-content: center;
-    border-radius: 20px;
-    border: 2px solid $yellow-200;
+    border-radius: 10px;
+    border: none;
     background: $white-200;
     margin-top: 10px;
     position: absolute;
+    right: 0px;
     z-index: 1;
+    box-shadow: -1px 1px 3px 0px rgba(82, 82, 82, 0.10), -4px 5px 6px 0px rgba(82, 82, 82, 0.09), -8px 11px 8px 0px rgba(82, 82, 82, 0.05), -15px 20px 10px 0px rgba(82, 82, 82, 0.01), -23px 32px 11px 0px rgba(82, 82, 82, 0.00);
 }
 
 .dropdownContentWrapp {

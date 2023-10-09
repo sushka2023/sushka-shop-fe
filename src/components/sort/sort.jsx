@@ -1,39 +1,42 @@
 import { useState } from "react";
-import Options from "../options/Options";
-import sortStyles from "./sort.module.scss";
+import styles from "./sort.module.scss";
 
 const Sort = () => {
-    const [sortValue, setSortValue] = useState("Сортування за замовчуванням");
+    const [sortValue, setSortValue] = useState("За замовчуванням");
 
     const clickInput = (e) => setSortValue(e.target.value);
 
   return (
-    <Options value={sortValue} >
-      <div className={sortStyles.inputWrapper}>
+    <>
+      <h3 className={styles.title}>Сортування</h3>
+      <div className={styles.inputWrapper}>
         <input
-          className={sortStyles.sortInput}
+          className={styles.radio}
           type="radio"
           id="default"
           name="sorting"
-          value="Сортування за замовчуванням"
+          value="За замовчуванням"
           onClick={clickInput}
+          defaultChecked
         />
-        <label htmlFor="default">Сортування за замовчуванням</label>
+        <label htmlFor="default">За замовчуванням</label>
       </div>
-      <div className={sortStyles.inputWrapper}>
+      <div className={styles.inputWrapper}>
         <input
-          className={sortStyles.sortInput}
+          className={styles.radio}
           type="radio"
           id="byGrowth"
           name="sorting"
           value="Ціна за зростанням"
           onClick={clickInput}
         />
-        <label htmlFor="byGrowth">Ціна за зростанням</label>
+        <label htmlFor="byGrowth" className={styles.label}>
+          Ціна за зростанням
+        </label>
       </div>
-      <div className={sortStyles.inputWrapper}>
+      <div className={styles.inputWrapper}>
         <input
-          className={sortStyles.sortInput}
+          className={styles.radio}
           type="radio"
           id="byDecline"
           name="sorting"
@@ -42,7 +45,7 @@ const Sort = () => {
         />
         <label htmlFor="byDecline">Ціна за спаданням</label>
       </div>
-    </Options>
+    </>
   );
 };
 

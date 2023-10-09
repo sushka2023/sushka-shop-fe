@@ -1,13 +1,5 @@
 @import '../../styles/base/base.scss';
 
-.itemWrapp {
-    padding: 10px 20px 10px 20px;
-
-    &:hover {
-        background-color: $light-200;
-    }
-}
-
 .applyBtnWrapper {
     display: flex;
     align-items: center;
@@ -16,22 +8,37 @@
 }
 
 .applyIcon {
-    height: 8px;
+    height: 14px;
     transform: rotate(270deg);
 }
 
 .applyDropdown {
-    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-radius: 10px;
     background: $green-dark-200;
     border: none;
     width: 200px;
     height: 44px;
     color: $white-200;
     font-family: $open-sans;
-    font-size: 13px;
-    font-weight: $font-weight-500;
-    line-height: 100%;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
     cursor: pointer;
+}
+
+.checkboxWrapp {
+    display: flex;
+    row-gap: 23px;
+    column-gap: 35px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding: 0px 20px 0px;
+    height: 160px;
+    flex-direction: column;
 }
 
 .checkbox {
@@ -52,7 +59,8 @@
     width: 24px;
     height: 24px;
     background-color: inherit;
-    border: 2px solid $green-dark-200;
+    border-radius: 5px;
+    border: 2px solid $green-dark-400;
     left: 0;
     top: -4px;
 }
@@ -80,9 +88,9 @@
 .label {
     color: $green-dark-200;
     font-family: $open-sans;
-    font-size: 13px;
-    font-weight: $font-weight-600;
-    line-height: 100%;
+    font-size: 16px;
+    font-weight: $font-weight-400;
+    line-height: 130%;
 }
 
 
