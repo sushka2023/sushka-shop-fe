@@ -43,7 +43,7 @@ const ItemCard = ({ item }) => {
             </span>
           </div>
         </div>
-        <button className={styles.cardButtom}>Додати в кошик</button>
+        <button className={styles.cardButtom}>Купити</button>
       </div>
     </li>
   );
