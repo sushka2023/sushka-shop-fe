@@ -8,8 +8,8 @@ import { Link as ScrollLink } from "react-scroll";
 import styles from "./CatalogPage.module.scss";
 import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
 import Filter from "../../components/Filter/filter";
-import Sort from "../../components/sort/sort";
 import { fetchItems } from "../../Redax/Products/operation/Operation";
+import CategoriesButtons from "../../components/Categories-button/Categories";
 
 const theme = createTheme({
   palette: {
@@ -60,7 +60,7 @@ const CatalogPage = () => {
       <div className={styles.catalogBorder}></div>
       <div className={styles.container}>
         <div className={styles.catalogOption}>
-          <h2 className={styles.catalogTitle}>Каталог</h2>
+          <CategoriesButtons />
           <div className={styles.optionsWrapper}>
             <Filter />
           </div>
