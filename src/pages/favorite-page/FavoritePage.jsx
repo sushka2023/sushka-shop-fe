@@ -16,13 +16,11 @@ const FavoritePage = () => {
           <h2 className={styles.title}>Улюблене</h2>
           <ul className={styles.list}>
             {favoriteItems.map((item, index) => (
-              <>
                 <ItemCard
-                  key={index}
                   item={item}
+                  key={index}
                   isFavorite={item.product.is_favorite}
                 />
-              </>
             ))}
             <li className={styles.addNewItem}>
               <Link className={styles.link} to="/catalog">

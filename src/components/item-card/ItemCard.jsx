@@ -9,7 +9,6 @@ import { toggleFavorite } from '../../Redax/Products/slices/items-slice';
 const ItemCard = ({ item, isFavorite }) => {
   
   const dispatch = useDispatch();
-  console.log(item);
 
   const handleClickFavorite = () => {
     dispatch(toggleFavorite(item));
@@ -47,7 +46,8 @@ const ItemCard = ({ item, isFavorite }) => {
 };
 
 ItemCard.propTypes = {
-    item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  isFavorite: PropTypes.bool.isRequired
 };
 
 export default ItemCard

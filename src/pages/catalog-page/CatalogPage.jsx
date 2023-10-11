@@ -37,13 +37,19 @@ const CatalogPage = () => {
   const allProducts = useSelector(selectAllItem);
   const dispatch = useDispatch();
 
+  const localData = localStorage.getItem("persist:root");
+  
   useEffect(() => {
-    dispatch(fetchItems({ params: 0, operationType: "fatch" }));
-  }, [dispatch]);
+
+    if (!localData) {
+      dispatch(fetchItems({ params: 0, operationType: "fatch" }));
+    }
+  }, [dispatch, localData]);
 
   const handleClickLoadMore = () => {
     setOffset(offset + 1);
     setCurrentPage(currentPage + 1);
+    
     dispatch(fetchItems({ params: offset + 1, operationType: "loadMore" }));
   };
 

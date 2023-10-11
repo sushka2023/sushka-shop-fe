@@ -35,15 +35,19 @@ export const itemsSlice = createSlice({
       state.operation = null;
       state.isLoading = false;
       state.error = null;
-      if (action.payload.operationType === "pagination") {
-        state.items = action.payload.data;
-      }
-      if (action.payload.operationType === "loadMore") {
-        state.items = [...state.items, ...action.payload.data];
-      }
 
-      if (action.payload.operationType === "fatch") {
-        state.items = action.payload.data;
+      switch (action.payload.operationType) {
+        case "pagination":
+          state.items = action.payload.data;
+          break;
+        case "loadMore":
+          state.items = [...state.items, ...action.payload.data];
+          break;
+        case "fatch":
+          state.items = action.payload.data;
+          break;
+        default:
+          break;
       }
     },
   },
