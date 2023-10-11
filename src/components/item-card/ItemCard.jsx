@@ -4,18 +4,15 @@ import { ReactComponent as IconFavoriteIsActive } from '../../icons/favoriteacti
 import ShopItem from "../../images/shop-item.jpg";
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
-import { addToFavorite } from "../../Redax/Products/slices/favoriteSlice";
-import { useState } from 'react';
+import { toggleFavorite } from '../../Redax/Products/slices/items-slice';
 
-const ItemCard = ({ item }) => {
-
-  const [isFavorite, setIsFavorite] = useState(false);
+const ItemCard = ({ item, isFavorite }) => {
   
   const dispatch = useDispatch();
+  console.log(item);
 
   const handleClickFavorite = () => {
-    setIsFavorite(!isFavorite);
-    dispatch(addToFavorite(item));
+    dispatch(toggleFavorite(item));
   }
 
   return (
@@ -24,7 +21,7 @@ const ItemCard = ({ item }) => {
         <div className={styles.cardContent}>
           <div className={styles.slideImage}>
             <img src={ShopItem} alt="mandarin pastille" />
-            {isFavorite ? (
+            {!isFavorite ? (
               <IconFavorite
                 className={styles.cardFavorite}
                 onClick={handleClickFavorite}

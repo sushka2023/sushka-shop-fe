@@ -1,12 +1,13 @@
 import { ReactComponent as IconAddNewItem } from "../../icons/add.svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectFavoriteItem } from "../../Redax/Products/selectors/Selectors";
+import { selectAllItem } from "../../Redax/Products/selectors/Selectors";
 import styles from "./favoritePage.module.scss";
 import ItemCard from "../../components/item-card/ItemCard";
 
 const FavoritePage = () => {
-  const favoriteItem = useSelector(selectFavoriteItem);
+  const allItem = useSelector(selectAllItem);
+  const favoriteItems = allItem.filter((item) => item.product.is_favorite);
 
     return (
       <section className={styles.favoriteBg}>
@@ -14,9 +15,13 @@ const FavoritePage = () => {
         <div className={styles.container}>
           <h2 className={styles.title}>Улюблене</h2>
           <ul className={styles.list}>
-            {favoriteItem.map((item, index) => (
+            {favoriteItems.map((item, index) => (
               <>
-                <ItemCard key={index} item={item} />
+                <ItemCard
+                  key={index}
+                  item={item}
+                  isFavorite={item.product.is_favorite}
+                />
               </>
             ))}
             <li className={styles.addNewItem}>

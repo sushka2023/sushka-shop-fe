@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchItems } from "../operation/Operation";
-import { addToFavorite } from "./favoriteSlice";
 
 const handleRejected = (state, action) => {
   state.operation = null;
@@ -8,29 +7,23 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
-const toggleItemInFavorite = (favorite, itemToAddOrRemove) => {
-  const existingIndex = favorite.findIndex(
-    (item) => item.product.id === itemToAddOrRemove.product.id
-  );
-
-  if (existingIndex === -1) {
-    return [...favorite, itemToAddOrRemove];
-  }
-
-  else {
-    return favorite.filter((item) => item.product.id !== itemToAddOrRemove.product.id);
-  }
-}
-
 export const itemsSlice = createSlice({
   name: "AllItems",
   initialState: {
     items: [],
-    favorite: [],
     isLoading: false,
     operation: null,
     error: null,
     operationType: null,
+  },
+  reducers: {
+    toggleFavorite: (state, action) => {
+      state.items.map((item) => {
+        if (item.product.id === action.payload.product.id) {
+          item.product.is_favorite = !action.payload.product.is_favorite;
+        }
+      })
+    },
   },
   extraReducers: {
     [fetchItems.pending](state, action) {
@@ -53,11 +46,8 @@ export const itemsSlice = createSlice({
         state.items = action.payload.data;
       }
     },
-    [addToFavorite](state, action) {
-      const updatedFavorite = toggleItemInFavorite(state.favorite, action.payload);
-      state.favorite = updatedFavorite;
-    },
   },
 });
 
+export const { toggleFavorite } = itemsSlice.actions;
 export default itemsSlice.reducer;

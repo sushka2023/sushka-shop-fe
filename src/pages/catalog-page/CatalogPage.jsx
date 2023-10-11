@@ -68,7 +68,7 @@ const CatalogPage = () => {
         <div>
           <ul className={styles.catalogList}>
             {allProducts.map((item, index) => (
-              <ItemCard item={item} key={index} />
+              <ItemCard item={item} key={index} isFavorite={item.product.is_favorite} />
             ))}
           </ul>
         </div>
