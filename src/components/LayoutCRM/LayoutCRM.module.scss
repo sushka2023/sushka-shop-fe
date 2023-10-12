@@ -1,0 +1,28 @@
+@import "../../styles/base/base.scss";
+
+.containerCrm {
+  display: flex;
+  justify-content: space-between;
+
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0px 40px;
+}
+
+.asideCrm {
+  box-sizing: border-box;
+  width: 250px;
+  padding: 40px 30px 40px 40px;
+}
+
+.containerHeader {
+  max-width: 1190px;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.containerContent {
+  background-color: $CRM-grey-of-base;
+}
