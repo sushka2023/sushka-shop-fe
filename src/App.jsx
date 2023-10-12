@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
@@ -77,6 +77,7 @@ function App() {
           path="settings"
           element={<div style={{ marginBottom: "500px" }}>Settings page</div>}
         />
+        <Route index element={<Navigate to="dashbord" replace />} />
       </Route>
     </Routes>
   );
