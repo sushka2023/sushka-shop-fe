@@ -195,6 +195,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .dropdownList {
     display: none;
     position: absolute;
+    z-index: 1;
     left: -10px;
     width: 200px;
     padding: 10px;

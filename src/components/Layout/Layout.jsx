@@ -9,7 +9,9 @@ const Layout = () => {
     <>
       <Header />
       <Suspense>
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
       </Suspense>
       <Footer />
     </>

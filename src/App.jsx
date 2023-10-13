@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
+import FavoritePage from "./pages/favorite-page/FavoritePage";
 import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
 
 function App() {
@@ -9,7 +10,10 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
-        <Route path="catalog" element={<CatalogPage />} />
+        <Route
+          path="catalog"
+          element={<CatalogPage />}
+        />
         <Route
           path="catalog/:params"
           element={<div style={{ marginBottom: "500px" }}>catalog params</div>}
@@ -24,7 +28,7 @@ function App() {
         />
         <Route
           path="favorite"
-          element={<div style={{ marginBottom: "500px" }}>Улюблене</div>}
+          element={<FavoritePage/>}
         />
         <Route
           path="account"

@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
+import { Link, useLocation } from "react-router-dom";
+import { Link as ScrollLink, scroller } from "react-scroll";
+import { useEffect } from "react";
 import styles from '../Header.module.scss'; 
 
 const HeaderNav = () => {
+
+  const location = useLocation();
+  const homePath = location.pathname === '/';
+
+    useEffect(() => {
+      if (homePath) {
+        scroller.scrollTo(location.hash.slice(1), {
+          smooth: true,
+          duration: 500,
+        });
+      }
+    }, [homePath, location]);
 
   return (
     <nav className={styles.navWrapper}>
@@ -41,24 +54,36 @@ const HeaderNav = () => {
           </ul>
         </li>
         <li className={styles.listNavLine}>
-          <ScrollLink
-            to="review"
-            smooth={true}
-            duration={500}
-            className={styles.listNavLink}
-          >
-            Відгуки
-          </ScrollLink>
+          {homePath ? (
+            <ScrollLink
+              to="review"
+              smooth={true}
+              duration={500}
+              className={styles.listNavLink}
+            >
+              Відгуки
+            </ScrollLink>
+          ) : (
+            <Link to="/#review" className={styles.listNavLink}>
+              Відгуки
+            </Link>
+          )}
         </li>
         <li className={styles.listNavLine}>
-          <ScrollLink
-            to="aboutUs"
-            className={styles.listNavLink}
-            smooth={true}
-            duration={500}
-          >
-            Про нас
-          </ScrollLink>
+          {homePath ? (
+            <ScrollLink
+              to="aboutUs"
+              className={styles.listNavLink}
+              smooth={true}
+              duration={500}
+            >
+              Про нас
+            </ScrollLink>
+          ) : (
+            <Link to="/#aboutUs" className={styles.listNavLink}>
+              Про нас
+            </Link>
+          )}
         </li>
         <li className={styles.listNavLine}>
           <Link to="cooperation" className={styles.listNavLink}>
