@@ -1,0 +1,69 @@
+@import "../../../styles/base/base.scss";
+
+.asideTitle {
+  color: $CRM-grey;
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: $font-weight-700;
+  line-height: 130%;
+
+  margin-bottom: 40px;
+}
+.asideList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navigationLink {
+  display: flex;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: $CRM-grey;
+
+  transition: background-color $transition-duration;
+
+  &:hover,
+  &:focus {
+    background-color: $CRM-accent;
+  }
+}
+
+.asideCategory {
+  color: $CRM-grey;
+  font-family: $open-sans;
+  font-size: 18px;
+
+  font-weight: $font-weight-600;
+  line-height: 100%;
+  transition: color $transition-duration;
+
+  .navigationLink:hover &,
+  .navigationLink:focus & {
+    color: $white-200;
+  }
+
+  .active & {
+    color: $white-200;
+  }
+}
+
+.navigationIcon {
+  fill: $CRM-grey;
+  transition: fill $transition-duration;
+
+  .navigationLink:hover &,
+  .navigationLink:focus & {
+    fill: $white-200;
+  }
+
+  .active & {
+    fill: $white-200;
+  }
+}
+
+.active {
+  background-color: $CRM-accent;
+  color: $white-200;
+}
