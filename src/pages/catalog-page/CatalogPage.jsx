@@ -36,15 +36,10 @@ const CatalogPage = () => {
 
   const allProducts = useSelector(selectAllItem);
   const dispatch = useDispatch();
-
-  const localData = localStorage.getItem("persist:root");
   
   useEffect(() => {
-
-    if (!localData) {
       dispatch(fetchItems({ params: 0, operationType: "fatch" }));
-    }
-  }, [dispatch, localData]);
+  }, [dispatch]);
 
   const handleClickLoadMore = () => {
     setOffset(offset + 1);

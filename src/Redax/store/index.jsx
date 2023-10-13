@@ -7,7 +7,7 @@ import { itemsSlice } from "../Products/slices/items-slice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["items"],
+  blacklist: ["items"],
 };
 
 const rootReducer = combineReducers({

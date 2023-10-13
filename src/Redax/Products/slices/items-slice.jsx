@@ -1,10 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchItems } from "../operation/Operation";
 
+const handlePending = (state, action) => {
+  state.isLoading = true;
+  state.operation = action.meta.arg.operationType;
+};
+
 const handleRejected = (state, action) => {
-  state.operation = null;
   state.isLoading = false;
+  state.operation = null;
   state.error = action.payload;
+};
+
+const handleFulfilled = (state, action) => {
+  state.isLoading = false;
+  state.operation = null;
+  state.error = null;
+
+  const { data } = action.payload;
+
+  switch (action.payload.operationType) {
+    case "pagination":
+      state.items = data;
+      break;
+    case "loadMore":
+      state.items = [...state.items, ...data];
+      break;
+    case "fatch":
+      state.items = data;
+      break;
+    default:
+      break;
+  }
 };
 
 export const itemsSlice = createSlice({
@@ -14,7 +41,6 @@ export const itemsSlice = createSlice({
     isLoading: false,
     operation: null,
     error: null,
-    operationType: null,
   },
   reducers: {
     toggleFavorite: (state, action) => {
@@ -22,34 +48,14 @@ export const itemsSlice = createSlice({
         if (item.product.id === action.payload.product.id) {
           item.product.is_favorite = !action.payload.product.is_favorite;
         }
-      })
+      });
     },
   },
-  extraReducers: {
-    [fetchItems.pending](state, action) {
-      state.isLoading = true;
-      state.operation = action.meta.arg.operationType;
-    },
-    [fetchItems.rejected]: handleRejected,
-    [fetchItems.fulfilled](state, action) {
-      state.operation = null;
-      state.isLoading = false;
-      state.error = null;
-
-      switch (action.payload.operationType) {
-        case "pagination":
-          state.items = action.payload.data;
-          break;
-        case "loadMore":
-          state.items = [...state.items, ...action.payload.data];
-          break;
-        case "fatch":
-          state.items = action.payload.data;
-          break;
-        default:
-          break;
-      }
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchItems.pending, handlePending)
+      .addCase(fetchItems.rejected, handleRejected)
+      .addCase(fetchItems.fulfilled, handleFulfilled)
   },
 });
 
