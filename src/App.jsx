@@ -1,13 +1,10 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
+import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
 
 function App() {
-
-   const location = useLocation();
-   const cameBack = location.state?.from ?? "/";
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -47,17 +44,41 @@ function App() {
         />
       </Route>
 
-      <Route
-        path="crm"
-        element={
-          <div style={{ marginBottom: "500px" }}>
-            <Link to={cameBack} style={{ border: "1px solid black" }}>
-              GO BACK
-            </Link>{" "}
-            crm
-          </div>
-        }
-      />
+      <Route path="crm" element={<LayoutCRM />}>
+        <Route
+          path="dashbord"
+          element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
+        />
+        <Route
+          path="orders"
+          element={<div style={{ marginBottom: "500px" }}>Order page</div>}
+        />
+        <Route
+          path="orders/:params"
+          element={<div style={{ marginBottom: "500px" }}>orders params</div>}
+        />
+        <Route
+          path="products"
+          element={<div style={{ marginBottom: "500px" }}>Products page</div>}
+        />
+        <Route
+          path="products/:params"
+          element={<div style={{ marginBottom: "500px" }}>products params</div>}
+        />
+        <Route
+          path="clients"
+          element={<div style={{ marginBottom: "500px" }}>Clients page</div>}
+        />
+        <Route
+          path="clients/:params"
+          element={<div style={{ marginBottom: "500px" }}>clients params</div>}
+        />
+        <Route
+          path="settings"
+          element={<div style={{ marginBottom: "500px" }}>Settings page</div>}
+        />
+        <Route index element={<Navigate to="dashbord" replace />} />
+      </Route>
     </Routes>
   );
 }

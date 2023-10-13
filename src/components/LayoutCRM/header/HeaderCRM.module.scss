@@ -1,0 +1,126 @@
+@import "../../../styles/base/base.scss";
+
+.header {
+  display: flex;
+  padding: 25px 40px 25px 30px;
+}
+
+.navWrapper {
+  display: flex;
+  margin-left: auto;
+  gap: 60px;
+}
+
+.navList {
+  display: flex;
+  gap: 20px;
+}
+
+.navItem {
+  position: relative;
+
+  &:last-child::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 100%;
+    background-color: $CRM-grey;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    bottom: 0;
+
+    margin-right: -40px;
+  }
+}
+
+.navLinkCrm {
+  width: 231px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid $CRM-accent;
+  border-radius: 20px;
+
+  transition: scale $transition-duration;
+
+  &.linkCrm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: $open-sans;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+    color: $CRM-accent;
+  }
+
+  &:hover {
+    scale: 1.1;
+  }
+}
+
+.navSettings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+
+  border: 1px solid transparent;
+  border-radius: 50%;
+
+  transition: scale $transition-duration, border-color $transition-duration;
+
+  &:hover {
+    border-color: $CRM-accent;
+    scale: 1.1;
+    animation: rotateOut 0.5s ease forwards;
+  }
+}
+
+.iconsNav {
+  fill: $CRM-accent;
+  width: 20px;
+  height: 20px;
+}
+
+.btnExit {
+  display: inline-flex;
+  align-items: center;
+  padding: 15px 30px;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background-color: $white-200;
+  cursor: pointer;
+
+  color: $CRM-accent;
+  font-family: $open-sans;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+
+  transition: scale $transition-duration, border-color $transition-duration;
+
+  &:hover {
+    border-color: $CRM-accent;
+    scale: 1.1;
+  }
+}
+
+.iconArrow {
+  fill: $CRM-accent;
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes rotateOut {
+  from {
+    transform: rotate(0);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+}
