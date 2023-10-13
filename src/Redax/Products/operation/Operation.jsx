@@ -17,13 +17,15 @@ export const fetchItems = createAsyncThunk(
   }
 );
 
-export const fetchAllCategories = async () => {
-  try {
-    const qwe = await axios
-      .get("api/product_category/all")
-      .then((categories) => categories.data);
-    return qwe;
-  } catch (e) {
-    console.log(e);
+export const fetchAllCategories = createAsyncThunk(
+  "api/allCategories",
+  async ({ operationType }, thunkAPI) => {
+    try {
+      const response = await axios.get("api/product_category/all");
+      return { data: response.data, operationType };
+    }
+    catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
   }
-};
+);

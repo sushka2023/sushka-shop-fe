@@ -1,26 +1,17 @@
 import { useEffect, useState } from 'react';
-import { fetchAllCategories } from '../../Redax/Products/operation/Operation';
+import { useSelector } from 'react-redux';
+import { selectAllCategories } from '../../Redax/Products/selectors/Selectors';
 import styles from './Categories.module.scss';
 
 
 const CategoriesButtons = () => {
-    const [allCategories, setAllCategories] = useState(null);
     const [activeButton, setActiveButton] = useState(null);
+    const allCategories = useSelector(selectAllCategories);
 
     useEffect(() => {
-        fetchAllCategories()
-            .then((categories) => {
-                setAllCategories(categories)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, [])
-
-    useEffect(() => {
-        if (allCategories && allCategories.length > 0) {
-            setActiveButton(allCategories[0].name);
-        }
+      if (allCategories && allCategories.length > 0) {
+        setActiveButton(allCategories[0].name);
+      }
     }, [allCategories]);
 
     const handleClickButton = (e) => {

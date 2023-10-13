@@ -10,14 +10,9 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
-        <Route
-          path="catalog"
-          element={<CatalogPage />}
-        />
-        <Route
-          path="catalog/:params"
-          element={<div style={{ marginBottom: "500px" }}>catalog params</div>}
-        />
+        <Route path="catalog">
+          <Route path=":params/:page" element={<CatalogPage />} />
+        </Route>
         <Route
           path="cooperation"
           element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
@@ -26,10 +21,7 @@ function App() {
           path="account"
           element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
         />
-        <Route
-          path="favorite"
-          element={<FavoritePage/>}
-        />
+        <Route path="favorite" element={<FavoritePage />} />
         <Route
           path="account"
           element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
