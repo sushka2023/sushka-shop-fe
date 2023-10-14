@@ -1,10 +1,8 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom'; 
 import styles from './Registration.module.scss';
 import RegForm from './components/RegForm';
 import { fetchRegistration } from '../../store/slices/reg-slice';
 import { useSelector, useDispatch } from 'react-redux';
-import Modal from '../../components/Modal/Modal';
 
 
 const Registration = ({ onLogin }) => {

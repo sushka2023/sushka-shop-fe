@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import styles from './Modal.module.scss'
 import classnames from 'classnames'
 import Portal from "../Portal/Portal";

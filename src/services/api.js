@@ -25,7 +25,7 @@ class ApplicationApi {
         this.api.interceptors.response.use(function (response) {
             return response;
           }, function (error) {
-            if (error.response.status === 401) {
+            if (error.response.status === 401 && !window.location.pathname.includes('confirmed_email')) {
                 localStorage.setItem('userToken', '') 
                 window.location.href = '/'
             }
@@ -40,6 +40,12 @@ class ApplicationApi {
 
     async login(data) {
         const response = await this.api.post('/api/auth/login', data);
+        return response.data;
+    }
+
+    async confirmedEmail(data) {
+        console.log(data)
+        const response = await this.api.get(data);
         return response.data;
     }
 }

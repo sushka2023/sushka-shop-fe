@@ -1,7 +1,8 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import MainPage from "./pages/main-page/MainPage";
-import CatalogPage from "./pages/catalog-page/CatalogPage";
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import MainPage from './pages/main-page/MainPage';
+import CatalogPage from './pages/catalog-page/CatalogPage';
+import ConfirmedRegistration from './containers/ConfirmedRegistration/ConfirmedRegistration';
 
 function App() {
    const location = useLocation();
@@ -44,12 +45,11 @@ function App() {
           path="policy"
           element={<div style={{ marginBottom: "500px" }}>policy</div>}
         />
-      </Route>
-      <Route
+        <Route
           path="/api/auth/confirmed_email/:token"
-          element={<div style={{ marginBottom: "500px" }}>policy</div>}
+          element={<ConfirmedRegistration />}
         />
-
+      </Route>
       <Route
         path="crm"
         element={

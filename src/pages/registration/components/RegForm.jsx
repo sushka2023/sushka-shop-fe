@@ -3,27 +3,40 @@ import { Formik, Field, Form } from 'formik';
 import styles from './RegForm.module.scss';
 import * as Yup from 'yup';
 
-// function validateEmail(value) {
-//     let error;
-//     if (!value) {
-//       error = 'Введіть email';
-//     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-//       error = 'Email невірний';
-//     }
-//     return error;
-// }
+// const DisplayingErrorMessagesSchema = Yup.object().shape({
+//     firstLastName: Yup.string()
+//         .min(8, 'Мінімальна кількість символів: 8')
+//         .max(30, 'Мінімальна кількість символів: 30')
+//         .required("Введіть ім'я та прізвище"),
+//     email: Yup.string().email('Некоректний email').required('Введіть email'),
+//     password: Yup.string()
+//         .min(8, 'Мінімальна кількість символів: 8')
+//         .max(30, 'Мінімальна кількість символів: 30')
+//         .required("Введіть пароль"),
+//   });
 
-const DisplayingErrorMessagesSchema = Yup.object().shape({
-    firstLastName: Yup.string()
-        .min(8, 'Мінімальна кількість символів: 8')
-        .max(30, 'Мінімальна кількість символів: 30')
-        .required("Введіть ім'я та прізвище"),
-    email: Yup.string().email('Некоректний email').required('Введіть email'),
-    password: Yup.string()
-        .min(8, 'Мінімальна кількість символів: 8')
-        .max(30, 'Мінімальна кількість символів: 30')
-        .required("Введіть пароль"),
-  });
+const SignupSchema = Yup.object().shape({
+  firstLastName: Yup.string()
+    .min(3, 'Мінімальна кількість символів: 3')
+    .max(50, 'Максимальна кількість символів: 50')
+    .required("Введіть ім'я та прізвище")
+    .matches(/[\wА-яа-я]{3,}\s[\wА-яа-я]{3,}/, "Має містити Ім'я та Прізвище з мінімальною кількістю символів: 3"),
+  email: Yup.string()
+    .email()
+    .required('Введіть email'),
+  password: Yup.string()
+    .min(8, 'Мінімальна кількість символів: 8')
+    .max(30, 'Мінімальна кількість символів: 30')
+    .required("Введіть пароль")
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s)./,
+      'Має містити принаймні одну малу, велику літеру, цифру та символи'
+    ),
+    passwordRepeat: Yup.string()
+    .test('passwords-match', 'Паролі не співпадають', function(value){
+      return this.parent.password === value
+    })
+});
 
 function validatePasswordRepeat(value) {
    let error;
@@ -44,7 +57,7 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
         passwordRepeat: '',
 
       }}
-    //   validationSchema={DisplayingErrorMessagesSchema}
+      validationSchema={SignupSchema}
       onSubmit={onSubmit}
     >
       {({ errors, touched, isValidating }) => (
@@ -56,7 +69,7 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
                 name="firstLastName" 
                 placeholder="Ім’я та прізвище" 
             />
-            {touched.username && errors.firstLastName && <div>{errors.firstLastName}</div>}
+            {touched.firstLastName && errors.firstLastName ? (<div className={styles.formFirstLastName}>{errors.firstLastName}</div>) : null}
 
             <label htmlFor="email"></label>
             <Field
@@ -66,7 +79,7 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
             placeholder="Електронна пошта"
             type="email"
             />
-            {touched.email && errors.firstLastName && <div>{errors.email}</div>}
+            {touched.email && errors.email && <div className={styles.formEmail}>{errors.email}</div>}
 
             <label htmlFor="password"></label>
             <Field 
@@ -76,7 +89,7 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
                 placeholder="Пароль" 
                 type="password"
             />
-            {touched.password && errors.password && <div>{errors.password}</div>}
+            {touched.password && errors.password && <div className={styles.formPassword}>{errors.password}</div>}
 
             <label htmlFor="passwordRepeat"></label>
             <Field 
@@ -87,8 +100,8 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
                 type="password"
                 validate={validatePasswordRepeat}
             />
-            {touched.passwordRepeat && errors.passwordRepeat && <div>{errors.passwordRepeat}</div>}
-            {submitError && 'Неправильно введені данні'}
+            {touched.passwordRepeat && errors.passwordRepeat && <div className={styles.formPasswordRepeat}>{errors.passwordRepeat}</div>}
+            {/* {submitError && <div className={styles.formSubmitError}>'Невірно введені данні'</div>} */}
             <button disabled={submitLoading} type="submit" className={styles.btn}>{submitLoading ? 'Loading...' : 'ЗАРЕЄСТРУВАТИСЬ'}</button>
         </Form>
     )}

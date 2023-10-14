@@ -25,6 +25,26 @@
             opacity: 0.6; /* Firefox */
         }
     }
+
+    &FirstLastName, 
+    &Email, 
+    &Password,
+    &PasswordRepeat {
+        width: 400px;
+        color: $red;
+        font-family: $open-sans;
+        font-size: 16px;
+        margin: -20px 0 20px 0;
+    }
+
+    &SubmitError {
+        width: 400px;
+        color: $red;
+        font-family: $open-sans;
+        font-size: 16px;
+        text-align: center;
+    }
+    
 }
 
 .btn {

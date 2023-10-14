@@ -2,13 +2,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import applicationApi from '../../services/api';
 
 export const fetchRegistration = createAsyncThunk('reg/fetchRegistration', async (values, { rejectWithValue }) => {
-    console.log('alibaba')
     try {
         console.log(values)
         return await applicationApi.registration(values)
     } catch(error) {
         return rejectWithValue(error.response.data)
     }
+})
+
+export const fetchConfirmEmail = createAsyncThunk('reg/fetchConfirmEmail', async (values, { rejectWithValue }) => {
+  try {
+      console.log(values)
+      return await applicationApi.confirmedEmail(values)
+  } catch(error) {
+      return rejectWithValue(error.response.data)
+  }
 })
 
 export const regReducer = createSlice({
@@ -18,6 +26,7 @@ export const regReducer = createSlice({
       isLoading: false,
       error: '',
       isRegistered: false,
+      isConfirmed: false,
     },
     extraReducers: builder => {
       builder
@@ -31,7 +40,15 @@ export const regReducer = createSlice({
         })
         .addCase(fetchRegistration.rejected, (state, action) => {
           state.isLoading = false;
-          console.log(action)
+          if (action.error) {
+            state.error = action.error
+          }
+        })
+        .addCase(fetchConfirmEmail.fulfilled, (state, action) => {
+          state.isConfirmed = true;
+        })
+        .addCase(fetchConfirmEmail.rejected, (state, action) => {
+          state.isConfirmed = false;
           if (action.error) {
             state.error = action.error
           }

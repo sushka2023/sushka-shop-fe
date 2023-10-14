@@ -16,7 +16,7 @@ function validateEmail(value) {
     if (!value) {
       error = 'Введіть email';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = 'Email невірний';
+      error = 'Email невірний';z
     }
     return error;
 }
@@ -31,7 +31,7 @@ function validatePassword(value) {
     return error;
 }
 
-const LogForm = ({ onLog }) => (
+const LogForm = ({ onLog, onSubmit, submitLoading }) => (
     // const [login, setLogin] = useState('');
     // const [password, setPassword] = useState('');
 
