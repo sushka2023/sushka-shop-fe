@@ -1,4 +1,7 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectAllCategories } from "./Redax/Products/selectors/Selectors";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
@@ -6,6 +9,16 @@ import FavoritePage from "./pages/favorite-page/FavoritePage";
 import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
 
 function App() {
+  const navigate = useNavigate();
+  const allCategories = useSelector(selectAllCategories);
+
+    useEffect(() => {
+      const currentPath = window.location.pathname;
+      if (currentPath === "/catalog") {
+        navigate(`/catalog/${allCategories[0].name}/0`);
+      }
+    }, [allCategories, navigate]);
+  
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

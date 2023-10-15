@@ -1,0 +1,37 @@
+@import '../../../styles/base/base.scss';
+
+.breadBlock {
+    @include page-container;
+    margin-top: 50px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+};
+
+.IconArrow {
+    height: 12px;
+    fill: $green-dark-200;
+}
+
+.breadLine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: $green-dark-400;
+    font-family: $open-sans;
+    font-size: 14px;
+    font-weight: $font-weight-600;
+
+    &:hover {
+        color: $green-dark-200;
+    }
+}
+
+.currentPath {
+    color: $green-dark-200;
+}
+
+.breadList {
+    display: flex;
+    gap: 4px;
+};
