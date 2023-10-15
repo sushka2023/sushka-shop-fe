@@ -7,7 +7,8 @@ const getUkrainianName = (name) => {
     catalog: "Каталог",
     favorite: "Улюблене",
     cart: "Кошик",
-    conditions: "Співпраця",
+    cooperation: "Співпраця",
+    conditions: "Умови та Положення",
     policy: "Політика конфіденційності",
     account: "Особистий кабінет",
   };
