@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./header/index";
-import CustomSeparator from "./breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "./breadcrumbs/Breadcrumbs";
 import Footer from "./footer/index";
 
 const Layout = () => {
@@ -13,7 +13,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      {!homePath && <CustomSeparator />}
+      {!homePath && <Breadcrumbs />}
       <Suspense>
         <main>
           <Outlet />
