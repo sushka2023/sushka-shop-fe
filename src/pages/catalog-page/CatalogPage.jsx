@@ -5,6 +5,7 @@ import ItemCard from "../../components/item-card/ItemCard";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as ScrollLink } from "react-scroll";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./CatalogPage.module.scss";
 import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
 import Filter from "../../components/Filter/filter";
@@ -31,29 +32,30 @@ const paginationStyles = {
 };
 
 const CatalogPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [offset, setOffset] = useState(0);
+  const { params, page } = useParams();
+  const [offset, setOffset] = useState(parseInt(page));
+  const [operationType, setOperationType] = useState("fatch");
 
   const allProducts = useSelector(selectAllItem);
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
-      dispatch(fetchItems({ params: 0, operationType: "fatch" }));
-  }, [dispatch]);
+    dispatch(fetchItems({ params: offset, operationType: operationType }));
+  }, [dispatch, offset, operationType]);
 
   const handleClickLoadMore = () => {
-    setOffset(offset + 1);
-    setCurrentPage(currentPage + 1);
-    
-    dispatch(fetchItems({ params: offset + 1, operationType: "loadMore" }));
+    setOperationType("loadMore");
+    const newOffset = offset + 1;
+    setOffset(newOffset === 1 ? newOffset + 1 : newOffset)
+    navigate(`/catalog/${params}/${parseInt(page) + 1}`);
   };
 
   const handleClickPagination = (e) => {
-    setOffset(parseInt(e.target.textContent));
-    setCurrentPage(parseInt(e.target.textContent));
-    dispatch(
-      fetchItems({ params: e.target.textContent, operationType: "pagination" })
-    );
+    setOperationType("fatch");
+    const newPage = parseInt(e.target.textContent);
+    setOffset(newPage === 1 ? 0 : newPage);
+    navigate(`/catalog/${params}/${newPage - 1}`);
   };
 
   return (
@@ -69,12 +71,16 @@ const CatalogPage = () => {
         <div>
           <ul className={styles.catalogList}>
             {allProducts.map((item, index) => (
-              <ItemCard item={item} key={index} isFavorite={item.product.is_favorite} />
+              <ItemCard
+                item={item}
+                key={index}
+                isFavorite={item.product.is_favorite}
+              />
             ))}
           </ul>
         </div>
         <div className={styles.btnWrapper}>
-          {currentPage < 3 && (
+          {offset < 3 && (
             <button
               type="button"
               className={styles.loadMore}
@@ -96,7 +102,7 @@ const CatalogPage = () => {
                 hideNextButton
                 sx={paginationStyles}
                 onClick={handleClickPagination}
-                page={currentPage}
+                page={offset === 0 ? 1 : offset}
               />
             </ScrollLink>
           </ThemeProvider>
