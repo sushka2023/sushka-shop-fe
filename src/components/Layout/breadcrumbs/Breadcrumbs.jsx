@@ -10,6 +10,7 @@ import styles from "./breadcrumbs.module.scss";
 const getUkrainianName = (name) => {
   const ukrainianNames = {
     catalog: "Каталог",
+    review: "Відгуки",
     favorite: "Улюблене",
     cart: "Кошик",
     cooperation: "Співпраця",

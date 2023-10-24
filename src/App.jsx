@@ -31,6 +31,10 @@ function App() {
           />
         </Route>
         <Route
+          path="review"
+          element={<div style={{ marginBottom: "500px" }}>Відгуки</div>}
+        />
+        <Route
           path="cooperation"
           element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
         />
