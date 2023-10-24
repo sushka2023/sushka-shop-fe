@@ -49,20 +49,9 @@ const HeaderNav = () => {
           </ul>
         </li>
         <li className={styles.listNavLine}>
-          {homePath ? (
-            <ScrollLink
-              to="review"
-              smooth={true}
-              duration={500}
-              className={styles.listNavLink}
-            >
-              Відгуки
-            </ScrollLink>
-          ) : (
-            <Link to="/#review" className={styles.listNavLink}>
+            <Link to={'/review'} className={styles.listNavLink}>
               Відгуки
             </Link>
-          )}
         </li>
         <li className={styles.listNavLine}>
           {homePath ? (
