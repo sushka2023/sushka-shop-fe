@@ -48,10 +48,10 @@
     line-height: normal;
     text-transform: uppercase;
     cursor: pointer;
-};
 
-.listNavLink:hover {
-    color: $yellow-200;
+    &:hover {
+        color: $yellow-200;
+    }
 };
 
 .listNavLink:active {
@@ -220,6 +220,7 @@ input[type="search"]::-webkit-search-cancel-button {
     padding: 0px 10px;
     display: flex;
     align-items: center;
+    color: $green-dark-200;
     &:hover {
         cursor: pointer;
         border-radius: 10px;
