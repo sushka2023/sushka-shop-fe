@@ -15,7 +15,7 @@ function App() {
     useEffect(() => {
       const currentPath = window.location.pathname;
       if (currentPath === "/catalog") {
-        navigate(`/catalog/${allCategories[0].name}/0`);
+        navigate(`catalog/${allCategories[0].name}/0`);
       }
     }, [allCategories, navigate]);
   
@@ -24,7 +24,11 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
         <Route path="catalog">
-          <Route path=":params/:page" element={<CatalogPage />} />
+          <Route path=":category/:page" element={<CatalogPage />} />
+          <Route
+            path=":category/:productId/details"
+            element={<div style={{ marginBottom: "500px" }}>product page</div>}
+          />
         </Route>
         <Route
           path="cooperation"
