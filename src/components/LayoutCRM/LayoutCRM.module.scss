@@ -3,10 +3,6 @@
 .containerCrm {
   display: flex;
   justify-content: space-between;
-
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0px 40px;
 }
 
 .asideCrm {
@@ -16,8 +12,6 @@
 }
 
 .containerHeader {
-  max-width: 1190px;
-
   display: flex;
   flex-direction: column;
   flex-grow: 1;
