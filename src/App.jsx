@@ -7,18 +7,20 @@ import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
 import FavoritePage from "./pages/favorite-page/FavoritePage";
 import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
+import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
+import ProductPage from "./pages/product-page/ProductPage";
 
 function App() {
   const navigate = useNavigate();
   const allCategories = useSelector(selectAllCategories);
 
-    useEffect(() => {
-      const currentPath = window.location.pathname;
-      if (currentPath === "/catalog") {
-        navigate(`catalog/${allCategories[0].name}/0`);
-      }
-    }, [allCategories, navigate]);
-  
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath === "/catalog") {
+      navigate(`catalog/${allCategories[0].name}/0`);
+    }
+  }, [allCategories, navigate]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -27,7 +29,7 @@ function App() {
           <Route path=":category/:page" element={<CatalogPage />} />
           <Route
             path=":category/:productId/details"
-            element={<div style={{ marginBottom: "500px" }}>product page</div>}
+            element={<ProductPage />}
           />
         </Route>
         <Route
@@ -91,9 +93,10 @@ function App() {
           element={<div style={{ marginBottom: "500px" }}>clients params</div>}
         />
         <Route
-          path="settings"
-          element={<div style={{ marginBottom: "500px" }}>Settings page</div>}
+          path="opinions"
+          element={<div style={{ marginBottom: "500px" }}>Opinions Page</div>}
         />
+        <Route path="settings" element={<CrmSettingsPage />} />
         <Route index element={<Navigate to="dashbord" replace />} />
       </Route>
     </Routes>
