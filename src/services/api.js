@@ -10,8 +10,10 @@ class ApplicationApi {
         });
 
         this.api.interceptors.request.use(config => {
-            const token = localStorage.getItem('userToken') || '';
-            config.headers.Authorization = token;
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                config.headers['WWW-Authenticate'] = `Bearer ${token}` ;
+            }
 
             // if(config.method === 'post') {
             //     delete config.headers['Content-Type'];
@@ -26,7 +28,7 @@ class ApplicationApi {
             return response;
           }, function (error) {
             if (error.response.status === 401 && !window.location.pathname.includes('confirmed_email')) {
-                localStorage.setItem('userToken', '') 
+                localStorage.setItem('access_token', '') 
                 window.location.href = '/'
             }
             return Promise.reject(error);
@@ -44,8 +46,12 @@ class ApplicationApi {
     }
 
     async confirmedEmail(data) {
-        console.log(data)
         const response = await this.api.get(data);
+        return response.data;
+    }
+
+    async getCurrentUser()  {
+        const response = await this.api.get('/api/users/me/');
         return response.data;
     }
 }

@@ -17,13 +17,23 @@
         font-weight: $font-weight-300;
         color: #9aab8e;
         background-color: #F4F4F4;
-        border: none;
+        border: 1px solid transparent;
         border-radius: 10px;
-
+    
         ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: green;
             opacity: 0.6; /* Firefox */
         }
+
+        &.error {
+            border-color: $red;
+            input::-webkit-input-placeholder {
+                color: red !important;
+            }
+            
+        }
+
+        
     }
 
     &Error {
@@ -31,6 +41,9 @@
         font-size: 16px;
         font-weight: $font-weight-400;
         color: $red;
+        margin-bottom: 20px;
+
+        
     }
 
     &Options {

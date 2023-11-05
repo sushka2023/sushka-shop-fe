@@ -1,39 +1,29 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import styles from './LogForm.module.scss';
-import { useState } from 'react';
 import * as Yup from 'yup';
+import classNames from 'classnames';
 
-// const SignInSchema = Yup.object().shape({
-//     email: Yup.string().email('Email невірний').required('Введіть email'),
-//     password: Yup.string()
-//       .required('Введіть пароль'),
-    
-// });
 
-function validateEmail(value) {
-    let error;
-    if (!value) {
-      error = 'Введіть email';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = 'Email невірний';z
-    }
-    return error;
-}
-
-function validatePassword(value) {
-    let error;
-    if (!value) {
-      error = 'Введіть пароль';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = 'Пароль невірний';
-    }
-    return error;
-}
+const SigninSchema = Yup.object().shape({
+  email: Yup.string()
+    .email()
+    .required('Введіть email')
+    .matches(
+      /[a-zA-Z0-9_.+-]{5,}@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+      'Maє містити мінімум 4 символи перед @'
+    ),
+  password: Yup.string()
+    .min(8, 'Мінімальна кількість символів: 8')
+    .max(30, 'Мінімальна кількість символів: 30')
+    .required("Введіть пароль")
+    .matches(
+      /(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$/,
+      'Має містити '
+    ),
+});
 
 const LogForm = ({ onLog, onSubmit, submitLoading }) => (
-    // const [login, setLogin] = useState('');
-    // const [password, setPassword] = useState('');
 
   <div>
     <Formik
@@ -43,48 +33,48 @@ const LogForm = ({ onLog, onSubmit, submitLoading }) => (
         toggle: 'Запам’ятати пароль',
         checked: [],
       }}
+      validationSchema={SigninSchema}
       onSubmit={onLog}
     >
-        {({ errors, touched, validateField, validateForm }) => (
+        {({ errors, touched,  validateField, validateForm }) => (
             <Form className={styles.form}>
                 {/* Email field */}
                 <label htmlFor="email"></label>
                 <Field
-                className={styles.formField}
+                className={classNames(styles.formField, {[styles.error]: errors.email || errors.password})}
                 id="email"
                 name="email"
                 placeholder="Електронна пошта"
                 type="email"
-                validate={validateEmail}
                 />
-                {errors.email && touched.email && <div className={styles.formError}>{errors.email}</div>}
 
                 {/* Password field */}
                 <label htmlFor="password"></label>
                 <Field 
-                    className={styles.formField}
+                    className={classNames(styles.formField, {[styles.error]: errors.email || errors.password})}
                     id="password" 
                     name="password" 
                     placeholder="Пароль" 
                     type="password"
-                    // validate={validatePassword}
                 />
-                {errors.password && touched.email && <div className={styles.formError}>{errors.password}</div>}
+                {(errors.password || errors.email) && touched.email && <div className={styles.formError}>Невірно вказаний пароль або e-mail</div>}
 
                <div className={styles.formOptions}>
-                    <label className={styles.formOptionsCheckbox}>
-                        <Field  type="checkbox" name="checked" value="Запам’ятати пароль"/>
-                        Запам’ятати пароль
-                    </label>
-                    <p className={styles.formOptionsQuestion}>Забули пароль?</p>
+                    <>
+                      <label className={styles.formOptionsCheckbox}>
+                          <Field  type="checkbox" name="checked" value="Запам’ятати пароль"/>
+                          Запам’ятати пароль
+                      </label>
+                      <p className={styles.formOptionsQuestion}>Забули пароль?</p>
+                    </>
                </div>
 
                 <button 
                     type="submit" 
+                    disabled={submitLoading} 
                     className={styles.btn}
-                    onClick={() => validateForm().then(() => console.log('valid'))}
                 >
-                    УВІЙТИ
+                    {submitLoading ? 'Loading...' : 'УВІЙТИ'}
                 </button>
             </Form>
         )}

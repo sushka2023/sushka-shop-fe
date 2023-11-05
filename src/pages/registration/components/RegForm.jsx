@@ -3,18 +3,6 @@ import { Formik, Field, Form } from 'formik';
 import styles from './RegForm.module.scss';
 import * as Yup from 'yup';
 
-// const DisplayingErrorMessagesSchema = Yup.object().shape({
-//     firstLastName: Yup.string()
-//         .min(8, 'Мінімальна кількість символів: 8')
-//         .max(30, 'Мінімальна кількість символів: 30')
-//         .required("Введіть ім'я та прізвище"),
-//     email: Yup.string().email('Некоректний email').required('Введіть email'),
-//     password: Yup.string()
-//         .min(8, 'Мінімальна кількість символів: 8')
-//         .max(30, 'Мінімальна кількість символів: 30')
-//         .required("Введіть пароль"),
-//   });
-
 const SignupSchema = Yup.object().shape({
   firstLastName: Yup.string()
     .min(3, 'Мінімальна кількість символів: 3')
@@ -45,7 +33,6 @@ function validatePasswordRepeat(value) {
    }
    return error;
 }
-
 
 const RegForm = ({ onSubmit, submitLoading, submitError}) => (
   <div>
@@ -102,7 +89,13 @@ const RegForm = ({ onSubmit, submitLoading, submitError}) => (
             />
             {touched.passwordRepeat && errors.passwordRepeat && <div className={styles.formPasswordRepeat}>{errors.passwordRepeat}</div>}
             {/* {submitError && <div className={styles.formSubmitError}>'Невірно введені данні'</div>} */}
-            <button disabled={submitLoading} type="submit" className={styles.btn}>{submitLoading ? 'Loading...' : 'ЗАРЕЄСТРУВАТИСЬ'}</button>
+            <button 
+              disabled={submitLoading} 
+              type="submit" 
+              className={styles.btn}
+            >
+              {submitLoading ? 'Loading...' : 'ЗАРЕЄСТРУВАТИСЬ'}
+            </button>
         </Form>
     )}
     </Formik>

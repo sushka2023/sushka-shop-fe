@@ -3,6 +3,7 @@ import Layout from './components/Layout/Layout';
 import MainPage from './pages/main-page/MainPage';
 import CatalogPage from './pages/catalog-page/CatalogPage';
 import ConfirmedRegistration from './containers/ConfirmedRegistration/ConfirmedRegistration';
+import ProtectedRoute from './router/ProtectedRouter';
 
 function App() {
    const location = useLocation();
@@ -22,16 +23,16 @@ function App() {
           element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
         />
         <Route
-          path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
-        />
-        <Route
           path="favorite"
           element={<div style={{ marginBottom: "500px" }}>Улюблене</div>}
         />
         <Route
           path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+          element={
+            <ProtectedRoute>
+              <div style={{ marginBottom: "500px" }}>Акаунт</div>
+            </ProtectedRoute>
+          }
         />
         <Route
           path="cart"
