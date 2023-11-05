@@ -29,10 +29,12 @@ const Breadcrumbs = () => {
   const allProducts = useSelector(selectAllItem);
 
   const getCategoryName = (id) => {
-    const category = allCategories.find(
-      (category) => category.id === parseInt(id, 10)
-    );
-    return category ? category.name : id;
+    if (allCategories) {
+          const category = allCategories.find(
+            (category) => category.id === parseInt(id, 10)
+          );
+          return category ? category.name : id;
+    }
   };
 
   const getProductName = (id) => {

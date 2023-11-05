@@ -3,7 +3,7 @@ import styles from './crmStatus.module.scss';
 
 const CrmStatus = ({ onStatusChange, currentStatus }) => {
     
-    const [selectedStatus, setSelectedStatus] = useState(currentStatus);
+  const [selectedStatus, setSelectedStatus] = useState(currentStatus);
 
     const handleLocalStatusChange = (e) => {
       setSelectedStatus(e.target.labels[0].innerText);
