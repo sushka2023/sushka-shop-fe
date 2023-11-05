@@ -33,7 +33,7 @@ const LogForm = ({ onLog, onSubmit, submitLoading }) => (
         toggle: 'Запам’ятати пароль',
         checked: [],
       }}
-      validationSchema={SigninSchema}
+      // validationSchema={SigninSchema}
       onSubmit={onLog}
     >
         {({ errors, touched,  validateField, validateForm }) => (

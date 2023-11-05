@@ -12,7 +12,7 @@ class ApplicationApi {
         this.api.interceptors.request.use(config => {
             const token = localStorage.getItem('access_token');
             if (token) {
-                config.headers['WWW-Authenticate'] = `Bearer ${token}` ;
+                config.headers.Authorization = `Bearer ${token}` ;
             }
 
             // if(config.method === 'post') {
