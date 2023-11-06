@@ -32,7 +32,7 @@ const HeaderNav = () => {
       <ul className={styles.listNav}>
         <li className={`${styles.listNavLine} ${styles.dropdown}`}>
           <Link
-            to={`catalog/${allCategories && allCategories[0].name}/0`}
+            to={`catalog/${allCategories && allCategories[0].id}/0`}
             className={styles.listNavLink}
           >
             Каталог

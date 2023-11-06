@@ -50,8 +50,8 @@ export const itemsSlice = createSlice({
   reducers: {
     toggleFavorite: (state, action) => {
       state.items.map((item) => {
-        if (item.product.id === action.payload.product.id) {
-          item.product.is_favorite = !action.payload.product.is_favorite;
+        if (item.id === action.payload.id) {
+          item.is_favorite = !action.payload.is_favorite;
         }
       });
     },

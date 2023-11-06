@@ -74,7 +74,7 @@ const CatalogPage = () => {
               <ItemCard
                 item={item}
                 key={index}
-                isFavorite={item.product.is_favorite}
+                isFavorite={item.is_favorite}
               />
             ))}
           </ul>
