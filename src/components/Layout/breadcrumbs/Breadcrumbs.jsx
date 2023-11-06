@@ -38,10 +38,12 @@ const Breadcrumbs = () => {
   };
 
   const getProductName = (id) => {
-    const product = allProducts.find(
-      (product) => product.product.id === parseInt(id, 10)
-    );
-    return product ? product.product.name : id;
+    if (allProducts) {
+      const product = allProducts.find(
+        (product) => product.id === parseInt(id, 10)
+      );
+      return product ? product.name : id;
+    }
   };
 
   const replaceIdsWithNames = (pathArray) => {

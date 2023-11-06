@@ -31,7 +31,7 @@ const ItemCard = ({ item, isFavorite }) => {
       <div className={styles.slideElement}>
         <div className={styles.cardContent}>
           <Link
-            to={`/catalog/${item.product.product_category_id}/${item.product.id}/details`}
+            to={`/catalog/${item.product_category_id}/${item.id}/details`}
           >
             <div className={styles.slideImage}>
               <img src={ShopItem} alt="mandarin pastille" />
@@ -48,8 +48,8 @@ const ItemCard = ({ item, isFavorite }) => {
               )}
             </div>
             <div className={styles.cardTitle}>
-              <h3 className={styles.cardHeader}>{item.product.name}</h3>
-              <p className={styles.cardPararaph}>{item.product.description}</p>
+              <h3 className={styles.cardHeader}>{item.name}</h3>
+              <p className={styles.cardPararaph}>{item.description}</p>
               <ul className={styles.listWeight}>
                 {item.prices.map((price) => (
                   <li className={styles.weightElement} key={price.id}>

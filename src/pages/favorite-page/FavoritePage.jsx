@@ -7,7 +7,7 @@ import ItemCard from "../../components/item-card/ItemCard";
 
 const FavoritePage = () => {
   const allItem = useSelector(selectAllItem);
-  const favoriteItems = allItem.filter((item) => item.product.is_favorite);
+  const favoriteItems = allItem.filter((item) => item.is_favorite);
 
     return (
       <section className={styles.favoriteBg}>
@@ -19,7 +19,7 @@ const FavoritePage = () => {
                 <ItemCard
                   item={item}
                   key={index}
-                  isFavorite={item.product.is_favorite}
+                  isFavorite={item.is_favorite}
                 />
             ))}
             <li className={styles.addNewItem}>
