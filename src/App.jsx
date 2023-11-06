@@ -7,6 +7,8 @@ import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
 import FavoritePage from "./pages/favorite-page/FavoritePage";
 import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
+import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
+import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
 
 function App() {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ function App() {
     useEffect(() => {
       const currentPath = window.location.pathname;
       if (currentPath === "/catalog") {
-        navigate(`catalog/${allCategories[0].name}/0`);
+        navigate(`catalog/${allCategories[0].id}/0`);
       }
     }, [allCategories, navigate]);
   
@@ -74,14 +76,10 @@ function App() {
           path="orders/:params"
           element={<div style={{ marginBottom: "500px" }}>orders params</div>}
         />
-        <Route
-          path="products"
-          element={<div style={{ marginBottom: "500px" }}>Products page</div>}
-        />
-        <Route
-          path="products/:params"
-          element={<div style={{ marginBottom: "500px" }}>products params</div>}
-        />
+        <Route path="products" element={<CrmProductsPage />} />
+
+        <Route path="products/:params" element={<CrmAddNewProduct />} />
+
         <Route
           path="clients"
           element={<div style={{ marginBottom: "500px" }}>Clients page</div>}

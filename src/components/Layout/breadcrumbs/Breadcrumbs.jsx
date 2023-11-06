@@ -29,17 +29,21 @@ const Breadcrumbs = () => {
   const allProducts = useSelector(selectAllItem);
 
   const getCategoryName = (id) => {
-    const category = allCategories.find(
-      (category) => category.id === parseInt(id, 10)
-    );
-    return category ? category.name : id;
+    if (allCategories) {
+          const category = allCategories.find(
+            (category) => category.id === parseInt(id, 10)
+          );
+          return category ? category.name : id;
+    }
   };
 
   const getProductName = (id) => {
-    const product = allProducts.find(
-      (product) => product.product.id === parseInt(id, 10)
-    );
-    return product ? product.product.name : id;
+    if (allProducts) {
+      const product = allProducts.find(
+        (product) => product.id === parseInt(id, 10)
+      );
+      return product ? product.name : id;
+    }
   };
 
   const replaceIdsWithNames = (pathArray) => {
