@@ -245,6 +245,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &:disabled {
     border: 1px solid #b4bfcd;
