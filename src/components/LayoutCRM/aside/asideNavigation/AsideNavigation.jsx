@@ -3,6 +3,7 @@ import { ReactComponent as IconStatistics } from "../../../../icons/statistics.s
 import { ReactComponent as IconOrders } from "../../../../icons/orders.svg";
 import { ReactComponent as IconProducts } from "../../../../icons/products.svg";
 import { ReactComponent as IconClients } from "../../../../icons/clients.svg";
+import { ReactComponent as IconOpinion } from "../../../../icons/opinion.svg";
 import styles from "../AsideCRM.module.scss";
 
 const AsideNavigation = () => {
@@ -59,6 +60,19 @@ const AsideNavigation = () => {
           >
             <IconClients className={styles.navigationIcon} />
             <span className={styles.asideCategory}>Клієнти</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="opinions"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles.active} ${styles.navigationLink}`
+                : styles.navigationLink
+            }
+          >
+            <IconOpinion className={styles.navigationIcon} />
+            <span className={styles.asideCategory}>Відгуки</span>
           </NavLink>
         </li>
       </ul>

@@ -1,0 +1,20 @@
+@import "../../styles/base/base.scss";
+
+.container {
+  padding: 34px 40px 30px 30px;
+}
+
+.title {
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: $font-weight-500;
+  line-height: 130%;
+  color: $CRM-grey;
+  margin-bottom: 34px;
+}
+
+.createCategoryContainer {
+  display: flex;
+  gap: 150px;
+  background-color: white;
+}
