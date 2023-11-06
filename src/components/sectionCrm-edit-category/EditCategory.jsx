@@ -5,7 +5,7 @@ import CategoriesList from "./CategoriesList";
 import ArchivedCategoriesList from "./ArchivedCategories";
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5ODkxNjYwNCwiZXhwIjoxNjk5MDg5NDA0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.thAMZvpFX0IlOF6B4PnUm4eifFvPJE2wfjvQ4FN5akk";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
 
 const EditCategory = () => {
   const [currentlyEditing, setCurrentlyEditing] = useState(null);
