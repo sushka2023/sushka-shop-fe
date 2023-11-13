@@ -92,7 +92,9 @@ const CategoriesList = ({
 
       {categories?.length === 5 && (
         <div>
-          <span className={styles.info}>*Максимальна кількість</span>
+          <span className={styles.info}>
+            Максимальна кількість категорій (5)
+          </span>
         </div>
       )}
     </>
