@@ -228,7 +228,7 @@ const ProductPage = () => {
             <div>
               <p className={styles.descriptionTitle}>Опис товару</p>
               <p className={styles.descriptionProduct}>
-                {products.product.description}
+                {products.description}
               </p>
             </div>
           </div>

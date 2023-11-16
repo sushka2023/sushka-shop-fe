@@ -10,7 +10,6 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
       onStatusChange(e.target.labels[0].innerText);
     };
 
-
   return (
     <div
       className={styles.statusDropdownContainer}

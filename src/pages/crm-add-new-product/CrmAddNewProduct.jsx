@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import CrmStatus from "../../components/Crm-status/CrmStatus";
 import CrmImages from "../../components/Crm-images/crmImages";
+import CrmCategoriesBlock from "../../components/Crm-categories-block/CrmCategoriesBlock";
 import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import styles from "./crmAddNewProduct.module.scss";
 
@@ -8,7 +9,7 @@ const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStatus, setCurrentStatus] = useState("Новий");
   const containerRef = useRef(null);
-
+  
   const handleStatusChange = (newStatus) => setCurrentStatus(newStatus);
   
   useEffect(() => {
@@ -89,6 +90,9 @@ const CrmAddNewProduct = () => {
             </label>
           </div>
           <CrmImages />
+        </div>
+        <div className={styles.categoriesOptionWrapp}>
+          <CrmCategoriesBlock />
         </div>
       </form>
     </section>

@@ -1,0 +1,153 @@
+@import '../../styles/base/base.scss';
+
+.iconWrapp {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 1px solid $CRM-accent;
+
+    &Disabled {
+        pointer-events: none;
+        border: 1px solid #D9D9D9;
+    }
+}
+
+.iconPlus {
+    fill: $CRM-accent;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    cursor: pointer;
+
+    &Disabled {
+        fill: #D9D9D9;
+    }
+}
+
+.iconArrow {
+    fill: $CRM-grey;
+    width: 14px;
+    transform: rotate(90deg);
+}
+
+.categoriesWrapper {
+    position: relative;
+    display: inline-flex;
+    gap: 10px;
+    display: inline-flex;
+    align-items: flex-end;
+}
+
+.categoriesBtn {
+    position: relative;
+    display: flex;
+    width: 200px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+    background: var(--White, #FFF);
+    box-shadow: 0px 1px 2px 0px rgb(16 24 40 / 5%);
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    color: $CRM-grey;
+    font-family: $open-sans;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.categoriesList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    z-index: 2;
+    top: 57px;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 116, 139, 0.20);
+    background: #FFF;
+    color: $CRM-grey;
+    padding: 10px 0px;
+}
+
+.categoriesParagraph {
+    color: $CRM-grey;
+    font-family: $open-sans;
+    font-size: 14px;
+    margin-bottom: 9px;
+
+    &Empty {
+        margin-bottom: 55px;
+    }
+}
+
+.categoriesListLine {
+    padding: 10px 15px;
+}
+
+.categoryLabel {
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+    color: $CRM-grey;
+    font-family: $open-sans;
+    font-size: 16px;
+    line-height: 24px;
+
+    &Active {
+        color: $CRM-accent;
+    }
+}
+
+.categoryInput {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.categoryInput+.categoryLabel {
+    position: relative;
+    cursor: pointer;
+    margin-left: 32px;
+}
+
+.categoryInput+.categoryLabel:before {
+    content: '';
+    position: absolute;
+    width: 19px;
+    height: 19px;
+}
+
+.categoryInput:checked+.categoryLabel:before {
+    content: "";
+    position: absolute;
+    background-image: url(/src/icons/crmcheckbox.svg);
+    width: 19px;
+    background-repeat: no-repeat;
+    left: -33px;
+    top: 60%;
+    transform: translate(0, -60%);
+}
+
+.categoriesListWrapp {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.categoryLine {
+    position: relative;
+    min-width: 184px;
+}
+
+.iconDel {
+    position: absolute;
+    z-index: 1;
+    width: 13px;
+    height: 16px;
+    top: -2px;
+    cursor: pointer;
+}

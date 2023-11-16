@@ -25,7 +25,8 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.63.6",
     "slick-carousel": "^1.8.1",
-    "swiper": "^10.1.0"
+    "swiper": "^10.1.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",
