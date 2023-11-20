@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Login.module.scss';
 import LogForm from './components/LogForm';
-import { fetchLoging } from '../../store/slices/auth-slice';
+import { fetchLoging } from '../../Redax/Auth/slices/auth-slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Login = ({ onRegister }) => {

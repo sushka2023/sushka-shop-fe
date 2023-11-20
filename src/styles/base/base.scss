@@ -1,66 +1,73 @@
 // white color
-$white-200: #FFF;
-$white-300: rgba(255, 255, 255, 0.80);
-$white-400: rgba(255, 255, 255, 0.60);
-$white-500: rgba(255, 255, 255, 0.40);
-$white-600: rgba(254, 238, 225, 0.20);
+$white-200: #fff;
+$white-300: rgba(255, 255, 255, 0.8);
+$white-400: rgba(255, 255, 255, 0.6);
+$white-500: rgba(255, 255, 255, 0.4);
+$white-600: rgba(254, 238, 225, 0.2);
 
-// dark green color 
+// dark green color
 $green-dark-200: #567343;
-$green-dark-300: rgba(86, 115, 67, 0.80);
-$green-dark-400: rgba(86, 115, 67, 0.60);
-$green-dark-500: rgba(86, 115, 67, 0.40);
-$green-dark-600: rgba(86, 115, 67, 0.20);
+$green-dark-300: rgba(86, 115, 67, 0.8);
+$green-dark-400: rgba(86, 115, 67, 0.6);
+$green-dark-500: rgba(86, 115, 67, 0.4);
+$green-dark-600: rgba(86, 115, 67, 0.2);
 
 // Light Peach color
-$light-200: #FEEEE1;
-$light-300: rgba(254, 238, 225, 0.80);
-$light-400: rgba(254, 238, 225, 0.60);
-$light-500: rgba(254, 238, 225, 0.40);
-$light-600: rgba(254, 238, 225, 0.20);
+$light-200: #feeee1;
+$light-300: rgba(254, 238, 225, 0.8);
+$light-400: rgba(254, 238, 225, 0.6);
+$light-500: rgba(254, 238, 225, 0.4);
+$light-600: rgba(254, 238, 225, 0.2);
 
-// black color 
+// black color
 $black-200: #000;
-$black-300: rgba(0, 0, 0, 0.80);
-$black-400: rgba(0, 0, 0, 0.60);
-$black-500: rgba(0, 0, 0, 0.40);
-$black-600: rgba(0, 0, 0, 0.20);
+$black-300: rgba(0, 0, 0, 0.8);
+$black-400: rgba(0, 0, 0, 0.6);
+$black-500: rgba(0, 0, 0, 0.4);
+$black-600: rgba(0, 0, 0, 0.2);
 
 // pink color
-$pink-200: #FCA1A9;
-$pink-300: rgba(252, 161, 169, 0.80);
-$pink-400: rgba(252, 161, 169, 0.60);
-$pink-500: rgba(252, 161, 169, 0.40);
-$pink-600: rgba(252, 161, 169, 0.20);
+$pink-200: #fca1a9;
+$pink-300: rgba(252, 161, 169, 0.8);
+$pink-400: rgba(252, 161, 169, 0.6);
+$pink-500: rgba(252, 161, 169, 0.4);
+$pink-600: rgba(252, 161, 169, 0.2);
 
 // green color
-$green-200: #77CEBC;
-$green-300: rgba(119, 206, 188, 0.80);
-$green-400: rgba(119, 206, 188, 0.60);
-$green-500: rgba(119, 206, 188, 0.40);
-$green-600: rgba(119, 206, 188, 0.20);
+$green-200: #77cebc;
+$green-300: rgba(119, 206, 188, 0.8);
+$green-400: rgba(119, 206, 188, 0.6);
+$green-500: rgba(119, 206, 188, 0.4);
+$green-600: rgba(119, 206, 188, 0.2);
 
 // yellow color
-$yellow-200: #FCC812;
-$yellow-300: rgba(252, 200, 18, 0.80);
-$yellow-400: rgba(252, 200, 18, 0.60);
-$yellow-500: rgba(252, 200, 18, 0.40);
-$yellow-600: rgba(252, 200, 18, 0.20);
+$yellow-200: #fcc812;
+$yellow-300: rgba(252, 200, 18, 0.8);
+$yellow-400: rgba(252, 200, 18, 0.6);
+$yellow-500: rgba(252, 200, 18, 0.4);
+$yellow-600: rgba(252, 200, 18, 0.2);
 
 // OTHERS COLORS
-$blue: #94B7BD;
-$red: #FD6769;
-$light-pink: #FED9DB;
-$light-yellow: #F6ECC8;
+$blue: #94b7bd;
+$red: #fd6769;
+$light-pink: #fed9db;
+$light-yellow: #f6ecc8;
 $dark-blue: #100174;
+
+//crm-colors
+$CRM-accent: #5d5fef;
+$CRM-grey: #64748b;
+$CRM-grey-of-base: #f5f5fa;
+$CRM-grey-400: rgba(100, 116, 139, 0.60);
 
 // container
 
 @mixin page-container($max-width: 1440px) {
-    max-width: $max-width;
-    margin: 0 auto;
-    padding: 10px 40px;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: 10px 40px;
 }
+
 
 // fonts
 $nunito: Nunito;
@@ -74,3 +81,6 @@ $font-weight-600: 600;
 $font-weight-500: 500;
 $font-weight-400: 400;
 $font-weight-300: 300;
+
+//transition
+$transition-duration: 250ms linear;

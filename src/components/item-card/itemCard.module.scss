@@ -1,0 +1,143 @@
+@import '../../styles/base/base.scss';
+
+.slideElement {
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.cardTitle {
+    padding: 0px 40px 30px;
+}
+
+.slideImage {
+    position: relative;
+    padding: 40px 20px 32px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+
+    & img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.cardContent {
+    border-radius: 10px;
+    background-color: $white-200;
+}
+
+.cardFavorite {
+    position: absolute;
+    top: 40px;
+    right: 34px;
+    fill: $green-dark-200;
+
+    &:hover {
+        fill: $yellow-200;
+        cursor: pointer;
+    }
+}
+
+.cardButtom {
+    margin-top: 20px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    width: 100%;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    background-color: $yellow-200;
+    color: $white-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-700;
+    line-height: 130%;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+        color: $pink-200;
+        background-color: $light-200;
+    }
+
+    ;
+
+    &:active {
+        color: $white-200;
+        background-color: $yellow-200;
+    }
+}
+
+.cardHeader {
+    margin-bottom: 18px;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 22px;
+    font-weight: $font-weight-600;
+    line-height: 120%;
+}
+
+.cardPararaph {
+    max-width: 320px;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 17px;
+    font-weight: $font-weight-300;
+    line-height: 140%;
+    margin-bottom: 70px;
+}
+
+.cardPrice {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 22px;
+    font-weight: $font-weight-600;
+    line-height: 120%;
+}
+
+.listWeight {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.weightElement {
+    width: 75px;
+    height: 40px;
+}
+
+.weightElementButton {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    border: 1px solid $yellow-200;
+    background-color: inherit;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+
+    &:hover {
+        cursor: pointer;
+        border: 2px solid $yellow-400;
+        color: $green-dark-400;
+    }
+}
+
+.activeWeightElementButton {
+    background: $yellow-200;
+    color: $white-200;
+
+    &:hover {
+        background: $yellow-300;
+        color: $white-200;
+        border: 2px solid $yellow-300;
+    }
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MainPage from '../../pages/main-page/MainPage';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchConfirmEmail } from '../../store/slices/reg-slice';
+import { fetchConfirmEmail } from '../../Redax/Auth/slices/reg-slice';
 import Modal from '../../components/Modal/Modal';
 
 const ConfirmedRegistration = () => {

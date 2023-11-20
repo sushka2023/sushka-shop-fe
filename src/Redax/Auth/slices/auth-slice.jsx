@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import applicationApi from '../../services/api';
+import applicationApi from '../operation/Operation';
 
 const accessToken = localStorage.getItem('access_token')
 ? localStorage.getItem('access_token')

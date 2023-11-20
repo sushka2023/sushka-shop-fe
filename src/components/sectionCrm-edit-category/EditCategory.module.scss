@@ -1,0 +1,266 @@
+@import "../../styles/base/base.scss";
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  gap: 150px;
+  max-width: 100%;
+
+  padding: 30px 28px 28px 20px;
+  background-color: $white-200;
+
+  border-radius: 8px;
+}
+
+.categoryTitle {
+  font-family: $open-sans;
+  font-size: 22px;
+  color: $CRM-grey;
+  font-weight: $font-weight-600;
+  line-height: 120%;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 270px;
+}
+
+.heightContainer {
+  height: 430px;
+}
+
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// форма
+
+.formAdd {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+
+.categoryAdd {
+  max-width: 220px;
+  color: $black-200;
+  font-family: $open-sans;
+  font-weight: $font-weight-400;
+  font-size: 18px;
+  line-height: 140%;
+  padding: 5px 5px;
+
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #b4bfcd;
+  transition: border-bottom $transition-duration;
+
+  &:hover,
+  &:focus {
+    border-bottom: 1px solid $CRM-accent;
+  }
+}
+
+.btnAdd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.iconAdd {
+  fill: #b4bfcd;
+  width: 24px;
+  height: 24px;
+
+  transition: scale $transition-duration, fill $transition-duration;
+
+  &:hover,
+  &:focus {
+    scale: 1.1;
+    fill: $CRM-accent;
+  }
+}
+.iconAddDisable {
+  fill: #b4bfcd;
+  width: 24px;
+  height: 24px;
+  cursor: not-allowed;
+}
+
+// категорія
+
+.category {
+  width: 100%;
+  display: flex;
+  height: 50px;
+}
+
+.formEdit {
+  width: 220px;
+  display: flex;
+  height: 50px;
+}
+
+.textWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 220px;
+  padding: 10px 14px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.categoryText {
+  color: $CRM-grey;
+  font-family: $open-sans;
+  font-size: 16px;
+  line-height: calc(24 / 16);
+}
+
+.btnEdit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.iconEdit {
+  fill: $CRM-grey;
+  width: 20px;
+  height: 20px;
+
+  transition: scale $transition-duration, fill $transition-duration;
+
+  &:hover,
+  &:focus {
+    scale: 1.4;
+    fill: $CRM-accent;
+  }
+}
+
+.btnDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  border: transparent;
+}
+
+.iconDelete {
+  fill: $red;
+  width: 18px;
+  height: 20px;
+
+  transition: scale $transition-duration;
+
+  &:hover,
+  &:focus {
+    scale: 1.1;
+  }
+}
+
+.categoryEdit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 220px;
+  padding: 10px 14px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+  &:focus {
+    outline: none;
+    border: 1px solid $CRM-accent;
+  }
+}
+
+.btnSave {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  border: transparent;
+}
+
+.iconSave {
+  fill: $CRM-accent;
+  width: 24px;
+  height: 24px;
+
+  transition: scale $transition-duration, fill $transition-duration;
+
+  &:hover,
+  &:focus {
+    scale: 1.1;
+    fill: $green-dark-200;
+  }
+}
+
+// текст
+
+.info {
+  color: $CRM-grey;
+  font-family: $open-sans;
+  font-size: 18px;
+  line-height: 140%;
+}
+
+// icon
+
+.btnUnarchive {
+  border-radius: 50%;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #13ba24;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:disabled {
+    border: 1px solid #b4bfcd;
+    cursor: not-allowed;
+  }
+}
+
+.iconPlus {
+  fill: #13ba24;
+  width: 50px;
+  height: 50px;
+}
+
+.iconPlusDisable {
+  fill: #b4bfcd;
+  width: 50px;
+  height: 50px;
+}

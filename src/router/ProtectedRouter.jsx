@@ -1,5 +1,5 @@
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
-import { fetchUser } from '../store/slices/user-slice';
+import { fetchUser } from '../Redax/Auth/slices/user-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import React, {useEffect} from 'react';
 

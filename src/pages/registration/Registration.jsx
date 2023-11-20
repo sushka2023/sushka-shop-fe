@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Registration.module.scss';
 import RegForm from './components/RegForm';
-import { fetchRegistration } from '../../store/slices/reg-slice';
+import { fetchRegistration } from '../../Redax/Auth/slices/reg-slice';
 import { useSelector, useDispatch } from 'react-redux';
 
 

@@ -20,12 +20,9 @@ const Header = () => {
     }
   }, [isLogged])
   return (
-    <header className={styles.containerHeader} name='nav'>
+    <header className={styles.containerHeader} name="nav">
       <div className={styles.headerWrapper}>
-        <Link
-          to="/"
-          className={styles.logoLink}
-        >
+        <Link to="/" className={styles.logoLink}>
           <IconLogo />
         </Link>
         <div className={styles.navBlock}>

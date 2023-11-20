@@ -1,0 +1,98 @@
+@import '../../styles/base/base.scss';
+
+.applyBtnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 23px;
+}
+
+.applyIcon {
+    height: 14px;
+    transform: rotate(270deg);
+}
+
+.applyDropdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-radius: 10px;
+    background: $green-dark-200;
+    border: none;
+    width: 200px;
+    height: 44px;
+    color: $white-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+    cursor: pointer;
+}
+
+.checkboxWrapp {
+    display: flex;
+    row-gap: 23px;
+    column-gap: 35px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding: 0px 20px 0px;
+    height: 160px;
+    flex-direction: column;
+}
+
+.checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.checkbox + label {
+    position: relative;
+    padding: 0 0 0 40px;
+    cursor: pointer;
+}
+
+.checkbox + label:before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: inherit;
+    border-radius: 5px;
+    border: 2px solid $green-dark-400;
+    left: 0;
+    top: -4px;
+}
+
+.checkbox:checked + label:before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../icons/checkbox.svg');
+    border: 2px solid $green-dark-200;
+}
+
+.title {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 130%;
+    padding: 10px 20px 10px 20px;
+}
+
+.label {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-400;
+    line-height: 130%;
+}
+
+
+
+

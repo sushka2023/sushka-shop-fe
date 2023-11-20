@@ -1,0 +1,25 @@
+@import '../../styles/base/base.scss';
+
+.list {
+    display: flex;
+    gap: 10px;
+}
+
+.listButton {
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: inherit;
+    border: 2px solid $white-500;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: $white-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+}
+
+.active {
+    background-color: $yellow-200;
+    border: 2px solid $yellow-200;
+}

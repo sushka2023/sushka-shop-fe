@@ -1,31 +1,50 @@
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import MainPage from './pages/main-page/MainPage';
-import CatalogPage from './pages/catalog-page/CatalogPage';
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectAllCategories } from "./Redax/Products/selectors/Selectors";
+import Layout from "./components/Layout/Layout";
+import MainPage from "./pages/main-page/MainPage";
+import CatalogPage from "./pages/catalog-page/CatalogPage";
+import FavoritePage from "./pages/favorite-page/FavoritePage";
+import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
+import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
+import ProductPage from "./pages/product-page/ProductPage";
+import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
+import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
 import ConfirmedRegistration from './containers/ConfirmedRegistration/ConfirmedRegistration';
 import ProtectedRoute from './router/ProtectedRouter';
 
 function App() {
-   const location = useLocation();
-   const cameBack = location.state?.from ?? "/";
+  const navigate = useNavigate();
+  const allCategories = useSelector(selectAllCategories);
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath === "/catalog") {
+      navigate(`catalog/${allCategories[0].id}/0`);
+    }
+  }, [allCategories, navigate]);
 
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<MainPage />} />
-        <Route path="catalog" element={<CatalogPage />} />
+        <Route path="catalog">
+          <Route path=":category/:page" element={<CatalogPage />} />
+          <Route
+            path=":category/:productId/details"
+            element={<ProductPage />}
+          />
+        </Route>
         <Route
-          path="catalog/:params"
-          element={<div style={{ marginBottom: "500px" }}>catalog params</div>}
+          path="review"
+          element={<div style={{ marginBottom: "500px" }}>Відгуки</div>}
         />
         <Route
           path="cooperation"
           element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
         />
-        <Route
-          path="favorite"
-          element={<div style={{ marginBottom: "500px" }}>Улюблене</div>}
-        />
+        <Route path="favorite" element={<FavoritePage />} />
         <Route
           path="account"
           element={
@@ -51,17 +70,38 @@ function App() {
           element={<ConfirmedRegistration />}
         />
       </Route>
-      <Route
-        path="crm"
-        element={
-          <div style={{ marginBottom: "500px" }}>
-            <Link to={cameBack} style={{ border: "1px solid black" }}>
-              GO BACK
-            </Link>{" "}
-            crm
-          </div>
-        }
-      />
+      <Route path="crm" element={<LayoutCRM />}>
+        <Route
+          path="dashbord"
+          element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
+        />
+        <Route
+          path="orders"
+          element={<div style={{ marginBottom: "500px" }}>Order page</div>}
+        />
+        <Route
+          path="orders/:params"
+          element={<div style={{ marginBottom: "500px" }}>orders params</div>}
+        />
+        <Route path="products" element={<CrmProductsPage />} />
+
+        <Route path="products/:params" element={<CrmAddNewProduct />} />
+
+        <Route
+          path="clients"
+          element={<div style={{ marginBottom: "500px" }}>Clients page</div>}
+        />
+        <Route
+          path="clients/:params"
+          element={<div style={{ marginBottom: "500px" }}>clients params</div>}
+        />
+        <Route
+          path="opinions"
+          element={<div style={{ marginBottom: "500px" }}>Opinions Page</div>}
+        />
+        <Route path="settings" element={<CrmSettingsPage />} />
+        <Route index element={<Navigate to="dashbord" replace />} />
+      </Route>
     </Routes>
   );
 }
