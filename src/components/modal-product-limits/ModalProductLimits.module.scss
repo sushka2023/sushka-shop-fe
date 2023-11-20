@@ -1,0 +1,43 @@
+@import "../../styles/base/base.scss";
+
+.modal {
+  box-sizing: border-box;
+  top: 355px;
+  right: 220px;
+  position: absolute;
+  display: block;
+  border-radius: 10px;
+  background: #e8fdf2;
+  padding: 20px 50px 20px 20px;
+  width: 400px;
+  height: 145px;
+}
+
+.modalText {
+  color: #059691;
+
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+}
+
+.btnCloseModal {
+  position: absolute;
+  display: inline-flex;
+  border: none;
+  padding: 0px;
+  width: 24px;
+  height: 24px;
+  top: 10px;
+  right: 15px;
+  background-color: transparent;
+}
+
+.iconTriangle {
+  position: absolute;
+  width: 20px;
+  height: 13px;
+  bottom: -13px;
+  right: 190px;
+}
