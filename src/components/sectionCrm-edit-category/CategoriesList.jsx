@@ -5,9 +5,6 @@ import styles from "./EditCategory.module.scss";
 import PropTypes from "prop-types";
 
 const CategoriesList = ({
-  handleCreateCategory,
-  newCategory,
-  setNewCategory,
   categories,
   currentlyEditing,
   cancelEditing,
@@ -19,33 +16,6 @@ const CategoriesList = ({
 }) => {
   return (
     <>
-      <form
-        className={styles.formAdd}
-        autoComplete="off"
-        onSubmit={handleCreateCategory}
-      >
-        <input
-          className={styles.categoryAdd}
-          maxLength={20}
-          type="text"
-          placeholder="Нова категорія"
-          required
-          value={newCategory}
-          onChange={(e) => setNewCategory(e.target.value)}
-        />
-        <button
-          className={styles.btnAdd}
-          type="submit"
-          disabled={categories.length >= 5}
-        >
-          <IconCheck
-            className={
-              categories.length >= 5 ? styles.iconAddDisable : styles.iconAdd
-            }
-          />
-        </button>
-      </form>
-
       <ul className={styles.categoryList}>
         {categories?.map((category) => (
           <li key={category.id}>
@@ -104,9 +74,6 @@ const CategoriesList = ({
 export default CategoriesList;
 
 CategoriesList.propTypes = {
-  handleCreateCategory: PropTypes.func.isRequired,
-  newCategory: PropTypes.string.isRequired,
-  setNewCategory: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentlyEditing: PropTypes.number,
   cancelEditing: PropTypes.func.isRequired,

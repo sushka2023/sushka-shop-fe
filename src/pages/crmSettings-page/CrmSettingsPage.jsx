@@ -1,6 +1,4 @@
-import EditCategory from "../../components/sectionCrm-edit-category/EditCategory";
-import EditSubCategory from "../../components/sectionCrm-edit-category/EditSubCategory";
-
+import ManageCategories from "../../components/sectionCrm-edit-category/ManageCategories";
 import styles from "./CrmSettingsPage.module.scss";
 
 const CrmSettingsPage = () => {
@@ -8,8 +6,8 @@ const CrmSettingsPage = () => {
     <div className={styles.container}>
       <h3 className={styles.title}>Налаштування</h3>
       <div className={styles.createCategoryContainer}>
-        <EditCategory />
-        <EditSubCategory />
+        <ManageCategories type="product_category" />
+        <ManageCategories type="product_sub_category" />
       </div>
     </div>
   );
