@@ -7,19 +7,17 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
 
     const handleLocalStatusChange = (e) => {
       setSelectedStatus(e.target.labels[0].innerText);
-      onStatusChange(e.target.labels[0].innerText);
+      onStatusChange(e.target.name, e.target.value, e.target.labels[0].innerText);
     };
 
   return (
-    <div
-      className={styles.statusDropdownContainer}
-    >
+    <div className={styles.statusDropdownContainer}>
       <ul className={styles.statusList}>
         <li className={`${styles.statusLine} ${styles.statusNew}`}>
           <input
             type="radio"
             id="new"
-            name="status"
+            name="product_status"
             value="new"
             checked={selectedStatus === "Новий"}
             onChange={handleLocalStatusChange}
@@ -36,7 +34,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
           <input
             type="radio"
             id="active"
-            name="status"
+            name="product_status"
             value="active"
             checked={selectedStatus === "Активний"}
             onChange={handleLocalStatusChange}
@@ -53,7 +51,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
           <input
             type="radio"
             id="archive"
-            name="status"
+            name="product_status"
             value="archive"
             checked={selectedStatus === "Архівований"}
             onChange={handleLocalStatusChange}

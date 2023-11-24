@@ -17,8 +17,8 @@ const CrmCategoriesBlock = () => {
 
     return (
       <div className={styles.categoriesOptionWrapp}>
-        <CrmCategories categories={mainCategories} type="main" />
-        <CrmCategories categories={subCategories} type="sub" />
+        <CrmCategories categories={mainCategories} type="main_category" />
+        <CrmCategories categories={subCategories} type="sub_categories" />
       </div>
     );
 };

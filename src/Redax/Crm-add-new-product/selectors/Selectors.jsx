@@ -1,3 +1,5 @@
-export const selectMainCategories = state => state.newProduct.mainCategories;
+export const selectMainCategories = (state) => state.allCategories.mainCategories;
 
-export const selectSubCategories = state => state.newProduct.subCategories;
+export const selectSubCategories = (state) => state.allCategories.subCategories;
+
+export const selectFormData = (state) => state.newProduct;

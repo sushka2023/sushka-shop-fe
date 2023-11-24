@@ -1,10 +1,14 @@
 @import '../../styles/base/base.scss';
 
-.container {
-    background-color: white;
-    margin: 69px 30px 69px 40px;
+.form {
     padding: 20px 30px;
+}
+
+
+.formWrapp {
+    background-color: $white-200;
     border-radius: 8px;
+    padding: 30px 20px;
 }
 
 .title {

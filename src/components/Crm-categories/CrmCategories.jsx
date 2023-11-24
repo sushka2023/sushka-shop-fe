@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import { ReactComponent as PlusIcon } from "../../icons/plus1.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { v4 as uuidv4 } from 'uuid';
 import styles from "./crmCategories.module.scss";
+import { addCategories, addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 
 const CrmCategories = ({ categories, type }) => {
   const [selectedCategories, setSelectedCategories] = useState({});
   const [isOpen, setIsOpen] = useState({});
   const [categoriesList, setCategoriesList] = useState([0]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const valuesSelectedCategories = Object.values(selectedCategories);
+    
+    const categoriesId = categories && categories.map((category) => {
+      const index = valuesSelectedCategories.findIndex((value) => value === category.name);
+      return index !== -1 ? category.id : null;
+    });
+
+    dispatch(addData({type, value: categoriesId }));  
+  }, [dispatch, selectedCategories])
 
   useEffect(() => {
     if (categories) {
-      setSelectedCategories({ 0: categories[0].name });
+      setSelectedCategories({ [0]: categories[0].name });
     }
   }, [categories]);
 
@@ -49,33 +63,40 @@ const CrmCategories = ({ categories, type }) => {
 
   return (
     <div className={styles.categoriesWrapper}>
-      <div
-        className={`${styles.iconWrapp} ${categoriesList.length === 5 ? styles.iconWrappDisabled : ""
+      {type === "sub_categories" && (
+        <div
+          className={`${styles.iconWrapp} ${
+            categoriesList.length === 5 ? styles.iconWrappDisabled : ""
           }`}
-      >
-        <PlusIcon
-          className={`${styles.iconPlus} ${categoriesList.length === 5 ? styles.iconPlusDisabled : ""
+        >
+          <PlusIcon
+            className={`${styles.iconPlus} ${
+              categoriesList.length === 5 ? styles.iconPlusDisabled : ""
             }`}
-          onClick={handleClickNewCategoryLine}
-        />
-      </div>
+            onClick={handleClickNewCategoryLine}
+          />
+        </div>
+      )}
       <div>
         <p
-          className={`${styles.categoriesParagraph} ${(type === "sub" && categoriesList.length === 0) ? styles.categoriesParagraphEmpty : ''
-            }`}
+          className={`${styles.categoriesParagraph} ${
+            type === "sub" && categoriesList.length === 0
+              ? styles.categoriesParagraphEmpty
+              : ""
+          }`}
         >
-          {type === "main" ? "Категорія товару*" : "Саб-категорія товару*"}
+          {type === "main_category" ? "Категорія товару*" : "Саб-категорія товару"}
         </p>
         <ul className={styles.categoriesListWrapp}>
           {categoriesList.map((categoriesLine) => (
             <li className={styles.categoryLine} key={categoriesLine}>
-              {(type === "sub" ||
-                (type === "main" && categoriesList.length > 1)) && (
-                  <DeleteIcon
-                    className={styles.iconDel}
-                    onClick={(e) => handleClickDelete(e, categoriesLine)}
-                  />
-                )}
+              {(type === "sub_categories" ||
+                (type === "main_category" && categoriesList.length > 1)) && (
+                <DeleteIcon
+                  className={styles.iconDel}
+                  onClick={(e) => handleClickDelete(e, categoriesLine)}
+                />
+              )}
               <button
                 className={styles.categoriesBtn}
                 type="button"
@@ -91,7 +112,7 @@ const CrmCategories = ({ categories, type }) => {
                       <input
                         type="radio"
                         id={`${category.name}-${categoriesLine}`}
-                        name={`category-${categoriesLine}`}
+                        name={category.id}
                         value={category.name}
                         className={styles.categoryInput}
                         onChange={handleChange(categoriesLine)}
@@ -101,10 +122,11 @@ const CrmCategories = ({ categories, type }) => {
                       />
                       <label
                         htmlFor={`${category.name}-${categoriesLine}`}
-                        className={`${styles.categoryLabel} ${selectedCategories[categoriesLine] === category.name
+                        className={`${styles.categoryLabel} ${
+                          selectedCategories[categoriesLine] === category.name
                             ? styles.categoryLabelActive
                             : ""
-                          }`}
+                        }`}
                       >
                         {category.name}
                       </label>

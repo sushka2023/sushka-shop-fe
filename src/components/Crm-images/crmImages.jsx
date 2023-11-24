@@ -27,6 +27,7 @@ const CrmImages = () => {
   return (
     <div className={styles.fileWrapper}>
       <input
+        name="images"
         type="file"
         id="file"
         multiple
