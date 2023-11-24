@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from "prop-types";
 import styles from './crmStatus.module.scss';
 
 const CrmStatus = ({ onStatusChange, currentStatus }) => {
@@ -67,6 +68,11 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
       </ul>
     </div>
   );
+};
+
+CrmStatus.propTypes = {
+  onStatusChange: PropTypes.func,
+  currentStatus: PropTypes.string,
 };
 
 export default CrmStatus;

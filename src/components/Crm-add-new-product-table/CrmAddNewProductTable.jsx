@@ -11,9 +11,9 @@ import styles from './CrmAddNewProduct.module.scss'
 const arrayOptionWeight = [50, 100, 150, 200, 300, 400, 500, 1000];
 
 const CrmAddNewProductTable = () => {
-  const [isOpen, setIsOpen] = useState(null);
+  const [isOpen] = useState(null);
   const [openRows, setOpenRows] = useState({});
-  const [currentWeight, setCurrentWeight] = useState(arrayOptionWeight[0]);
+  const [currentWeight] = useState(arrayOptionWeight[0]);
   const [data, setData] = useState([
     {
       id: uuidv4(),

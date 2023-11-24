@@ -1,14 +1,14 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./CrmAddNewProduct.module.scss";
 
-const WeightList = ({ WeightList, onWeightChange, currentWeight, onClose }) => {
+const WeightList = ({ WeightList, onWeightChange, currentWeight }) => {
   const [selectedWeight, setSelectedWeight] = useState(currentWeight);
 
   const handleWightChange = (e) => {
     const newWeight = parseInt(e.target.labels[0].innerText);
     setSelectedWeight(newWeight);
     onWeightChange(newWeight);
-    // onClose();
   };
 
   return (
@@ -29,6 +29,12 @@ const WeightList = ({ WeightList, onWeightChange, currentWeight, onClose }) => {
       ))}
     </ul>
   );
+};
+
+WeightList.propTypes = {
+  WeightList: PropTypes.array,
+  onWeightChange: PropTypes.func,
+  currentWeight: PropTypes.number
 };
 
 export default WeightList;

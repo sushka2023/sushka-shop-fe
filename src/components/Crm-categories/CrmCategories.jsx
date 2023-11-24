@@ -4,8 +4,9 @@ import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import { ReactComponent as PlusIcon } from "../../icons/plus1.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { v4 as uuidv4 } from 'uuid';
+import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import styles from "./crmCategories.module.scss";
-import { addCategories, addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
+import PropTypes from "prop-types";
 
 const CrmCategories = ({ categories, type }) => {
   const [selectedCategories, setSelectedCategories] = useState({});
@@ -22,7 +23,7 @@ const CrmCategories = ({ categories, type }) => {
     });
 
     dispatch(addData({type, value: categoriesId }));  
-  }, [dispatch, selectedCategories])
+  }, [categories, dispatch, selectedCategories, type])
 
   useEffect(() => {
     if (categories) {
@@ -140,6 +141,11 @@ const CrmCategories = ({ categories, type }) => {
       </div>
     </div>
   );
+};
+
+CrmCategories.propTypes = {
+  categories: PropTypes.array,
+  type: PropTypes.string
 };
 
 export default CrmCategories;
