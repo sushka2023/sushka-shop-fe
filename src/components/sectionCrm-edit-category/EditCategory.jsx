@@ -4,6 +4,8 @@ import axios from "axios";
 import CategoriesList from "./CategoriesList";
 import ArchivedCategoriesList from "./ArchivedCategories";
 
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
 
@@ -40,22 +42,46 @@ const EditCategory = () => {
 
   // create category
 
+  const isCategoryExists = async (categoryList, categoryName) => {
+    return categoryList.find(
+      (category) =>
+        category.name.trim().toLowerCase() === categoryName.trim().toLowerCase()
+    );
+  };
+
   const createCrmCategory = async () => {
     try {
-      const { data } = await axios.post(
-        "api/product_category/create",
-        {
-          name: newCategory,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const categoryExistsInMain = await isCategoryExists(
+        categories,
+        newCategory
       );
 
-      setCategories([...categories, data]);
-      setNewCategory("");
+      const categoryExistsInArchived = await isCategoryExists(
+        archivedCategories,
+        newCategory
+      );
+
+      if (categoryExistsInMain || categoryExistsInArchived) {
+        Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`);
+        return;
+      } else {
+        const { data } = await axios.post(
+          "api/product_category/create",
+          {
+            name: newCategory,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setCategories([...categories, data]);
+        setNewCategory("");
+
+        Notify.success(`Категорія <${newCategory}> додана успішно`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -91,6 +117,7 @@ const EditCategory = () => {
         data,
       ]);
       setCategories(updatedCategories);
+      Notify.success(`Категорію архівовано`);
     } catch (error) {
       console.error(error);
     }
@@ -100,25 +127,41 @@ const EditCategory = () => {
 
   const updateCrmCategory = async () => {
     try {
-      const { id, name } = editedCategory;
-
-      await axios.patch(
-        `api/product_category/edit`,
-        { id, name },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const categoryExistsInMain = await isCategoryExists(
+        categories,
+        newCategory
       );
 
-      const updatedCategories = categories.map((category) =>
-        category.id === id ? { ...category, name } : category
+      const categoryExistsInArchived = await isCategoryExists(
+        archivedCategories,
+        newCategory
       );
 
-      setCategories(updatedCategories);
-      setCurrentlyEditing(null);
-      setEditedCategory({ id: null, name: "" });
+      if (categoryExistsInMain || categoryExistsInArchived) {
+        Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`);
+        return;
+      } else {
+        const { id, name } = editedCategory;
+
+        await axios.patch(
+          `api/product_category/edit`,
+          { id, name },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const updatedCategories = categories.map((category) =>
+          category.id === id ? { ...category, name } : category
+        );
+
+        setCategories(updatedCategories);
+        setCurrentlyEditing(null);
+        setEditedCategory({ id: null, name: "" });
+        Notify.success(`Категорію змінено успішно`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -163,6 +206,7 @@ const EditCategory = () => {
       );
       setArchivedCategories(updatedArchivedCategories);
       addUnarchivedToCategories(data);
+      Notify.success(`Категорію успішно додано у список`);
     } catch (error) {
       console.error(error);
     }

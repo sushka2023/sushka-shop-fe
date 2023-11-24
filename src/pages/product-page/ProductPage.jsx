@@ -7,6 +7,7 @@ import { ReactComponent as IconHeart } from "../../icons/favorite.svg";
 import { ReactComponent as IconArrowleft } from "../../icons/arrowleft.svg";
 import { ReactComponent as IconArrowRight } from "../../icons/arrowright.svg";
 import axios from "axios";
+import { ModalProductLimits } from "../../components/modal-product-limits/ModalProductLimits";
 
 const getProductForId = async (productId) => {
   const { data } = await axios.get(`api/product/${productId}`);
@@ -20,6 +21,9 @@ const ProductPage = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [quantity, setQuantity] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleClick = () => setShowModal(false);
 
   const { productId } = useParams();
 
@@ -59,6 +63,12 @@ const ProductPage = () => {
   };
 
   const increaseQuantity = () => {
+    if (selectedQuantity === 10) {
+      setShowModal(true);
+    }
+
+    console.log(selectedQuantity);
+
     const selectedPriceData = products?.prices?.find(
       (price) => price.weight === selectedWeight
     );
@@ -80,8 +90,8 @@ const ProductPage = () => {
 
   const handleBuyButtonClick = () => {
     const orderInfo = {
-      productId: products.product.id,
-      productName: products.product.name,
+      productId: products.id,
+      productName: products.name,
       quantity: selectedQuantity,
       price: selectedPrice,
       weight: selectedWeight,
@@ -162,6 +172,7 @@ const ProductPage = () => {
                 <h2 className={styles.titleProduct}>
                   Структурна йогуртова пастила з малиною, бананом та вівсянкою
                 </h2>
+                {showModal && <ModalProductLimits onClick={handleClick} />}
                 <p className={styles.orderWeight}>Оберіть вагу упаковки:</p>
                 <form className={styles.orderForm}>
                   {products.prices.map((price) => (
@@ -200,7 +211,10 @@ const ProductPage = () => {
                     <button
                       className={styles.btnQuantity}
                       onClick={increaseQuantity}
-                      disabled={quantity === selectedQuantity}
+                      disabled={
+                        quantity === selectedQuantity ||
+                        selectedQuantity === 100
+                      }
                     >
                       <IconPlus className={styles.iconPlus} />
                     </button>
@@ -225,6 +239,7 @@ const ProductPage = () => {
                 </div>
               </div>
             </div>
+
             <div>
               <p className={styles.descriptionTitle}>Опис товару</p>
               <p className={styles.descriptionProduct}>

@@ -81,6 +81,7 @@
 
 .ordertWrapper {
   width: 555px;
+  position: relative;
 }
 .orderForm {
   display: flex;
@@ -126,8 +127,10 @@
 .btnQuantityWrapper {
   display: flex;
   align-items: center;
+  width: 122px;
   gap: 8px;
-
+  border: 1px solid rgba(#fcc812, 0.2);
+  border-radius: 4px;
   margin-bottom: 30px;
 }
 
@@ -148,6 +151,21 @@
   &:focus {
     border: 1px solid #fcc812;
     background-color: #fcc812;
+    border-radius: 4px;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: not-allowed;
+  }
+}
+
+.btnQuantityDisabled {
+  &:hover,
+  &:focus {
+    border: 1px solid #c4c4c4;
+    background-color: #c4c4c4;
     border-radius: 4px;
   }
 }
