@@ -185,16 +185,10 @@ const ManageCategories = ({ type }) => {
   };
 
   const handleEditCategory = (e) => {
-    const inputValue = e.target.value;
-
-    if (!/^[а-яА-ЯЁёіІїЇєЄ\s]+$/u.test(inputValue) && inputValue !== "") {
-      Notify.warning("Будь ласка, введіть тільки кириличний текст");
-    } else {
-      setEditedCategory({
-        ...editedCategory,
-        name: inputValue,
-      });
-    }
+    setEditedCategory({
+      ...editedCategory,
+      name: e.target.value,
+    });
   };
 
   const startEditing = (categoryId) => {

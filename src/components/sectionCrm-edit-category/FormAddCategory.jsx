@@ -1,7 +1,6 @@
 import { ReactComponent as IconCheck } from "../../icons/check.svg";
 import styles from "./EditCategory.module.scss";
 import PropTypes from "prop-types";
-import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 const FormAddCategory = ({
   handleCreateCategory,
@@ -11,12 +10,7 @@ const FormAddCategory = ({
 }) => {
   const handleChangeInput = (e) => {
     const inputValue = e.target.value;
-
-    if (!/^[а-яА-ЯЁёіІїЇєЄ\s]+$/u.test(inputValue) && inputValue !== "") {
-      Notify.warning("Будь ласка, введіть тільки кириличний текст");
-    } else {
-      setNewCategory(inputValue);
-    }
+    setNewCategory(inputValue);
   };
 
   return (
@@ -33,7 +27,7 @@ const FormAddCategory = ({
           placeholder="Нова категорія"
           required
           value={newCategory}
-          onInput={handleChangeInput}
+          onChange={handleChangeInput}
         />
         <button
           className={styles.btnAdd}
