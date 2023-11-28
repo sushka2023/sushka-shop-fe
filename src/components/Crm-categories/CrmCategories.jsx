@@ -84,13 +84,21 @@ const CrmCategories = ({ categories, type }) => {
             type === "sub" && categoriesList.length === 0
               ? styles.categoriesParagraphEmpty
               : ""
-          }`}
+          }
+          ${type === "main_category" ? styles.mainCategoryLine : ""}`}
         >
-          {type === "main_category" ? "Категорія товару*" : "Саб-категорія товару"}
+          {type === "main_category"
+            ? "Категорія товару*"
+            : "Саб-категорія товару"}
         </p>
         <ul className={styles.categoriesListWrapp}>
           {categoriesList.map((categoriesLine) => (
-            <li className={styles.categoryLine} key={categoriesLine}>
+            <li
+              className={`${styles.categoryLine} ${
+                type === "main_category" ? styles.mainCategoryLine : ""
+              }`}
+              key={categoriesLine}
+            >
               {(type === "sub_categories" ||
                 (type === "main_category" && categoriesList.length > 1)) && (
                 <DeleteIcon

@@ -76,12 +76,17 @@
     font-family: $open-sans;
     font-size: 16px;
     line-height: 130%;
+
+    &:hover {
+        color: #5D5FEF;
+    }
 }
 
 .fileLine {
     display: flex;
     align-items: center;
     gap: 11px;
+    cursor: pointer;
 }
 
 .fileContentWrrap {
@@ -106,4 +111,13 @@
 .deleteIcon {
     width: 16px;
     height: 20px;
+}
+
+.filePreview {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 250px;
+    right: 500px;
+    object-fit: contain;
 }
