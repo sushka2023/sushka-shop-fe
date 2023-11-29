@@ -5,6 +5,7 @@ import CrmStatus from "../../components/Crm-status/CrmStatus";
 import CrmImages from "../../components/Crm-images/crmImages";
 import CrmCategoriesBlock from "../../components/Crm-categories-block/CrmCategoriesBlock";
 import CrmAddNewProductTable from "../../components/Crm-add-new-product-table/CrmAddNewProductTable";
+import CrmAddNewProductButton from "../../components/Crm-add-new-product-button/CrmAddNewProductButton";
 import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import styles from "./crmAddNewProduct.module.scss";
 
@@ -95,7 +96,7 @@ const CrmAddNewProduct = () => {
                   />
                 )}
               </div>
-              <button className={styles.saveBtns}>Зберегти</button>
+              <CrmAddNewProductButton />
             </div>
           </div>
           <div className={styles.inputsWrapp}>

@@ -34,3 +34,32 @@ export const fetchSubCategories = createAsyncThunk(
         }
     }
 );
+
+export const createNewProduct = createAsyncThunk(
+  "api/create-product",
+  async (product, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "api/product/create",
+        {
+          name: product.name,
+          description: product.description,
+          product_category_id: product.main_category,
+          sub_categories_id: product.sub_categories,
+          product_status: product.product_status,
+          promotional: true,
+          new_product: true,
+          is_popular: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

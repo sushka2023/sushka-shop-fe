@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createNewProduct } from "../operation/Operation";
 
 export const productSlice = createSlice({
   name: "newProduct",
@@ -27,12 +28,22 @@ export const productSlice = createSlice({
       }
     }
   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(addData.pending, handlePending)
-  //       .addCase(addData.rejected, handleRejected)
-  //       .addCase(addData.fulfilled, handleFulfilled)
-  //   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createNewProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createNewProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.operation = null;
+        state.error = action.payload;
+      })
+      .addCase(createNewProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.operation = null;
+        state.error = null;
+      })
+  },
 });
 
 export const { addData, addCategories, addPrice } = productSlice.actions;
