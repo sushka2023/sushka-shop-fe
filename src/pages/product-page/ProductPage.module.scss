@@ -16,6 +16,29 @@
   margin-bottom: 20px;
 }
 
+.sub_categories_list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 5px;
+}
+
+.sub_categories_item {
+  display: inline-flex;
+  padding: 5px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  background: #fca1a9;
+
+  color: #fff;
+  font-family: $open-sans;
+  font-size: 18px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+}
+
 .productWrapper {
   display: flex;
   gap: 115px;
@@ -184,6 +207,18 @@
   color: $green-dark-200;
   text-align: center;
   width: 28px;
+}
+
+.selectOldPrice {
+  color: #d9d9d9;
+  display: inline-block;
+  font-family: $open-sans;
+  font-size: 20px;
+  line-height: 140%;
+  text-decoration: line-through;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .selectPrice {
