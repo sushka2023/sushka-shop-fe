@@ -9,7 +9,7 @@ export const productSlice = createSlice({
     product_status: "new",
     main_category: null,
     sub_categories: [],
-    images: [],
+    images: null,
     price: [],
     isLoading: false,
     operation: null,
@@ -20,12 +20,10 @@ export const productSlice = createSlice({
       const key = action.payload.type;
       const values = action.payload.value;
       state[key] = values;
-      if (Array.isArray(values)) {
-        state[key] = values.filter((value) => value);
-      }
-      if (key === "main_category" && values) {
-        state[key] = values.find((category) => category);
-      }
+
+      if (key === "sub_categories" && values) state[key] = values.filter((value) => value);
+      
+      if (key === "main_category" && values) state[key] = values.find((category) => category);
     }
   },
   extraReducers: (builder) => {

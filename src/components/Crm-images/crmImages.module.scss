@@ -76,23 +76,23 @@
     font-family: $open-sans;
     font-size: 16px;
     line-height: 130%;
-
-    &:hover {
-        color: #5D5FEF;
-    }
 }
 
 .fileLine {
     display: flex;
     align-items: center;
     gap: 11px;
-    cursor: pointer;
 }
 
 .fileContentWrrap {
     display: flex;
     align-items: center;
     gap: 13px;
+}
+
+.fileName:hover {
+    color: #5D5FEF;
+    cursor: pointer;
 }
 
 .starIcon, .deleteIcon {

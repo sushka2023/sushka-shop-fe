@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import { ReactComponent as PlusIcon } from "../../icons/plus.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { ReactComponent as FileIcon } from "../../icons/file.svg";
@@ -11,8 +13,22 @@ const CrmImages = () => {
   const [fileName, setFileName] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
   const [filePreviews, setFilePreviews] = useState({});
+  const [filesUrl, setFilesUrl] = useState([]);
   const [fileIsOpen, setFileIsOpen] = useState('');
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
+
+  // function convertFileToBase64(file, callback) {
+  //   const reader = new FileReader();
+  //   reader.onload = function () {
+  //     callback(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // }
+
+  useEffect(() => {
+    dispatch(addData({ type: 'images', value: filesUrl}))
+  }, [filesUrl, dispatch])
 
   const cleaningInput = () => {
     fileInputRef.current.value = "";
@@ -22,7 +38,7 @@ const CrmImages = () => {
     const files = Array.from(e.target.files);
 
     if (files.length > 4) {
-      Notiflix.Notify.info("Максимальна кількість зображень 4");
+      return Notiflix.Notify.info("Максимальна кількість зображень 4");
     }
 
     if (fileInputRef.current) {
@@ -30,10 +46,20 @@ const CrmImages = () => {
     }
     
     const newFilePreviews = {};
+   
 
     files.forEach((file) => {
       if (!fileName.includes(file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file);
+
+          const mainImage = activeFile === file.name; 
+          const newFileUrl = {
+            description: file.name,
+            image_file: newFilePreviews[file.name],
+            main_image: mainImage,
+        };
+        
+        setFilesUrl((prev) => [...prev, newFileUrl]);
       }
       else {
         return Notiflix.Notify.warning("Файл з такою назвою вже завантажений");
@@ -49,6 +75,8 @@ const CrmImages = () => {
 
   const handleClickDelete = (file) => {
     const delleteFile = fileName.filter((item) => item !== file);
+    const delleteFileUrl = filesUrl.filter((item) => item.description !== file);
+    console.log(delleteFile);
     const newFilePreviews = { ...filePreviews };
     URL.revokeObjectURL(newFilePreviews[file]);
 
@@ -61,9 +89,21 @@ const CrmImages = () => {
     !delleteFile.includes(activeFile) && setActiveFile('');
     delete newFilePreviews[file];
     setFilePreviews(newFilePreviews);
+    setFilesUrl(delleteFileUrl);
   }
   
-  const toggleActiveStar = (file) => setActiveFile(activeFile === file ? null : file);
+  const toggleActiveStar = (file) => {
+    setActiveFile(activeFile === file ? null : file)
+    
+    setFilesUrl(
+      filesUrl.map((fileUrl) => {
+        return {
+          ...fileUrl,
+          main_image: fileUrl.description === file,
+        };
+      })
+    );
+  };
 
   const handleMouseDown = (e, file) => setFileIsOpen(file);
 
@@ -102,7 +142,7 @@ const CrmImages = () => {
                   onMouseUp={(e) => handleMouseUp(e, file)}
                 >
                   <FileIcon className={styles.fileIcon} />
-                  {file}
+                  <span className={styles.fileName}>{file}</span>
                 </div>
                 <DeleteIcon
                   className={styles.deleteIcon}
