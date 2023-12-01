@@ -5,7 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { itemsSlice } from "../Products/slices/items-slice";
 import regReducer from "../Auth/slices/reg-slice";
 import authReducer from "../Auth/slices/auth-slice";
-import userReducer from "../Auth/slices/user-slice";
+import userReducer from "../User/slices/user-slice";
 
 const persistConfig = {
   key: "root",

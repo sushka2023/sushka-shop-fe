@@ -14,13 +14,7 @@ class ApplicationApi {
             if (token) {
                 config.headers.Authorization = `Bearer ${token}` ;
             }
-
-            // if(config.method === 'post') {
-            //     delete config.headers['Content-Type'];
-            // } else {
-            //     config.headers['Content-Type'] = 'application/json';
-            // }
-
+            
             return config;
         });
 

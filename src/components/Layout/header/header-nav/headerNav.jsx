@@ -5,6 +5,7 @@ import { fetchAllCategories } from "../../../../Redax/Products/operation/Operati
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from '../Header.module.scss'; 
+import { selectUser } from '../../../../Redax/User/selectors/Selectors';
 
 const HeaderNav = () => {
 
@@ -12,6 +13,7 @@ const HeaderNav = () => {
   const homePath = location.pathname === '/';
 
   const allCategories = useSelector(selectAllCategories);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -75,9 +77,11 @@ const HeaderNav = () => {
           </Link>
         </li>
         <li className={styles.listNavLine}>
-          <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
+          {user?.role === 'admin' || user?.role === 'moderator' && (
+            <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
             CRM
-          </Link>
+            </Link>
+          )}
         </li>
       </ul>
     </nav>

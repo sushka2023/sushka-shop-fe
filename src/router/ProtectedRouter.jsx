@@ -1,7 +1,7 @@
 import { NavLink, Outlet, Navigate } from 'react-router-dom';
-import { fetchUser } from '../Redax/Auth/slices/user-slice';
+import { fetchUser } from '../Redax/User/operation/Operation';
 import { useSelector, useDispatch } from 'react-redux';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 const ProtectedRoute = ( {children} ) => {
   const { accessToken } = useSelector((state) => state.auth)
@@ -14,7 +14,6 @@ const ProtectedRoute = ( {children} ) => {
     }
   }, [accessToken, user]) 
 
-    console.log('allo', accessToken)
   // show unauthorized screen if no user is found in redux store
   if (!accessToken) {
     return (
