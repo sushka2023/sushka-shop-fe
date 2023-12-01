@@ -57,9 +57,40 @@ export const createNewProduct = createAsyncThunk(
           },
         }
       );
-      return response.data;
+
+      // product.price.map((price) => {
+      //   await axios.post(
+      //     "api/price/create",
+      //     {
+      //       product_id: response.data.id,
+      //       weight: price.weight.toString(),
+      //       price: parseInt(price.price),
+      //   })
+      // })
+      
+      return response.data.id
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const addImages = createAsyncThunk(
+  "api/create-images",
+  async (imageFile, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "api/images/create_img_product",
+        imageFile,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }
 );

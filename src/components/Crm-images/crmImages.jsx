@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { addImages } from "../../Redax/Crm-add-new-product/operation/Operation";
 import { ReactComponent as PlusIcon } from "../../icons/plus.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { ReactComponent as FileIcon } from "../../icons/file.svg";
@@ -13,22 +14,30 @@ const CrmImages = () => {
   const [fileName, setFileName] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
   const [filePreviews, setFilePreviews] = useState({});
-  const [filesUrl, setFilesUrl] = useState([]);
+  const [files, setFiles] = useState([]);
   const [fileIsOpen, setFileIsOpen] = useState('');
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
-
-  // function convertFileToBase64(file, callback) {
-  //   const reader = new FileReader();
-  //   reader.onload = function () {
-  //     callback(reader.result);
-  //   };
-  //   reader.readAsDataURL(file);
-  // }
+  const productId = useSelector(selectProductId);
 
   useEffect(() => {
-    dispatch(addData({ type: 'images', value: filesUrl}))
-  }, [filesUrl, dispatch])
+    files.map((image) => {
+      const formData = new FormData();
+      formData.append("image_file", image);
+      formData.append("description", image.name);
+      formData.append("main_image", image.name === activeFile ? true : false);
+      formData.append("product_id", productId);
+      dispatch(addImages(formData));
+    })
+    // for (const image of files) {
+    //   const formData = new FormData();
+    //   formData.append('image_file', image);
+    //   formData.append('description', image.name);
+    //   formData.append('main_image', image.name === activeFile ? true : false);
+    //   formData.append('product_id', productId);
+    //   dispatch(addImages(formData))
+    // }
+  }, [dispatch, productId])
 
   const cleaningInput = () => {
     fileInputRef.current.value = "";
@@ -51,15 +60,8 @@ const CrmImages = () => {
     files.forEach((file) => {
       if (!fileName.includes(file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file);
-
-          const mainImage = activeFile === file.name; 
-          const newFileUrl = {
-            description: file.name,
-            image_file: newFilePreviews[file.name],
-            main_image: mainImage,
-        };
         
-        setFilesUrl((prev) => [...prev, newFileUrl]);
+        setFiles((prev) => [...prev, file]);
       }
       else {
         return Notiflix.Notify.warning("Файл з такою назвою вже завантажений");

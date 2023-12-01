@@ -4,12 +4,12 @@ import { createNewProduct } from "../operation/Operation";
 export const productSlice = createSlice({
   name: "newProduct",
   initialState: {
+    productId: null,
     name: null,
     description: null,
     product_status: "new",
     main_category: null,
     sub_categories: [],
-    images: null,
     price: [],
     isLoading: false,
     operation: null,
@@ -36,10 +36,11 @@ export const productSlice = createSlice({
         state.operation = null;
         state.error = action.payload;
       })
-      .addCase(createNewProduct.fulfilled, (state) => {
+      .addCase(createNewProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.operation = null;
         state.error = null;
+        state.productId = action.payload;
       })
   },
 });
