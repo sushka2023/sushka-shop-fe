@@ -77,7 +77,7 @@ const HeaderNav = () => {
           </Link>
         </li>
         <li className={styles.listNavLine}>
-          {user?.role === 'admin' || user?.role === 'moderator' && (
+          {(user?.role === 'admin' || user?.role === 'moderator') && (
             <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
             CRM
             </Link>

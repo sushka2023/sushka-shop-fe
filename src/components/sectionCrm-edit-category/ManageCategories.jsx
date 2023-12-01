@@ -3,13 +3,14 @@ import styles from "./EditCategory.module.scss";
 import axios from "axios";
 import CategoriesList from "./CategoriesList";
 import ArchivedCategoriesList from "./ArchivedCategories";
-
 import { Notify } from "notiflix/build/notiflix-notify-aio";
+import PropTypes from "prop-types";
+import FormAddCategory from "./FormAddCategory";
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
 
-const EditCategory = () => {
+const ManageCategories = ({ type }) => {
   const [currentlyEditing, setCurrentlyEditing] = useState(null);
   const [categories, setCategories] = useState([]);
   const [archivedCategories, setArchivedCategories] = useState([]);
@@ -21,7 +22,7 @@ const EditCategory = () => {
   useEffect(() => {
     const fetchCrmCategories = async () => {
       try {
-        const { data } = await axios.get("api/product_category/all_for_crm", {
+        const { data } = await axios.get(`api/${type}/all_for_crm`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +39,7 @@ const EditCategory = () => {
     };
 
     fetchCrmCategories();
-  }, []);
+  }, [type]);
 
   // create category
 
@@ -50,6 +51,13 @@ const EditCategory = () => {
   };
 
   const createCrmCategory = async () => {
+    if (newCategory.trim() === "" || newCategory.trim().length < 3) {
+      Notify.warning(
+        "Для створення категорії ведіть текстове значення  (мін. кількість символів: 3)"
+      );
+      return;
+    }
+
     try {
       const categoryExistsInMain = await isCategoryExists(
         categories,
@@ -66,9 +74,9 @@ const EditCategory = () => {
         return;
       } else {
         const { data } = await axios.post(
-          "api/product_category/create",
+          `api/${type}/create`,
           {
-            name: newCategory,
+            name: newCategory.trim(),
           },
           {
             headers: {
@@ -97,7 +105,7 @@ const EditCategory = () => {
   const deleteCrmCategory = async (categoryId) => {
     try {
       const { data } = await axios.put(
-        `api/product_category/archive`,
+        `api/${type}/archive`,
         {
           id: categoryId,
         },
@@ -127,24 +135,33 @@ const EditCategory = () => {
 
   const updateCrmCategory = async () => {
     try {
-      const categoryExistsInMain = await isCategoryExists(
-        categories,
-        newCategory
-      );
+      if (
+        editedCategory.name.trim() === "" ||
+        editedCategory.name.trim().length < 3
+      ) {
+        Notify.warning(
+          "Для едагування категорії ведіть текстове значення  (мін. кількість символів: 3)"
+        );
+        setCurrentlyEditing(null);
+        setEditedCategory({ id: null, name: "" });
+        return;
+      }
+
+      const { id, name } = editedCategory;
+      const categoryExistsInMain = await isCategoryExists(categories, name);
 
       const categoryExistsInArchived = await isCategoryExists(
         archivedCategories,
-        newCategory
+        name
       );
 
       if (categoryExistsInMain || categoryExistsInArchived) {
-        Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`);
-        return;
+        Notify.failure(`Категорія <${name}> вже існує у вашому списку!`);
+        setCurrentlyEditing(null);
+        setEditedCategory({ id: null, name: "" });
       } else {
-        const { id, name } = editedCategory;
-
         await axios.patch(
-          `api/product_category/edit`,
+          `api/${type}/edit`,
           { id, name },
           {
             headers: {
@@ -190,7 +207,7 @@ const EditCategory = () => {
   const unarchiveCrmCategory = async (categoryId) => {
     try {
       const { data } = await axios.put(
-        `api/product_category/unarchive`,
+        `api/${type}/unarchive`,
         {
           id: categoryId,
         },
@@ -222,7 +239,19 @@ const EditCategory = () => {
         <div
           className={`${styles.categoryContainer} ${styles.heightContainer}`}
         >
-          <h4 className={styles.categoryTitle}>Категорії товарів</h4>
+          {type === "product_category" ? (
+            <h4 className={styles.categoryTitle}>Категорії товарів</h4>
+          ) : (
+            <h4 className={styles.categoryTitle}>Саб-категорії товарів</h4>
+          )}
+
+          <FormAddCategory
+            handleCreateCategory={handleCreateCategory}
+            newCategory={newCategory}
+            setNewCategory={setNewCategory}
+            categories={categories}
+          />
+
           <CategoriesList
             handleCreateCategory={handleCreateCategory}
             newCategory={newCategory}
@@ -241,9 +270,16 @@ const EditCategory = () => {
       {archivedCategories?.length !== 0 && (
         <div className={styles.container}>
           <div className={styles.categoryContainer}>
-            <h4 className={styles.categoryTitle}>
-              Архівовані категорії товарів
-            </h4>
+            {type === "product_category" ? (
+              <h4 className={styles.categoryTitle}>
+                Архівовані категорії товарів
+              </h4>
+            ) : (
+              <h4 className={styles.categoryTitle}>
+                Архівовані саб-категорії товарів
+              </h4>
+            )}
+
             <ArchivedCategoriesList
               categories={categories}
               unarchiveCrmCategory={unarchiveCrmCategory}
@@ -256,4 +292,9 @@ const EditCategory = () => {
   );
 };
 
-export default EditCategory;
+export default ManageCategories;
+
+ManageCategories.propTypes = {
+  type: PropTypes.oneOf(["product_category", "product_sub_category"])
+    .isRequired,
+};

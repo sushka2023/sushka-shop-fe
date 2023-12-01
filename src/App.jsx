@@ -13,6 +13,8 @@ import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
 import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
 import ConfirmedRegistration from './containers/ConfirmedRegistration/ConfirmedRegistration';
 import ProtectedRoute from './router/ProtectedRouter';
+import ConditionsPage from "./pages/conditions-page/ConditionsPage";
+import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
 
 function App() {
   const navigate = useNavigate();
@@ -57,14 +59,8 @@ function App() {
           path="cart"
           element={<div style={{ marginBottom: "500px" }}>Корзина</div>}
         />
-        <Route
-          path="conditions"
-          element={<div style={{ marginBottom: "500px" }}>conditions</div>}
-        />
-        <Route
-          path="policy"
-          element={<div style={{ marginBottom: "500px" }}>policy</div>}
-        />
+        <Route path="conditions" element={<ConditionsPage />} />
+        <Route path="policy" element={<PrivacyPolicyPage />} />
         <Route
           path="/api/auth/confirmed_email/:token"
           element={<ConfirmedRegistration />}
