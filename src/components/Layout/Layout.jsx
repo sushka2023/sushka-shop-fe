@@ -9,7 +9,7 @@ const Layout = () => {
 
   const location = useLocation();
   const homePath = location.pathname === "/";
-  
+
   return (
     <>
       <Header />

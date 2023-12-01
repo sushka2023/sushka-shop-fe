@@ -11,6 +11,8 @@ import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
 import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
+import ConfirmedRegistration from './containers/ConfirmedRegistration/ConfirmedRegistration';
+import ProtectedRoute from './router/ProtectedRouter';
 import ConditionsPage from "./pages/conditions-page/ConditionsPage";
 import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
 
@@ -44,14 +46,14 @@ function App() {
           path="cooperation"
           element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
         />
-        <Route
-          path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
-        />
         <Route path="favorite" element={<FavoritePage />} />
         <Route
           path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+          element={
+            <ProtectedRoute>
+              <div style={{ marginBottom: "500px" }}>Акаунт</div>
+            </ProtectedRoute>
+          }
         />
         <Route
           path="cart"
@@ -59,8 +61,11 @@ function App() {
         />
         <Route path="conditions" element={<ConditionsPage />} />
         <Route path="policy" element={<PrivacyPolicyPage />} />
+        <Route
+          path="/api/auth/confirmed_email/:token"
+          element={<ConfirmedRegistration />}
+        />
       </Route>
-
       <Route path="crm" element={<LayoutCRM />}>
         <Route
           path="dashbord"
