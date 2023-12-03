@@ -37,6 +37,11 @@ export const productSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(createNewProduct.fulfilled, (state, action) => {
+        state.name = null;
+        state.description = null;
+        state.main_category = null;
+        state.sub_categories = [];
+        state.price = [];
         state.isLoading = false;
         state.operation = null;
         state.error = null;

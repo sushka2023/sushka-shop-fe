@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import { v4 as uuidv4 } from "uuid";
 import WeightList from "./WeightList";
@@ -27,6 +28,8 @@ const CrmAddNewProductTable = () => {
   ]);
   const dispatch = useDispatch();
 
+  const productId = useSelector(selectProductId);
+
   const handleInputChange = (id, columnId, value) => {
     setData((currentData) =>
       currentData.map((row) =>
@@ -34,6 +37,20 @@ const CrmAddNewProductTable = () => {
       )
     );
   };
+
+  useEffect(() => {
+    setData([
+      {
+        id: uuidv4(),
+        active: false,
+        weight: arrayOptionWeight[0],
+        availability: "",
+        price: "",
+        sale: false,
+        priceSale: "",
+      },
+    ]);
+  }, [productId])
 
   useEffect(() => {
     dispatch(addData({ type: 'price', value: data }));

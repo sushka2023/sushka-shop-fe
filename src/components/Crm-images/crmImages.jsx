@@ -11,33 +11,31 @@ import styles from "./crmImages.module.scss";
 
 
 const CrmImages = () => {
-  const [fileName, setFileName] = useState([]);
   const [activeFile, setActiveFile] = useState(null);
   const [filePreviews, setFilePreviews] = useState({});
-  const [files, setFiles] = useState([]);
+  const [filesArr, setFiles] = useState([]);
   const [fileIsOpen, setFileIsOpen] = useState('');
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const productId = useSelector(selectProductId);
 
   useEffect(() => {
-    files.map((image) => {
-      const formData = new FormData();
-      formData.append("image_file", image);
-      formData.append("description", image.name);
-      formData.append("main_image", image.name === activeFile ? true : false);
-      formData.append("product_id", productId);
-      dispatch(addImages(formData));
-    })
-    // for (const image of files) {
-    //   const formData = new FormData();
-    //   formData.append('image_file', image);
-    //   formData.append('description', image.name);
-    //   formData.append('main_image', image.name === activeFile ? true : false);
-    //   formData.append('product_id', productId);
-    //   dispatch(addImages(formData))
-    // }
-  }, [dispatch, productId])
+    if (productId) {
+      filesArr.map((image) => {
+        const formData = new FormData();
+        formData.append("image_file", image);
+        formData.append("description", image.name);
+        formData.append("main_image", image.name === activeFile ? true : false);
+        formData.append("product_id", productId);
+        dispatch(addImages(formData));
+      });
+      setActiveFile(null);
+      setFilePreviews({});
+      setFiles([]);
+
+    }
+
+  }, [productId])
 
   const cleaningInput = () => {
     fileInputRef.current.value = "";
@@ -56,29 +54,21 @@ const CrmImages = () => {
     
     const newFilePreviews = {};
    
-
     files.forEach((file) => {
-      if (!fileName.includes(file.name)) {
+      if (!filesArr.some((f) => f.name === file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file);
-        
+
         setFiles((prev) => [...prev, file]);
-      }
-      else {
+      } else {
         return Notiflix.Notify.warning("Файл з такою назвою вже завантажений");
       }
     });
       
-    const newFileNames = files.map((file) => file.name).filter((file) => !fileName.includes(file));
-      
     setFilePreviews((prev) => ({ ...prev, ...newFilePreviews }));
-      
-    setFileName((prev) => [...prev, ...newFileNames.slice(0, 4)]);
   };
 
   const handleClickDelete = (file) => {
-    const delleteFile = fileName.filter((item) => item !== file);
-    const delleteFileUrl = filesUrl.filter((item) => item.description !== file);
-    console.log(delleteFile);
+    const delletedFiles = filesArr.filter((item) => item.name !== file);
     const newFilePreviews = { ...filePreviews };
     URL.revokeObjectURL(newFilePreviews[file]);
 
@@ -86,25 +76,14 @@ const CrmImages = () => {
       cleaningInput()
     }
 
-    setFileName(delleteFile);
-
-    !delleteFile.includes(activeFile) && setActiveFile('');
+    !delletedFiles.some((file) => file.name === activeFile) && setActiveFile("");
     delete newFilePreviews[file];
     setFilePreviews(newFilePreviews);
-    setFilesUrl(delleteFileUrl);
+    setFiles(delletedFiles);
   }
   
   const toggleActiveStar = (file) => {
     setActiveFile(activeFile === file ? null : file)
-    
-    setFilesUrl(
-      filesUrl.map((fileUrl) => {
-        return {
-          ...fileUrl,
-          main_image: fileUrl.description === file,
-        };
-      })
-    );
   };
 
   const handleMouseDown = (e, file) => setFileIsOpen(file);
@@ -129,32 +108,32 @@ const CrmImages = () => {
           <span className={styles.fileMax}>(макс 4 по 10 МВ)</span>
         </h3>
         <ul className={styles.fileList}>
-          {fileName.map((file) => (
-            <li key={file} className={styles.fileLine}>
+          {filesArr.map((file) => (
+            <li key={file.name} className={styles.fileLine}>
               <StarIcon
                 className={`${styles.starIcon} ${
-                  activeFile === file && styles.starIconActive
+                  activeFile === file.name && styles.starIconActive
                 }`}
-                onClick={() => toggleActiveStar(file)}
+                onClick={() => toggleActiveStar(file.name)}
               />
               <div className={styles.fileLineWrrap}>
                 <div
                   className={styles.fileContentWrrap}
-                  onMouseDown={(e) => handleMouseDown(e, file)}
-                  onMouseUp={(e) => handleMouseUp(e, file)}
+                  onMouseDown={(e) => handleMouseDown(e, file.name)}
+                  onMouseUp={(e) => handleMouseUp(e, file.name)}
                 >
                   <FileIcon className={styles.fileIcon} />
-                  <span className={styles.fileName}>{file}</span>
+                  <span className={styles.fileName}>{file.name}</span>
                 </div>
                 <DeleteIcon
                   className={styles.deleteIcon}
-                  onClick={() => handleClickDelete(file)}
+                  onClick={() => handleClickDelete(file.name)}
                 />
               </div>
-              {fileIsOpen === file && (
+              {fileIsOpen === file.name && (
                 <img
-                  src={filePreviews[file]}
-                  alt={file}
+                  src={filePreviews[file.name]}
+                  alt={file.name}
                   className={styles.filePreview}
                 />
               )}
@@ -165,13 +144,13 @@ const CrmImages = () => {
       <label
         htmlFor="file"
         className={`${styles.fileLabel} ${
-          fileName.length >= 4 && styles.fileLabelDisabled
+          filesArr.length >= 4 && styles.fileLabelDisabled
         }`}
       >
         Завантажити фото
         <PlusIcon
           className={`${styles.plusIcon} ${
-            fileName.length >= 4 && styles.plusIconDisabled
+            filesArr.length >= 4 && styles.plusIconDisabled
           }`}
         />
       </label>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import { ReactComponent as PlusIcon } from "../../icons/plus1.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
@@ -7,12 +7,22 @@ import { v4 as uuidv4 } from 'uuid';
 import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import styles from "./crmCategories.module.scss";
 import PropTypes from "prop-types";
+import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 
 const CrmCategories = ({ categories, type }) => {
   const [selectedCategories, setSelectedCategories] = useState({});
   const [isOpen, setIsOpen] = useState({});
   const [categoriesList, setCategoriesList] = useState([0]);
   const dispatch = useDispatch();
+  const productId = useSelector(selectProductId)
+
+  useEffect(() => {
+    if (productId) {
+      setSelectedCategories({});
+      setIsOpen({});
+      setCategoriesList([0]);
+    }
+  }, [productId])
 
   useEffect(() => {
     const valuesSelectedCategories = Object.values(selectedCategories);
@@ -26,10 +36,10 @@ const CrmCategories = ({ categories, type }) => {
   }, [categories, dispatch, selectedCategories, type])
 
   useEffect(() => {
-    if (categories) {
+    if (categories && Object.keys(selectedCategories).length === 0) {
       setSelectedCategories({ [0]: categories[0].name });
     }
-  }, [categories]);
+  }, [categories, selectedCategories]);
 
   const toggleDropdown = (categoriesLine) => {
     setIsOpen({ ...isOpen, [categoriesLine]: !isOpen[categoriesLine] });

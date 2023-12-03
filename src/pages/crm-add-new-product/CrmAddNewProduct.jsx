@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import CrmStatus from "../../components/Crm-status/CrmStatus";
 import CrmImages from "../../components/Crm-images/crmImages";
@@ -14,7 +15,10 @@ const CrmAddNewProduct = () => {
   const [currentStatus, setCurrentStatus] = useState("Новий");
   const [timerId, setTimerId] = useState(null);
   const containerRef = useRef(null);
+  const nameInputRef = useRef(null);
+  const descriptionRef = useRef(null);
   const dispatch = useDispatch();
+  const productId = useSelector(selectProductId);
   
   const handleStatusChange = (type, newStatusValue, newStatusName) => {
     setCurrentStatus(newStatusName);
@@ -34,6 +38,13 @@ const CrmAddNewProduct = () => {
 
     setTimerId(newTimerId);
   };
+
+  useEffect(() => {
+    if (productId) {
+      if (nameInputRef.current) nameInputRef.current.value = "";
+      if (descriptionRef.current) descriptionRef.current.value = "";
+    }
+  }, [productId]);
   
   useEffect(() => {
     const handleClickDropdown = (e) => {
@@ -104,6 +115,7 @@ const CrmAddNewProduct = () => {
               <label htmlFor="name" className={styles.label}>
                 Назва товару*
                 <input
+                  ref={nameInputRef}
                   onChange={handleChangeFormData}
                   type="text"
                   id="name"
@@ -114,6 +126,7 @@ const CrmAddNewProduct = () => {
               <label htmlFor="description" className={styles.label}>
                 Опис*
                 <textarea
+                  ref={descriptionRef}
                   onChange={handleChangeFormData}
                   type="text"
                   id="description"
