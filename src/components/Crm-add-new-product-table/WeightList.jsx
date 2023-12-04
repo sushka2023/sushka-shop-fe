@@ -6,7 +6,7 @@ const WeightList = ({ WeightList, onWeightChange, currentWeight }) => {
   const [selectedWeight, setSelectedWeight] = useState(currentWeight);
 
   const handleWightChange = (e) => {
-    const newWeight = parseInt(e.target.labels[0].innerText);
+    const newWeight = e.target.labels[0].innerText;
     setSelectedWeight(newWeight);
     onWeightChange(newWeight);
   };
@@ -34,7 +34,7 @@ const WeightList = ({ WeightList, onWeightChange, currentWeight }) => {
 WeightList.propTypes = {
   WeightList: PropTypes.array,
   onWeightChange: PropTypes.func,
-  currentWeight: PropTypes.number
+  currentWeight: PropTypes.string
 };
 
 export default WeightList;

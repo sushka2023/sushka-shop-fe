@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewProduct } from "../operation/Operation";
+import { createNewProduct, addImages } from "../operation/Operation";
 
 export const productSlice = createSlice({
   name: "newProduct",
@@ -11,7 +11,7 @@ export const productSlice = createSlice({
     main_category: null,
     sub_categories: [],
     price: [],
-    isLoading: false,
+    isLoading: 0,
     operation: null,
     error: null,
   },
@@ -29,10 +29,10 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createNewProduct.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading += 1;
       })
       .addCase(createNewProduct.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoading -= 1;
         state.operation = null;
         state.error = action.payload;
       })
@@ -42,11 +42,20 @@ export const productSlice = createSlice({
         state.main_category = null;
         state.sub_categories = [];
         state.price = [];
-        state.isLoading = false;
+        state.isLoading -= 1;
         state.operation = null;
         state.error = null;
         state.productId = action.payload;
       })
+      .addCase(addImages.pending, (state) => {
+        state.isLoading += 1;
+      })
+      .addCase(addImages.rejected, (state) => {
+        state.isLoading -= 1;
+      })
+      .addCase(addImages.fulfilled, (state) => {
+        state.isLoading -= 1;
+      });
   },
 });
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Report } from "notiflix/build/notiflix-report-aio";
 
 export const fetchMainCategories = createAsyncThunk(
   "api/crm-main-categories",
@@ -70,6 +71,11 @@ export const createNewProduct = createAsyncThunk(
       
       return response.data.id
     } catch (e) {
+      Report.failure(
+        "Упс... сталася помилка",
+        `Заплатіть своїм розробникам для вирішення ${e.message}`,
+        "Добре"
+      );
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -90,6 +96,11 @@ export const addImages = createAsyncThunk(
       );
       return response.data;
     } catch (e) {
+      Report.failure(
+        "Помилка під час завантаження файлів",
+        "Заплатіть своїм розробникам",
+        "Добре"
+      );
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
     }
   }

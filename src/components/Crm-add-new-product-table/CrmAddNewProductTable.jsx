@@ -9,7 +9,7 @@ import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
 import styles from './CrmAddNewProduct.module.scss'
 
-const arrayOptionWeight = [50, 100, 150, 200, 300, 400, 500, 1000];
+const arrayOptionWeight = ['50', '100', '150', '200', '300', '400', '500', '1000'];
 
 const CrmAddNewProductTable = () => {
   const [isOpen] = useState(null);
@@ -31,9 +31,19 @@ const CrmAddNewProductTable = () => {
   const productId = useSelector(selectProductId);
 
   const handleInputChange = (id, columnId, value) => {
+      let formattedValue = value;
+
+      if (
+        columnId === "price" ||
+        columnId === "priceSale" ||
+        columnId === "availability"
+      ) {
+        formattedValue = value === "" ? "" : parseFloat(value);
+      }
+    
     setData((currentData) =>
       currentData.map((row) =>
-        row.id === id ? { ...row, [columnId]: value } : row
+        row.id === id ? { ...row, [columnId]: formattedValue } : row
       )
     );
   };
@@ -94,9 +104,7 @@ const CrmAddNewProductTable = () => {
     );
   };
   
-  const handleCloseWeightList = () => {
-    setOpenRows({});
-  };
+  const handleCloseWeightList = () => setOpenRows({});
 
   return (
     <table className={`${styles.tableWrapp} ${styles.formWrapp}`} name="price">
@@ -115,7 +123,7 @@ const CrmAddNewProductTable = () => {
           <th
             className={`${styles.tableHeaderText} ${styles.tableHeaderTextAvailability}`}
           >
-            Наявність (шт)
+            Наявність (шт)*
           </th>
           <th
             className={`${styles.tableHeaderText} ${styles.tableHeaderTextPrice}`}
@@ -188,7 +196,7 @@ const CrmAddNewProductTable = () => {
               <input
                 className={`${styles.inputTable} ${row.availability === "" ? "" : styles.inputTableTextEmpty
                   }`}
-                type="text"
+                type="number"
                 value={row.availability}
                 onChange={(e) =>
                   handleInputChange(row.id, "availability", e.target.value)
@@ -201,7 +209,7 @@ const CrmAddNewProductTable = () => {
               <input
                 className={`${styles.inputTable} ${styles.inputTablePrice} ${row.price === "" ? "" : styles.inputTableTextEmpty
                   }`}
-                type="text"
+                type="number"
                 value={row.price}
                 onChange={(e) =>
                   handleInputChange(row.id, "price", e.target.value)
@@ -229,7 +237,7 @@ const CrmAddNewProductTable = () => {
               <input
                 className={`${styles.inputTable} ${row.priceSale === "" ? "" : styles.inputTableTextEmpty
                   }`}
-                type="text"
+                type="number"
                 value={row.priceSale}
                 onChange={(e) =>
                   handleInputChange(row.id, "priceSale", e.target.value)

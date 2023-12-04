@@ -20,7 +20,7 @@ const CrmImages = () => {
   const productId = useSelector(selectProductId);
 
   useEffect(() => {
-    if (productId) {
+    if (productId ?? filesArr.length > 0) {
       filesArr.map((image) => {
         const formData = new FormData();
         formData.append("image_file", image);
@@ -32,9 +32,7 @@ const CrmImages = () => {
       setActiveFile(null);
       setFilePreviews({});
       setFiles([]);
-
     }
-
   }, [productId])
 
   const cleaningInput = () => {
@@ -95,6 +93,7 @@ const CrmImages = () => {
     <div className={styles.fileWrapper}>
       <input
         ref={fileInputRef}
+        accept="image/jpeg, image/png, image/webp, image/heic"
         name="images"
         type="file"
         id="file"

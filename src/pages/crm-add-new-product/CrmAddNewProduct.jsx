@@ -13,7 +13,6 @@ import styles from "./crmAddNewProduct.module.scss";
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStatus, setCurrentStatus] = useState("Новий");
-  const [timerId, setTimerId] = useState(null);
   const containerRef = useRef(null);
   const nameInputRef = useRef(null);
   const descriptionRef = useRef(null);
@@ -28,15 +27,7 @@ const CrmAddNewProduct = () => {
   const handleChangeFormData = (e) => {
     const { value, name } = e.target;
 
-    if (timerId) {
-      clearTimeout(timerId);
-    }
-
-    const newTimerId = setTimeout(() => {
-      dispatch(addData({type: name, value }));
-    }, 1000);
-
-    setTimerId(newTimerId);
+    dispatch(addData({type: name, value }))
   };
 
   useEffect(() => {
@@ -118,6 +109,8 @@ const CrmAddNewProduct = () => {
                   ref={nameInputRef}
                   onChange={handleChangeFormData}
                   type="text"
+                  minLength={6}
+                  maxLength={50}
                   id="name"
                   name="name"
                   className={styles.nameInput}
@@ -129,6 +122,8 @@ const CrmAddNewProduct = () => {
                   ref={descriptionRef}
                   onChange={handleChangeFormData}
                   type="text"
+                  minLength={6}
+                  maxLength={150}
                   id="description"
                   name="description"
                   className={styles.descriptionTextaria}
