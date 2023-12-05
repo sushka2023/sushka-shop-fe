@@ -14,6 +14,9 @@ export const productSlice = createSlice({
     isLoading: 0,
     operation: null,
     error: null,
+    formErrors: {},
+    imagesUploadCount: 0,
+    images: false
   },
   reducers: {
     addData: (state, action) => {
@@ -21,10 +24,21 @@ export const productSlice = createSlice({
       const values = action.payload.value;
       state[key] = values;
 
-      if (key === "sub_categories" && values) state[key] = values.filter((value) => value);
-      
-      if (key === "main_category" && values) state[key] = values.find((category) => category);
-    }
+      if (key === "sub_categories" && values)
+        state[key] = values.filter((value) => value);
+
+      if (key === "main_category" && values)
+        state[key] = values.find((category) => category);
+    },
+    setFormErrors: (state, action) => {
+      state.formErrors = action.payload;
+    },
+    incrementImagesUploadCount: (state) => {
+      state.imagesUploadCount += 1;
+    },
+    resetImagesUploadCount: (state) => {
+      state.imagesUploadCount = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -59,5 +73,6 @@ export const productSlice = createSlice({
   },
 });
 
-export const { addData, addCategories, addPrice } = productSlice.actions;
+export const { addData, addCategories, addPrice, setFormErrors, incrementImagesUploadCount, resetImagesUploadCount } =
+  productSlice.actions;
 export default productSlice.reducer;

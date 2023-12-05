@@ -148,3 +148,16 @@
     padding: 10px;
     cursor: pointer;
 }
+
+.error {
+    color: red;
+}
+
+.errorInput {
+    border-color: red;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
+}

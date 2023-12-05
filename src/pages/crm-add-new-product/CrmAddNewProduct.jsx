@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import * as yup from "yup";
+import { newProductSchema } from "../../Halpers/validateNewProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
-import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
+import { selectProductId, selectFormErrors } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { addData, setFormErrors } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import CrmStatus from "../../components/Crm-status/CrmStatus";
 import CrmImages from "../../components/Crm-images/crmImages";
 import CrmCategoriesBlock from "../../components/Crm-categories-block/CrmCategoriesBlock";
@@ -18,6 +20,16 @@ const CrmAddNewProduct = () => {
   const descriptionRef = useRef(null);
   const dispatch = useDispatch();
   const productId = useSelector(selectProductId);
+  const formErrors = useSelector(selectFormErrors);
+
+const validateField = async (name, value) => {
+  try {
+    await yup.reach(newProductSchema, name).validate(value);
+    dispatch(setFormErrors({ ...formErrors, [name]: "" }));
+  } catch (error) {
+    dispatch(setFormErrors({ ...formErrors, [name]: error.message }));
+  }
+};
   
   const handleStatusChange = (type, newStatusValue, newStatusName) => {
     setCurrentStatus(newStatusName);
@@ -26,7 +38,7 @@ const CrmAddNewProduct = () => {
 
   const handleChangeFormData = (e) => {
     const { value, name } = e.target;
-
+    validateField(name, value);
     dispatch(addData({type: name, value }))
   };
 
@@ -103,7 +115,12 @@ const CrmAddNewProduct = () => {
           </div>
           <div className={styles.inputsWrapp}>
             <div className={styles.textInputsLayout}>
-              <label htmlFor="name" className={styles.label}>
+              <label
+                htmlFor="name"
+                className={`${styles.label} ${
+                  formErrors.name ? styles.error : ""
+                }`}
+              >
                 Назва товару*
                 <input
                   ref={nameInputRef}
@@ -113,10 +130,20 @@ const CrmAddNewProduct = () => {
                   maxLength={50}
                   id="name"
                   name="name"
-                  className={styles.nameInput}
+                  className={`${styles.nameInput} ${
+                    formErrors.name ? styles.errorInput : ""
+                  }`}
                 />
+                {formErrors.name && (
+                  <p className={styles.errorMessage}>{formErrors.name}</p>
+                )}
               </label>
-              <label htmlFor="description" className={styles.label}>
+              <label
+                htmlFor="description"
+                className={`${styles.label} ${
+                  formErrors.description ? styles.error : ""
+                }`}
+              >
                 Опис*
                 <textarea
                   ref={descriptionRef}
@@ -126,8 +153,15 @@ const CrmAddNewProduct = () => {
                   maxLength={150}
                   id="description"
                   name="description"
-                  className={styles.descriptionTextaria}
+                  className={`${styles.descriptionTextaria} ${
+                    formErrors.description ? styles.errorInput : ""
+                  }`}
                 />
+                {formErrors.description && (
+                  <p className={styles.errorMessage}>
+                    {formErrors.description}
+                  </p>
+                )}
               </label>
             </div>
             <CrmImages />

@@ -1,45 +1,87 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { addData, incrementImagesUploadCount, resetImagesUploadCount, setFormErrors } from "../../Redax/Crm-add-new-product/slices/product-slice";
+import * as yup from "yup";
+import { selectProductId, selectFormErrors } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 import { addImages } from "../../Redax/Crm-add-new-product/operation/Operation";
+import { newProductImagesSchema } from "../../Halpers/validateNewProduct";
 import { ReactComponent as PlusIcon } from "../../icons/plus.svg";
 import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { ReactComponent as FileIcon } from "../../icons/file.svg";
 import { ReactComponent as StarIcon } from "../../icons/star.svg";
 import Notiflix from "notiflix";
+import { Report } from "notiflix/build/notiflix-report-aio";
 import styles from "./crmImages.module.scss";
 
 
 const CrmImages = () => {
   const [activeFile, setActiveFile] = useState(null);
   const [filePreviews, setFilePreviews] = useState({});
-  const [filesArr, setFiles] = useState([]);
+  const [filesArr, setFilesArr] = useState([]);
   const [fileIsOpen, setFileIsOpen] = useState('');
+  const [attemptedUpload, setAttemptedUpload] = useState(false);
   const fileInputRef = useRef(null);
   const dispatch = useDispatch();
   const productId = useSelector(selectProductId);
+  const formErrors = useSelector(selectFormErrors);
 
   useEffect(() => {
-    if (productId ?? filesArr.length > 0) {
-      filesArr.map((image) => {
+    dispatch(addData({ type: "images", value: filesArr.length > 0 }));
+  const validateFiles = async () => {
+    try {
+      if (filesArr.length > 0) {
+        await newProductImagesSchema.validate({ images: true }, { abortEarly: false });
+        dispatch(setFormErrors({ ...formErrors, images: '' }));
+      } else if (attemptedUpload) {
+        throw new yup.ValidationError('Мінімальна кількість зображень 1', null, 'images');
+      }
+    } catch (error) {
+      if (attemptedUpload) {
+        dispatch(setFormErrors({ ...formErrors, images: error.message }));
+      }
+    }
+  };
+
+  if (attemptedUpload) {
+    validateFiles();
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [filesArr, attemptedUpload, dispatch]);
+
+  useEffect(() => {
+    if (productId && filesArr.length > 0) {
+      dispatch(resetImagesUploadCount());
+
+      const uploadPromises = filesArr.map((image) => {
         const formData = new FormData();
         formData.append("image_file", image);
         formData.append("description", image.name);
-        formData.append("main_image", image.name === activeFile ? true : false);
+        formData.append("main_image", image.name === activeFile);
         formData.append("product_id", productId);
-        dispatch(addImages(formData));
+
+        return dispatch(addImages(formData)).then(() => {
+          dispatch(incrementImagesUploadCount());
+        });
       });
+
+      Promise.all(uploadPromises).then(() => {
+        Report.success("Товар успішно створено", "", "Добре");
+      });
+
       setActiveFile(null);
       setFilePreviews({});
-      setFiles([]);
+      setFilesArr([]);
+      setAttemptedUpload(false)
     }
-  }, [productId])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productId]);
 
   const cleaningInput = () => {
     fileInputRef.current.value = "";
   }
 
   const handleFileChange = (e) => {
+    setAttemptedUpload(true);
     const files = Array.from(e.target.files);
 
     if (files.length > 4) {
@@ -56,7 +98,7 @@ const CrmImages = () => {
       if (!filesArr.some((f) => f.name === file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file);
 
-        setFiles((prev) => [...prev, file]);
+        setFilesArr((prev) => [...prev, file]);
       } else {
         return Notiflix.Notify.warning("Файл з такою назвою вже завантажений");
       }
@@ -77,7 +119,7 @@ const CrmImages = () => {
     !delletedFiles.some((file) => file.name === activeFile) && setActiveFile("");
     delete newFilePreviews[file];
     setFilePreviews(newFilePreviews);
-    setFiles(delletedFiles);
+    setFilesArr(delletedFiles);
   }
   
   const toggleActiveStar = (file) => {
@@ -110,9 +152,8 @@ const CrmImages = () => {
           {filesArr.map((file) => (
             <li key={file.name} className={styles.fileLine}>
               <StarIcon
-                className={`${styles.starIcon} ${
-                  activeFile === file.name && styles.starIconActive
-                }`}
+                className={`${styles.starIcon} ${activeFile === file.name && styles.starIconActive
+                  }`}
                 onClick={() => toggleActiveStar(file.name)}
               />
               <div className={styles.fileLineWrrap}>
@@ -142,17 +183,16 @@ const CrmImages = () => {
       </div>
       <label
         htmlFor="file"
-        className={`${styles.fileLabel} ${
-          filesArr.length >= 4 && styles.fileLabelDisabled
-        }`}
+        className={`${styles.fileLabel} ${filesArr.length >= 4 && styles.fileLabelDisabled
+          }`}
       >
         Завантажити фото
         <PlusIcon
-          className={`${styles.plusIcon} ${
-            filesArr.length >= 4 && styles.plusIconDisabled
-          }`}
+          className={`${styles.plusIcon} ${filesArr.length >= 4 && styles.plusIconDisabled
+            }`}
         />
       </label>
+      {formErrors.images && <p className={styles.imagesError}>{formErrors.images}</p>}
     </div>
   );
 };

@@ -94,6 +94,7 @@ export const addImages = createAsyncThunk(
           },
         }
       );
+      
       return response.data;
     } catch (e) {
       Report.failure(
