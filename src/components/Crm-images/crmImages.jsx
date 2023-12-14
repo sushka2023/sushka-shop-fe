@@ -26,27 +26,32 @@ const CrmImages = () => {
   const formErrors = useSelector(selectFormErrors);
 
   useEffect(() => {
-    dispatch(addData({ type: "images", value: filesArr.length > 0 }));
-  const validateFiles = async () => {
-    try {
-      if (filesArr.length > 0) {
-        await newProductImagesSchema.validate({ images: true }, { abortEarly: false });
-        dispatch(setFormErrors({ ...formErrors, images: '' }));
-      } else if (attemptedUpload) {
-        throw new yup.ValidationError('Мінімальна кількість зображень 1', null, 'images');
-      }
-    } catch (error) {
-      if (attemptedUpload) {
-        dispatch(setFormErrors({ ...formErrors, images: error.message }));
-      }
+    if (filesArr.length > 4) {
+      Notiflix.Notify.info("Максимальна кількість зображень 4");
+      return setFilesArr(filesArr.splice(0, 4));
     }
-  };
+
+    dispatch(addData({ type: "images", value: filesArr.length > 0 }));
+    const validateFiles = async () => {
+      try {
+        if (filesArr.length > 0) {
+          await newProductImagesSchema.validate({ images: true }, { abortEarly: false });
+          dispatch(setFormErrors({ ...formErrors, images: '' }));
+        } else if (attemptedUpload) {
+          throw new yup.ValidationError('Мінімальна кількість зображень 1', null, 'images');
+        }
+      } catch (error) {
+        if (attemptedUpload) {
+          dispatch(setFormErrors({ ...formErrors, images: error.message }));
+        }
+      }
+    };
 
   if (attemptedUpload) {
     validateFiles();
   }
 // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [filesArr, attemptedUpload, dispatch]);
+  }, [filesArr, attemptedUpload, dispatch]);
 
   useEffect(() => {
     if (productId && filesArr.length > 0) {
@@ -82,11 +87,8 @@ const CrmImages = () => {
 
   const handleFileChange = (e) => {
     setAttemptedUpload(true);
-    const files = Array.from(e.target.files);
 
-    if (files.length > 4) {
-      return Notiflix.Notify.info("Максимальна кількість зображень 4");
-    }
+    const files = Array.from(e.target.files);
 
     if (fileInputRef.current) {
       cleaningInput();
@@ -97,7 +99,6 @@ const CrmImages = () => {
     files.forEach((file) => {
       if (!filesArr.some((f) => f.name === file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file);
-
         setFilesArr((prev) => [...prev, file]);
       } else {
         return Notiflix.Notify.warning("Файл з такою назвою вже завантажений");
@@ -146,7 +147,7 @@ const CrmImages = () => {
       <div>
         <h3 className={styles.fileTitle}>
           Завантажені фото
-          <span className={styles.fileMax}>(макс 4 по 10 МВ)</span>
+          <span className={styles.fileMax}> (макс 4 по 10 МВ)</span>
         </h3>
         <ul className={styles.fileList}>
           {filesArr.map((file) => (

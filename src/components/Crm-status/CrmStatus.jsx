@@ -34,15 +34,15 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         <li className={`${styles.statusLine} ${styles.statusActive}`}>
           <input
             type="radio"
-            id="active"
+            id="activated"
             name="product_status"
-            value="active"
+            value="activated"
             checked={selectedStatus === "Активний"}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
           <label
-            htmlFor="active"
+            htmlFor="activated"
             className={`${styles.statusLabel} ${styles.statusLabelActive}`}
           >
             Активний
@@ -51,15 +51,15 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         <li className={`${styles.statusLine} ${styles.statusArchive}`}>
           <input
             type="radio"
-            id="archive"
+            id="archived"
             name="product_status"
-            value="archive"
+            value="archived"
             checked={selectedStatus === "Архівований"}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
           <label
-            htmlFor="archive"
+            htmlFor="archived"
             className={`${styles.statusLabel} ${styles.statusLabelArchive}`}
           >
             Архівований
