@@ -3,7 +3,7 @@ import styles from "./cooperation.module.scss";
 
 const CooperationPage = () => {
   return (
-    <section className={styles.container} style={{ marginBottom: "500px" }}>
+    <section className={styles.container}>
       <div className={styles.wrappDescription}>
         <h1 className={styles.title}>Співпраця з нами</h1>
         <p className={styles.paragraph}>
@@ -14,38 +14,72 @@ const CooperationPage = () => {
         <p className={styles.paragraph}>Чому співпраця з нами буде успішною?</p>
         <ul className={styles.advantagesList}>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Якісна та сертифікована продукція
           </li>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Доступна ціна
           </li>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Гарантуємо, що ваше замовлення буде вчасно оброблене на зручних
             умовах доставки та оплати
           </li>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Понад 50 позицій в ассортименті
           </li>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Продукт, що має довготривалий термін зберігання
           </li>
           <li className={styles.advantagesLine}>
-            <div className={styles.acceptBall}><AcceptIcon className={styles.iconAccept} /></div>
+            <div className={styles.acceptBall}>
+              <AcceptIcon className={styles.iconAccept} />
+            </div>
             Надаємо на час співпраці - стенд та рекламні оголошення (за потреби)
           </li>
         </ul>
+        <p className={styles.paragraph}>
+          Залишайте заявку і ми зв'яжемося з Вами протягом дня.
+        </p>
       </div>
       <form className={styles.form}>
         <h2 className={styles.formTitle}>Залишити заявку</h2>
-        <input type="text" className={styles.inputName} />
-        <input type="text" className={styles.inputEmail} />
-        <input type="text" className={styles.inputNumber} />
-        <textarea className={styles.comment} />
+        <label className={styles.formLabel}>
+          <input
+            type="text"
+            placeholder="Ваше ім'я*"
+            className={styles.formInput}
+          />
+        </label>
+        <label className={styles.formLabel}>
+          <input
+            type="text"
+            placeholder="Електронна пошта*"
+            className={styles.formInput}
+          />
+        </label>
+        <label className={styles.formLabel}>
+          <input
+            type="text"
+            placeholder="Номер телефону (опціонально)"
+            className={styles.formInput}
+          />
+        </label>
+        <textarea placeholder="Додати коментар" className={styles.comment} />
+        <button className={styles.formBtn} disabled>Відправити</button>
       </form>
     </section>
   );
