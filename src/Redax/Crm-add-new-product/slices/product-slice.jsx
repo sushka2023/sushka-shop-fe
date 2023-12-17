@@ -11,7 +11,7 @@ export const productSlice = createSlice({
     main_category: null,
     sub_categories: [],
     price: [],
-    isLoading: 0,
+    isLoading: null,
     operation: null,
     error: null,
     formErrors: {},
@@ -53,9 +53,10 @@ export const productSlice = createSlice({
       .addCase(createNewProduct.fulfilled, (state, action) => {
         state.name = null;
         state.description = null;
+        state.product_status = "new";
         state.main_category = null;
         state.sub_categories = [];
-        state.isLoading -= 1;
+        state.isLoading = null;
         state.operation = null;
         state.error = null;
         state.productId = action.payload;

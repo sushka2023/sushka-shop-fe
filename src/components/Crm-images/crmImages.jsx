@@ -10,7 +10,6 @@ import { ReactComponent as DeleteIcon } from "../../icons/delete.svg";
 import { ReactComponent as FileIcon } from "../../icons/file.svg";
 import { ReactComponent as StarIcon } from "../../icons/star.svg";
 import Notiflix from "notiflix";
-import { Report } from "notiflix/build/notiflix-report-aio";
 import styles from "./crmImages.module.scss";
 
 
@@ -57,7 +56,7 @@ const CrmImages = () => {
     if (productId && filesArr.length > 0) {
       dispatch(resetImagesUploadCount());
 
-      const uploadPromises = filesArr.map((image) => {
+      filesArr.map((image) => {
         const formData = new FormData();
         formData.append("image_file", image);
         formData.append("description", image.name);
@@ -67,10 +66,6 @@ const CrmImages = () => {
         return dispatch(addImages(formData)).then(() => {
           dispatch(incrementImagesUploadCount());
         });
-      });
-
-      Promise.all(uploadPromises).then(() => {
-        Report.success("Товар успішно створено", "", "Добре");
       });
 
       setActiveFile(null);

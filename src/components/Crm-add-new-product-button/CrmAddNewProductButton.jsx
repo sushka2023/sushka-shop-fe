@@ -13,13 +13,18 @@ const CrmAddNewProductButton = () => {
   const productId = useSelector(selectProductId);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (productId) {
-      productData.price.map((item) => {
-        dispatch(addPrice({price: item, productId }));
-      });
-    }
-  }, [dispatch, productId]);
+ useEffect(() => {
+   const sendPricesSequentially = async () => {
+     if (productId) {
+       for (const price of productData.price) {
+         await dispatch(addPrice({ price: price, productId })).unwrap();
+       }
+     }
+   };
+
+   sendPricesSequentially();
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ }, [dispatch, productId]);
 
   const handleClickSaveProduct = async (e) => {
     e.preventDefault();

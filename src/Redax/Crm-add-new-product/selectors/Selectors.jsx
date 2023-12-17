@@ -7,3 +7,5 @@ export const selectFormData = (state) => state.newProduct;
 export const selectProductId = (state) => state.newProduct.productId;
 
 export const selectFormErrors = (state) => state.newProduct.formErrors;
+
+export const selectIsLoading = (state) => state.newProduct.isLoading;
