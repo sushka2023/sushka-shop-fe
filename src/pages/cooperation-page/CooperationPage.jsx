@@ -1,3 +1,4 @@
+import CooperationForm from "../../components/Cooperation-form/CooperationForm";
 import { ReactComponent as AcceptIcon } from "../../icons/crmcheckbox.svg";
 import styles from "./cooperation.module.scss";
 
@@ -55,32 +56,7 @@ const CooperationPage = () => {
           Залишайте заявку і ми зв'яжемося з Вами протягом дня.
         </p>
       </div>
-      <form className={styles.form}>
-        <h2 className={styles.formTitle}>Залишити заявку</h2>
-        <label className={styles.formLabel}>
-          <input
-            type="text"
-            placeholder="Ваше ім'я*"
-            className={styles.formInput}
-          />
-        </label>
-        <label className={styles.formLabel}>
-          <input
-            type="text"
-            placeholder="Електронна пошта*"
-            className={styles.formInput}
-          />
-        </label>
-        <label className={styles.formLabel}>
-          <input
-            type="text"
-            placeholder="Номер телефону (опціонально)"
-            className={styles.formInput}
-          />
-        </label>
-        <textarea placeholder="Додати коментар" className={styles.comment} />
-        <button className={styles.formBtn} disabled>Відправити</button>
-      </form>
+      <CooperationForm />
     </section>
   );
 };
