@@ -59,17 +59,7 @@ export const createNewProduct = createAsyncThunk(
         }
       );
 
-      // product.price.map((price) => {
-      //   await axios.post(
-      //     "api/price/create",
-      //     {
-      //       product_id: response.data.id,
-      //       weight: price.weight.toString(),
-      //       price: parseInt(price.price),
-      //   })
-      // })
-      
-      return response.data.id
+      return response.data.id;
     } catch (e) {
       Report.failure(
         "Упс... сталася помилка",
@@ -103,6 +93,34 @@ export const addImages = createAsyncThunk(
         "Добре"
       );
       return thunkAPI.rejectWithValue(e.response?.data || e.message);
+    }
+  }
+);
+
+export const addPrice = createAsyncThunk(
+  "api/create-price",
+  async ({price, productId}, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "api/price/create",
+        {
+          product_id: productId,
+          weight: price.weight,
+          price: price.price,
+          old_price: price.priceSale,
+          quantity: price.availability,
+          is_active: price.active,
+          promotional: price.sale,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
     }
   }
 );

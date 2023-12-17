@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewProduct, addImages } from "../operation/Operation";
+import { createNewProduct, addImages, addPrice } from "../operation/Operation";
 
 export const productSlice = createSlice({
   name: "newProduct",
@@ -55,7 +55,6 @@ export const productSlice = createSlice({
         state.description = null;
         state.main_category = null;
         state.sub_categories = [];
-        state.price = [];
         state.isLoading -= 1;
         state.operation = null;
         state.error = null;
@@ -69,10 +68,19 @@ export const productSlice = createSlice({
       })
       .addCase(addImages.fulfilled, (state) => {
         state.isLoading -= 1;
+      })
+      .addCase(addPrice.pending, (state) => {
+        state.isLoading += 1;
+      })
+      .addCase(addPrice.rejected, (state) => {
+        state.isLoading -= 1;
+      })
+      .addCase(addPrice.fulfilled, (state) => {
+        state.isLoading -= 1;
       });
   },
 });
 
-export const { addData, addCategories, addPrice, setFormErrors, incrementImagesUploadCount, resetImagesUploadCount } =
+export const { addData, addCategories, setFormErrors, incrementImagesUploadCount, resetImagesUploadCount } =
   productSlice.actions;
 export default productSlice.reducer;

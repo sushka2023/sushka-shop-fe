@@ -2,14 +2,24 @@ import * as yup from "yup";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { setFormErrors } from "../../Redax/Crm-add-new-product/slices/product-slice";
-import { createNewProduct } from "../../Redax/Crm-add-new-product/operation/Operation";
-import { selectFormData } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { addPrice, createNewProduct } from "../../Redax/Crm-add-new-product/operation/Operation";
+import { selectFormData, selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 import { newProductSchema, newProductImagesSchema } from "../../Halpers/validateNewProduct";
 import styles from "./crmAddNewProductButton.module.scss";
+import { useEffect } from "react";
 
 const CrmAddNewProductButton = () => {
   const productData = useSelector(selectFormData);
+  const productId = useSelector(selectProductId);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (productId) {
+      productData.price.map((item) => {
+        dispatch(addPrice({price: item, productId }));
+      });
+    }
+  }, [dispatch, productId]);
 
   const handleClickSaveProduct = async (e) => {
     e.preventDefault();
