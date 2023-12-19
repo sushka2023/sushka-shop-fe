@@ -9,21 +9,28 @@ import { ReactComponent as IconArrowRight } from "../../icons/arrowright.svg";
 import axios from "axios";
 import { ModalProductLimits } from "../../components/modal-product-limits/ModalProductLimits";
 
+const isAuth = true;
+const PRODUCT_ORDERS_LS_KEY = "product-orders";
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
+
 const getProductForId = async (productId) => {
   const { data } = await axios.get(`api/product/${productId}`);
   return data;
 };
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
-
-const addProductToBasket = async ({ productId, selectedQuantity }) => {
+const addProductToBasket = async (
+  productId,
+  selectedQuantity,
+  selectedPriceId
+) => {
   const response = await axios.post(
     `api/basket_items/add`,
 
     {
       product_id: productId,
       quantity: selectedQuantity,
+      price_id_by_the_user: selectedPriceId,
     },
     {
       headers: {
@@ -38,6 +45,7 @@ const ProductPage = () => {
   const [products, setProducts] = useState(null);
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState(0);
+  const [selectedPriceId, setSelectedPriceId] = useState(0);
   const [selectedOldPrice, setselectedOldPrice] = useState(0);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -52,13 +60,14 @@ const ProductPage = () => {
       try {
         const data = await getProductForId(productId);
         setProducts(data);
+
+        console.log(data);
         if (data.prices.length > 0) {
           setSelectedWeight(data.prices[0].weight);
           setSelectedPrice(data.prices[0].price);
+          setSelectedPriceId(data.prices[0].id);
           setselectedOldPrice(data.prices[0].old_price);
         }
-
-        // console.log(data);
       } catch (error) {
         console.error("Помилка запиту:", error);
       }
@@ -78,6 +87,7 @@ const ProductPage = () => {
 
     setSelectedWeight(selectedWeightValue);
     setSelectedPrice(selectedPriceData.price);
+    setSelectedPriceId(selectedPriceData.id);
     setselectedOldPrice(selectedPriceData.old_price);
     setSelectedQuantity(1);
   };
@@ -110,44 +120,53 @@ const ProductPage = () => {
     }
   };
 
-  // const PRODUCT_ORDERS_LS_KEY = "product-orders";
-
-  // const handleBuyButtonClick = () => {
-  //   const orderInfo = {
-  //     productId: products.id,
-  //     productName: products.name,
-  //     quantity: selectedQuantity,
-  //     price: selectedPrice,
-  //     weight: selectedWeight,
-  //     img: products.images[selectedImage].image_url,
-  //   };
-
-  //   const productOrders =
-  //     JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
-
-  //   productOrders.push(orderInfo);
-
-  //   localStorage.setItem(PRODUCT_ORDERS_LS_KEY, JSON.stringify(productOrders));
-
-  //   console.log(orderInfo);
-  //   alert("Товар додано в кошик!");
-
-  // }
-  // };
-
   const handleBuyButtonClick = async () => {
-    // console.log(selectedQuantity);
-    // console.log(productId);
+    console.log(selectedQuantity);
+    console.log(productId);
+    console.log(selectedPriceId);
 
     try {
-      const response = await addProductToBasket({
-        productId,
-        selectedQuantity,
-      });
+      if (isAuth) {
+        await addProductToBasket(productId, selectedQuantity, selectedPriceId);
 
-      console.log(response);
+        alert("Товар добавлено в кошик!");
+      } else {
+        const orderInfo = {
+          id: products.id,
+          price_id_by_the_user: selectedPriceId,
+          // product: {
+          //   id: products.id,
+          //   images: [
+          //       {
+          //       products.images.find((image) => image.main_image === true)
+          //         ?.image_url || products.images[selectedImage].image_url,
+          //     },
+          //   ],
+          // },
+          name: products.name,
+          quantity: selectedQuantity,
 
-      // return response.data;
+          // productId: products.id,
+          // productName: products.name,
+
+          price: selectedPrice,
+          // weight: selectedWeight,
+          // img: products.images[selectedImage].image_url,
+        };
+
+        const productOrders =
+          JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
+
+        productOrders.push(orderInfo);
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        );
+
+        console.log(orderInfo);
+        alert("Товар додано в кошик!");
+      }
     } catch (error) {
       console.error("Помилка при додаванні товару до кошика:", error);
       throw error;
@@ -227,8 +246,6 @@ const ProductPage = () => {
                   ))}
                 </ul>
 
-                {showModal && <ModalProductLimits onClick={handleClick} />}
-
                 <p className={styles.orderWeight}>Оберіть вагу упаковки:</p>
                 <form className={styles.orderForm}>
                   {products.prices.map((price) => (
@@ -254,6 +271,7 @@ const ProductPage = () => {
 
                 <div>
                   <p className={styles.orderWeight}>Оберіть кількість:</p>
+
                   <div className={styles.btnQuantityWrapper}>
                     <button
                       className={styles.btnQuantity}
@@ -272,6 +290,8 @@ const ProductPage = () => {
                     >
                       <IconPlus className={styles.iconPlus} />
                     </button>
+
+                    {showModal && <ModalProductLimits onClick={handleClick} />}
                   </div>
                 </div>
 
