@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFormErrors } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import { addPrice, createNewProduct } from "../../Redax/Crm-add-new-product/operation/Operation";
 import { selectFormData, selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
-import { newProductSchema, newProductImagesSchema } from "../../Halpers/validateNewProduct";
+import { newProductSchema, newProductImagesSchema, newProductPriceSchema } from "../../Halpers/validateNewProduct";
 import styles from "./crmAddNewProductButton.module.scss";
 import { useEffect } from "react";
 
@@ -13,26 +13,36 @@ const CrmAddNewProductButton = () => {
   const productId = useSelector(selectProductId);
   const dispatch = useDispatch();
 
- useEffect(() => {
-   const sendPricesSequentially = async () => {
-     if (productId) {
-       for (const price of productData.price) {
-         await dispatch(addPrice({ price: price, productId })).unwrap();
-       }
-     }
-   };
-
-   sendPricesSequentially();
- // eslint-disable-next-line react-hooks/exhaustive-deps
- }, [dispatch, productId]);
+  useEffect(() => {
+    const sendPricesSequentially = async () => {
+      if (productId) {
+        for (const price of productData.price) {
+          try {
+            await dispatch(addPrice({ price: price, productId })).unwrap();
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    };
+    sendPricesSequentially();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, productId])
 
   const handleClickSaveProduct = async (e) => {
     e.preventDefault();
     try {
       await newProductSchema.validate(productData, { abortEarly: false });
       await newProductImagesSchema.validate({ images: productData.images }, { abortEarly: false });
+      await newProductPriceSchema.validate(productData.price, { abortEarly: false });
+    
+
       dispatch(setFormErrors({}));
-      dispatch(createNewProduct(productData));
+
+      await dispatch(createNewProduct(productData)).unwrap();
+
+      // await sendPricesSequentially();
+
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const newErrors = {};

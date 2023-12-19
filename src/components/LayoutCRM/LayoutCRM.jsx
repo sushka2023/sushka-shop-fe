@@ -6,17 +6,21 @@ import HeaderCRM from "./header/HeaderCRM";
 import AsideCRM from "./aside/AsideCRM";
 import styles from "./LayoutCRM.module.scss";
 import { selectIsLoading } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
+import { useDispatch } from "react-redux";
 import { Report } from "notiflix/build/notiflix-report-aio";
 
 const LayoutCRM = () => {
 
   const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
 
    useEffect(() => {
      if (isLoading === 0) {
        Report.success("Товар успішно створено", "", "Добре");
+       dispatch(addData({ type: "isLoading", value: null }));
      }
-   }, [isLoading]);
+   }, [dispatch, isLoading]);
 
   return (
     <div className={styles.containerCrm}>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProductId } from "../../Redax/Crm-add-new-product/selectors/Selectors";
+import { selectProductId, selectFormErrors } from "../../Redax/Crm-add-new-product/selectors/Selectors";
 import { addData } from "../../Redax/Crm-add-new-product/slices/product-slice";
 import { v4 as uuidv4 } from "uuid";
 import WeightList from "./WeightList";
@@ -27,8 +27,13 @@ const CrmAddNewProductTable = () => {
     },
   ]);
   const dispatch = useDispatch();
-
   const productId = useSelector(selectProductId);
+  const validationErrors = useSelector(selectFormErrors);
+
+ const hasError = (rowIndex, columnName) => {
+   const errorKey = `[${rowIndex}].${columnName}`;
+   return validationErrors && validationErrors[errorKey];
+ };
 
   const handleInputChange = (id, columnId, value) => {
       let formattedValue = value;
@@ -54,10 +59,10 @@ const CrmAddNewProductTable = () => {
         id: uuidv4(),
         active: false,
         weight: arrayOptionWeight[0],
-        availability: "",
-        price: "",
+        availability: null,
+        price: null,
         sale: false,
-        priceSale: "",
+        priceSale: null,
       },
     ]);
   }, [productId])
@@ -71,10 +76,10 @@ const CrmAddNewProductTable = () => {
       id: uuidv4(),
       active: false,
       weight: arrayOptionWeight[0],
-      availability: "",
-      price: "",
+      availability: null,
+      price: null,
       sale: false,
-      priceSale: "",
+      priceSale: null,
     };
     setData((currentData) => [...currentData, newRow]);
   };
@@ -146,7 +151,7 @@ const CrmAddNewProductTable = () => {
         </tr>
       </thead>
       <tbody className={styles.tableBody}>
-        {data.map((row) => (
+        {data.map((row, index) => (
           <tr className={styles.tableContentRow} key={row.id}>
             <td
               className={`${styles.tableColumnInput} ${styles.tableHeaderTextActive}`}
@@ -174,8 +179,9 @@ const CrmAddNewProductTable = () => {
                 {row.weight}
                 <div className={styles.arrowWrapp}>
                   <ArowIcon
-                    className={`${styles.arowIcon} ${openRows[row.id] ? styles.arowIconActive : ""
-                      }`}
+                    className={`${styles.arowIcon} ${
+                      openRows[row.id] ? styles.arowIconActive : ""
+                    }`}
                   />
                 </div>
               </div>
@@ -191,26 +197,32 @@ const CrmAddNewProductTable = () => {
               )}
             </td>
             <td
-              className={`${styles.tableColumnInput} ${styles.tableHeaderTextAvailability}`}
+              className={`${styles.tableColumnInput} ${
+                styles.tableHeaderTextAvailability
+              } ${hasError(index, "availability") ? styles.errorBorder : ""}`}
             >
               <input
-                className={`${styles.inputTable} ${row.availability === "" ? "" : styles.inputTableTextEmpty
-                  }`}
+                className={`${styles.inputTable} ${
+                  !row.availability ? "" : styles.inputTableTextEmpty
+                }`}
                 type="number"
-                value={row.availability}
+                value={row.availability || ""}
                 onChange={(e) =>
                   handleInputChange(row.id, "availability", e.target.value)
                 }
               />
             </td>
             <td
-              className={`${styles.tableColumnInput} ${styles.tableHeaderTextPrice}`}
+              className={`${styles.tableColumnInput} ${
+                styles.tableHeaderTextPrice
+              } ${hasError(index, "price") ? styles.errorBorder : ""}`}
             >
               <input
-                className={`${styles.inputTable} ${styles.inputTablePrice} ${row.price === "" ? "" : styles.inputTableTextEmpty
-                  }`}
+                className={`${styles.inputTable} ${styles.inputTablePrice} ${
+                  !row.price ? "" : styles.inputTableTextEmpty
+                }`}
                 type="number"
-                value={row.price}
+                value={row.price || ""}
                 onChange={(e) =>
                   handleInputChange(row.id, "price", e.target.value)
                 }
@@ -232,13 +244,16 @@ const CrmAddNewProductTable = () => {
               </div>
             </td>
             <td
-              className={`${styles.tableColumnInput} ${styles.tableHeaderTextPriceSale}`}
+              className={`${styles.tableColumnInput} ${
+                styles.tableHeaderTextPriceSale
+              } ${hasError(index, "priceSale") ? styles.errorBorder : ""}`}
             >
               <input
-                className={`${styles.inputTable} ${row.priceSale === "" ? "" : styles.inputTableTextEmpty
-                  }`}
+                className={`${styles.inputTable} ${
+                  !row.priceSale ? "" : styles.inputTableTextEmpty
+                }`}
                 type="number"
-                value={row.priceSale}
+                value={row.priceSale || ""}
                 onChange={(e) =>
                   handleInputChange(row.id, "priceSale", e.target.value)
                 }
@@ -257,16 +272,18 @@ const CrmAddNewProductTable = () => {
         <tr>
           <td colSpan="6" className={styles.containerPlus}>
             <div
-              className={`${styles.iconWrapp} ${arrayOptionWeight.length === data.length
+              className={`${styles.iconWrapp} ${
+                arrayOptionWeight.length === data.length
                   ? styles.iconWrappDisabled
                   : ""
-                }`}
+              }`}
             >
               <PlusIcon
-                className={`${styles.iconPlus} ${arrayOptionWeight.length === data.length
+                className={`${styles.iconPlus} ${
+                  arrayOptionWeight.length === data.length
                     ? styles.iconPlusDisabled
                     : ""
-                  }`}
+                }`}
                 onClick={addNewRow}
               />
             </div>

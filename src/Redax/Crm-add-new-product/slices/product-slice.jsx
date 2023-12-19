@@ -24,6 +24,11 @@ export const productSlice = createSlice({
       const values = action.payload.value;
       state[key] = values;
 
+      if (key === 'isLoading') {
+        state.isLoading = values;
+        state.productId = null;
+      }
+
       if (key === "sub_categories" && values)
         state[key] = values.filter((value) => value);
 
