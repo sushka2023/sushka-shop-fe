@@ -41,8 +41,6 @@ const CrmAddNewProductButton = () => {
 
       await dispatch(createNewProduct(productData)).unwrap();
 
-      // await sendPricesSequentially();
-
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const newErrors = {};
