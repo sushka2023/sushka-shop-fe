@@ -36,9 +36,10 @@
   font-size: 18px;
   line-height: 140%;
   text-decoration-line: underline;
-  cursor: pointer;
+
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 // information block
@@ -340,7 +341,7 @@
   align-items: center;
   gap: 10px;
   border-color: transparent;
-
+  cursor: pointer;
   border-radius: 10px;
   background: #fcc812;
 

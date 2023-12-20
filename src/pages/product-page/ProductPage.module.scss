@@ -128,7 +128,9 @@
 
 .labelWeight {
   display: flex;
-  width: 45px;
+
+  min-width: 45px;
+
   padding: 10px 15px;
   justify-content: center;
   align-items: center;

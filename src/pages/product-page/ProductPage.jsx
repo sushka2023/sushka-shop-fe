@@ -8,8 +8,11 @@ import { ReactComponent as IconArrowleft } from "../../icons/arrowleft.svg";
 import { ReactComponent as IconArrowRight } from "../../icons/arrowright.svg";
 import axios from "axios";
 import { ModalProductLimits } from "../../components/modal-product-limits/ModalProductLimits";
+import customStyles from "../../components/modal-product-limits/CustomStylesProductPage.module.scss";
 
 const isAuth = true;
+// const isAuth = false;
+
 const PRODUCT_ORDERS_LS_KEY = "product-orders";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
@@ -56,12 +59,19 @@ const ProductPage = () => {
   const { productId } = useParams();
 
   useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchProduct = async () => {
       try {
         const data = await getProductForId(productId);
         setProducts(data);
 
-        console.log(data);
+        // console.log(data);
         if (data.prices.length > 0) {
           setSelectedWeight(data.prices[0].weight);
           setSelectedPrice(data.prices[0].price);
@@ -121,9 +131,9 @@ const ProductPage = () => {
   };
 
   const handleBuyButtonClick = async () => {
-    console.log(selectedQuantity);
-    console.log(productId);
-    console.log(selectedPriceId);
+    // console.log(selectedQuantity);
+    // console.log(productId);
+    // console.log(selectedPriceId);
 
     try {
       if (isAuth) {
@@ -134,24 +144,20 @@ const ProductPage = () => {
         const orderInfo = {
           id: products.id,
           price_id_by_the_user: selectedPriceId,
-          // product: {
-          //   id: products.id,
-          //   images: [
-          //       {
-          //       products.images.find((image) => image.main_image === true)
-          //         ?.image_url || products.images[selectedImage].image_url,
-          //     },
-          //   ],
-          // },
-          name: products.name,
+          product: {
+            id: products.id,
+            name: products.name,
+            images: [
+              {
+                image_url:
+                  products.images.find((image) => image.main_image === true)
+                    ?.image_url || products.images[selectedImage].image_url,
+              },
+            ],
+            prices: products.prices,
+          },
+
           quantity: selectedQuantity,
-
-          // productId: products.id,
-          // productName: products.name,
-
-          price: selectedPrice,
-          // weight: selectedWeight,
-          // img: products.images[selectedImage].image_url,
         };
 
         const productOrders =
@@ -291,7 +297,12 @@ const ProductPage = () => {
                       <IconPlus className={styles.iconPlus} />
                     </button>
 
-                    {showModal && <ModalProductLimits onClick={handleClick} />}
+                    {showModal && (
+                      <ModalProductLimits
+                        onClick={handleClick}
+                        customStyles={customStyles}
+                      />
+                    )}
                   </div>
                 </div>
 

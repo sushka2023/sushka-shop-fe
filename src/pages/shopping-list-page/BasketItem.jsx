@@ -5,9 +5,16 @@ import { ReactComponent as IconArrowClose } from "../../icons/closemodal.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ModalProductLimits } from "../../components/modal-product-limits/ModalProductLimits";
+import PropTypes from "prop-types";
+import customStyles from "../../components/modal-product-limits/CustomStylesBasket.module.scss";
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
+
+const isAuth = true;
+// const isAuth = false;
+
+const PRODUCT_ORDERS_LS_KEY = "product-orders";
 
 const editProductQuantity = async (id, quantity) => {
   const data = await axios.patch(
@@ -63,10 +70,25 @@ const BasketItem = ({
     if (selectedQuantity === 10) {
       setShowModal(true);
     }
+
     try {
       setSelectedQuantity((prevQuantity) => prevQuantity + 1);
       calculateTotalPrice();
-      await editProductQuantity(idData, selectedQuantity + 1);
+      if (isAuth) {
+        await editProductQuantity(idData, selectedQuantity + 1);
+      } else {
+        const productOrders =
+          JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
+
+        const productForId = productOrders.find((item) => item.id === idData);
+
+        productForId.quantity = selectedQuantity + 1;
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        );
+      }
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +98,21 @@ const BasketItem = ({
     try {
       setSelectedQuantity((prevQuantity) => prevQuantity - 1);
       calculateTotalPrice();
-      await editProductQuantity(idData, selectedQuantity - 1);
+      if (isAuth) {
+        await editProductQuantity(idData, selectedQuantity - 1);
+      } else {
+        const productOrders =
+          JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
+
+        const productForId = productOrders.find((item) => item.id === idData);
+
+        productForId.quantity = selectedQuantity - 1;
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        );
+      }
     } catch (error) {
       console.log(error);
     }
@@ -117,7 +153,12 @@ const BasketItem = ({
             <IconPlus className={styles.iconPlus} />
           </button>
 
-          {showModal && <ModalProductLimits onClick={handleClick} />}
+          {showModal && (
+            <ModalProductLimits
+              onClick={handleClick}
+              customStyles={customStyles}
+            />
+          )}
         </div>
       </div>
 
@@ -135,6 +176,30 @@ const BasketItem = ({
       </button>
     </li>
   );
+};
+
+BasketItem.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        image_url: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    prices: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        weight: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+  userPrise: PropTypes.number.isRequired,
+  quantity: PropTypes.number.isRequired,
+  idData: PropTypes.number.isRequired,
+  removeItem: PropTypes.func.isRequired,
+  updateTotalValue: PropTypes.func.isRequired,
 };
 
 export default BasketItem;

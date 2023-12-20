@@ -22,13 +22,15 @@
 //   );
 // };
 
+import PropTypes from "prop-types";
 import styles from "./ModalProductLimits.module.scss";
 import { ReactComponent as IconArrowClose } from "../../icons/closemodal.svg";
 import { ReactComponent as IconTriangle } from "../../icons/triangle.svg";
 
-export const ModalProductLimits = ({ onClick }) => {
+export const ModalProductLimits = ({ onClick, customStyles }) => {
   return (
-    <div className={styles.modal}>
+    // <div className={styles.modal}>
+    <div className={`${styles.modal} ${customStyles.position}`}>
       <p className={styles.modalText}>
         При замовленні більше, ніж 10 одиниць одного виду товару, термін
         виготовлення замовлення може бути більшим. Менеджер зв’яжеться з Вами
@@ -40,4 +42,9 @@ export const ModalProductLimits = ({ onClick }) => {
       <IconTriangle className={styles.iconTriangle} />
     </div>
   );
+};
+
+ModalProductLimits.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  customStyles: PropTypes.object,
 };

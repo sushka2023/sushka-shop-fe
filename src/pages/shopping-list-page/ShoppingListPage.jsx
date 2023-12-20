@@ -6,6 +6,8 @@ import BasketItem from "./BasketItem";
 import BasketEmpty from "./BasketEmpty";
 
 const isAuth = true;
+// const isAuth = false;
+
 const PRODUCT_ORDERS_LS_KEY = "product-orders";
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
@@ -49,7 +51,7 @@ const ShoppingListPage = () => {
           const data = await getBasketItems();
           setBasketList(data);
 
-          console.log("список", data);
+          // console.log("список", data);
         } catch (error) {
           setIsLoading(false);
           console.error("Помилка запиту:", error);
@@ -62,6 +64,7 @@ const ShoppingListPage = () => {
     } else {
       const productOrders =
         JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
+      setBasketList(productOrders);
 
       console.log(productOrders);
     }
@@ -74,6 +77,8 @@ const ShoppingListPage = () => {
         [productId]: newPrice,
       };
 
+      console.log(prices);
+
       // Отримуємо масив значень всіх ключів у prices
       const allPricesValues = Object.values(updatedPrices);
 
@@ -83,8 +88,8 @@ const ShoppingListPage = () => {
       // Оновлюємо загальну суму
       setTotalAmount(total);
 
-      console.log("updatedPrices", updatedPrices);
-      console.log("Prices", prices);
+      // console.log("updatedPrices", updatedPrices);
+      // console.log("Prices", prices);
 
       return updatedPrices;
     });
@@ -92,18 +97,35 @@ const ShoppingListPage = () => {
 
   const removeProductFromBacket = async (id, quantity, userPrise) => {
     try {
-      const data = await removeProduct(id, quantity, userPrise);
-      const updatedBasket = await getBasketItems();
-      setBasketList(updatedBasket);
+      if (isAuth) {
+        await removeProduct(id, quantity, userPrise);
+        const updatedBasket = await getBasketItems();
+        setBasketList(updatedBasket);
+
+        // console.log(data);
+      } else {
+        const productOrders =
+          JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || [];
+
+        const productIndex = productOrders.findIndex(
+          (item) => item.product.id === id
+        );
+        productOrders.splice(productIndex, 1);
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        );
+
+        setBasketList(productOrders);
+      }
+
       // Видаляємо вартість продукту із загальної вартості
       setPrices((prevPrices) => {
         const updatedPrices = { ...prevPrices };
         delete updatedPrices[id];
         return updatedPrices;
       });
-
-      console.log(data);
-      return data;
     } catch (error) {
       console.error(error);
     }
@@ -118,6 +140,7 @@ const ShoppingListPage = () => {
               <div className={styles.shopTitleWrapper}>
                 <h2 className={styles.shopTitle}>Ваше замовлення</h2>
                 <button
+                  type="button"
                   onClick={() => navigate("/catalog")}
                   className={styles.btnBackCatalog}
                 >
