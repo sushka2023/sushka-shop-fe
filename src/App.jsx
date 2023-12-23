@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     const currentPath = window.location.pathname;
+  
     if (currentPath === "/catalog") {
       navigate(`catalog/${allCategories[0].id}/0`);
     }

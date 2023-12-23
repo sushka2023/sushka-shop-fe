@@ -16,13 +16,9 @@ const CrmAddNewProductButton = () => {
   useEffect(() => {
     const sendPricesSequentially = async () => {
       if (productId) {
-        for (const price of productData.price) {
-          try {
-            await dispatch(addPrice({ price: price, productId })).unwrap();
-          } catch (error) {
-            console.log(error);
-          }
-        }
+        productData.price.forEach((price) => {
+            dispatch(addPrice({ price: price, productId })).unwrap().catch(error => console.log(error));
+        })
       }
     };
     sendPricesSequentially();
