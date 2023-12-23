@@ -15,8 +15,10 @@ const HeaderNav = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllCategories({ operationType: "fatchAllCategories" }));
-  }, [dispatch]);
+    if (!allCategories) {
+      dispatch(fetchAllCategories({ operationType: "fatchAllCategories" }));
+    }
+  }, [dispatch, allCategories]);
 
   useEffect(() => {
     if (homePath) {

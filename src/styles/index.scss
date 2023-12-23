@@ -156,3 +156,19 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
+.notiflix-report-overlay {
+    backdrop-filter: blur(5px) !important;
+    background-color: rgb(255 255 255 / 20%) !important;
+}

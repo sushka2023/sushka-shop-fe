@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from "prop-types";
 import styles from './crmStatus.module.scss';
 
 const CrmStatus = ({ onStatusChange, currentStatus }) => {
@@ -7,20 +8,17 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
 
     const handleLocalStatusChange = (e) => {
       setSelectedStatus(e.target.labels[0].innerText);
-      onStatusChange(e.target.labels[0].innerText);
+      onStatusChange(e.target.name, e.target.value, e.target.labels[0].innerText);
     };
 
-
   return (
-    <div
-      className={styles.statusDropdownContainer}
-    >
+    <div className={styles.statusDropdownContainer}>
       <ul className={styles.statusList}>
         <li className={`${styles.statusLine} ${styles.statusNew}`}>
           <input
             type="radio"
             id="new"
-            name="status"
+            name="product_status"
             value="new"
             checked={selectedStatus === "Новий"}
             onChange={handleLocalStatusChange}
@@ -36,15 +34,15 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         <li className={`${styles.statusLine} ${styles.statusActive}`}>
           <input
             type="radio"
-            id="active"
-            name="status"
-            value="active"
+            id="activated"
+            name="product_status"
+            value="activated"
             checked={selectedStatus === "Активний"}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
           <label
-            htmlFor="active"
+            htmlFor="activated"
             className={`${styles.statusLabel} ${styles.statusLabelActive}`}
           >
             Активний
@@ -53,15 +51,15 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         <li className={`${styles.statusLine} ${styles.statusArchive}`}>
           <input
             type="radio"
-            id="archive"
-            name="status"
-            value="archive"
+            id="archived"
+            name="product_status"
+            value="archived"
             checked={selectedStatus === "Архівований"}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
           <label
-            htmlFor="archive"
+            htmlFor="archived"
             className={`${styles.statusLabel} ${styles.statusLabelArchive}`}
           >
             Архівований
@@ -70,6 +68,11 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
       </ul>
     </div>
   );
+};
+
+CrmStatus.propTypes = {
+  onStatusChange: PropTypes.func,
+  currentStatus: PropTypes.string,
 };
 
 export default CrmStatus;

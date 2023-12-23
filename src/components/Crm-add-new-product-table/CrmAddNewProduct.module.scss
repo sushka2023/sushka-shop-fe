@@ -1,0 +1,291 @@
+@import '../../styles/base/base.scss';
+
+.iconWrapp {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 1px solid $CRM-accent;
+
+    &Disabled {
+        pointer-events: none;
+        border: 1px solid #D9D9D9;
+    }
+}
+
+.iconPlus {
+    fill: $CRM-accent;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    cursor: pointer;
+
+    &Disabled {
+        fill: #D9D9D9;
+    }
+}
+
+.iconDel {
+    width: 13px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.arowIcon {
+    fill: $CRM-accent;
+    width: 7px;
+    height: 14px;
+    transform: rotate(90deg);
+
+    &Active {
+        transform: rotate(270deg);
+    }
+}
+
+.weightColumnWrapp {
+    position: relative;
+    cursor: pointer;
+}
+
+.arrowWrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    background: rgba(93, 95, 239, 0.20);
+}
+
+.weightColumn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $CRM-accent;
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+}
+
+.weightList {
+    width: 100px;
+    position: absolute;
+    top: 38px;
+    padding: 5px 0px;
+    z-index: 2;
+    border-radius: 8px;
+    background: $white-200;
+    box-shadow: -1px 1px 3px 0px rgb(82 82 82 / 10%), -4px 5px 6px 0px rgb(82 82 82 / 9%), -8px 11px 8px 0px rgb(82 82 82 / 5%), -15px 20px 10px 0px rgb(82 82 82 / 1%), -23px 32px 11px 0px rgb(82 82 82 / 0%);
+}
+
+.weightLine {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.weightInput {
+    opacity: 0;
+
+    &:checked+label:after {
+        opacity: 1;
+        content: url('../../icons/checkedcrmweight.svg');
+        color: $CRM-accent;
+    }
+
+    &+label {
+        position: relative;
+        cursor: pointer;
+        order: -1;
+        color: $CRM-grey;
+        color: $CRM-grey;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 130%;
+
+        &:after {
+            content: url('../../icons/checkedcrmweight.svg');
+            position: absolute;
+            left: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+        }
+    }
+
+    &:checked+label {
+        color: $CRM-accent;
+
+        &:after {
+            opacity: 1;
+        }
+    }
+}
+
+.tableWrapp {
+    width: 100%;
+    background-color: $white-200;
+    border-radius: 8px;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.tableHeaderRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.tableHeader {
+    width: 100%;
+    background: #F8FAFC;
+}
+
+.tableHeaderText {
+    display: flex;
+    justify-content: center;
+    color: $CRM-grey;
+    font-family: $open-sans;
+    font-size: 14px;
+    font-weight: $font-weight-400;
+
+    &Active, &Sale {
+        max-width: 60px;
+        width: 100%;
+    }
+
+    &Weight {
+        max-width: 140px;
+        width: 100%;
+    }
+
+    &Availability {
+        max-width: 108px;
+        width: 100%;
+    }
+
+    &Price, &PriceSale {
+        max-width: 110px;
+        width: 100%;
+    }
+
+    &Dellete {
+        max-width: 50px;
+        width: 100%;
+    }
+}
+
+.tableContentRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.tableColumnInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0px 10px;
+}
+
+.inputTable {
+    max-width: 50px;
+    border: none;
+    border-bottom: 1px solid #E2E8F0;
+    color: $CRM-grey;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-400;
+    line-height: 130%;
+    outline: none;
+
+    &TextEmpty {
+        border: none;
+    }
+    
+    &Price {
+        font-weight: $font-weight-600;
+    }
+}
+
+.tableContentRow {
+    position: relative;
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: #E2E8F0;
+    }
+
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: #E2E8F0;
+    }
+}
+
+.containerPlus {
+    padding: 30px 20px 42px;
+}
+
+
+.checkboxContainer {
+    position: relative;
+    display: inline-block;
+
+    & input {
+        opacity: 0;
+    }
+
+    & label {
+        position: absolute;
+        top: 0;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background-color: $white-200;
+        border: 1px solid #5D5FEF66;
+        border-radius: 33%;
+    }
+
+    & input:checked+label {
+        background-color: $CRM-accent;
+    }
+
+    & label:after {
+        content: url("../../icons/checkedcrmtable.svg");
+        font-size: 14px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
+
+    & input:checked+label:after {
+        opacity: 1;
+    }
+
+}
+
+.errorBorder {
+    border: 1px solid red;
+    border-radius: 10px;
+}

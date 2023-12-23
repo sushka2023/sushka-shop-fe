@@ -6,6 +6,7 @@ import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
 import CatalogPage from "./pages/catalog-page/CatalogPage";
 import FavoritePage from "./pages/favorite-page/FavoritePage";
+import CooperationPage from "./pages/cooperation-page/CooperationPage";
 import LayoutCRM from "./components/LayoutCRM/LayoutCRM";
 import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
 import ProductPage from "./pages/product-page/ProductPage";
@@ -20,6 +21,7 @@ function App() {
 
   useEffect(() => {
     const currentPath = window.location.pathname;
+  
     if (currentPath === "/catalog") {
       navigate(`catalog/${allCategories[0].id}/0`);
     }
@@ -42,7 +44,7 @@ function App() {
         />
         <Route
           path="cooperation"
-          element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
+          element={<CooperationPage />}
         />
         <Route
           path="account"

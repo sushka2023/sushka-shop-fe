@@ -45,6 +45,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin-top: 28px;
 }
 
 .plusIcon {
@@ -90,6 +91,11 @@
     gap: 13px;
 }
 
+.fileName:hover {
+    color: #5D5FEF;
+    cursor: pointer;
+}
+
 .starIcon, .deleteIcon {
     cursor: pointer;
 }
@@ -101,4 +107,23 @@
         fill: #5D5FEF;
         stroke: #5D5FEF;
     }
+}
+
+.deleteIcon {
+    width: 16px;
+    height: 20px;
+}
+
+.filePreview {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 250px;
+    right: 500px;
+    object-fit: contain;
+}
+
+.imagesError {
+    margin-top: 10px;
+    color: red;
 }
