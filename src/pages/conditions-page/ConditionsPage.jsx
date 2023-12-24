@@ -12,7 +12,7 @@ const ConditionsPage = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.conditionTitle}>
-        Умови та Положення використання веб-сайту Sushka.in.ua.
+        Умови та Положення використання вебсайту Sushka.in.ua.
       </h2>
       <div className={styles.conditionTextWrapper}>
         <p className={styles.conditionText}>
