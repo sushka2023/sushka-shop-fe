@@ -6,7 +6,10 @@
 }
 
 .cardTitle {
-    padding: 0px 40px 30px;
+    display: flex;
+    padding: 0px 30px 20px;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .slideImage {
@@ -72,7 +75,6 @@
 }
 
 .cardHeader {
-    margin-bottom: 18px;
     color: $green-dark-200;
     font-family: $open-sans;
     font-size: 22px;
@@ -87,7 +89,6 @@
     font-size: 17px;
     font-weight: $font-weight-300;
     line-height: 140%;
-    margin-bottom: 70px;
 }
 
 .cardPrice {
@@ -100,8 +101,8 @@
 
 .listWeight {
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
-    margin-bottom: 15px;
 }
 
 .weightElement {

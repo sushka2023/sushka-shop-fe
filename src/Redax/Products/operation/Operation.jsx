@@ -8,7 +8,7 @@ export const fetchItems = createAsyncThunk(
   async ({ params, operationType }, thunkAPI) => {
     try {
       const response = await axios.get(
-        `api/product/all?limit=9&offset=${params}&sort=name`
+        `api/product/all?limit=10&offset=${params}&pr_category_id=7`
       );
       return { data: response.data, operationType };
     } catch (e) {

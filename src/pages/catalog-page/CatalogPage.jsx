@@ -33,7 +33,8 @@ const paginationStyles = {
 
 const CatalogPage = () => {
   const { params, page } = useParams();
-  const [offset, setOffset] = useState(parseInt(page));
+  const [offset, setOffset] = useState(0);
+  const [pageN, setPageN] = useState(1);
   const [operationType, setOperationType] = useState("fatch");
 
   const allProducts = useSelector(selectAllItem);
@@ -46,16 +47,20 @@ const CatalogPage = () => {
 
   const handleClickLoadMore = () => {
     setOperationType("loadMore");
-    const newOffset = offset + 1;
-    setOffset(newOffset === 1 ? newOffset + 1 : newOffset)
-    navigate(`/catalog/${params}/${parseInt(page) + 1}`);
+    const newOffset = offset + 9;
+    setPageN(parseInt(pageN + 1));
+    setOffset(newOffset === 0 ? newOffset + 1 : newOffset)
+    // navigate(`/catalog/${params}/${parseInt(page) + 1}`);
   };
 
   const handleClickPagination = (e) => {
     setOperationType("fatch");
-    const newPage = parseInt(e.target.textContent);
-    setOffset(newPage === 1 ? 0 : newPage);
-    navigate(`/catalog/${params}/${newPage - 1}`);
+    const newOffset = offset + 9;
+    const currentPage = e.target.innerText;
+    
+    setPageN(parseInt(currentPage));
+    setOffset(newOffset);
+    // navigate(`/catalog/${params}/${newPage - 1}`);
   };
 
   return (
@@ -71,11 +76,7 @@ const CatalogPage = () => {
         <div>
           <ul className={styles.catalogList}>
             {allProducts.map((item, index) => (
-              <ItemCard
-                item={item}
-                key={index}
-                isFavorite={item.is_favorite}
-              />
+              <ItemCard item={item} key={index} isFavorite={item.is_favorite} />
             ))}
           </ul>
         </div>
@@ -102,7 +103,7 @@ const CatalogPage = () => {
                 hideNextButton
                 sx={paginationStyles}
                 onClick={handleClickPagination}
-                page={offset === 0 ? 1 : offset}
+                page={pageN}
               />
             </ScrollLink>
           </ThemeProvider>

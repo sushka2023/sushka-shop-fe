@@ -15,6 +15,11 @@ const ItemCard = ({ item, isFavorite }) => {
   
   const dispatch = useDispatch();
 
+  const shortDescription =
+    item.description.length > 60
+      ? `${item.description.substring(0, 60)}...`
+      : item.description;
+
   const handleClickFavorite = (e) => {
     e.preventDefault();
     dispatch(toggleFavorite(item));
@@ -30,9 +35,7 @@ const ItemCard = ({ item, isFavorite }) => {
     <li>
       <div className={styles.slideElement}>
         <div className={styles.cardContent}>
-          <Link
-            to={`/catalog/${item.product_category_id}/${item.id}/details`}
-          >
+          <Link to={`/catalog/${item.product_category_id}/${item.id}/details`}>
             <div className={styles.slideImage}>
               <img src={ShopItem} alt="mandarin pastille" />
               {!isFavorite ? (
@@ -49,12 +52,16 @@ const ItemCard = ({ item, isFavorite }) => {
             </div>
             <div className={styles.cardTitle}>
               <h3 className={styles.cardHeader}>{item.name}</h3>
-              <p className={styles.cardPararaph}>{item.description}</p>
+              <p className={styles.cardPararaph}>{shortDescription}</p>
               <ul className={styles.listWeight}>
                 {item.prices.map((price) => (
                   <li className={styles.weightElement} key={price.id}>
                     <button
-                      className={`${styles.weightElementButton} ${selectedWeight === price.weight ? styles.activeWeightElementButton : ''}`}
+                      className={`${styles.weightElementButton} ${
+                        selectedWeight === price.weight
+                          ? styles.activeWeightElementButton
+                          : ""
+                      }`}
                       onClick={(e) =>
                         handleWeightClick(e, price.weight, price.price)
                       }
