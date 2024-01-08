@@ -5,11 +5,11 @@ import ItemCard from "../../components/item-card/ItemCard";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as ScrollLink } from "react-scroll";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "./CatalogPage.module.scss";
 import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
 import Filter from "../../components/Filter/filter";
-import { fetchItems } from "../../Redax/Products/operation/Operation";
+import { fetchAllItems, fetchItemsByCategoties } from "../../Redax/Products/operation/Operation";
 import CategoriesButtons from "../../components/Categories-button/Categories";
 
 const theme = createTheme({
@@ -32,35 +32,48 @@ const paginationStyles = {
 };
 
 const CatalogPage = () => {
-  const { params, page } = useParams();
-  const [offset, setOffset] = useState(0);
-  const [pageN, setPageN] = useState(1);
+  const {category, page} = useParams();
+  const [pageN, setPageN] = useState(parseInt(page) || 1);
+  const [offset, setOffset] = useState(parseInt(page - 1) * 9 || 0);
   const [operationType, setOperationType] = useState("fatch");
 
+  const currentPath = window.location.pathname;
+  console.log(currentPath);
   const allProducts = useSelector(selectAllItem);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchItems({ params: offset, operationType: operationType }));
-  }, [dispatch, offset, operationType]);
+    setPageN(parseInt(page) || 1);
+    setOffset(parseInt((page - 1) * 9) || 0);
+  }, [page])
+  
+  useEffect(() => {
+    if (currentPath === "/catalog") {
+      dispatch(fetchAllItems({ params: offset, operationType: operationType }));
+    }
+    else {
+      dispatch(
+        fetchItemsByCategoties({
+          params: offset,
+          operationType: operationType,
+          category: category,
+        })
+      )
+    }
+  }, [category, currentPath, dispatch, offset, operationType]);
 
   const handleClickLoadMore = () => {
     setOperationType("loadMore");
     const newOffset = offset + 9;
-    setPageN(parseInt(pageN + 1));
-    setOffset(newOffset === 0 ? newOffset + 1 : newOffset)
-    // navigate(`/catalog/${params}/${parseInt(page) + 1}`);
+    setPageN(pageN + 1);
+    setOffset(newOffset)
   };
 
   const handleClickPagination = (e) => {
     setOperationType("fatch");
-    const newOffset = offset + 9;
     const currentPage = e.target.innerText;
-    
     setPageN(parseInt(currentPage));
-    setOffset(newOffset);
-    // navigate(`/catalog/${params}/${newPage - 1}`);
+    setOffset((currentPage - 1) * 9);
   };
 
   return (
@@ -81,7 +94,7 @@ const CatalogPage = () => {
           </ul>
         </div>
         <div className={styles.btnWrapper}>
-          {offset < 3 && (
+          {pageN < 3 && (
             <button
               type="button"
               className={styles.loadMore}

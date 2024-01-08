@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllCategories, fetchItems } from "../operation/Operation";
+import { fetchAllCategories, fetchAllItems, fetchItemsByCategoties } from "../operation/Operation";
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -58,9 +58,12 @@ export const itemsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchItems.pending, handlePending)
-      .addCase(fetchItems.rejected, handleRejected)
-      .addCase(fetchItems.fulfilled, handleFulfilledOperationItems)
+      .addCase(fetchItemsByCategoties.pending, handlePending)
+      .addCase(fetchItemsByCategoties.rejected, handleRejected)
+      .addCase(fetchItemsByCategoties.fulfilled, handleFulfilledOperationItems)
+      .addCase(fetchAllItems.pending, handlePending)
+      .addCase(fetchAllItems.rejected, handleRejected)
+      .addCase(fetchAllItems.fulfilled, handleFulfilledOperationItems)
       .addCase(fetchAllCategories.pending, handlePending)
       .addCase(fetchAllCategories.rejected, handleRejected)
       .addCase(fetchAllCategories.fulfilled, handleFulfilled);

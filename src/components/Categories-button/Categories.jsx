@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectAllCategories } from '../../Redax/Products/selectors/Selectors';
 import styles from './Categories.module.scss';
 
 
 const CategoriesButtons = () => {
-    const [activeButton, setActiveButton] = useState(null);
+    const navigate = useNavigate();
+    const { category } = useParams();
+    const [activeButton, setActiveButton] = useState(parseInt(category) || 'all');
     const allCategories = useSelector(selectAllCategories);
 
     useEffect(() => {
-      if (allCategories && allCategories.length > 0) {
-        setActiveButton(allCategories[0].name);
-      }
-    }, [allCategories]);
+        setActiveButton(parseInt(category) || 'all')
+    }, [category]);
 
-    const handleClickButton = (e) => {
-        setActiveButton(e.target.innerHTML);
+    const handleClickButton = (e, categoryId) => {
+        navigate(`/catalog/${categoryId}/1`);
+
+        if (categoryId === 'all') {
+            navigate(`/catalog`);
+        }
+
+        setActiveButton(categoryId);
     }
 
     return (
         <ul className={`${styles.list}`}>
             {allCategories &&
                 allCategories.map((category) => (
-                    <li key={category.name}>
+                    <li key={category.id}>
                         <button
                             type="button"
-                            className={`${styles.listButton} ${activeButton === category.name ? styles.active : ""}`}
-                            onClick={handleClickButton}
+                            className={`${styles.listButton} ${activeButton === category.id ? styles.active : ""}`}
+                            onClick={(e) => handleClickButton(e, category.id)}
                         >
                             {category.name}
                         </button>
@@ -35,8 +42,8 @@ const CategoriesButtons = () => {
             <li>
                 <button
                     type="button"
-                    className={`${styles.listButton} ${activeButton === 'Все' ? styles.active : ""}`}
-                    onClick={handleClickButton}
+                    className={`${styles.listButton} ${activeButton === 'all' ? styles.active : ""}`}
+                    onClick={(e) => handleClickButton(e, 'all')}
                 >
                     Все
                 </button>

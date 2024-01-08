@@ -32,7 +32,7 @@ const HeaderNav = () => {
       <ul className={styles.listNav}>
         <li className={`${styles.listNavLine} ${styles.dropdown}`}>
           <Link
-            to={`catalog/${allCategories && allCategories[0].id}/0`}
+            to={`catalog/${allCategories && allCategories[0].id}/1`}
             className={styles.listNavLink}
           >
             Каталог
@@ -41,7 +41,7 @@ const HeaderNav = () => {
             {allCategories &&
               allCategories.map((category) => (
                 <li className={styles.dropdownListLine} key={category.id}>
-                  <Link to={`/catalog/${category.name}/0`}>
+                  <Link to={`/catalog/${category.id}/1`}>
                     {category.name}
                   </Link>
                 </li>
