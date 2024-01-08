@@ -11,8 +11,11 @@ import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
 import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
+
 import ConditionsPage from "./pages/conditions-page/ConditionsPage";
 import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
+
+import ShoppingListPage from "./pages/shopping-list-page/ShoppingListPage";
 
 function App() {
   const navigate = useNavigate();
@@ -53,12 +56,11 @@ function App() {
           path="account"
           element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
         />
-        <Route
-          path="cart"
-          element={<div style={{ marginBottom: "500px" }}>Корзина</div>}
-        />
+
         <Route path="conditions" element={<ConditionsPage />} />
         <Route path="policy" element={<PrivacyPolicyPage />} />
+
+        <Route path="cart" element={<ShoppingListPage />} />
       </Route>
 
       <Route path="crm" element={<LayoutCRM />}>
