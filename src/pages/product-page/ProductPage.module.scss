@@ -108,8 +108,10 @@
 }
 .orderForm {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 40px;
+  max-width: 435px;
 }
 
 .orderWeight {
@@ -129,7 +131,7 @@
 .labelWeight {
   display: flex;
 
-  min-width: 45px;
+  min-width: 56px;
 
   padding: 10px 15px;
   justify-content: center;
