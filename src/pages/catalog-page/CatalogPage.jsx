@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllItem } from "../../Redax/Products/selectors/Selectors";
+import { setOffset, setOperation } from "../../Redax/Products/slices/items-slice";
+import { selectAllItem, selectOffset, selectOperationType } from "../../Redax/Products/selectors/Selectors";
 import ItemCard from "../../components/item-card/ItemCard";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -32,48 +33,61 @@ const paginationStyles = {
 };
 
 const CatalogPage = () => {
-  const {category, page} = useParams();
+  const { category, page } = useParams();
   const [pageN, setPageN] = useState(parseInt(page) || 1);
-  const [offset, setOffset] = useState(parseInt(page - 1) * 9 || 0);
-  const [operationType, setOperationType] = useState("fatch");
 
   const currentPath = window.location.pathname;
-  console.log(currentPath);
   const allProducts = useSelector(selectAllItem);
+  const operationType = useSelector(selectOperationType);
+  const offset = useSelector(selectOffset);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setPageN(parseInt(page) || 1);
-    setOffset(parseInt((page - 1) * 9) || 0);
-  }, [page])
+    const initialPage = parseInt(page) || 1;
+    dispatch(setOffset((initialPage - 1) * 9));
+    dispatch(setOperation("fatch"));
+  }, [dispatch, page]);
   
+  console.log(currentPath);
+
   useEffect(() => {
-    if (currentPath === "/catalog") {
-      dispatch(fetchAllItems({ params: offset, operationType: operationType }));
-    }
-    else {
-      dispatch(
-        fetchItemsByCategoties({
-          params: offset,
-          operationType: operationType,
-          category: category,
-        })
-      )
-    }
+    const fetchData = async () => {
+      if (operationType === "fatch" || operationType === "loadMore") {
+        if (currentPath === "/catalog" || currentPath === "/catalog/all") {
+          dispatch(
+            fetchAllItems({
+              params: offset,
+              operationType: operationType,
+            })
+          );
+        } else {
+          dispatch(
+            fetchItemsByCategoties({
+              params: offset,
+              operationType: operationType,
+              category: category,
+            })
+          );
+        }
+      }
+    };
+
+    fetchData();
   }, [category, currentPath, dispatch, offset, operationType]);
 
   const handleClickLoadMore = () => {
-    setOperationType("loadMore");
+    dispatch(setOperation("loadMore"));
     const newOffset = offset + 9;
     setPageN(pageN + 1);
-    setOffset(newOffset)
+    dispatch(setOffset(newOffset))
   };
 
   const handleClickPagination = (e) => {
-    setOperationType("fatch");
+    dispatch(setOperation("fatch"));
     const currentPage = e.target.innerText;
     setPageN(parseInt(currentPage));
-    setOffset((currentPage - 1) * 9);
+    dispatch(setOffset(parseInt((currentPage - 1) * 9)));
   };
 
   return (

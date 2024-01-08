@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectAllCategories } from '../../Redax/Products/selectors/Selectors';
+import { setOffset, setOperation } from '../../Redax/Products/slices/items-slice';
 import styles from './Categories.module.scss';
 
 
@@ -10,6 +11,7 @@ const CategoriesButtons = () => {
     const { category } = useParams();
     const [activeButton, setActiveButton] = useState(parseInt(category) || 'all');
     const allCategories = useSelector(selectAllCategories);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setActiveButton(parseInt(category) || 'all')
@@ -17,9 +19,13 @@ const CategoriesButtons = () => {
 
     const handleClickButton = (e, categoryId) => {
         navigate(`/catalog/${categoryId}/1`);
+        dispatch(setOffset(0));
+        dispatch(setOperation("fatch"))
 
         if (categoryId === 'all') {
-            navigate(`/catalog`);
+            navigate(`/catalog/all`);
+            dispatch(setOffset(0));
+            dispatch(setOperation("fatch"))
         }
 
         setActiveButton(categoryId);

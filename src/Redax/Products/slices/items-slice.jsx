@@ -43,7 +43,8 @@ export const itemsSlice = createSlice({
   initialState: {
     items: [],
     isLoading: false,
-    operation: null,
+    operation: "fatch",
+    offset: 0,
     error: null,
     allCategories: null,
   },
@@ -55,6 +56,12 @@ export const itemsSlice = createSlice({
         }
       });
     },
+    setOffset: (state, action) => {
+      state.offset = action.payload || 0;
+    },
+    setOperation: (state, action) => {
+      state.operation = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -70,5 +77,5 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { toggleFavorite } = itemsSlice.actions;
+export const { toggleFavorite, setOffset, setOperation } = itemsSlice.actions;
 export default itemsSlice.reducer;
