@@ -1,8 +1,7 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOffset, setOperation } from "../../Redax/Products/slices/items-slice";
-import { selectAllItem, selectOffset, selectOperationType, selectSortValue } from "../../Redax/Products/selectors/Selectors";
-import ItemCard from "../../components/item-card/ItemCard";
+import { selectOffset } from "../../Redax/Products/selectors/Selectors";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as ScrollLink } from "react-scroll";
@@ -10,8 +9,8 @@ import { useParams } from "react-router-dom";
 import styles from "./CatalogPage.module.scss";
 import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
 import Filter from "../../components/Filter/filter";
-import { fetchAllItems } from "../../Redax/Products/operation/Operation";
 import CategoriesButtons from "../../components/Categories-button/Categories";
+import CatalogList from "../../components/catalog-list/CatalogList";
 
 const theme = createTheme({
   palette: {
@@ -33,26 +32,11 @@ const paginationStyles = {
 };
 
 const CatalogPage = () => {
-  const { category, page } = useParams();
+  const { page } = useParams();
   const [pageN, setPageN] = useState(parseInt(page) || 1);
 
-  const currentPath = window.location.pathname;
-  const allProducts = useSelector(selectAllItem);
-  const operationType = useSelector(selectOperationType);
   const offset = useSelector(selectOffset);
-  const sortValue = useSelector(selectSortValue);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-          dispatch(
-            fetchAllItems({
-              offset,
-              operationType,
-              sortValue,
-              category: (currentPath !== "/catalog" || currentPath !== "/catalog/all") && category
-            })
-    );
-  }, [category, currentPath, dispatch, offset, sortValue]);
 
   const handleClickLoadMore = () => {
     dispatch(setOperation("loadMore"));
@@ -79,11 +63,7 @@ const CatalogPage = () => {
           </div>
         </div>
         <div>
-          <ul className={styles.catalogList}>
-            {allProducts.map((item, index) => (
-              <ItemCard item={item} key={index} isFavorite={item.is_favorite} />
-            ))}
-          </ul>
+          <CatalogList />
         </div>
         <div className={styles.btnWrapper}>
           {pageN < 3 && (

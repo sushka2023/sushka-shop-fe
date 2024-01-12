@@ -4,16 +4,23 @@ import { ReactComponent as IconFavoriteIsActive } from '../../icons/favoriteacti
 import ShopItem from "../../images/shop-item.jpg";
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toggleFavorite } from '../../Redax/Products/slices/items-slice';
 
 const ItemCard = ({ item, isFavorite }) => {
 
-   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight);
-   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price);
+   const [selectedWeight, setSelectedWeight] = useState(null);
+   const [selectedPrice, setSelectedPrice] = useState(null);
   
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (item) {
+      setSelectedWeight(item.prices[0].weight);
+      setSelectedPrice(item.prices[0].price);
+    }
+  }, [item])
 
   const shortDescription =
     item.description.length > 60
