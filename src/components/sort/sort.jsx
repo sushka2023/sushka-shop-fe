@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setSortValue } from "../../Redax/Products/slices/items-slice";
 import styles from "./sort.module.scss";
 
 const Sort = () => {
-    const [sortValue, setSortValue] = useState("За замовчуванням");
+  
+  const dispatch = useDispatch();
 
-    const clickInput = (e) => setSortValue(e.target.value);
+  const clickInput = (e) => dispatch(setSortValue(e.target.id));
 
   return (
     <>
@@ -13,37 +15,26 @@ const Sort = () => {
         <input
           className={styles.radio}
           type="radio"
-          id="default"
+          id="low_price"
           name="sorting"
-          value="За замовчуванням"
+          value="Ціна за спаданням"
           onClick={clickInput}
           defaultChecked
         />
-        <label htmlFor="default">За замовчуванням</label>
+        <label htmlFor="low_price">Ціна за спаданням</label>
       </div>
       <div className={styles.inputWrapper}>
         <input
           className={styles.radio}
           type="radio"
-          id="byGrowth"
+          id="heigh_price"
           name="sorting"
           value="Ціна за зростанням"
           onClick={clickInput}
         />
-        <label htmlFor="byGrowth" className={styles.label}>
+        <label htmlFor="heigh_price" className={styles.label}>
           Ціна за зростанням
         </label>
-      </div>
-      <div className={styles.inputWrapper}>
-        <input
-          className={styles.radio}
-          type="radio"
-          id="byDecline"
-          name="sorting"
-          value="Ціна за спаданням"
-          onClick={clickInput}
-        />
-        <label htmlFor="byDecline">Ціна за спаданням</label>
       </div>
     </>
   );

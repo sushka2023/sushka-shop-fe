@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllCategories, fetchAllItems, fetchItemsByCategoties } from "../operation/Operation";
+import { fetchAllCategories, fetchAllItems } from "../operation/Operation";
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -30,10 +30,8 @@ const handleFulfilledOperationItems = (state, action) => {
     case "loadMore":
       state.items = [...state.items, ...data];
       break;
-    case "fatch":
-      state.items = data;
-      break;
     default:
+      state.items = data;
       break;
   }
 };
@@ -43,8 +41,9 @@ export const itemsSlice = createSlice({
   initialState: {
     items: [],
     isLoading: false,
-    operation: "fatch",
+    operation: null,
     offset: 0,
+    sortValue: "low_price",
     error: null,
     allCategories: null,
   },
@@ -61,13 +60,13 @@ export const itemsSlice = createSlice({
     },
     setOperation: (state, action) => {
       state.operation = action.payload;
-    }
+    },
+    setSortValue: (state, action) => {
+      state.sortValue = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchItemsByCategoties.pending, handlePending)
-      .addCase(fetchItemsByCategoties.rejected, handleRejected)
-      .addCase(fetchItemsByCategoties.fulfilled, handleFulfilledOperationItems)
       .addCase(fetchAllItems.pending, handlePending)
       .addCase(fetchAllItems.rejected, handleRejected)
       .addCase(fetchAllItems.fulfilled, handleFulfilledOperationItems)
@@ -77,5 +76,5 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { toggleFavorite, setOffset, setOperation } = itemsSlice.actions;
+export const { toggleFavorite, setOffset, setOperation, setSortValue } = itemsSlice.actions;
 export default itemsSlice.reducer;

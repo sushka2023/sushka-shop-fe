@@ -1,7 +1,7 @@
 import { useEffect, useState, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOffset, setOperation } from "../../Redax/Products/slices/items-slice";
-import { selectAllItem, selectOffset, selectOperationType } from "../../Redax/Products/selectors/Selectors";
+import { selectAllItem, selectOffset, selectOperationType, selectSortValue } from "../../Redax/Products/selectors/Selectors";
 import ItemCard from "../../components/item-card/ItemCard";
 import Pagination from "@mui/material/Pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import styles from "./CatalogPage.module.scss";
 import { ReactComponent as ArowIcon } from "../../icons/arrowdown.svg";
 import Filter from "../../components/Filter/filter";
-import { fetchAllItems, fetchItemsByCategoties } from "../../Redax/Products/operation/Operation";
+import { fetchAllItems } from "../../Redax/Products/operation/Operation";
 import CategoriesButtons from "../../components/Categories-button/Categories";
 
 const theme = createTheme({
@@ -40,41 +40,19 @@ const CatalogPage = () => {
   const allProducts = useSelector(selectAllItem);
   const operationType = useSelector(selectOperationType);
   const offset = useSelector(selectOffset);
+  const sortValue = useSelector(selectSortValue);
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
-    setPageN(parseInt(page) || 1);
-    const initialPage = parseInt(page) || 1;
-    dispatch(setOffset((initialPage - 1) * 9));
-    dispatch(setOperation("fatch"));
-  }, [dispatch, page]);
-  
-  console.log(currentPath);
-
   useEffect(() => {
-    const fetchData = async () => {
-      if (operationType === "fatch" || operationType === "loadMore") {
-        if (currentPath === "/catalog" || currentPath === "/catalog/all") {
           dispatch(
             fetchAllItems({
-              params: offset,
-              operationType: operationType,
+              offset,
+              operationType,
+              sortValue,
+              category: (currentPath !== "/catalog" || currentPath !== "/catalog/all") && category
             })
-          );
-        } else {
-          dispatch(
-            fetchItemsByCategoties({
-              params: offset,
-              operationType: operationType,
-              category: category,
-            })
-          );
-        }
-      }
-    };
-
-    fetchData();
-  }, [category, currentPath, dispatch, offset, operationType]);
+    );
+  }, [category, currentPath, dispatch, offset, sortValue]);
 
   const handleClickLoadMore = () => {
     dispatch(setOperation("loadMore"));

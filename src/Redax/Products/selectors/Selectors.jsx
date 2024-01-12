@@ -8,5 +8,7 @@ export const selectAllCategories = state => state.items.allCategories;
 
 export const selectOffset = state => state.items.offset;
 
+export const selectSortValue = state => state.items.sortValue;
+
 export const selectOperationType = state => state.items.operation;
 

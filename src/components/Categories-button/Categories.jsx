@@ -26,6 +26,7 @@ const CategoriesButtons = () => {
             navigate(`/catalog/all`);
             dispatch(setOffset(0));
             dispatch(setOperation("fatch"))
+            return
         }
 
         setActiveButton(categoryId);
