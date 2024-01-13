@@ -44,6 +44,7 @@ export const itemsSlice = createSlice({
     operation: null,
     offset: 0,
     sortValue: "low_price",
+    selectedWeight: '',
     error: null,
     allCategories: null,
   },
@@ -64,6 +65,9 @@ export const itemsSlice = createSlice({
     setSortValue: (state, action) => {
       state.sortValue = action.payload;
     },
+    setSelectedWeight: (state, action) => {
+      state.selectedWeight = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -76,5 +80,5 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { toggleFavorite, setOffset, setOperation, setSortValue } = itemsSlice.actions;
+export const { toggleFavorite, setOffset, setOperation, setSortValue, setSelectedWeight } = itemsSlice.actions;
 export default itemsSlice.reducer;

@@ -5,12 +5,10 @@ axios.defaults.baseURL = "https://www.test-store.shop/";
 
 export const fetchAllItems = createAsyncThunk(
   "api/all-products",
-  async ({ offset, sortValue, operationType, category }, thunkAPI) => {
+  async ({ offset, sortValue, operationType, category, weight }, thunkAPI) => {
     try {
       const response = await axios.get(
-        `api/product/all?limit=9&offset=${offset}&sort=${sortValue}${
-          category ? `&pr_category_id=${category}` : ""
-        }`
+        `api/product/all?limit=9&offset=${offset}&sort=${sortValue}${category ? `&pr_category_id=${category}` : ''}${weight ? `&weight=${weight}` : ''}`
       );
 
       return { data: response.data, operationType };

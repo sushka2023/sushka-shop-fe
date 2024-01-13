@@ -7,6 +7,7 @@ import {
   selectOffset,
   selectOperationType,
   selectSortValue,
+  selectSelectedWeight
 } from "../../Redax/Products/selectors/Selectors";
 import ItemCard from "../../components/item-card/ItemCard";
 import styles from "./catalog-list.module.scss";
@@ -17,6 +18,7 @@ const CatalogList = () => {
     const operationType = useSelector(selectOperationType);
     const offset = useSelector(selectOffset);
     const sortValue = useSelector(selectSortValue);
+    const weight = useSelector(selectSelectedWeight);
     const { category } = useParams();
     const dispatch = useDispatch();
     
@@ -29,9 +31,10 @@ const CatalogList = () => {
             category:
               (currentPath !== "/catalog" || currentPath !== "/catalog/all") &&
               category,
+            weight,
           })
         );
-      }, [category, currentPath, dispatch, offset, sortValue]);
+      }, [category, currentPath, dispatch, offset]);
 
   return (
     <ul className={styles.catalogList}>
