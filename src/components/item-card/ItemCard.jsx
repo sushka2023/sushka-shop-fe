@@ -73,12 +73,12 @@ const ItemCard = ({ item, isFavorite }) => {
                         handleWeightClick(e, price.weight, price.price)
                       }
                     >
-                      {price.weight}
+                      {price.weight === "1000" ? `${"1кг"}` : `${price.weight}г`}
                     </button>
                   </li>
                 ))}
               </ul>
-              <span className={styles.cardPrice}>{selectedPrice} грн</span>
+              <span className={styles.cardPrice}>{selectedPrice} ₴</span>
             </div>
           </Link>
         </div>

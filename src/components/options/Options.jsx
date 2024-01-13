@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { selectSelectedWeight } from "../../Redax/Products/selectors/Selectors";
 import PropTypes from "prop-types";
 import { ReactComponent as SettingsIcon } from "../../icons/settings.svg";
 import styles from "./Options.module.scss";
 
 const Options = ({ children, value }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const containerRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+  const selectWeight = useSelector(selectSelectedWeight);
 
     useEffect(() => {
         const handleClickDropdown = (e) => {
@@ -36,6 +39,7 @@ const Options = ({ children, value }) => {
 
     return (
       <div className={styles.dropdown}>
+        {selectWeight && <span className={styles.sorting}></span>}
         <button className={styles.dropdownToggle} ref={containerRef}>
           {value}
           <SettingsIcon />
