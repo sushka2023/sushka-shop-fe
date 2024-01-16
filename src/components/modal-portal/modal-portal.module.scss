@@ -1,0 +1,25 @@
+@import "../../styles/base/base.scss";
+
+.modal {
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 600px;
+    height: 500px;
+    border-radius: 20px;
+    background: $white-200;
+    padding: 70px 100px 40px;
+}
+
+.modalWrapp {
+    position: relative;
+}
+
+.closeIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

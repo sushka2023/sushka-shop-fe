@@ -13,6 +13,8 @@ import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
 import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
 import ConditionsPage from "./pages/conditions-page/ConditionsPage";
 import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
+import ModalPortal from "./components/modal-portal/ModalPortal";
+import Auth from "./components/auth/Auth";
 
 function App() {
   const navigate = useNavigate();
@@ -26,74 +28,79 @@ function App() {
   }, [allCategories, navigate]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<MainPage />} />
-        <Route path="catalog">
-          <Route path=":category/:page" element={<CatalogPage />} />
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="catalog">
+            <Route path=":category/:page" element={<CatalogPage />} />
+            <Route
+              path=":category/:productId/details"
+              element={<ProductPage />}
+            />
+          </Route>
           <Route
-            path=":category/:productId/details"
-            element={<ProductPage />}
+            path="review"
+            element={<div style={{ marginBottom: "500px" }}>Відгуки</div>}
           />
+          <Route
+            path="cooperation"
+            element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
+          />
+          <Route
+            path="account"
+            element={<div style={{ marginBottom: "500px" }}></div>}
+          />
+          <Route path="favorite" element={<FavoritePage />} />
+          <Route
+            path="account"
+            element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+          />
+          <Route
+            path="cart"
+            element={<div style={{ marginBottom: "500px" }}>Корзина</div>}
+          />
+          <Route path="conditions" element={<ConditionsPage />} />
+          <Route path="policy" element={<PrivacyPolicyPage />} />
         </Route>
-        <Route
-          path="review"
-          element={<div style={{ marginBottom: "500px" }}>Відгуки</div>}
-        />
-        <Route
-          path="cooperation"
-          element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
-        />
-        <Route
-          path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
-        />
-        <Route path="favorite" element={<FavoritePage />} />
-        <Route
-          path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
-        />
-        <Route
-          path="cart"
-          element={<div style={{ marginBottom: "500px" }}>Корзина</div>}
-        />
-        <Route path="conditions" element={<ConditionsPage />} />
-        <Route path="policy" element={<PrivacyPolicyPage />} />
-      </Route>
 
-      <Route path="crm" element={<LayoutCRM />}>
-        <Route
-          path="dashbord"
-          element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
-        />
-        <Route
-          path="orders"
-          element={<div style={{ marginBottom: "500px" }}>Order page</div>}
-        />
-        <Route
-          path="orders/:params"
-          element={<div style={{ marginBottom: "500px" }}>orders params</div>}
-        />
-        <Route path="products" element={<CrmProductsPage />} />
+        <Route path="crm" element={<LayoutCRM />}>
+          <Route
+            path="dashbord"
+            element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
+          />
+          <Route
+            path="orders"
+            element={<div style={{ marginBottom: "500px" }}>Order page</div>}
+          />
+          <Route
+            path="orders/:params"
+            element={<div style={{ marginBottom: "500px" }}>orders params</div>}
+          />
+          <Route path="products" element={<CrmProductsPage />} />
 
-        <Route path="products/:params" element={<CrmAddNewProduct />} />
+          <Route path="products/:params" element={<CrmAddNewProduct />} />
 
-        <Route
-          path="clients"
-          element={<div style={{ marginBottom: "500px" }}>Clients page</div>}
-        />
-        <Route
-          path="clients/:params"
-          element={<div style={{ marginBottom: "500px" }}>clients params</div>}
-        />
-        <Route
-          path="opinions"
-          element={<div style={{ marginBottom: "500px" }}>Opinions Page</div>}
-        />
-        <Route path="settings" element={<CrmSettingsPage />} />
-        <Route index element={<Navigate to="dashbord" replace />} />
-      </Route>
-    </Routes>
+          <Route
+            path="clients"
+            element={<div style={{ marginBottom: "500px" }}>Clients page</div>}
+          />
+          <Route
+            path="clients/:params"
+            element={<div style={{ marginBottom: "500px" }}>clients params</div>}
+          />
+          <Route
+            path="opinions"
+            element={<div style={{ marginBottom: "500px" }}>Opinions Page</div>}
+          />
+          <Route path="settings" element={<CrmSettingsPage />} />
+          <Route index element={<Navigate to="dashbord" replace />} />
+        </Route>
+      </Routes>
+      <ModalPortal>
+        <Auth />
+      </ModalPortal>
+    </>
   );
 }
 

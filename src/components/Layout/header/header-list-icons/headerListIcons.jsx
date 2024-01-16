@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toggleModal } from "../../../../Redax/Auth/slices/auth-slice";
 import { useEffect, useRef, useState } from "react";
 import { ReactComponent as IconSearch } from "../../../../icons/search.svg";
 import { ReactComponent as IconAccount } from "../../../../icons/account.svg";
@@ -10,9 +12,10 @@ const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false);
   const iconRef = useRef();
   const inputRef = useRef();
+  const user = false;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-
     const handleClick = (e) => {
       if (iconRef.current.contains(e.target)) {
         setIsActive(true);
@@ -30,7 +33,7 @@ const HeaderListIcons = () => {
       window.removeEventListener("click", handleClick);
     };
   }, []);
-    
+
   return (
     <ul className={styles.listIcons}>
       <li className={styles.listIconsLineContainer}>
@@ -60,9 +63,16 @@ const HeaderListIcons = () => {
         </div>
       </li>
       <li className={styles.listIconsLine}>
-        <Link to="account">
-          <IconAccount className={styles.iconsNav} />
-        </Link>
+        {user ? (
+          <Link to="account">
+            <IconAccount className={styles.iconsNav} />
+          </Link>
+        ) : (
+          <IconAccount
+            className={styles.iconsNav}
+            onClick={() => dispatch(toggleModal(true))}
+          />
+        )}
       </li>
       <li className={styles.listIconsLine}>
         <Link to="favorite">
