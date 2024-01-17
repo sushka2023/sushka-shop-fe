@@ -22,27 +22,30 @@ const Auth = () => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={styles.formWrapp}>
+        
         <h2 className={styles.loginTitle}>
           {isLoginMode ? "Увійти до особистого кабінету" : "Зареєструватись"}
         </h2>
-        <label className={styles.field}>
-          <Field
-            type="text"
-            name="firstName"
-            placeholder="ім'я"
-            className={styles.firstName}
-          />
-        </label>
 
         {!isLoginMode && (
-          <label className={styles.field}>
-            <Field
-              type="text"
-              name="lastName"
-              placeholder="Прізвище"
-              className={styles.lastName}
-            />
-          </label>
+          <>
+            <label className={styles.field}>
+              <Field
+                type="text"
+                name="firstName"
+                placeholder="ім'я"
+                className={styles.firstName}
+              />
+            </label>
+            <label className={styles.field}>
+              <Field
+                type="text"
+                name="lastName"
+                placeholder="Прізвище"
+                className={styles.lastName}
+              />
+            </label>
+          </>
         )}
 
         <label className={styles.field}>
@@ -76,9 +79,7 @@ const Auth = () => {
 
         {isLoginMode && (
           <div className={styles.editPassWrapp}>
-            <label
-              className={styles.checkboxWrapper}
-            >
+            <label className={styles.checkboxWrapper}>
               <Field
                 type="checkbox"
                 name="rememberPassword"
