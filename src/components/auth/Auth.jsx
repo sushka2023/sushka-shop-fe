@@ -23,7 +23,7 @@ const Auth = () => {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={styles.formWrapp}>
         <h2 className={styles.loginTitle}>
-          {isLoginMode ? "Увійти" : "Зареєструватись"}
+          {isLoginMode ? "Увійти до особистого кабінету" : "Зареєструватись"}
         </h2>
         <label className={styles.field}>
           <Field
