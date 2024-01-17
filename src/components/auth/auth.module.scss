@@ -64,7 +64,7 @@
     font-family: $open-sans;
 }
 
-.loginWrapp, .regWrapp {
+.loginWrapp, .wrapp {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,12 +74,12 @@
    margin-bottom: 53px;
 }
 
-.regWrapp {
-    margin-top: 50px;
+.wrapp {
+    margin-top: 30px;
     margin-bottom: 45px;
 }
 
-.loginBtn {
+.btn {
     display: flex;
     width: 250px;
     height: 50px;
