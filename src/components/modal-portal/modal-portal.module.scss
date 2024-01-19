@@ -10,6 +10,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    backdrop-filter: blur(1px);
 
     &Show {
         opacity: 1;
