@@ -1,21 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Link as ScrollLink, scroller } from "react-scroll";
-import styles from '../Footer.module.scss';
+import { Link, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link as ScrollLink, scroller } from 'react-scroll'
+import styles from '../Footer.module.scss'
 
 const FooterNavList = () => {
-
-  const location = useLocation();
-  const homePath = location.pathname === "/";
+  const location = useLocation()
+  const homePath = location.pathname === '/'
 
   useEffect(() => {
     if (homePath) {
       scroller.scrollTo(location.hash.slice(1), {
         smooth: true,
-        duration: 500,
-      });
+        duration: 500
+      })
     }
-  }, [homePath, location]);
+  }, [homePath, location])
 
   return (
     <ul className={styles.footerNavList}>
@@ -89,7 +88,7 @@ const FooterNavList = () => {
         )}
       </li>
     </ul>
-  );
-};
+  )
+}
 
-export default FooterNavList;
+export default FooterNavList

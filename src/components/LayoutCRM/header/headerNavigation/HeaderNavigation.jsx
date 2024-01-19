@@ -1,6 +1,6 @@
-import { NavLink } from "react-router-dom";
-import { ReactComponent as IconGear } from "../../../../icons/gear.svg";
-import styles from "../HeaderCRM.module.scss";
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as IconGear } from '../../../../icons/gear.svg'
+import styles from '../HeaderCRM.module.scss'
 
 const HeaderNavigation = () => {
   return (
@@ -18,7 +18,7 @@ const HeaderNavigation = () => {
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default HeaderNavigation;
+export default HeaderNavigation

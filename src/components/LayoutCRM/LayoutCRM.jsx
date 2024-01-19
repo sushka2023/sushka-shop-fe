@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import HeaderCRM from "./header/HeaderCRM";
-import AsideCRM from "./aside/AsideCRM";
-import styles from "./LayoutCRM.module.scss";
+import PropTypes from 'prop-types'
+import { Suspense } from 'react'
+import { Outlet } from 'react-router-dom'
+import HeaderCRM from './header/HeaderCRM'
+import AsideCRM from './aside/AsideCRM'
+import styles from './LayoutCRM.module.scss'
 
 const LayoutCRM = () => {
   return (
@@ -20,11 +20,11 @@ const LayoutCRM = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 LayoutCRM.propTypes = {
-  children: PropTypes.node,
-};
+  children: PropTypes.node
+}
 
-export default LayoutCRM;
+export default LayoutCRM

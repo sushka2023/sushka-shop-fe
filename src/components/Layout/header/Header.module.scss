@@ -1,239 +1,238 @@
 @import '../../../styles/base/base.scss';
 
 .containerHeader {
-    @include page-container;
-};
+  @include page-container;
+}
 
 .headerWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 73px;
-};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 73px;
+}
 
 .navBlock {
-    display: flex;
-    width: 1360px;
-    justify-content: space-between;
+  display: flex;
+  width: 1360px;
+  justify-content: space-between;
 }
 
 .navWrapper {
-    display: flex;
-    align-items: center;
-    gap: 454px;
+  display: flex;
+  align-items: center;
+  gap: 454px;
 }
 
 .listNav {
-    display: flex;
-    gap: 30px;
+  display: flex;
+  gap: 30px;
 }
 
 .listIcons {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-};
-
-.listNavLine {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 85px;
-    height: 40px;
-    color: $green-dark-200;
-    font-family: $open-sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: $font-weight-600;
-    line-height: normal;
-    text-transform: uppercase;
-    cursor: pointer;
-
-    &:hover {
-        color: $yellow-200;
-    }
-};
-
-.listNavLink:active {
-    padding: 10px;
-    color: $white-200;
-    border-radius: 10px;
-    background: $yellow-200;
-};
-
-.navLinkCrm {
-    width: 101px;
-    height: 40px;
-    border-radius: 10px;
-    background: $green-dark-200;
-
-    &.linkCrm {
-       color: $white-200;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-    }
+  display: flex;
+  gap: 50px;
+  align-items: center;
 }
 
+.listNavLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 40px;
+  color: $green-dark-200;
+  font-family: $open-sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: $font-weight-600;
+  line-height: normal;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: $yellow-200;
+  }
+}
+
+.listNavLink:active {
+  padding: 10px;
+  color: $white-200;
+  border-radius: 10px;
+  background: $yellow-200;
+}
+
+.navLinkCrm {
+  width: 101px;
+  height: 40px;
+  border-radius: 10px;
+  background: $green-dark-200;
+
+  &.linkCrm {
+    color: $white-200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
 @keyframes slideIn {
-    0% {
-        width: 30px;
-        height: 33px;
-        opacity: 0;
-    }
-
-    100% {
-        width: 300px;
-        height: 50px;
-        opacity: 1;
-    }
-};
-
-.searchContainer {
+  0% {
     width: 30px;
     height: 33px;
-    position: relative;
+    opacity: 0;
+  }
 
-    &IsActive {
-        animation: slideIn 0.3s forwards;
-        position: relative;
-        width: 203px;
-        height: 50px;
-    }
-};
+  100% {
+    width: 300px;
+    height: 50px;
+    opacity: 1;
+  }
+}
+
+.searchContainer {
+  width: 30px;
+  height: 33px;
+  position: relative;
+
+  &IsActive {
+    animation: slideIn 0.3s forwards;
+    position: relative;
+    width: 203px;
+    height: 50px;
+  }
+}
 
 .searchInput {
-    display: none;
-};
-
+  display: none;
+}
 
 .searchInputIsActive {
-    font-family: $open-sans;
+  font-family: $open-sans;
+  color: $green-dark-200;
+  animation: slideIn 0.3s forwards;
+  border-radius: 10px;
+  background: #d5dbd1;
+  border: none;
+  cursor: pointer;
+  caret-color: $green-dark-200;
+  padding-left: 51px;
+  padding-right: 12.25px;
+  box-sizing: border-box;
+
+  &::placeholder {
     color: $green-dark-200;
-    animation: slideIn 0.3s forwards;
-    border-radius: 10px;
-    background: #D5DBD1;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: $font-weight-400;
+    line-height: 130%;
+  }
+  &:focus {
     border: none;
-    cursor: pointer;
-    caret-color: $green-dark-200;
-    padding-left: 51px;
-    padding-right: 12.25px;
-    box-sizing: border-box;
+    outline: none;
+  }
+  &:focus::placeholder {
+    content: '';
+  }
+}
 
-    &::placeholder {
-        color: $green-dark-200;
-        font-family: $open-sans;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: $font-weight-400;
-        line-height: 130%;
-    }
-    &:focus {
-        border: none;
-        outline: none;
-    }
-    &:focus::placeholder {
-        content: '';
-    }
-};
-
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    width: 17px;
-    height: 17px;
-    background-image: url(/src/icons/clear.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    cursor: pointer;
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  background-image: url(/src/icons/clear.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
 }
 
 .iconsNavSearch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    fill: $green-dark-200;
-    stroke: $green-dark-200;
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: $green-dark-200;
+  stroke: $green-dark-200;
 
-    &:hover {
-        cursor: pointer;
-        fill: $yellow-200;
-        stroke: $yellow-200;
-    }
-};
+  &:hover {
+    cursor: pointer;
+    fill: $yellow-200;
+    stroke: $yellow-200;
+  }
+}
 
 .iconsNavSearchIsActive {
-    left: 10px;
-    top: 50%;
-    transform: translate(0, -50%);
-    position: absolute;
-    fill: $green-dark-200;
-    stroke: $green-dark-200;
-        
-    &:hover {
-        cursor: pointer;
-        fill: $yellow-200;
-        stroke: $yellow-200;
-    }
+  left: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
+  position: absolute;
+  fill: $green-dark-200;
+  stroke: $green-dark-200;
+
+  &:hover {
+    cursor: pointer;
+    fill: $yellow-200;
+    stroke: $yellow-200;
+  }
 }
 
 .iconsNav {
-    fill: $green-dark-200;
+  fill: $green-dark-200;
 
-    &:hover {
-      cursor: pointer;
-      fill: $yellow-200;
-    };
-};
+  &:hover {
+    cursor: pointer;
+    fill: $yellow-200;
+  }
+}
 
 // dropdown
 
 .dropdown {
-    position: relative;
-};
+  position: relative;
+}
 
 .dropdownList {
-    display: none;
-    position: absolute;
-    z-index: 1;
-    left: -10px;
-    width: 200px;
-    padding: 10px;
-    border-radius: 0px 20px 20px 20px;
-    background: var(--white, #FFF);
-    box-shadow: 0px 0px 0px 0px rgb(0 0 0 / 10%), 
-    1px 0px 2px 0px rgb(0 0 0 / 10%), 
-    4px 2px 4px 0px rgb(0 0 0 / 9%), 
-    9px 4px 6px 0px rgb(0 0 0 / 5%), 
-    17px 7px 7px 0px rgb(0 0 0 / 1%), 
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: -10px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
+  background: var(--white, #fff);
+  box-shadow:
+    0px 0px 0px 0px rgb(0 0 0 / 10%),
+    1px 0px 2px 0px rgb(0 0 0 / 10%),
+    4px 2px 4px 0px rgb(0 0 0 / 9%),
+    9px 4px 6px 0px rgb(0 0 0 / 5%),
+    17px 7px 7px 0px rgb(0 0 0 / 1%),
     26px 11px 8px 0px rgb(0 0 0 / 0%);
-};
+}
 
 .dropdown:hover .dropdownList {
-    display: flex;
-    flex-direction: column;
-    top: 37px;
-};
+  display: flex;
+  flex-direction: column;
+  top: 37px;
+}
 
 .dropdownListLine {
-    height: 40px;
-    padding: 0px 10px;
-    display: flex;
-    align-items: center;
-    color: $green-dark-200;
-    &:hover {
-        cursor: pointer;
-        border-radius: 10px;
-        background: rgba(86, 115, 67, 0.10);
-    }
+  height: 40px;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  color: $green-dark-200;
+  &:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    background: rgba(86, 115, 67, 0.1);
+  }
 
-    &:active {
-        color: $white-200;
-        border-radius: 10px;
-        background: var(--dark-green, #567343);
-    }
-};
+  &:active {
+    color: $white-200;
+    border-radius: 10px;
+    background: var(--dark-green, #567343);
+  }
+}
 
 .dropdawnListLink {
-    padding: 0px 14px;
-};
+  padding: 0px 14px;
+}

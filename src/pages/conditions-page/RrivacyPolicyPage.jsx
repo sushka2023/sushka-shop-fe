@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import styles from "./ConditionsPage.module.scss";
+/* eslint-disable max-lines */
+import { useEffect } from 'react'
+import styles from './ConditionsPage.module.scss'
 
 const PrivacyPolicyPage = () => {
   useEffect(() => {
     window.scroll({
       top: 0,
-      behavior: "instant",
-    });
-  }, []);
+      behavior: 'instant'
+    })
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -269,7 +270,7 @@ const PrivacyPolicyPage = () => {
         </ol>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PrivacyPolicyPage;
+export default PrivacyPolicyPage
