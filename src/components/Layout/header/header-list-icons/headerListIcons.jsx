@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../../../Redax/Auth/slices/auth-slice";
 import { useEffect, useRef, useState } from "react";
 import { ReactComponent as IconSearch } from "../../../../icons/search.svg";
@@ -7,12 +7,13 @@ import { ReactComponent as IconAccount } from "../../../../icons/account.svg";
 import { ReactComponent as IconFavorite } from "../../../../icons/favorite.svg";
 import { ReactComponent as IconCart } from "../../../../icons/cart.svg";
 import styles from "../Header.module.scss";
+import { selectUser } from "../../../../Redax/Auth/selectors/Selectors";
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false);
   const iconRef = useRef();
   const inputRef = useRef();
-  const user = false;
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {

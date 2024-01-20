@@ -7,36 +7,100 @@
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.20);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
     backdrop-filter: blur(1px);
+}
 
-    &Show {
+@keyframes showOverlay {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    100% {
         opacity: 1;
         visibility: visible;
     }
-    
-};
+}
+
+@keyframes hideOverlay {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.overlayEnterActive{
+    animation: showOverlay 0.3s ease-in-out forwards;
+}
+
+.overlayEnter {
+  animation: showOverlay 0.3s ease-in-out forwards;
+}
+
+.overlayExitActive {
+    animation: hideOverlay 0.3s ease-in-out forwards;
+}
+
+.overlayExit {
+    animation: hideOverlay 0.3s ease-in-out forwards;
+}
 
 .modal {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) translateY(50%);
     z-index: 1;
     width: 600px;
     border-radius: 20px;
     background: $white-200;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) translateY(0);
+@keyframes showModal {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -50%) translateY(50%);
+    }
+
+    100% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) translateY(0);
+    }
+}
+
+@keyframes hideModal {
+    0% {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) translateY(0);
+        }
+    
+        100% {
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, -50%) translateY(50%);
+        }
+}
+
+.entering {
+    animation: showModal 0.3s ease-in-out forwards;
+}
+.entered {
+    animation: showModal 0.3s ease-in-out forwards;
+}
+
+.exiting {
+    animation: hideModal 0.3s ease-in-out forwards;
+}
+
+.exited {
+    animation: hideModal 0.3s ease-in-out forwards;
 }
 
 .closeIcon {

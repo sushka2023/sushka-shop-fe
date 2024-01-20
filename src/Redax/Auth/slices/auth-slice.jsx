@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { login, signUp } from "../operation/Operation";
 
 const initialState = {
+  accessTokenn: null,
+  refreshToken: null,
   user: null,
   isLoading: false,
   errors: null,
@@ -15,7 +17,7 @@ export const authSlice = createSlice({
   reducers: {
     toggleModal: (state, action) => {
       state.modal = action.payload
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -25,11 +27,10 @@ export const authSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
-        state.errors = action.error;
+        state.errors = action.payload;
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = action.payload.data;
       })
       .addCase(login.pending, (state, action) => {
         state.isLoading = true;
@@ -41,7 +42,9 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.data;
+        state.user = action.payload.data.user;
+        state.accessTokenn = action.payload.data.access_token;
+        state.refreshToken = action.payload.data.access_token;
       });
   }
 });

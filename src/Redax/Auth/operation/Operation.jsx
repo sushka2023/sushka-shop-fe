@@ -13,7 +13,7 @@ export const signUp = createAsyncThunk(
       });
       return { data: response.data, operationType };
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(e.response.status);
     }
   }
 );

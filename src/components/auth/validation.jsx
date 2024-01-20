@@ -28,3 +28,9 @@ export const SignupSchema = Yup.object().shape({
         .oneOf([Yup.ref("password"), null], "Паролі повинні співпадати")
         .required("Поле має бути заповненим"),
 });
+
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string().required("Поле має бути заповненим"),
+  password: Yup.string().required("Поле має бути заповненим"),
+});
+
