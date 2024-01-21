@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectAllCategories } from "./Redax/Products/selectors/Selectors";
 import Layout from "./components/Layout/Layout";
 import MainPage from "./pages/main-page/MainPage";
@@ -15,10 +15,17 @@ import ConditionsPage from "./pages/conditions-page/ConditionsPage";
 import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
 import ModalPortal from "./components/modal-portal/ModalPortal";
 import Auth from "./components/auth/Auth";
+import { currentUser } from "./Redax/Auth/operation/Operation";
+import PrivateRoute from "./components/privste-route/PrivateRoute";
+import { selectIsLogedIn, selectToken } from "./Redax/Auth/selectors/Selectors";
+import AccountPage from "./pages/account-page/AccountPage";
 
 function App() {
   const navigate = useNavigate();
   const allCategories = useSelector(selectAllCategories);
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const isLogedIn = useSelector(selectIsLogedIn);
 
   useEffect(() => {
     const currentPath = window.location.pathname;
@@ -26,6 +33,12 @@ function App() {
       navigate(`catalog/${allCategories[0].id}/0`);
     }
   }, [allCategories, navigate]);
+
+  useEffect(() => {
+    if (token && !isLogedIn) {
+      dispatch(currentUser({ accessTokenn: token, operationType: "currentUser" }));
+    }
+  }, [token, isLogedIn, dispatch])
 
   return (
     <>
@@ -47,14 +60,14 @@ function App() {
             path="cooperation"
             element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
           />
-          <Route
-            path="account"
-            element={<div style={{ marginBottom: "500px" }}></div>}
-          />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
-            path="account"
-            element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+            path="/account"
+            element={
+              <PrivateRoute
+                redirectTo="/"
+                component={<AccountPage />} />
+            }
           />
           <Route
             path="cart"
@@ -67,7 +80,9 @@ function App() {
         <Route path="crm" element={<LayoutCRM />}>
           <Route
             path="dashbord"
-            element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
+            element={
+              <div style={{ marginBottom: "500px" }}>Dashboard page</div>
+            }
           />
           <Route
             path="orders"
@@ -87,7 +102,9 @@ function App() {
           />
           <Route
             path="clients/:params"
-            element={<div style={{ marginBottom: "500px" }}>clients params</div>}
+            element={
+              <div style={{ marginBottom: "500px" }}>clients params</div>
+            }
           />
           <Route
             path="opinions"

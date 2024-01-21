@@ -29,7 +29,9 @@ const ModalPortal = ({ children }) => {
             <div className={`${styles.modal} ${styles[state]}`}>
               <IconClose
                 className={styles.closeIcon}
-                onClick={() => dispatch(toggleModal(false))}
+                onClick={() => {
+                  dispatch(toggleModal(false))
+                }}
               />
               {children}
             </div>

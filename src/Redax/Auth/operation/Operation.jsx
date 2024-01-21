@@ -33,6 +33,38 @@ export const login = createAsyncThunk(
         });
       return { data: response.data, operationType };
     } catch (e) {
+      return thunkAPI.rejectWithValue(e.response.status);
+    }
+  }
+);
+
+export const currentUser = createAsyncThunk(
+  "api/currentUser",
+  async ({ accessTokenn, operationType }, thunkAPI) => {
+    try {
+      const response = await axios.get("api/users/me/", {
+        headers: {
+          Authorization: `Bearer ${accessTokenn}`,
+        },
+      });
+      return { data: response.data, operationType };
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "api/logOut",
+  async ({ accessTokenn }, thunkAPI) => {
+    try {
+      const response = await axios.post("api/auth/logout", null, {
+        headers: {
+          Authorization: `Bearer ${accessTokenn}`,
+        },
+      });
+      return response;
+    } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }

@@ -7,13 +7,13 @@ import { ReactComponent as IconAccount } from "../../../../icons/account.svg";
 import { ReactComponent as IconFavorite } from "../../../../icons/favorite.svg";
 import { ReactComponent as IconCart } from "../../../../icons/cart.svg";
 import styles from "../Header.module.scss";
-import { selectUser } from "../../../../Redax/Auth/selectors/Selectors";
+import { selectIsLogedIn } from "../../../../Redax/Auth/selectors/Selectors";
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false);
   const iconRef = useRef();
   const inputRef = useRef();
-  const user = useSelector(selectUser);
+  const isLogedIn = useSelector(selectIsLogedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const HeaderListIcons = () => {
         </div>
       </li>
       <li className={styles.listIconsLine}>
-        {user ? (
+        {isLogedIn ? (
           <Link to="account">
             <IconAccount className={styles.iconsNav} />
           </Link>

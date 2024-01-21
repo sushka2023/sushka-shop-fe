@@ -4,7 +4,7 @@ import { login, signUp } from "../../Redax/Auth/operation/Operation";
 import { Formik, Form, Field } from "formik";
 import { SignupSchema, LoginSchema } from "./validation";
 import styles from "./auth.module.scss";
-import { selectIsLoading, selectUser } from "../../Redax/Auth/selectors/Selectors";
+import { selectErrors, selectIsLoading, selectOperationType, selectUser } from "../../Redax/Auth/selectors/Selectors";
 import { toggleModal } from "../../Redax/Auth/slices/auth-slice";
 import { useNavigate } from "react-router-dom";
 
@@ -15,14 +15,20 @@ const Auth = () => {
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsLoading);
   const user = useSelector(selectUser);
+  const operationType = useSelector(selectOperationType)
+  const error = useSelector(selectErrors)
 
   useEffect(() => {
-    if (user) {
+    if (user && operationType === "Login") {
       dispatch(toggleModal(false))
       navigate("account");
     }
+    if (user && operationType === "SignUp") {
+      setMailConfirmation(true)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, dispatch])
+
 
   const toggleLoginMode = () => setLoginMode(!isLoginMode);
 
@@ -36,8 +42,6 @@ const Auth = () => {
 
   const handleSubmit = (values) => {
     dispatch(isLoginMode ? login({ user: values, operationType: "Login" }) : signUp({ user: values, operationType: "SignUp" }));
-
-    !isLoginMode && setMailConfirmation(true);
   };
 
   return (
@@ -108,17 +112,27 @@ const Auth = () => {
                   name="email"
                   placeholder="Електронна пошта"
                   className={`${styles.email} ${
-                    errors.email && touched.email && styles.fieldError
+                    (errors.email && touched.email) ||
+                    (error === 403 && styles.fieldError)
                   }`}
                 />
               </label>
               {errors.email && touched.email ? (
                 <div className={styles.error}>{errors.email}</div>
               ) : null}
+              {error === 409 && (
+                <div className={styles.error}>
+                  Користувач з такою поштою вже зареєстрований
+                </div>
+              )}
 
               <label
                 className={`${styles.label} ${
-                  errors.password && touched.password && styles.labelError
+                  errors.password &&
+                  touched.password &&
+                  styles.fieldError ||
+                  error === 403 &&
+                  styles.labelError
                 }`}
               >
                 <Field
@@ -126,13 +140,22 @@ const Auth = () => {
                   name="password"
                   placeholder="Пароль"
                   className={`${styles.password} ${
-                    errors.password && touched.password && styles.fieldError
+                      errors.password &&
+                      touched.password &&
+                      styles.fieldError ||
+                      error === 403 && styles.fieldError  
                   }`}
                 />
               </label>
               {errors.password && touched.password ? (
                 <div className={styles.error}>{errors.password}</div>
               ) : null}
+
+              {error === 403 && (
+                <div className={styles.error}>
+                  Невірно вказаний пароль або e-mail
+                </div>
+              )}
 
               {!isLoginMode && (
                 <>
@@ -202,14 +225,16 @@ const Auth = () => {
           )}
         </Formik>
       ) : (
-        <div className={styles.confEmailWrapp}>
-          <h2 className={styles.confEmailTitle}>
-            Підтвердіть вашу електронну пошту
-          </h2>
-          <p className={styles.confEmailDescr}>
-            Ми відправили лист з підтвердженням на вашу електронну пошту!
-          </p>
-        </div>
+        mailConfirmation && (
+          <div className={styles.confEmailWrapp}>
+            <h2 className={styles.confEmailTitle}>
+              Підтвердіть вашу електронну пошту
+            </h2>
+            <p className={styles.confEmailDescr}>
+              Ми відправили лист з підтвердженням на вашу електронну пошту!
+            </p>
+          </div>
+        )
       )}
     </>
   );
