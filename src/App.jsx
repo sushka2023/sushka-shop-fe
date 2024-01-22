@@ -13,6 +13,7 @@ import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
 import CrmAddNewProduct from './pages/crm-add-new-product/CrmAddNewProduct'
 import ConditionsPage from './pages/conditions-page/ConditionsPage'
 import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
+import CooperationPage from './pages/cooperation-page/CooperationPage'
 
 function App() {
   const navigate = useNavigate()

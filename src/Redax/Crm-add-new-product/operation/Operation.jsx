@@ -63,7 +63,7 @@ export const createNewProduct = createAsyncThunk(
     } catch (e) {
       Report.failure(
         "Упс... сталася помилка",
-        `Заплатіть своїм розробникам для вирішення ${e.message}`,
+        `${e.message}`,
         "Добре"
       );
       return thunkAPI.rejectWithValue(e.message);
