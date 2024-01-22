@@ -8,6 +8,7 @@ import { ReactComponent as IconArrowleft } from "../../icons/arrowleft.svg";
 import { ReactComponent as IconArrowRight } from "../../icons/arrowright.svg";
 import axios from "axios";
 import { ModalProductLimits } from "../../components/modal-product-limits/ModalProductLimits";
+import { Loader } from "../../components/Loader/Loader";
 
 const getProductForId = async (productId) => {
   const { data } = await axios.get(`api/product/${productId}`);
@@ -15,6 +16,8 @@ const getProductForId = async (productId) => {
 };
 
 const ProductPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [products, setProducts] = useState(null);
   const [selectedWeight, setSelectedWeight] = useState("");
   const [selectedPrice, setSelectedPrice] = useState(0);
@@ -124,7 +127,7 @@ const ProductPage = () => {
   return (
     <>
       <div className={styles.container}>
-        {products ? (
+        {products && !isLoading ? (
           <div>
             <div className={styles.productWrapper}>
               <div>
@@ -248,7 +251,8 @@ const ProductPage = () => {
             </div>
           </div>
         ) : (
-          <p>Завантаження...</p>
+          // <p>Завантаження...</p>
+          <Loader />
         )}
       </div>
     </>

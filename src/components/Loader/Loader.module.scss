@@ -1,0 +1,125 @@
+.backdrop {
+  background-color: rgba(12, 12, 12, 0.334);
+  width: 100vh;
+  height: 100vh;
+}
+
+.list {
+  display: flex;
+  gap: 30px;
+}
+
+.first {
+  z-index: 50;
+}
+
+// 2
+@keyframes customCombinedAnimationSecond {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(0);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-180deg);
+  }
+}
+
+.animate__customCombinedAnimationSecond {
+  animation-name: customCombinedAnimationSecond;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-delay: 0;
+  z-index: 40;
+}
+
+// 3
+
+@keyframes customCombinedAnimationThird {
+  0% {
+    opacity: 1;
+    transform: translateX(-250%) rotate(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(0%) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(180deg);
+  }
+}
+
+.animate__customCombinedAnimationThird {
+  animation-name: customCombinedAnimationThird;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0.6s;
+  opacity: 0;
+  z-index: 30;
+}
+
+@keyframes customCombinedAnimationFour {
+  0% {
+    opacity: 1;
+    transform: translateX(-350%) rotate(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(0%) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(180deg);
+  }
+}
+
+.animate__customCombinedAnimationFour {
+  animation-name: customCombinedAnimationFour;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 1.4s;
+  opacity: 0;
+  z-index: 20;
+}
+
+@keyframes customCombinedAnimationFive {
+  0% {
+    opacity: 1;
+    transform: translateX(-450%) rotate(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(0%) rotate(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-180deg);
+  }
+}
+
+.animate__customCombinedAnimationFive {
+  animation-name: customCombinedAnimationFive;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 2.2s;
+  opacity: 0;
+  z-index: 10;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateX(0) rotate(180deg);
+}
