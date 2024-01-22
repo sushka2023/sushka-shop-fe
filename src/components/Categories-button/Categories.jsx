@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAllCategories } from '../../Redax/Products/selectors/Selectors'
+
 import styles from './Categories.module.scss'
 
 const CategoriesButtons = () => {
