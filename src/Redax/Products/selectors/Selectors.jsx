@@ -1,8 +1,15 @@
-export const selectIsLoading = state => state.items.isLoading;
+export const selectIsLoading = (state) => {
+  return state.items.isLoading
+}
 
-export const selectAllItem = state => state.items.items;
+export const selectAllItem = (state) => {
+  return state.items.items
+}
 
-export const selectFavoriteItem = state => state.items.favorite;
+export const selectFavoriteItem = (state) => {
+  return state.items.favorite
+}
 
-export const selectAllCategories = state => state.items.allCategories;
-
+export const selectAllCategories = (state) => {
+  return state.items.allCategories
+}

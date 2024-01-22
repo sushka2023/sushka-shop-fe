@@ -51,34 +51,33 @@ const validateField = async (name, value) => {
   
   useEffect(() => {
     const handleClickDropdown = (e) => {
-      setIsOpen(!isOpen);
+      setIsOpen(!isOpen)
 
       if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
-
-    document.addEventListener("click", handleClickDropdown);
-
-    return () => {
-      document.removeEventListener("click", handleClickDropdown);
-    };
-  }, [isOpen]);
-
-  const applyDropDown = (e) => {
-    
-    if (e.target.nodeName === "BUTTON") {
-      return;
     }
 
-    e.stopPropagation();
-  };
+    document.addEventListener('click', handleClickDropdown)
+
+    return () => {
+      document.removeEventListener('click', handleClickDropdown)
+    }
+  }, [isOpen])
+
+  const applyDropDown = (e) => {
+    if (e.target.nodeName === 'BUTTON') {
+      return
+    }
+
+    e.stopPropagation()
+  }
 
   const statusClasses = {
     Новий: styles.statusNew,
     Активний: styles.statusActive,
-    Архівований: styles.statusArchive,
-  };
+    Архівований: styles.statusArchive
+  }
 
   return (
     <section className={styles.container}>
@@ -173,7 +172,7 @@ const validateField = async (name, value) => {
         <CrmAddNewProductTable />
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default CrmAddNewProduct;
+export default CrmAddNewProduct

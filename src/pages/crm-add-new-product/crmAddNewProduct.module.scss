@@ -11,119 +11,120 @@
 }
 
 .title {
-    display: flex;
-    gap: 20px;
-    align-items: flex-end;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
 }
 
 .header {
-    color: $CRM-grey;
-    font-family: $comfortaa;
-    font-size: 32px;
-    font-weight: $font-weight-500;
-    line-height: 130%;
+  color: $CRM-grey;
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: $font-weight-500;
+  line-height: 130%;
 }
 
 .status {
-    padding: 5px 10px;
-    border-radius: 10px;
-    background: rgba(224, 231, 255, 0.50);
-    color: $CRM-accent;
-    font-family: $open-sans;
-    font-size: 16px;
-    font-weight: $font-weight-600;
-    line-height: 130%;
-    
-        &Active {
-            color: #059691;
-            background: rgba(209, 250, 229, 0.50);
-        }
-    
-        &Archive {
-            color: $CRM-grey;
-            background: rgba(241, 245, 249, 0.50);
-        }
+  padding: 5px 10px;
+  border-radius: 10px;
+  background: rgba(224, 231, 255, 0.5);
+  color: $CRM-accent;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+
+  &Active {
+    color: #059691;
+    background: rgba(209, 250, 229, 0.5);
+  }
+
+  &Archive {
+    color: $CRM-grey;
+    background: rgba(241, 245, 249, 0.5);
+  }
 }
 
 .titleWrapper {
-    display: flex;
-    margin-bottom: 30px;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .editSaveBtnsBlock {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .editBtn {
-    display: flex;
-    width: 200px;
-    height: 40px;
-    padding: 10px 10px 10px 20px;
-    gap: 24px;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid $CRM-accent;
-    background: inherit;
-    color: $CRM-accent;
-    text-align: center;
-    font-family: $open-sans;
-    font-size: 16px;
-    font-weight: $font-weight-600;
-    line-height: 130%;
-    cursor: pointer;
+  display: flex;
+  width: 200px;
+  height: 40px;
+  padding: 10px 10px 10px 20px;
+  gap: 24px;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid $CRM-accent;
+  background: inherit;
+  color: $CRM-accent;
+  text-align: center;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+  cursor: pointer;
 }
 
 .arrowIcon {
-    fill: $CRM-accent;
-    transform: rotate(90deg);
+  fill: $CRM-accent;
+  transform: rotate(90deg);
 }
 
 .dropdownPosition {
-    position: relative;
+  position: relative;
 }
 
 .inputsWrapp {
-    display: flex;
-    justify-content: space-between;
-    gap: 46px;
+  display: flex;
+  justify-content: space-between;
+  gap: 46px;
 }
 
 .textInputsLayout {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 672px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 672px;
+  width: 100%;
 }
 
 .label {
-    color: $CRM-grey;
-    font-family: $open-sans;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
+  color: $CRM-grey;
+  font-family: $open-sans;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
 }
 
-.nameInput, .descriptionTextaria{
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(100, 116, 139, 0.20);
-    background: $white-200;
-    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-    outline: none;
-    resize: none;
-    color: $CRM-grey;
-    font-family: $open-sans;
-    font-size: 14px;
+.nameInput,
+.descriptionTextaria {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  background: $white-200;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  outline: none;
+  resize: none;
+  color: $CRM-grey;
+  font-family: $open-sans;
+  font-size: 14px;
 }
 
 .descriptionTextaria {
-    height: 248px;
+  height: 248px;
 }
 
 .categoriesWrapper {

@@ -1,4 +1,4 @@
-@import "../../../styles/base/base.scss";
+@import '../../../styles/base/base.scss';
 
 .header {
   display: flex;
@@ -20,7 +20,7 @@
   position: relative;
 
   &:last-child::after {
-    content: "";
+    content: '';
     display: block;
     width: 1px;
     height: 100%;
@@ -70,7 +70,9 @@
   border: 1px solid transparent;
   border-radius: 50%;
 
-  transition: scale $transition-duration, border-color $transition-duration;
+  transition:
+    scale $transition-duration,
+    border-color $transition-duration;
 
   &:hover {
     border-color: $CRM-accent;
@@ -100,7 +102,9 @@
   font-weight: $font-weight-600;
   line-height: 130%;
 
-  transition: scale $transition-duration, border-color $transition-duration;
+  transition:
+    scale $transition-duration,
+    border-color $transition-duration;
 
   &:hover {
     border-color: $CRM-accent;

@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { ReactComponent as IconLogo } from "../../../icons/logo.svg";
-import HeaderNav from "./header-nav/headerNav";
-import HeaderListIcons from "./header-list-icons/headerListIcons";
-import styles from "./Header.module.scss";
+import { Link } from 'react-router-dom'
+import { ReactComponent as IconLogo } from '../../../icons/logo.svg'
+import HeaderNav from './header-nav/headerNav'
+import HeaderListIcons from './header-list-icons/headerListIcons'
+import styles from './Header.module.scss'
 
 const Header = () => {
   return (
@@ -17,7 +17,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

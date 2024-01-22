@@ -7,7 +7,7 @@ import { categoriesSlice } from "../Crm-add-new-product/slices/categories-slice"
 import { productSlice } from "../Crm-add-new-product/slices/product-slice";
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
   blacklist: ["items", "newProduct", "allCategories"],
 };
@@ -18,10 +18,10 @@ const rootReducer = combineReducers({
   newProduct: productSlice.reducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-  reducer: persistedReducer,
-});
+  reducer: persistedReducer
+})
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store)

@@ -20,7 +20,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="new"
             name="product_status"
             value="new"
-            checked={selectedStatus === "Новий"}
+            checked={selectedStatus === 'Новий'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -67,8 +67,8 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         </li>
       </ul>
     </div>
-  );
-};
+  )
+}
 
 CrmStatus.propTypes = {
   onStatusChange: PropTypes.func,

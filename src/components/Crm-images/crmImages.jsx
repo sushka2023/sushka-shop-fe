@@ -190,7 +190,7 @@ const CrmImages = () => {
       </label>
       {formErrors.images && <p className={styles.imagesError}>{formErrors.images}</p>}
     </div>
-  );
-};
+  )
+}
 
-export default CrmImages;
+export default CrmImages

@@ -1,13 +1,15 @@
-import { useState } from "react";
-import styles from "./sort.module.scss";
+import { Fragment, useState } from 'react'
+import styles from './sort.module.scss'
 
 const Sort = () => {
-    const [sortValue, setSortValue] = useState("За замовчуванням");
+  const [sortValue, setSortValue] = useState('За замовчуванням')
 
-    const clickInput = (e) => setSortValue(e.target.value);
+  const clickInput = (e) => {
+    return setSortValue(e.target.value)
+  }
 
   return (
-    <>
+    <Fragment>
       <h3 className={styles.title}>Сортування</h3>
       <div className={styles.inputWrapper}>
         <input
@@ -45,8 +47,8 @@ const Sort = () => {
         />
         <label htmlFor="byDecline">Ціна за спаданням</label>
       </div>
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default Sort;
+export default Sort

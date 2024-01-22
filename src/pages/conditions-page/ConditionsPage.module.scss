@@ -1,0 +1,115 @@
+@import '../../styles/base/base.scss';
+
+.container {
+  @include page-container;
+  padding-top: 30px;
+  padding-bottom: 220px;
+}
+
+.conditionTitle {
+  color: #567343;
+
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 130%;
+  margin-bottom: 50px;
+
+  counter-reset: h3counter;
+}
+
+.conditionText {
+  color: #567343;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 130%;
+}
+
+.conditionAnchor {
+  color: #567343;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 130%;
+  margin-top: 15px;
+  padding-left: 5px;
+
+  &:before {
+    content: counter(h3counter) '. ';
+    counter-increment: h3counter;
+    padding-right: 5px;
+  }
+}
+
+.numberList {
+  counter-reset: li-level-one-counter;
+  color: #567343;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 130%;
+
+  > li {
+    padding-left: 5px;
+    counter-increment: li-level-one-counter;
+
+    margin: 10px 0 10px 33px;
+
+    &::marker {
+      content: counter(h3counter) '.' counter(li-level-one-counter) '. ';
+    }
+  }
+}
+
+.numberList {
+  counter-reset: li-level-one-counter;
+  color: #567343;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 130%;
+
+  > li {
+    padding-left: 5px;
+    counter-increment: li-level-one-counter;
+
+    margin: 10px 0 10px 33px;
+
+    &::marker {
+      content: counter(h3counter) '.' counter(li-level-one-counter) '. ';
+    }
+  }
+}
+
+.subNumberList {
+  counter-reset: li-level-two-counter;
+  color: #567343;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 130%;
+
+  > li {
+    padding-left: 5px;
+    counter-increment: li-level-two-counter;
+
+    margin: 10px 0 10px 33px;
+
+    &::marker {
+      content: counter(h3counter) '.' counter(li-level-one-counter) '.'
+        counter(li-level-two-counter) '. ';
+    }
+  }
+}
+
+.unnumerableList {
+  list-style-type: '-';
+  display: flex;
+  flex-direction: column;
+
+  > li {
+    padding-left: 5px;
+    margin: 10px 0 10px 0;
+  }
+}

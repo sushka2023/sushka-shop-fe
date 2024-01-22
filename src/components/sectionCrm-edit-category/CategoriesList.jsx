@@ -1,13 +1,11 @@
-import { ReactComponent as IconCheck } from "../../icons/check.svg";
-import { ReactComponent as IconEdit } from "../../icons/edit.svg";
-import { ReactComponent as IconTrash } from "../../icons/trash.svg";
-import styles from "./EditCategory.module.scss";
-import PropTypes from "prop-types";
+import { Fragment } from 'react'
+import { ReactComponent as IconCheck } from '../../icons/check.svg'
+import { ReactComponent as IconEdit } from '../../icons/edit.svg'
+import { ReactComponent as IconTrash } from '../../icons/trash.svg'
+import styles from './EditCategory.module.scss'
+import PropTypes from 'prop-types'
 
 const CategoriesList = ({
-  handleCreateCategory,
-  newCategory,
-  setNewCategory,
   categories,
   currentlyEditing,
   cancelEditing,
@@ -15,79 +13,58 @@ const CategoriesList = ({
   handleEditCategory,
   updateCrmCategory,
   startEditing,
-  deleteCrmCategory,
+  deleteCrmCategory
 }) => {
   return (
-    <>
-      <form
-        className={styles.formAdd}
-        autoComplete="off"
-        onSubmit={handleCreateCategory}
-      >
-        <input
-          className={styles.categoryAdd}
-          maxLength={20}
-          type="text"
-          placeholder="Нова категорія"
-          required
-          value={newCategory}
-          onChange={(e) => setNewCategory(e.target.value)}
-        />
-        <button
-          className={styles.btnAdd}
-          type="submit"
-          disabled={categories.length >= 5}
-        >
-          <IconCheck
-            className={
-              categories.length >= 5 ? styles.iconAddDisable : styles.iconAdd
-            }
-          />
-        </button>
-      </form>
-
+    <Fragment>
       <ul className={styles.categoryList}>
-        {categories?.map((category) => (
-          <li key={category.id}>
-            {currentlyEditing === category.id ? (
-              <form onSubmit={cancelEditing} className={styles.formEdit}>
-                <input
-                  className={styles.categoryEdit}
-                  type="text"
-                  autoFocus
-                  value={editedCategory.name}
-                  onChange={handleEditCategory}
-                />
-                <button
-                  className={styles.btnSave}
-                  type="submit"
-                  onClick={updateCrmCategory}
-                >
-                  <IconCheck className={styles.iconSave} />
-                </button>
-              </form>
-            ) : (
-              <div className={styles.category}>
-                <div className={styles.textWrapper}>
-                  <span className={styles.categoryText}>{category.name}</span>
+        {categories?.map((category) => {
+          return (
+            <li key={category.id}>
+              {currentlyEditing === category.id ? (
+                <form onSubmit={cancelEditing} className={styles.formEdit}>
+                  <input
+                    className={styles.categoryEdit}
+                    type="text"
+                    autoFocus
+                    value={editedCategory.name}
+                    onChange={handleEditCategory}
+                  />
                   <button
-                    className={styles.btnEdit}
-                    onClick={() => startEditing(category.id)}
+                    className={styles.btnSave}
+                    type="submit"
+                    onClick={updateCrmCategory}
                   >
-                    <IconEdit className={styles.iconEdit} />
+                    <IconCheck className={styles.iconSave} />
+                  </button>
+                </form>
+              ) : (
+                <div className={styles.category}>
+                  <div className={styles.textWrapper}>
+                    <span className={styles.categoryText}>{category.name}</span>
+                    <button
+                      className={styles.btnEdit}
+                      onClick={() => {
+                        return startEditing(category.id)
+                      }}
+                    >
+                      <IconEdit className={styles.iconEdit} />
+                    </button>
+                  </div>
+
+                  <button
+                    className={styles.btnDelete}
+                    onClick={() => {
+                      return deleteCrmCategory(category.id)
+                    }}
+                  >
+                    <IconTrash className={styles.iconDelete} />
                   </button>
                 </div>
-
-                <button
-                  className={styles.btnDelete}
-                  onClick={() => deleteCrmCategory(category.id)}
-                >
-                  <IconTrash className={styles.iconDelete} />
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
+              )}
+            </li>
+          )
+        })}
       </ul>
 
       {categories?.length === 5 && (
@@ -97,16 +74,13 @@ const CategoriesList = ({
           </span>
         </div>
       )}
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default CategoriesList;
+export default CategoriesList
 
 CategoriesList.propTypes = {
-  handleCreateCategory: PropTypes.func.isRequired,
-  newCategory: PropTypes.string.isRequired,
-  setNewCategory: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentlyEditing: PropTypes.number,
   cancelEditing: PropTypes.func.isRequired,
@@ -114,5 +88,5 @@ CategoriesList.propTypes = {
   handleEditCategory: PropTypes.func.isRequired,
   updateCrmCategory: PropTypes.func.isRequired,
   startEditing: PropTypes.func.isRequired,
-  deleteCrmCategory: PropTypes.func.isRequired,
-};
+  deleteCrmCategory: PropTypes.func.isRequired
+}

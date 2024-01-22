@@ -36,11 +36,11 @@ const LayoutCRM = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 LayoutCRM.propTypes = {
-  children: PropTypes.node,
-};
+  children: PropTypes.node
+}
 
-export default LayoutCRM;
+export default LayoutCRM
