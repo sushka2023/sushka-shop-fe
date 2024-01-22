@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -46,19 +47,11 @@
     "vite": "^4.3.9",
     "vite-plugin-svgr": "^3.2.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx}": [
-      "eslint src --ext js,jsx --fix",
-      "prettier --write \"src/**/*.{js,jsx}\""
-    ],
-    "*.{html,css,less,ejs}": [
-      "eslint src --ext js,jsx --fix",
-      "prettier --write \"src/**/*.{js,jsx}\""
+      "npm run lint",
+      "npm run format",
+      "eslint --cache --fix"
     ]
   }
 }
