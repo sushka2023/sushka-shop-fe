@@ -2,7 +2,7 @@ import { arrayOptionWeigth } from '../../options/options'
 import Options from '../options/Options'
 import Sort from '../sort/sort'
 import styles from './filter.module.scss'
-import { ReactComponent as ArowIcon } from '../../icons/arrowdown.svg'
+import ArowIcon from '../../icons/arrowdown.svg?react'
 
 const Filter = () => {
   return (

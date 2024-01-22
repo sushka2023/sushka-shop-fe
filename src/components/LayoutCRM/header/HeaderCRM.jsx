@@ -1,5 +1,5 @@
 import styles from './HeaderCRM.module.scss'
-import { ReactComponent as IconArrow } from '../../../icons/arrowcrm.svg'
+import IconArrow from '../../../icons/arrowcrm.svg?react'
 import HeaderNavigation from './headerNavigation/HeaderNavigation'
 
 const HeaderCRM = () => {

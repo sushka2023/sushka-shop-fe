@@ -9,7 +9,8 @@
     "lint": "eslint src --ext js,jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "generate": "openapi -i https://www.test-store.shop/openapi.json -o src/types"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -30,27 +31,30 @@
     "swiper": "^10.1.0"
   },
   "devDependencies": {
-    "@svgr/webpack": "^8.0.1",
-    "@types/react": "^18.0.37",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
     "@vitejs/plugin-react": "^4.0.0",
-    "eslint": "^8.38.0",
+    "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
+    "openapi-typescript": "^6.7.4",
+    "openapi-typescript-codegen": "^0.27.0",
     "prettier": "^3.2.4",
-    "svgo": "^3.0.2",
-    "vite": "^4.3.9",
-    "vite-plugin-svgr": "^3.2.0"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "npm run lint",
-      "npm run format"
+      "yarn lint",
+      "yarn format"
     ]
   }
 }

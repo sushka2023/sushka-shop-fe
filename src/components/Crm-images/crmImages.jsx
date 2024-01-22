@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { ReactComponent as PlusIcon } from '../../icons/plus.svg'
-import { ReactComponent as DeleteIcon } from '../../icons/delete.svg'
-import { ReactComponent as FileIcon } from '../../icons/file.svg'
-import { ReactComponent as StarIcon } from '../../icons/star.svg'
+import PlusIcon from '../../icons/plus.svg?react'
+import DeleteIcon from '../../icons/delete.svg?react'
+import FileIcon from '../../icons/file.svg?react'
+import StarIcon from '../../icons/star.svg?react'
 import styles from './crmImages.module.scss'
 
 const CrmImages = () => {

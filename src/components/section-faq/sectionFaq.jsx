@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import MuiAccordion from '@mui/material/Accordion'
-import { ReactComponent as Arrow } from '../../icons/arrow.svg'
+import Arrow from '../../icons/arrow.svg?react'
 
 const Accordion = styled((props) => {
   return <MuiAccordion disableGutters elevation={0} square {...props} />

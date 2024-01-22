@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { ReactComponent as IconCheck } from '../../icons/check.svg'
+import IconCheck from '../../icons/check.svg?react'
 import styles from './EditCategory.module.scss'
 import PropTypes from 'prop-types'
 

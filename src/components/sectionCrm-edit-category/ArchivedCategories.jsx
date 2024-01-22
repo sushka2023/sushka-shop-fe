@@ -1,6 +1,6 @@
 import styles from './EditCategory.module.scss'
 import PropTypes from 'prop-types'
-import { ReactComponent as IconPlus } from '../../icons/plus1.svg'
+import IconPlus from '../../icons/plus1.svg?react'
 import { Fragment } from 'react'
 
 const ArchivedCategoriesList = ({
