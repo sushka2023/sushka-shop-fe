@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import { ReactComponent as IconCheck } from '../../icons/check.svg'
-import { ReactComponent as IconEdit } from '../../icons/edit.svg'
-import { ReactComponent as IconTrash } from '../../icons/trash.svg'
+import IconCheck from '../../icons/check.svg?react'
+import IconEdit from '../../icons/edit.svg?react'
+import IconTrash from '../../icons/trash.svg?react'
 import styles from './EditCategory.module.scss'
 import PropTypes from 'prop-types'
 

@@ -1,6 +1,6 @@
 import styles from './itemCard.module.scss'
-import { ReactComponent as IconFavorite } from '../../icons/favorite.svg'
-import { ReactComponent as IconFavoriteIsActive } from '../../icons/favoriteactive.svg'
+import IconFavorite from '../../icons/favorite.svg?react'
+import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'

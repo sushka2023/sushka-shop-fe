@@ -1,28 +1,30 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import { ReactComponent as IconSearch } from '../../../../icons/search.svg'
-import { ReactComponent as IconAccount } from '../../../../icons/account.svg'
-import { ReactComponent as IconFavorite } from '../../../../icons/favorite.svg'
-import { ReactComponent as IconCart } from '../../../../icons/cart.svg'
+import IconSearch from '../../../../icons/search.svg?react'
+import IconAccount from '../../../../icons/account.svg?react'
+import IconFavorite from '../../../../icons/favorite.svg?react'
+import IconCart from '../../../../icons/cart.svg?react'
 import styles from '../Header.module.scss'
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
-  const iconRef = useRef()
-  const inputRef = useRef()
+  const iconRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (iconRef.current.contains(e.target)) {
-        setIsActive(true)
-        inputRef.current.focus()
-      }
+  const handleClick = (event: MouseEvent) => {
+    const target = event.target as Node
 
-      if (!iconRef.current.contains(e.target)) {
-        setIsActive(false)
-      }
+    if (iconRef.current?.contains(target)) {
+      setIsActive(true)
+      inputRef.current?.focus()
     }
 
+    if (!iconRef.current?.contains(target)) {
+      setIsActive(false)
+    }
+  }
+
+  useEffect(() => {
     window.addEventListener('click', handleClick)
 
     return () => {

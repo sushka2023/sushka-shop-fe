@@ -5,7 +5,7 @@ import {
   selectAllItem
 } from '../../../Redax/Products/selectors/Selectors'
 import { useLocation, Link } from 'react-router-dom'
-import { ReactComponent as IconArrow } from '../../../icons/arrow.svg'
+import IconArrow from '../../../icons/arrow.svg?react'
 import styles from './breadcrumbs.module.scss'
 
 const getUkrainianName = (name) => {

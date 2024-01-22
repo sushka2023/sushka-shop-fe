@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import CrmStatus from '../../components/Crm-status/CrmStatus'
 import CrmImages from '../../components/Crm-images/crmImages'
-import { ReactComponent as ArowIcon } from '../../icons/arrow.svg'
+import ArowIcon from '../../icons/arrow.svg?react'
 import styles from './crmAddNewProduct.module.scss'
 
 const CrmAddNewProduct = () => {
