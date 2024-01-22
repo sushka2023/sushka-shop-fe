@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import styles from './sort.module.scss'
 
 const Sort = () => {
+  // eslint-disable-next-line no-unused-vars
   const [sortValue, setSortValue] = useState('За замовчуванням')
 
   const clickInput = (e) => {
