@@ -8,8 +8,7 @@
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
-    "preview": "vite preview",
-    "precommit": "npm run lint && npm run format"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -41,6 +40,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "svgo": "^3.0.2",
     "vite": "^4.3.9",
@@ -48,7 +48,17 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run precommit"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "npm run format",
+      "npm run lint"
+    ],
+    "*.{html,css,less,ejs}": [
+      "npm run format",
+      "npm run lint"
+    ]
   }
 }
