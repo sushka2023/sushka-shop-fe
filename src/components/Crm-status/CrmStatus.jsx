@@ -1,20 +1,16 @@
-import { useState } from 'react';
-import styles from './crmStatus.module.scss';
+import { useState } from 'react'
+import styles from './crmStatus.module.scss'
 
 const CrmStatus = ({ onStatusChange, currentStatus }) => {
-    
-  const [selectedStatus, setSelectedStatus] = useState(currentStatus);
+  const [selectedStatus, setSelectedStatus] = useState(currentStatus)
 
-    const handleLocalStatusChange = (e) => {
-      setSelectedStatus(e.target.labels[0].innerText);
-      onStatusChange(e.target.labels[0].innerText);
-    };
-
+  const handleLocalStatusChange = (e) => {
+    setSelectedStatus(e.target.labels[0].innerText)
+    onStatusChange(e.target.labels[0].innerText)
+  }
 
   return (
-    <div
-      className={styles.statusDropdownContainer}
-    >
+    <div className={styles.statusDropdownContainer}>
       <ul className={styles.statusList}>
         <li className={`${styles.statusLine} ${styles.statusNew}`}>
           <input
@@ -22,7 +18,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="new"
             name="status"
             value="new"
-            checked={selectedStatus === "Новий"}
+            checked={selectedStatus === 'Новий'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -39,7 +35,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="active"
             name="status"
             value="active"
-            checked={selectedStatus === "Активний"}
+            checked={selectedStatus === 'Активний'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -56,7 +52,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="archive"
             name="status"
             value="archive"
-            checked={selectedStatus === "Архівований"}
+            checked={selectedStatus === 'Архівований'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -69,7 +65,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
         </li>
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default CrmStatus;
+export default CrmStatus

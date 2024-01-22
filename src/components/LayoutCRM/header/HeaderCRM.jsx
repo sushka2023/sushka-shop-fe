@@ -1,6 +1,6 @@
-import styles from "./HeaderCRM.module.scss";
-import { ReactComponent as IconArrow } from "../../../icons/arrowcrm.svg";
-import HeaderNavigation from "./headerNavigation/HeaderNavigation";
+import styles from './HeaderCRM.module.scss'
+import { ReactComponent as IconArrow } from '../../../icons/arrowcrm.svg'
+import HeaderNavigation from './headerNavigation/HeaderNavigation'
 
 const HeaderCRM = () => {
   return (
@@ -13,7 +13,7 @@ const HeaderCRM = () => {
         </button>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default HeaderCRM;
+export default HeaderCRM

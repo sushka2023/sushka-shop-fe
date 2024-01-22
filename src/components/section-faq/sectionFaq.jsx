@@ -1,55 +1,65 @@
-import styles from "./sectionFaq.module.scss";
-import { styled } from "@mui/material/styles";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import MuiAccordion from "@mui/material/Accordion";
-import { ReactComponent as Arrow } from "../../icons/arrow.svg";
+import styles from './sectionFaq.module.scss'
+import { styled } from '@mui/material/styles'
+import MuiAccordionSummary from '@mui/material/AccordionSummary'
+import MuiAccordionDetails from '@mui/material/AccordionDetails'
+import MuiAccordion from '@mui/material/Accordion'
+import { ReactComponent as Arrow } from '../../icons/arrow.svg'
 
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(() => ({
-  background: 'inherit',
-  border: "none",
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
+const Accordion = styled((props) => {
+  return <MuiAccordion disableGutters elevation={0} square {...props} />
+})(() => {
+  return {
+    'background': 'inherit',
+    'border': 'none',
+    '&:not(:last-child)': {
+      borderBottom: 0
+    },
+    '&:before': {
+      display: 'none'
+    }
+  }
+})
 
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    {...props}
-    expandIcon={<Arrow sx={{ fontSize: "0.9rem" }} style={{fill: "white"}} />}
-  />
-))(() => ({
-  backgroundColor: "none",
-  borderBottom: "1px solid #fff",
-  margin: "0px",
-  paddingLeft: "0px",
-  flexDirection: 'row',
-  "&.Mui-expanded": {
-    borderBottom: "none",
-  },
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(-90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginTop: "16px",
-    marginBottom: "24px",
-  },
-}));
+const AccordionSummary = styled((props) => {
+  return (
+    <MuiAccordionSummary
+      {...props}
+      expandIcon={
+        <Arrow sx={{ fontSize: '0.9rem' }} style={{ fill: 'white' }} />
+      }
+    />
+  )
+})(() => {
+  return {
+    'backgroundColor': 'none',
+    'borderBottom': '1px solid #fff',
+    'margin': '0px',
+    'paddingLeft': '0px',
+    'flexDirection': 'row',
+    '&.Mui-expanded': {
+      borderBottom: 'none'
+    },
+    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+      transform: 'rotate(-90deg)'
+    },
+    '& .MuiAccordionSummary-content': {
+      marginTop: '16px',
+      marginBottom: '24px'
+    }
+  }
+})
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => {
+  return {
     padding: theme.spacing(0),
     paddingBottom: '30px',
-  borderBottom: "1px solid #fff",
-}));
+    borderBottom: '1px solid #fff'
+  }
+})
 
 const SectionFaq = () => {
   return (
-    <section className={styles.accordionSection} id='faq'>
+    <section className={styles.accordionSection} id="faq">
       <div className={styles.border}></div>
       <div className={styles.accordionWrapper}>
         <h2 className={styles.accordionHeader}>Найчастіші запитання</h2>
@@ -147,7 +157,7 @@ const SectionFaq = () => {
         </Accordion>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default SectionFaq;
+export default SectionFaq

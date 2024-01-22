@@ -1,5 +1,5 @@
-import ManageCategories from "../../components/sectionCrm-edit-category/ManageCategories";
-import styles from "./CrmSettingsPage.module.scss";
+import ManageCategories from '../../components/sectionCrm-edit-category/ManageCategories'
+import styles from './CrmSettingsPage.module.scss'
 
 const CrmSettingsPage = () => {
   return (
@@ -10,7 +10,7 @@ const CrmSettingsPage = () => {
         <ManageCategories type="product_sub_category" />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CrmSettingsPage;
+export default CrmSettingsPage
