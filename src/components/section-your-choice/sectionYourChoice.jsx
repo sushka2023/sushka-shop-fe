@@ -1,15 +1,14 @@
-import { ReactComponent as IconMix } from '../../icons/mix.svg';
-import { ReactComponent as IconApple } from "../../icons/apple.svg";
-import { ReactComponent as IconBowl } from "../../icons/bowl.svg";
-import { ReactComponent as IconBox } from "../../icons/box.svg";
+import { ReactComponent as IconMix } from '../../icons/mix.svg'
+import { ReactComponent as IconApple } from '../../icons/apple.svg'
+import { ReactComponent as IconBowl } from '../../icons/bowl.svg'
+import { ReactComponent as IconBox } from '../../icons/box.svg'
 import ApllePic from '../../images/aplle-pic.jpg'
 import FruitMixSecond from '../../images/fruit-mix-2.jpg'
 import styles from './sectionYourChoice.module.scss'
 
-
 const SectionYourChoice = () => {
   return (
-    <section className={styles.sectionYourChoice} id='aboutProduct'>
+    <section className={styles.sectionYourChoice} id="aboutProduct">
       <div className={styles.yourChoiceWrapper}>
         <img src={ApllePic} alt="falling apples" width={555} />
         <div className={styles.yourChoiceWrapperDescription}>
@@ -55,12 +54,10 @@ const SectionYourChoice = () => {
       <div className={styles.yourChoiceLastBlock}>
         <div className={styles.yourChoiceLastBlockWrapper}>
           <p className={styles.yourChoiceLastBlockPararaph}>
-            Тут знайдеш близько
-            {" "}
+            Тут знайдеш близько{' '}
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
               30 смаків
-            </span>
-            {" "}
+            </span>{' '}
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </p>
@@ -74,8 +71,7 @@ const SectionYourChoice = () => {
           <p className={styles.yourChoiceLastBlockPararaph}>
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
-            фантазіям і обов’язково скажеш:
-            {" "}
+            фантазіям і обов’язково скажеш:{' '}
             <span className={styles.yourChoiceLastBlockPararaphItalic}>
               «Це смачно!»
             </span>
@@ -84,7 +80,7 @@ const SectionYourChoice = () => {
         <img src={FruitMixSecond} alt="fruit mix" width={555} />
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default SectionYourChoice;
+export default SectionYourChoice

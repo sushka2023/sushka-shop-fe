@@ -1,78 +1,78 @@
 @import '../../styles/base/base.scss';
 
 .container {
-    padding: 44px 36px 49px 30px;
+  padding: 44px 36px 49px 30px;
 }
 
 .spaceBetweenWrapper {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .flexWrapper {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .title {
-    color: $CRM-grey;
-    font-family: $comfortaa;
-    font-size: 32px;
-    font-weight: $font-weight-500;
-    line-height: 130%;
+  color: $CRM-grey;
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: $font-weight-500;
+  line-height: 130%;
 }
 
 .search {
-    display: flex;
-    width: 300px;
-    height: 50px;
-    padding: 10px 0px 10px 50px;
-    align-items: center;
-    gap: 10px;
-    border: none;
-    border-radius: 10px;
-    background: $white-200;
-    outline: none;
-    width: 100%;
+  display: flex;
+  width: 300px;
+  height: 50px;
+  padding: 10px 0px 10px 50px;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  border-radius: 10px;
+  background: $white-200;
+  outline: none;
+  width: 100%;
 
-    &::placeholder {
-        color: $CRM-grey-400;
-        font-family: $open-sans;
-        font-size: 16px;
-        line-height: 130%;
-    }
+  &::placeholder {
+    color: $CRM-grey-400;
+    font-family: $open-sans;
+    font-size: 16px;
+    line-height: 130%;
+  }
 }
 
 .searchLabel {
-    position: relative;
-    width: 300px;
+  position: relative;
+  width: 300px;
 }
 
 .searchIcon {
-    stroke: $CRM-grey;
-    fill: $CRM-grey;
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
+  stroke: $CRM-grey;
+  fill: $CRM-grey;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
 }
 
 .addNewProduct {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    padding: 15px 26px 15px 30px;
-    border-radius: 20px;
-    background: $CRM-accent;
-    color: $white-200;
-    font-family: $open-sans;
-    font-size: 16px;
-    font-weight: $font-weight-600;
-    line-height: 130%;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  padding: 15px 26px 15px 30px;
+  border-radius: 20px;
+  background: $CRM-accent;
+  color: $white-200;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+  cursor: pointer;
 }
 
 .iconPlus {
-    fill: $white-200;
+  fill: $white-200;
 }

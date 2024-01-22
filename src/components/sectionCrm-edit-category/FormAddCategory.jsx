@@ -1,20 +1,21 @@
-import { ReactComponent as IconCheck } from "../../icons/check.svg";
-import styles from "./EditCategory.module.scss";
-import PropTypes from "prop-types";
+import { Fragment } from 'react'
+import { ReactComponent as IconCheck } from '../../icons/check.svg'
+import styles from './EditCategory.module.scss'
+import PropTypes from 'prop-types'
 
 const FormAddCategory = ({
   handleCreateCategory,
   newCategory,
   setNewCategory,
-  categories,
+  categories
 }) => {
   const handleChangeInput = (e) => {
-    const inputValue = e.target.value;
-    setNewCategory(inputValue);
-  };
+    const inputValue = e.target.value
+    setNewCategory(inputValue)
+  }
 
   return (
-    <>
+    <Fragment>
       <form
         className={styles.formAdd}
         autoComplete="off"
@@ -41,15 +42,15 @@ const FormAddCategory = ({
           />
         </button>
       </form>
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default FormAddCategory;
+export default FormAddCategory
 
 FormAddCategory.propTypes = {
   handleCreateCategory: PropTypes.func.isRequired,
   newCategory: PropTypes.string.isRequired,
   setNewCategory: PropTypes.func.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired
+}

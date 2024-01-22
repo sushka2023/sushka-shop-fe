@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import styles from '../Footer.module.scss'; 
+import { Link } from 'react-router-dom'
+import styles from '../Footer.module.scss'
 
 const FooterLegalList = () => {
   return (
@@ -15,7 +15,7 @@ const FooterLegalList = () => {
         </Link>
       </li>
     </ul>
-  );
-};
+  )
+}
 
-export default FooterLegalList;
+export default FooterLegalList

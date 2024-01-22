@@ -18,9 +18,9 @@ const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTcwNDcwMjY1MiwiZXhwIjoxNzEwMDU5NDUyLCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.Mw17_D-7jMLiwfhCs9QupbGoPMSIRmemPvhCZnU3MNc";
 
 const getProductForId = async (productId) => {
-  const { data } = await axios.get(`api/product/${productId}`);
-  return data;
-};
+  const { data } = await axios.get(`api/product/${productId}`)
+  return data
+}
 
 const addProductToBasket = async (
   productId,
@@ -53,10 +53,12 @@ const ProductPage = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const [showModal, setShowModal] = useState(false);
-  const handleClick = () => setShowModal(false);
+  const [showModal, setShowModal] = useState(false)
+  const handleClick = () => {
+    return setShowModal(false)
+  }
 
-  const { productId } = useParams();
+  const { productId } = useParams()
 
   useEffect(() => {
     window.scroll({
@@ -79,21 +81,21 @@ const ProductPage = () => {
           setselectedOldPrice(data.prices[0].old_price);
         }
       } catch (error) {
-        console.error("Помилка запиту:", error);
+        console.error('Помилка запиту:', error)
       }
-    };
+    }
 
-    fetchProduct();
-  }, [productId]);
+    fetchProduct()
+  }, [productId])
 
   //   Обробник події, який викликається при зміні ваги
   const handleWeightChange = (event) => {
-    const selectedWeightValue = event.target.value;
+    const selectedWeightValue = event.target.value
 
     // Знайти відповідну ціну та кількість для обраної ваги
-    const selectedPriceData = products?.prices?.find(
-      (price) => price.weight === selectedWeightValue
-    );
+    const selectedPriceData = products?.prices?.find((price) => {
+      return price.weight === selectedWeightValue
+    })
 
     setSelectedWeight(selectedWeightValue);
     setSelectedPrice(selectedPriceData.price);
@@ -104,7 +106,7 @@ const ProductPage = () => {
 
   const increaseQuantity = () => {
     if (selectedQuantity === 10) {
-      setShowModal(true);
+      setShowModal(true)
     }
 
     const selectedPriceData = products?.prices?.find(
@@ -128,7 +130,7 @@ const ProductPage = () => {
         (prevOldPrice) => prevOldPrice - selectedPriceData.old_price
       );
     }
-  };
+  }
 
   const handleBuyButtonClick = async () => {
     // console.log(selectedQuantity);
@@ -181,18 +183,18 @@ const ProductPage = () => {
 
   const showNextImage = () => {
     if (selectedImage < products.images.length - 1) {
-      setSelectedImage(selectedImage + 1);
+      setSelectedImage(selectedImage + 1)
     }
-  };
+  }
 
   const showPreviousImage = () => {
     if (selectedImage > 0) {
-      setSelectedImage(selectedImage - 1);
+      setSelectedImage(selectedImage - 1)
     }
-  };
+  }
 
   return (
-    <>
+    <Fragment>
       <div className={styles.container}>
         {products ? (
           <div>
@@ -220,21 +222,23 @@ const ProductPage = () => {
                   </button>
                 </div>
                 <ul className={styles.imageList}>
-                  {products.images.map((image, index) => (
-                    <li
-                      className={styles.imageListItem}
-                      key={image.id}
-                      onClick={() => {
-                        setSelectedImage(index);
-                      }}
-                    >
-                      <img
-                        className={styles.imageProduct}
-                        src={image.image_url}
-                        alt={image.description}
-                      />
-                    </li>
-                  ))}
+                  {products.images.map((image, index) => {
+                    return (
+                      <li
+                        className={styles.imageListItem}
+                        key={image.id}
+                        onClick={() => {
+                          setSelectedImage(index)
+                        }}
+                      >
+                        <img
+                          className={styles.imageProduct}
+                          src={image.image_url}
+                          alt={image.description}
+                        />
+                      </li>
+                    )
+                  })}
                 </ul>
               </div>
 
@@ -343,8 +347,8 @@ const ProductPage = () => {
           <p>Завантаження...</p>
         )}
       </div>
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default ProductPage;
+export default ProductPage

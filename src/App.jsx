@@ -11,22 +11,20 @@ import CrmSettingsPage from "./pages/crmSettings-page/CrmSettingsPage";
 import ProductPage from "./pages/product-page/ProductPage";
 import CrmProductsPage from "./pages/crm-products-page/CrmProductsPage";
 import CrmAddNewProduct from "./pages/crm-add-new-product/CrmAddNewProduct";
-
 import ConditionsPage from "./pages/conditions-page/ConditionsPage";
 import PrivacyPolicyPage from "./pages/conditions-page/RrivacyPolicyPage";
-
 import ShoppingListPage from "./pages/shopping-list-page/ShoppingListPage";
 
 function App() {
-  const navigate = useNavigate();
-  const allCategories = useSelector(selectAllCategories);
+  const navigate = useNavigate()
+  const allCategories = useSelector(selectAllCategories)
 
   useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath === "/catalog") {
-      navigate(`catalog/${allCategories[0].id}/0`);
+    const currentPath = window.location.pathname
+    if (currentPath === '/catalog' && allCategories) {
+      navigate(`catalog/${allCategories[0].id}/0`)
     }
-  }, [allCategories, navigate]);
+  }, [allCategories, navigate])
 
   return (
     <Routes>
@@ -41,22 +39,21 @@ function App() {
         </Route>
         <Route
           path="review"
-          element={<div style={{ marginBottom: "500px" }}>Відгуки</div>}
+          element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
         />
         <Route
           path="cooperation"
-          element={<div style={{ marginBottom: "500px" }}>Співпраця</div>}
+          element={<div style={{ marginBottom: '500px' }}>Співпраця</div>}
         />
         <Route
           path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+          element={<div style={{ marginBottom: '500px' }}>Акаунт</div>}
         />
         <Route path="favorite" element={<FavoritePage />} />
         <Route
           path="account"
-          element={<div style={{ marginBottom: "500px" }}>Акаунт</div>}
+          element={<div style={{ marginBottom: '500px' }}>Акаунт</div>}
         />
-
         <Route path="conditions" element={<ConditionsPage />} />
         <Route path="policy" element={<PrivacyPolicyPage />} />
 
@@ -66,15 +63,15 @@ function App() {
       <Route path="crm" element={<LayoutCRM />}>
         <Route
           path="dashbord"
-          element={<div style={{ marginBottom: "500px" }}>Dashboard page</div>}
+          element={<div style={{ marginBottom: '500px' }}>Dashboard page</div>}
         />
         <Route
           path="orders"
-          element={<div style={{ marginBottom: "500px" }}>Order page</div>}
+          element={<div style={{ marginBottom: '500px' }}>Order page</div>}
         />
         <Route
           path="orders/:params"
-          element={<div style={{ marginBottom: "500px" }}>orders params</div>}
+          element={<div style={{ marginBottom: '500px' }}>orders params</div>}
         />
         <Route path="products" element={<CrmProductsPage />} />
 
@@ -82,21 +79,21 @@ function App() {
 
         <Route
           path="clients"
-          element={<div style={{ marginBottom: "500px" }}>Clients page</div>}
+          element={<div style={{ marginBottom: '500px' }}>Clients page</div>}
         />
         <Route
           path="clients/:params"
-          element={<div style={{ marginBottom: "500px" }}>clients params</div>}
+          element={<div style={{ marginBottom: '500px' }}>clients params</div>}
         />
         <Route
           path="opinions"
-          element={<div style={{ marginBottom: "500px" }}>Opinions Page</div>}
+          element={<div style={{ marginBottom: '500px' }}>Opinions Page</div>}
         />
         <Route path="settings" element={<CrmSettingsPage />} />
         <Route index element={<Navigate to="dashbord" replace />} />
       </Route>
     </Routes>
-  );
+  )
 }
 
-export default App;
+export default App
