@@ -53,12 +53,12 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "npm run format",
-      "npm run lint"
+      "eslint src --ext js,jsx --fix",
+      "prettier --write \"src/**/*.{js,jsx}\""
     ],
     "*.{html,css,less,ejs}": [
-      "npm run format",
-      "npm run lint"
+      "eslint src --ext js,jsx --fix",
+      "prettier --write \"src/**/*.{js,jsx}\""
     ]
   }
 }
