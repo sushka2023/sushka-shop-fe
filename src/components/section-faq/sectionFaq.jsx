@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import styles from './sectionFaq.module.scss'
 import { styled } from '@mui/material/styles'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
