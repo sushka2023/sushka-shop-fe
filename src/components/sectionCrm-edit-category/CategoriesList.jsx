@@ -1,8 +1,9 @@
-import { ReactComponent as IconCheck } from "../../icons/check.svg";
-import { ReactComponent as IconEdit } from "../../icons/edit.svg";
-import { ReactComponent as IconTrash } from "../../icons/trash.svg";
-import styles from "./EditCategory.module.scss";
-import PropTypes from "prop-types";
+import { Fragment } from 'react'
+import IconCheck from '../../icons/check.svg?react'
+import IconEdit from '../../icons/edit.svg?react'
+import IconTrash from '../../icons/trash.svg?react'
+import styles from './EditCategory.module.scss'
+import PropTypes from 'prop-types'
 
 const CategoriesList = ({
   categories,
@@ -12,52 +13,58 @@ const CategoriesList = ({
   handleEditCategory,
   updateCrmCategory,
   startEditing,
-  deleteCrmCategory,
+  deleteCrmCategory
 }) => {
   return (
-    <>
+    <Fragment>
       <ul className={styles.categoryList}>
-        {categories?.map((category) => (
-          <li key={category.id}>
-            {currentlyEditing === category.id ? (
-              <form onSubmit={cancelEditing} className={styles.formEdit}>
-                <input
-                  className={styles.categoryEdit}
-                  type="text"
-                  autoFocus
-                  value={editedCategory.name}
-                  onChange={handleEditCategory}
-                />
-                <button
-                  className={styles.btnSave}
-                  type="submit"
-                  onClick={updateCrmCategory}
-                >
-                  <IconCheck className={styles.iconSave} />
-                </button>
-              </form>
-            ) : (
-              <div className={styles.category}>
-                <div className={styles.textWrapper}>
-                  <span className={styles.categoryText}>{category.name}</span>
+        {categories?.map((category) => {
+          return (
+            <li key={category.id}>
+              {currentlyEditing === category.id ? (
+                <form onSubmit={cancelEditing} className={styles.formEdit}>
+                  <input
+                    className={styles.categoryEdit}
+                    type="text"
+                    autoFocus
+                    value={editedCategory.name}
+                    onChange={handleEditCategory}
+                  />
                   <button
-                    className={styles.btnEdit}
-                    onClick={() => startEditing(category.id)}
+                    className={styles.btnSave}
+                    type="submit"
+                    onClick={updateCrmCategory}
                   >
-                    <IconEdit className={styles.iconEdit} />
+                    <IconCheck className={styles.iconSave} />
+                  </button>
+                </form>
+              ) : (
+                <div className={styles.category}>
+                  <div className={styles.textWrapper}>
+                    <span className={styles.categoryText}>{category.name}</span>
+                    <button
+                      className={styles.btnEdit}
+                      onClick={() => {
+                        return startEditing(category.id)
+                      }}
+                    >
+                      <IconEdit className={styles.iconEdit} />
+                    </button>
+                  </div>
+
+                  <button
+                    className={styles.btnDelete}
+                    onClick={() => {
+                      return deleteCrmCategory(category.id)
+                    }}
+                  >
+                    <IconTrash className={styles.iconDelete} />
                   </button>
                 </div>
-
-                <button
-                  className={styles.btnDelete}
-                  onClick={() => deleteCrmCategory(category.id)}
-                >
-                  <IconTrash className={styles.iconDelete} />
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
+              )}
+            </li>
+          )
+        })}
       </ul>
 
       {categories?.length === 5 && (
@@ -67,11 +74,11 @@ const CategoriesList = ({
           </span>
         </div>
       )}
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default CategoriesList;
+export default CategoriesList
 
 CategoriesList.propTypes = {
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -81,5 +88,5 @@ CategoriesList.propTypes = {
   handleEditCategory: PropTypes.func.isRequired,
   updateCrmCategory: PropTypes.func.isRequired,
   startEditing: PropTypes.func.isRequired,
-  deleteCrmCategory: PropTypes.func.isRequired,
-};
+  deleteCrmCategory: PropTypes.func.isRequired
+}

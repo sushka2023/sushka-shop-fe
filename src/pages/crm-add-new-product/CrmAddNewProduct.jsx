@@ -1,46 +1,47 @@
-import { useState, useEffect, useRef } from "react";
-import CrmStatus from "../../components/Crm-status/CrmStatus";
-import CrmImages from "../../components/Crm-images/crmImages";
-import { ReactComponent as ArowIcon } from "../../icons/arrow.svg";
-import styles from "./crmAddNewProduct.module.scss";
+import { useState, useEffect, useRef } from 'react'
+import CrmStatus from '../../components/Crm-status/CrmStatus'
+import CrmImages from '../../components/Crm-images/crmImages'
+import ArowIcon from '../../icons/arrow.svg?react'
+import styles from './crmAddNewProduct.module.scss'
 
 const CrmAddNewProduct = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentStatus, setCurrentStatus] = useState("Новий");
-  const containerRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const [currentStatus, setCurrentStatus] = useState('Новий')
+  const containerRef = useRef(null)
 
-  const handleStatusChange = (newStatus) => setCurrentStatus(newStatus);
-  
+  const handleStatusChange = (newStatus) => {
+    return setCurrentStatus(newStatus)
+  }
+
   useEffect(() => {
     const handleClickDropdown = (e) => {
-      setIsOpen(!isOpen);
+      setIsOpen(!isOpen)
 
       if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
-
-    document.addEventListener("click", handleClickDropdown);
-
-    return () => {
-      document.removeEventListener("click", handleClickDropdown);
-    };
-  }, [isOpen]);
-
-  const applyDropDown = (e) => {
-    
-    if (e.target.nodeName === "BUTTON") {
-      return;
     }
 
-    e.stopPropagation();
-  };
+    document.addEventListener('click', handleClickDropdown)
+
+    return () => {
+      document.removeEventListener('click', handleClickDropdown)
+    }
+  }, [isOpen])
+
+  const applyDropDown = (e) => {
+    if (e.target.nodeName === 'BUTTON') {
+      return
+    }
+
+    e.stopPropagation()
+  }
 
   const statusClasses = {
     Новий: styles.statusNew,
     Активний: styles.statusActive,
-    Архівований: styles.statusArchive,
-  };
+    Архівований: styles.statusArchive
+  }
 
   return (
     <section className={styles.container}>
@@ -92,7 +93,7 @@ const CrmAddNewProduct = () => {
         </div>
       </form>
     </section>
-  );
-};
+  )
+}
 
-export default CrmAddNewProduct;
+export default CrmAddNewProduct

@@ -1,8 +1,8 @@
-import { ReactComponent as IconInst } from '../../../../icons/inst.svg';
-import { ReactComponent as IconTg } from '../../../../icons/tg.svg';
-import { ReactComponent as IconMail } from '../../../../icons/mail.svg';
-import { ReactComponent as IconPhone } from '../../../../icons/phone.svg';
-import styles from '../Footer.module.scss';
+import IconInst from '../../../../icons/inst.svg?react'
+import IconTg from '../../../../icons/tg.svg?react'
+import IconMail from '../../../../icons/mail.svg?react'
+import IconPhone from '../../../../icons/phone.svg?react'
+import styles from '../Footer.module.scss'
 
 const FooterContactList = () => {
   return (
@@ -29,16 +29,13 @@ const FooterContactList = () => {
         </a>
       </li>
       <li className={styles.footerContactListLine}>
-        <a
-          className={styles.footerContactListLink}
-          href="tel:+380993099999"
-        >
+        <a className={styles.footerContactListLink} href="tel:+380993099999">
           <IconPhone className={styles.footerContactListIcon} />
           +380993099999
         </a>
       </li>
     </ul>
-  );
-};
+  )
+}
 
-export default FooterContactList;
+export default FooterContactList

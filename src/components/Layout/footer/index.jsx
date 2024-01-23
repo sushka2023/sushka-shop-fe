@@ -1,13 +1,13 @@
-import { Link as ScrollLink } from "react-scroll";
-import { ReactComponent as IconLogoFooter } from '../../../icons/logofooter.svg';
-import { ReactComponent as IconMastercard } from '../../../icons/mastercard.svg';
-import { ReactComponent as IconVisa } from '../../../icons/visa.svg';
-import { ReactComponent as IconLiqpay } from '../../../icons/liqpay.svg';
-import { ReactComponent as Strawberry } from "../../../icons/strawberry.svg";
-import styles from "../footer/Footer.module.scss";
-import FooterNavList from "./footer-nav-list/footerNavList";
-import FooterLegalList from "./footer-legal-list/footerLegalList";
-import FooterContactList from "./footer-contact-list/footerContactList";
+import { Link as ScrollLink } from 'react-scroll'
+import IconLogoFooter from '../../../icons/logofooter.svg?react'
+import IconMastercard from '../../../icons/mastercard.svg?react'
+import IconVisa from '../../../icons/visa.svg?react'
+import IconLiqpay from '../../../icons/liqpay.svg?react'
+import Strawberry from '../../../icons/strawberry.svg?react'
+import styles from '../footer/Footer.module.scss'
+import FooterNavList from './footer-nav-list/footerNavList'
+import FooterLegalList from './footer-legal-list/footerLegalList'
+import FooterContactList from './footer-contact-list/footerContactList'
 
 const Footer = () => {
   return (
@@ -49,7 +49,7 @@ const Footer = () => {
         </ul>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

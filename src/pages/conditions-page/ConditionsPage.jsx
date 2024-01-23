@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import styles from "./ConditionsPage.module.scss";
+/* eslint-disable max-lines */
+import { useEffect } from 'react'
+import styles from './ConditionsPage.module.scss'
 
 const ConditionsPage = () => {
   useEffect(() => {
     window.scroll({
       top: 0,
-      behavior: "instant",
-    });
-  }, []);
+      behavior: 'instant'
+    })
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -474,7 +475,7 @@ const ConditionsPage = () => {
         </ol>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConditionsPage;
+export default ConditionsPage

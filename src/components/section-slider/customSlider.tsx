@@ -1,17 +1,17 @@
-import styles from "./sliderSection.module.scss";
-import { ReactComponent as IconFavorite } from "../../icons/favorite.svg";
+import styles from './sliderSection.module.scss'
+import IconFavorite from '../../icons/favorite.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
+import { FC, HTMLProps } from 'react'
 
-const CustomSlider = ({ ...props }) => {
+type Props = HTMLProps<HTMLDivElement>
+
+const CustomSlider: FC<Props> = ({ ...props }) => {
   return (
     <div className={styles.slideWrapper}>
       <div {...props} className={styles.slideElement}>
         <div className={styles.cardContent}>
           <div className={styles.slideImage}>
-            <img
-              src={ShopItem}
-              alt="mandarin pastille"
-            />
+            <img src={ShopItem} alt="mandarin pastille" />
             <IconFavorite className={styles.cardFavorite} />
           </div>
           <div className={styles.cardTitle}>
@@ -25,7 +25,7 @@ const CustomSlider = ({ ...props }) => {
         <button className={styles.cardButtom}>Додати в кошик</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CustomSlider;
+export default CustomSlider

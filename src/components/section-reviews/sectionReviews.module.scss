@@ -1,188 +1,187 @@
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
 @import '../../styles/base/base.scss';
 
-
 .border {
-    background-image: url(/src/icons/bordersliderreview.svg);
-    position: absolute;
-    top: -150px;
-    height: 158px;
-    z-index: -1;
-    background-repeat: repeat;
-    width: 100%;
-    background-size: cover;
-};
+  background-image: url(/src/icons/bordersliderreview.svg);
+  position: absolute;
+  top: -150px;
+  height: 158px;
+  z-index: -1;
+  background-repeat: repeat;
+  width: 100%;
+  background-size: cover;
+}
 
 .iconWrapper {
-    position: absolute;
-    top: -35px;
-    right: 90px;
+  position: absolute;
+  top: -35px;
+  right: 90px;
 }
 
 .iconBwrapper {
-    top: -63px;
-    z-index: -2;
-    position: absolute;
-    left: 25px;
+  top: -63px;
+  z-index: -2;
+  position: absolute;
+  left: 25px;
 }
 
 .borderSecond {
-    background-image: url(/src/icons/bordersecondsliderreview.svg);
-    position: absolute;
-    height: 105px;
-    width: 100%;
-    background-size: cover;
-    background-repeat-y: no-repeat;
+  background-image: url(/src/icons/bordersecondsliderreview.svg);
+  position: absolute;
+  height: 105px;
+  width: 100%;
+  background-size: cover;
+  background-repeat-y: no-repeat;
 }
 
 .sectionContainer {
-    @include page-container;
-    position: relative;
-};
+  @include page-container;
+  position: relative;
+}
 
 .sectionBg {
-    margin-top: 254px;
-    margin-bottom: 200px;
-    background-color: $yellow-200;
-    position: relative;
-};
+  margin-top: 254px;
+  margin-bottom: 200px;
+  background-color: $yellow-200;
+  position: relative;
+}
 
 .sliderContainer {
-    max-width: 1360px;
-    margin: 0 auto;
-    padding: 72px 40px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-};
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 72px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .slideWrapper {
-    margin-right: 20px;
-};
+  margin-right: 20px;
+}
 
 .sectionHeader {
-    color: $white-200;
-    font-family: $nunito;
-    font-size: 48px;
-    font-weight: $font-weight-500;
-};
+  color: $white-200;
+  font-family: $nunito;
+  font-size: 48px;
+  font-weight: $font-weight-500;
+}
 
 .ArrowPrevStyle {
-    width: 40px;
-    height: 40px;
-    background: none;
-    transform: rotate(180deg);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  transform: rotate(180deg);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-    &:hover {
-        cursor: pointer;
-    }
-};
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 .ArrowNextStyle {
-    width: 40px;
-    height: 40px;
-    background: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-    &:hover {
-        cursor: pointer;
-    }
-};
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 .sliderContainer {
-    display: flex;
-    align-items: center;
-};
+  display: flex;
+  align-items: center;
+}
 
 .slideElement {
-    max-width: 400px;
-    box-sizing: border-box;
-};
+  max-width: 400px;
+  box-sizing: border-box;
+}
 
 .slideImage {
-    position: relative;
-    padding: 40px 20px 32px;
-};
+  position: relative;
+  padding: 40px 20px 32px;
+}
 
 .cardTitle {
-    padding: 0px 40px 30px;
-};
+  padding: 0px 40px 30px;
+}
 
 .cardContent {
-    border-radius: 10px;
-    background-color: $white-200;
-};
+  border-radius: 10px;
+  background-color: $white-200;
+}
 
 .cardFavorite {
-    position: absolute;
-    top: 40px;
-    right: 34px;
-    fill: $green-dark-200;
+  position: absolute;
+  top: 40px;
+  right: 34px;
+  fill: $green-dark-200;
 
-    &:hover {
-        fill: $yellow-200;
-        cursor: pointer;
-    }
-};
+  &:hover {
+    fill: $yellow-200;
+    cursor: pointer;
+  }
+}
 
 .cardButtom {
-    margin-top: 20px;
-    border-radius: 10px;
-    border: none;
-    display: flex;
-    width: 100%;
-    height: 60px;
-    justify-content: center;
-    align-items: center;
-    background-color: $yellow-200;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  background-color: $yellow-200;
+  color: $white-200;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-700;
+  line-height: 130%;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: $pink-200;
+    background-color: $light-200;
+  }
+
+  &:active {
     color: $white-200;
-    font-family: $open-sans;
-    font-size: 16px;
-    font-weight: $font-weight-700;
-    line-height: 130%;
-    text-transform: uppercase;
-    cursor: pointer;
-
-    &:hover {
-        color: $pink-200;
-        background-color: $light-200;
-    };
-
-    &:active {
-        color: $white-200;
-        background-color: $yellow-200;
-    }
-};
+    background-color: $yellow-200;
+  }
+}
 
 .cardHeader {
-    margin-bottom: 18px;
-    color: $green-dark-200;
-    font-family: $open-sans;
-    font-size: 22px;
-    font-weight: $font-weight-600;
-    line-height: 120%;
-};
+  margin-bottom: 18px;
+  color: $green-dark-200;
+  font-family: $open-sans;
+  font-size: 22px;
+  font-weight: $font-weight-600;
+  line-height: 120%;
+}
 
 .cardPararaph {
-    width: 320px;
-    color: $green-dark-200;
-    font-family: $open-sans;
-    font-size: 17px;
-    font-weight: $font-weight-300;
-    line-height: 140%;
-    margin-bottom: 70px;
-};
+  width: 320px;
+  color: $green-dark-200;
+  font-family: $open-sans;
+  font-size: 17px;
+  font-weight: $font-weight-300;
+  line-height: 140%;
+  margin-bottom: 70px;
+}
 
 .cardPrice {
-    color: $green-dark-200;
-    font-family: $open-sans;
-    font-size: 18px;
-    font-weight: $font-weight-600;
-    line-height: 130%;
-};
+  color: $green-dark-200;
+  font-family: $open-sans;
+  font-size: 18px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+}

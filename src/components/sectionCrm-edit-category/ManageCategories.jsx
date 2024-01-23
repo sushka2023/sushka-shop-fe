@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
-import styles from "./EditCategory.module.scss";
-import axios from "axios";
-import CategoriesList from "./CategoriesList";
-import ArchivedCategoriesList from "./ArchivedCategories";
-import { Notify } from "notiflix/build/notiflix-notify-aio";
-import PropTypes from "prop-types";
-import FormAddCategory from "./FormAddCategory";
+/* eslint-disable max-lines */
+/* eslint-disable complexity */
+import { useEffect, useState } from 'react'
+import styles from './EditCategory.module.scss'
+import axios from 'axios'
+import CategoriesList from './CategoriesList'
+import ArchivedCategoriesList from './ArchivedCategories'
+import { Notify } from 'notiflix/build/notiflix-notify-aio'
+import PropTypes from 'prop-types'
+import FormAddCategory from './FormAddCategory'
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY";
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY'
 
 const ManageCategories = ({ type }) => {
-  const [currentlyEditing, setCurrentlyEditing] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [archivedCategories, setArchivedCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState("");
-  const [editedCategory, setEditedCategory] = useState({ id: null, name: "" });
+  const [currentlyEditing, setCurrentlyEditing] = useState(null)
+  const [categories, setCategories] = useState([])
+  const [archivedCategories, setArchivedCategories] = useState([])
+  const [newCategory, setNewCategory] = useState('')
+  const [editedCategory, setEditedCategory] = useState({ id: null, name: '' })
 
   // get categories
 
@@ -24,81 +26,86 @@ const ManageCategories = ({ type }) => {
       try {
         const { data } = await axios.get(`api/${type}/all_for_crm`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+            Authorization: `Bearer ${token}`
+          }
+        })
 
-        const filteredData = data.filter((item) => !item.is_deleted);
-        const filteredArchivedData = data.filter((item) => item.is_deleted);
+        const filteredData = data.filter((item) => {
+          return !item.is_deleted
+        })
+        const filteredArchivedData = data.filter((item) => {
+          return item.is_deleted
+        })
 
-        setCategories(filteredData);
-        setArchivedCategories(filteredArchivedData);
+        setCategories(filteredData)
+        setArchivedCategories(filteredArchivedData)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
+    }
 
-    fetchCrmCategories();
-  }, [type]);
+    fetchCrmCategories()
+  }, [type])
 
   // create category
 
   const isCategoryExists = async (categoryList, categoryName) => {
-    return categoryList.find(
-      (category) =>
+    return categoryList.find((category) => {
+      return (
         category.name.trim().toLowerCase() === categoryName.trim().toLowerCase()
-    );
-  };
+      )
+    })
+  }
 
   const createCrmCategory = async () => {
-    if (newCategory.trim() === "" || newCategory.trim().length < 3) {
+    if (newCategory.trim() === '' || newCategory.trim().length < 3) {
       Notify.warning(
-        "Для створення категорії ведіть текстове значення  (мін. кількість символів: 3)"
-      );
-      return;
+        'Для створення категорії ведіть текстове значення  (мін. кількість символів: 3)'
+      )
+      return
     }
 
     try {
       const categoryExistsInMain = await isCategoryExists(
         categories,
         newCategory
-      );
+      )
 
       const categoryExistsInArchived = await isCategoryExists(
         archivedCategories,
         newCategory
-      );
+      )
 
       if (categoryExistsInMain || categoryExistsInArchived) {
-        Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`);
-        return;
+        Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`)
+        return
       } else {
         const { data } = await axios.post(
           `api/${type}/create`,
           {
-            name: newCategory.trim(),
+            name: newCategory.trim()
           },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+              Authorization: `Bearer ${token}`
+            }
           }
-        );
+        )
 
-        setCategories([...categories, data]);
-        setNewCategory("");
+        setCategories([...categories, data])
+        setNewCategory('')
 
-        Notify.success(`Категорія <${newCategory}> додана успішно`);
+        Notify.success(`Категорія <${newCategory}> додана успішно`)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleCreateCategory = (e) => {
-    e.preventDefault();
-    createCrmCategory();
-  };
+    e.preventDefault()
+    createCrmCategory()
+  }
 
   // delete category
 
@@ -107,101 +114,100 @@ const ManageCategories = ({ type }) => {
       const { data } = await axios.put(
         `api/${type}/archive`,
         {
-          id: categoryId,
+          id: categoryId
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         }
-      );
+      )
 
-      const updatedCategories = categories.filter(
-        (category) => category.id !== categoryId
-      );
+      const updatedCategories = categories.filter((category) => {
+        return category.id !== categoryId
+      })
 
-      setArchivedCategories((prevArchivedCategories) => [
-        ...prevArchivedCategories,
-        data,
-      ]);
-      setCategories(updatedCategories);
-      Notify.success(`Категорію архівовано`);
+      setArchivedCategories((prevArchivedCategories) => {
+        return [...prevArchivedCategories, data]
+      })
+      setCategories(updatedCategories)
+      Notify.success(`Категорію архівовано`)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   //  edit category
 
   const updateCrmCategory = async () => {
     try {
       if (
-        editedCategory.name.trim() === "" ||
+        editedCategory.name.trim() === '' ||
         editedCategory.name.trim().length < 3
       ) {
         Notify.warning(
-          "Для едагування категорії ведіть текстове значення  (мін. кількість символів: 3)"
-        );
-        setCurrentlyEditing(null);
-        setEditedCategory({ id: null, name: "" });
-        return;
+          'Для едагування категорії ведіть текстове значення  (мін. кількість символів: 3)'
+        )
+        setCurrentlyEditing(null)
+        setEditedCategory({ id: null, name: '' })
+        return
       }
 
-      const { id, name } = editedCategory;
-      const categoryExistsInMain = await isCategoryExists(categories, name);
+      const { id, name } = editedCategory
+      const categoryExistsInMain = await isCategoryExists(categories, name)
 
       const categoryExistsInArchived = await isCategoryExists(
         archivedCategories,
         name
-      );
+      )
 
       if (categoryExistsInMain || categoryExistsInArchived) {
-        Notify.failure(`Категорія <${name}> вже існує у вашому списку!`);
-        setCurrentlyEditing(null);
-        setEditedCategory({ id: null, name: "" });
+        Notify.failure(`Категорія <${name}> вже існує у вашому списку!`)
+        setCurrentlyEditing(null)
+        setEditedCategory({ id: null, name: '' })
       } else {
         await axios.patch(
           `api/${type}/edit`,
           { id, name },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
-            },
+              Authorization: `Bearer ${token}`
+            }
           }
-        );
+        )
 
-        const updatedCategories = categories.map((category) =>
-          category.id === id ? { ...category, name } : category
-        );
+        const updatedCategories = categories.map((category) => {
+          return category.id === id ? { ...category, name } : category
+        })
 
-        setCategories(updatedCategories);
-        setCurrentlyEditing(null);
-        setEditedCategory({ id: null, name: "" });
-        Notify.success(`Категорію змінено успішно`);
+        setCategories(updatedCategories)
+        setCurrentlyEditing(null)
+        setEditedCategory({ id: null, name: '' })
+        Notify.success(`Категорію змінено успішно`)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const handleEditCategory = (e) => {
     setEditedCategory({
       ...editedCategory,
-      name: e.target.value,
-    });
-  };
+      name: e.target.value
+    })
+  }
 
   const startEditing = (categoryId) => {
-    const categoryToEdit = categories.find(
-      (category) => category.id === categoryId
-    );
-    setEditedCategory({ ...categoryToEdit });
-    setCurrentlyEditing(categoryId);
-  };
+    const categoryToEdit = categories.find((category) => {
+      return category.id === categoryId
+    })
+    setEditedCategory({ ...categoryToEdit })
+    setCurrentlyEditing(categoryId)
+  }
 
   const cancelEditing = (e) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   // unarchive category
   const unarchiveCrmCategory = async (categoryId) => {
@@ -209,29 +215,33 @@ const ManageCategories = ({ type }) => {
       const { data } = await axios.put(
         `api/${type}/unarchive`,
         {
-          id: categoryId,
+          id: categoryId
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         }
-      );
+      )
 
       const updatedArchivedCategories = archivedCategories.filter(
-        (category) => category.id !== categoryId
-      );
-      setArchivedCategories(updatedArchivedCategories);
-      addUnarchivedToCategories(data);
-      Notify.success(`Категорію успішно додано у список`);
+        (category) => {
+          return category.id !== categoryId
+        }
+      )
+      setArchivedCategories(updatedArchivedCategories)
+      addUnarchivedToCategories(data)
+      Notify.success(`Категорію успішно додано у список`)
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   const addUnarchivedToCategories = (unarchived) => {
-    setCategories((prevCategories) => [...prevCategories, unarchived]);
-  };
+    setCategories((prevCategories) => {
+      return [...prevCategories, unarchived]
+    })
+  }
 
   return (
     <div>
@@ -239,7 +249,7 @@ const ManageCategories = ({ type }) => {
         <div
           className={`${styles.categoryContainer} ${styles.heightContainer}`}
         >
-          {type === "product_category" ? (
+          {type === 'product_category' ? (
             <h4 className={styles.categoryTitle}>Категорії товарів</h4>
           ) : (
             <h4 className={styles.categoryTitle}>Саб-категорії товарів</h4>
@@ -270,7 +280,7 @@ const ManageCategories = ({ type }) => {
       {archivedCategories?.length !== 0 && (
         <div className={styles.container}>
           <div className={styles.categoryContainer}>
-            {type === "product_category" ? (
+            {type === 'product_category' ? (
               <h4 className={styles.categoryTitle}>
                 Архівовані категорії товарів
               </h4>
@@ -289,12 +299,11 @@ const ManageCategories = ({ type }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ManageCategories;
+export default ManageCategories
 
 ManageCategories.propTypes = {
-  type: PropTypes.oneOf(["product_category", "product_sub_category"])
-    .isRequired,
-};
+  type: PropTypes.oneOf(['product_category', 'product_sub_category']).isRequired
+}

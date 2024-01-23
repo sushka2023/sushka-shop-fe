@@ -29,10 +29,10 @@ function App() {
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    if (currentPath === "/catalog") {
+    if (currentPath === "/catalog" && allCategories) {
       navigate(`catalog/${allCategories[0].id}/0`);
     }
-  }, [allCategories, navigate]);
+  }, [allCategories, navigate])
 
   useEffect(() => {
     if (token && !isLogedIn) {
@@ -76,23 +76,36 @@ function App() {
           <Route path="conditions" element={<ConditionsPage />} />
           <Route path="policy" element={<PrivacyPolicyPage />} />
         </Route>
+        <Route
+          path="review"
+          element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
+        />
+        <Route
+          path="cooperation"
+          element={<div style={{ marginBottom: '500px' }}>Співпраця</div>}
+        />
+        <Route path="favorite" element={<FavoritePage />} />
+        <Route
+          path="cart"
+          element={<div style={{ marginBottom: '500px' }}>Корзина</div>}
+        />
+        <Route path="conditions" element={<ConditionsPage />} />
+        <Route path="policy" element={<PrivacyPolicyPage />} />
 
-        <Route path="crm" element={<LayoutCRM />}>
-          <Route
-            path="dashbord"
-            element={
-              <div style={{ marginBottom: "500px" }}>Dashboard page</div>
-            }
-          />
-          <Route
-            path="orders"
-            element={<div style={{ marginBottom: "500px" }}>Order page</div>}
-          />
-          <Route
-            path="orders/:params"
-            element={<div style={{ marginBottom: "500px" }}>orders params</div>}
-          />
-          <Route path="products" element={<CrmProductsPage />} />
+      <Route path="crm" element={<LayoutCRM />}>
+        <Route
+          path="dashbord"
+          element={<div style={{ marginBottom: '500px' }}>Dashboard page</div>}
+        />
+        <Route
+          path="orders"
+          element={<div style={{ marginBottom: '500px' }}>Order page</div>}
+        />
+        <Route
+          path="orders/:params"
+          element={<div style={{ marginBottom: '500px' }}>orders params</div>}
+        />
+        <Route path="products" element={<CrmProductsPage />} />
 
           <Route path="products/:params" element={<CrmAddNewProduct />} />
 
@@ -121,4 +134,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
