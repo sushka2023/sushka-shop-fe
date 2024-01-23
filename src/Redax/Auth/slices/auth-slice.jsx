@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { login, currentUser, signUp, logout } from '../operation/Operation'
 
-const initialState = {
+const INITIAL_STATE = {
   accessTokenn: null,
   user: null,
   isLogedIn: false,
@@ -13,7 +13,7 @@ const initialState = {
 
 export const authSlice = createSlice({
   name: 'Auth',
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {
     toggleModal: (state, action) => {
       state.modal = action.payload

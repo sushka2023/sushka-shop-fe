@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { selectIsLoading } from '../../Redax/Auth/selectors/Selectors'
 import styles from './auth.module.scss'
 
-const SubButton = ({ isLoginMode }) => {
+const AuthButton = ({ isLoginMode }) => {
   const isLoading = useSelector(selectIsLoading)
 
   return (
@@ -14,4 +14,4 @@ const SubButton = ({ isLoginMode }) => {
   )
 }
 
-export default SubButton
+export default AuthButton

@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import Error from './Error'
+import FieldErorr from './FieldErorr'
 import styles from './auth.module.scss'
 import { Fragment } from 'react'
 
@@ -20,7 +20,7 @@ const EmailField = ({ errors, touched, apiError }) => {
           }`}
         />
       </label>
-      <Error errors={errors.email} touched={touched.email} />
+      <FieldErorr errors={errors.email} touched={touched.email} />
     </Fragment>
   )
 }

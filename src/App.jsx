@@ -40,7 +40,7 @@ function App() {
         currentUser({ accessTokenn: token, operationType: 'currentUser' })
       )
     }
-  }, [token, isLogedIn, dispatch])
+  }, [token, isLogedIn])
 
   return (
     <Fragment>

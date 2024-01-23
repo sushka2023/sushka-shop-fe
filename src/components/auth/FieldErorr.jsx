@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import styles from './auth.module.scss'
 
-const Error = ({ errors, touched, apiError }) => {
+const FieldErorr = ({ errors, touched, apiError }) => {
   return (
     <Fragment>
       {errors && touched ? <div className={styles.error}>{errors}</div> : null}
@@ -17,4 +17,4 @@ const Error = ({ errors, touched, apiError }) => {
   )
 }
 
-export default Error
+export default FieldErorr

@@ -166,19 +166,18 @@
 }
 
 .fieldError {
-    border: 1px solid #FD6769;
+    border: 1px solid $red;
 
     &::placeholder {
-        color: #FD6769;
+        color: $red;
     }
 }
 
 .error {
-    color: var(--Palette-Addition-red-wrong-answer, #FD6769);
-    font-family: "Open Sans";
+    color: $red;
+    font-family: $open-sans;
     font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight-400;
     line-height: 130%;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -194,20 +193,18 @@
 }
 
 .confEmailTitle {
-    color: var(--Dark-Green, #567343);
-    font-family: "Open Sans";
+    color: $green-dark-200;
+    font-family: $open-sans;
     font-size: 22px;
-    font-style: normal;
-    font-weight: 600;
+    font-weight: $font-weight-600;
     line-height: 120%;
 }
 
 .confEmailDescr {
-    color: var(--Dark-Green, #567343);
+    color: $green-dark-200;
     text-align: center;
-    font-family: "Open Sans";
+    font-family: $open-sans;
     font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight-400;
     line-height: 140%;
 }

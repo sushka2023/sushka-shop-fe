@@ -10,7 +10,7 @@ import {
 } from '../../Redax/Auth/selectors/Selectors'
 import { toggleModal } from '../../Redax/Auth/slices/auth-slice'
 import { useNavigate } from 'react-router-dom'
-import Error from './Error'
+import FieldErorr from './FieldErorr'
 import FirstNameField from './FirstNameField'
 import LastNameField from './LastNameField'
 import EmailField from './EmailField'
@@ -19,8 +19,8 @@ import RepeatPassword from './RepeatPasswordField'
 import RememberPassword from './RememberPassword'
 import MailConfirmation from './MailConfirmation'
 import styles from './auth.module.scss'
-import SubButton from './SubButton'
-import SwitchForm from './SwitchForm'
+import AuthButton from './AuthButton'
+import AuthToggle from './AuthToggle'
 
 const Auth = () => {
   const [isLoginMode, setLoginMode] = useState(true)
@@ -40,13 +40,11 @@ const Auth = () => {
       setMailConfirmation(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, dispatch])
+  }, [user, operationType])
 
-  const toggleLoginMode = () => {
-    return setLoginMode(!isLoginMode)
-  }
+  const toggleLoginMode = () => setLoginMode(!isLoginMode)
 
-  const initialValues = {
+  const INITIAL_VALUES = {
     firstName: '',
     lastName: '',
     email: '',
@@ -54,19 +52,18 @@ const Auth = () => {
     repeatPassword: ''
   }
 
-  const handleSubmit = (values) => {
-    return dispatch(
+  const handleSubmit = (values) =>
+    dispatch(
       isLoginMode
         ? login({ user: values, operationType: 'Login' })
         : signUp({ user: values, operationType: 'SignUp' })
     )
-  }
 
   return (
     <Fragment>
       {!mailConfirmation ? (
         <Formik
-          initialValues={initialValues}
+          initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
           validationSchema={isLoginMode ? LoginSchema : SignupSchema}
         >
@@ -91,13 +88,13 @@ const Auth = () => {
                   <RepeatPassword errors={errors} touched={touched} />
                 )}
 
-                <Error apiError={apiError} />
+                <FieldErorr apiError={apiError} />
 
                 {isLoginMode && <RememberPassword />}
 
-                <SubButton isLoginMode={isLoginMode} />
+                <AuthButton isLoginMode={isLoginMode} />
 
-                <SwitchForm
+                <AuthToggle
                   isLoginMode={isLoginMode}
                   toggleLoginMode={toggleLoginMode}
                 />

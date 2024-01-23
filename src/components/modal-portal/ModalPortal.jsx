@@ -10,10 +10,12 @@ const ModalPortal = ({ children }) => {
   const isOpen = useSelector(selectModal)
   const dispatch = useDispatch()
 
+  const TIMEOUT_DELAY_MS = 500
+
   const modalContent = (
     <CSSTransition
       in={isOpen}
-      timeout={500}
+      timeout={TIMEOUT_DELAY_MS}
       classNames={{
         enter: styles.overlayEnter,
         enterActive: styles.overlayEnterActive,
@@ -24,7 +26,12 @@ const ModalPortal = ({ children }) => {
       mountOnEnter
     >
       <div className={styles.overlay}>
-        <Transition in={isOpen} timeout={500} unmountOnExit mountOnEnter>
+        <Transition
+          in={isOpen}
+          timeout={TIMEOUT_DELAY_MS}
+          unmountOnExit
+          mountOnEnter
+        >
           {(state) => {
             return (
               <div className={`${styles.modal} ${styles[state]}`}>

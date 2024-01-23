@@ -1,6 +1,6 @@
 import styles from './auth.module.scss'
 
-const SwitchForm = ({ isLoginMode, toggleLoginMode }) => {
+const AuthToggle = ({ isLoginMode, toggleLoginMode }) => {
   return (
     <div className={styles.toRegWrapp}>
       <p className={styles.paragraph}>
@@ -17,4 +17,4 @@ const SwitchForm = ({ isLoginMode, toggleLoginMode }) => {
   )
 }
 
-export default SwitchForm
+export default AuthToggle
