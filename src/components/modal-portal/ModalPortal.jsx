@@ -3,7 +3,7 @@ import { CSSTransition, Transition } from 'react-transition-group'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleModal } from '../../Redax/Auth/slices/auth-slice'
 import { selectModal } from '../../Redax/Auth/selectors/Selectors'
-import IconClose from '../../icons/close.svg'
+import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
 
 const ModalPortal = ({ children }) => {
