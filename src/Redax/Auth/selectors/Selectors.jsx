@@ -1,15 +1,27 @@
-export const selectModal = (state) => state.auth.modal;
+export const selectModal = (state) => {
+  return state.auth.modal
+}
 
-export const selectUser = (state) => state.auth.user;
+export const selectUser = (state) => {
+  return state.auth.user
+}
 
-export const selectIsLoading = (state) => state.auth.isLoading;
+export const selectIsLoading = (state) => {
+  return state.auth.isLoading
+}
 
-export const selectErrors = (state) => state.auth.errors;
+export const selectErrors = (state) => {
+  return state.auth.errors
+}
 
-export const selectOperationType = (state) => state.auth.operationType;
+export const selectOperationType = (state) => {
+  return state.auth.operationType
+}
 
-export const selectToken = (state) => state.auth.accessTokenn;
+export const selectToken = (state) => {
+  return state.auth.accessTokenn
+}
 
-export const selectIsLogedIn = (state) => state.auth.isLogedIn;
-
-
+export const selectIsLogedIn = (state) => {
+  return state.auth.isLogedIn
+}

@@ -1,8 +1,9 @@
-import styles from "./auth.module.scss";
+import { Fragment } from 'react'
+import styles from './auth.module.scss'
 
 const Error = ({ errors, touched, apiError }) => {
   return (
-    <>
+    <Fragment>
       {errors && touched ? <div className={styles.error}>{errors}</div> : null}
       {apiError === 409 && (
         <div className={styles.error}>
@@ -12,8 +13,8 @@ const Error = ({ errors, touched, apiError }) => {
       {apiError === 403 && (
         <div className={styles.error}>Невірно вказаний пароль або e-mail</div>
       )}
-    </>
-  );
-};
+    </Fragment>
+  )
+}
 
-export default Error;
+export default Error

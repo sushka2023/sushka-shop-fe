@@ -1,71 +1,74 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const signUp = createAsyncThunk(
-  "api/signUp",
+  'api/signUp',
   async ({ user, operationType }, thunkAPI) => {
     try {
       const response = await axios.post(`api/auth/signup`, {
         email: user.email,
         first_name: user.firstName,
         last_name: user.lastName,
-        password_checksum: user.repeatPassword,
-      });
-      return { data: response.data, operationType };
+        password_checksum: user.repeatPassword
+      })
+      return { data: response.data, operationType }
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.response.status);
+      return thunkAPI.rejectWithValue(e.response.status)
     }
   }
-);
+)
 
 export const login = createAsyncThunk(
-  "api/login",
+  'api/login',
   async ({ user, operationType }, thunkAPI) => {
     try {
-        const response = await axios.post("api/auth/login", {
-         username: user.email,
-         password: user.password,
+      const response = await axios.post(
+        'api/auth/login',
+        {
+          username: user.email,
+          password: user.password
         },
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
-        });
-      return { data: response.data, operationType };
+        }
+      )
+      return { data: response.data, operationType }
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.response.status);
+      return thunkAPI.rejectWithValue(e.response.status)
     }
   }
-);
+)
 
 export const currentUser = createAsyncThunk(
-  "api/currentUser",
+  'api/currentUser',
   async ({ accessTokenn, operationType }, thunkAPI) => {
     try {
-      const response = await axios.get("api/users/me/", {
+      const response = await axios.get('api/users/me/', {
         headers: {
-          Authorization: `Bearer ${accessTokenn}`,
-        },
-      });
-      return { data: response.data, operationType };
+          Authorization: `Bearer ${accessTokenn}`
+        }
+      })
+      return { data: response.data, operationType }
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(e.message)
     }
   }
-);
+)
 
 export const logout = createAsyncThunk(
-  "api/logOut",
+  'api/logOut',
   async ({ accessTokenn }, thunkAPI) => {
     try {
-      const response = await axios.post("api/auth/logout", null, {
+      const response = await axios.post('api/auth/logout', null, {
         headers: {
-          Authorization: `Bearer ${accessTokenn}`,
-        },
-      });
-      return response;
+          Authorization: `Bearer ${accessTokenn}`
+        }
+      })
+      return response
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(e.message)
     }
   }
-);
+)
