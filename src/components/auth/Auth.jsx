@@ -42,7 +42,9 @@ const Auth = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, operationType])
 
-  const toggleLoginMode = () => setLoginMode(!isLoginMode)
+  const toggleLoginMode = () => {
+    return setLoginMode(!isLoginMode)
+  }
 
   const INITIAL_VALUES = {
     firstName: '',
@@ -52,12 +54,13 @@ const Auth = () => {
     repeatPassword: ''
   }
 
-  const handleSubmit = (values) =>
-    dispatch(
+  const handleSubmit = (values) => {
+    return dispatch(
       isLoginMode
         ? login({ user: values, operationType: 'Login' })
         : signUp({ user: values, operationType: 'SignUp' })
     )
+  }
 
   return (
     <Fragment>

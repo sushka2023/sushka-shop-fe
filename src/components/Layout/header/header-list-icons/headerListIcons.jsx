@@ -73,7 +73,9 @@ const HeaderListIcons = () => {
         ) : (
           <IconAccount
             className={styles.iconsNav}
-            onClick={() => dispatch(toggleModal(true))}
+            onClick={() => {
+              return dispatch(toggleModal(true))
+            }}
           />
         )}
       </li>

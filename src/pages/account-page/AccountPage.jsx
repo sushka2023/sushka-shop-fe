@@ -5,8 +5,10 @@ import { logout } from '../../Redax/Auth/operation/Operation'
 const AccountPage = () => {
   const token = useSelector(selectToken)
   const dispatch = useDispatch()
-  
-  const handleClickLogout = () => dispatch(logout({ accessTokenn: token }))
+
+  const handleClickLogout = () => {
+    return dispatch(logout({ accessTokenn: token }))
+  }
 
   return (
     <div style={{ marginBottom: '500px' }}>
