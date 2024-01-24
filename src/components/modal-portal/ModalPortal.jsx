@@ -1,20 +1,15 @@
 import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
-import { useSelector, useDispatch } from 'react-redux'
-import { toggleModal } from '../../Redax/Auth/slices/auth-slice'
-import { selectModal } from '../../Redax/Auth/selectors/Selectors'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
 
-const ModalPortal = ({ children }) => {
-  const isOpen = useSelector(selectModal)
-  const dispatch = useDispatch()
+const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
 
   const TIMEOUT_DELAY_MS = 500
 
   const modalContent = (
     <CSSTransition
-      in={isOpen}
+      in={isModalOpen}
       timeout={TIMEOUT_DELAY_MS}
       classNames={{
         enter: styles.overlayEnter,
@@ -27,7 +22,7 @@ const ModalPortal = ({ children }) => {
     >
       <div className={styles.overlay}>
         <Transition
-          in={isOpen}
+          in={isModalOpen}
           timeout={TIMEOUT_DELAY_MS}
           unmountOnExit
           mountOnEnter
@@ -37,9 +32,7 @@ const ModalPortal = ({ children }) => {
               <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
-                  onClick={() => {
-                    dispatch(toggleModal(false))
-                  }}
+                  onClick={() => setIsModalOpen(false)}
                 />
                 {children}
               </div>

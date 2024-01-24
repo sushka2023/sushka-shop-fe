@@ -6,9 +6,9 @@ import { SignupSchema, LoginSchema } from './validation'
 import {
   selectErrors,
   selectOperationType,
-  selectUser
+  selectUser,
+  selectIsLogedIn
 } from '../../Redax/Auth/selectors/Selectors'
-import { toggleModal } from '../../Redax/Auth/slices/auth-slice'
 import { useNavigate } from 'react-router-dom'
 import FieldErorr from './FieldErorr'
 import FirstNameField from './FirstNameField'
@@ -22,24 +22,24 @@ import styles from './auth.module.scss'
 import AuthButton from './AuthButton'
 import AuthToggle from './AuthToggle'
 
-const Auth = () => {
+const Auth = ({setIsModalOpen}) => {
   const [isLoginMode, setLoginMode] = useState(true)
   const [mailConfirmation, setMailConfirmation] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(selectUser)
+  const isLogedIn = useSelector(selectIsLogedIn)
   const operationType = useSelector(selectOperationType)
   const apiError = useSelector(selectErrors)
 
   useEffect(() => {
-    if (user && operationType === 'Login') {
-      dispatch(toggleModal(false))
+    if (user && isLogedIn) {
+      setIsModalOpen(false)
       navigate('account')
     }
-    if (user && operationType === 'SignUp') {
+    if (user && !isLoginMode) {
       setMailConfirmation(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, operationType])
 
   const toggleLoginMode = () => {

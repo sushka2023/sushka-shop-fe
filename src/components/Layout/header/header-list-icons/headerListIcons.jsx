@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { toggleModal } from '../../../../Redax/Auth/slices/auth-slice'
+import { useSelector } from 'react-redux'
 import { useEffect, useRef, useState } from 'react'
+import ModalPortal from '../../../modal-portal/ModalPortal'
+import Auth from '../../../auth/Auth'
 import IconSearch from '../../../../icons/search.svg?react'
 import IconAccount from '../../../../icons/account.svg?react'
 import IconFavorite from '../../../../icons/favorite.svg?react'
@@ -11,10 +12,10 @@ import { selectIsLogedIn } from '../../../../Redax/Auth/selectors/Selectors'
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const iconRef = useRef(null)
   const inputRef = useRef(null)
   const isLogedIn = useSelector(selectIsLogedIn)
-  const dispatch = useDispatch()
 
   const handleClick = (event) => {
     const target = event.target
@@ -38,58 +39,61 @@ const HeaderListIcons = () => {
   }, [])
 
   return (
-    <ul className={styles.listIcons}>
-      <li className={styles.listIconsLineContainer}>
-        <div
-          ref={iconRef}
-          id="search"
-          className={
-            isActive ? styles.searchContainerIsActive : styles.searchContainer
-          }
-        >
-          <input
-            ref={inputRef}
-            type="search"
-            placeholder="Пошук"
+    <>
+      <ul className={styles.listIcons}>
+        <li className={styles.listIconsLineContainer}>
+          <div
+            ref={iconRef}
+            id="search"
             className={
-              isActive
-                ? ` ${styles.searchInputIsActive}`
-                : `${styles.searchInput}`
+              isActive ? styles.searchContainerIsActive : styles.searchContainer
             }
-          />
-          <IconSearch
-            id="iconSearch"
-            className={
-              isActive ? styles.iconsNavSearchIsActive : styles.iconsNavSearch
-            }
-          />
-        </div>
-      </li>
-      <li className={styles.listIconsLine}>
-        {isLogedIn ? (
-          <Link to="account">
-            <IconAccount className={styles.iconsNav} />
+          >
+            <input
+              ref={inputRef}
+              type="search"
+              placeholder="Пошук"
+              className={
+                isActive
+                  ? ` ${styles.searchInputIsActive}`
+                  : `${styles.searchInput}`
+              }
+            />
+            <IconSearch
+              id="iconSearch"
+              className={
+                isActive ? styles.iconsNavSearchIsActive : styles.iconsNavSearch
+              }
+            />
+          </div>
+        </li>
+        <li className={styles.listIconsLine}>
+          {isLogedIn ? (
+            <Link to="account">
+              <IconAccount className={styles.iconsNav} />
+            </Link>
+          ) : (
+            <IconAccount
+              className={styles.iconsNav}
+              onClick={() => setIsModalOpen(true)}
+            />
+          )}
+        </li>
+        <li className={styles.listIconsLine}>
+          <Link to="favorite">
+            <IconFavorite className={styles.iconsNav} />
           </Link>
-        ) : (
-          <IconAccount
-            className={styles.iconsNav}
-            onClick={() => {
-              return dispatch(toggleModal(true))
-            }}
-          />
-        )}
-      </li>
-      <li className={styles.listIconsLine}>
-        <Link to="favorite">
-          <IconFavorite className={styles.iconsNav} />
-        </Link>
-      </li>
-      <li className={styles.listIconsLine}>
-        <Link to="cart">
-          <IconCart className={styles.iconsNav} />
-        </Link>
-      </li>
-    </ul>
+        </li>
+        <li className={styles.listIconsLine}>
+          <Link to="cart">
+            <IconCart className={styles.iconsNav} />
+          </Link>
+        </li>
+      </ul>
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <Auth setIsModalOpen={setIsModalOpen} />
+      </ModalPortal>
+    </>
   )
 }
 

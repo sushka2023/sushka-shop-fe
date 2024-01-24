@@ -13,8 +13,6 @@ import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
 import CrmAddNewProduct from './pages/crm-add-new-product/CrmAddNewProduct'
 import ConditionsPage from './pages/conditions-page/ConditionsPage'
 import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
-import ModalPortal from './components/modal-portal/ModalPortal'
-import Auth from './components/auth/Auth'
 import { currentUser } from './Redax/Auth/operation/Operation'
 import PrivateRoute from './components/privste-route/PrivateRoute'
 import { selectIsLogedIn, selectToken } from './Redax/Auth/selectors/Selectors'
@@ -129,9 +127,6 @@ function App() {
           <Route index element={<Navigate to="dashbord" replace />} />
         </Route>
       </Routes>
-      <ModalPortal>
-        <Auth />
-      </ModalPortal>
     </Fragment>
   )
 }

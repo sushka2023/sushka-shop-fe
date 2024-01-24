@@ -8,21 +8,11 @@ const INITIAL_STATE = {
   isLoading: false,
   errors: null,
   operationType: null,
-  modal: false
 }
 
 export const authSlice = createSlice({
   name: 'Auth',
   initialState: INITIAL_STATE,
-  reducers: {
-    toggleModal: (state, action) => {
-      state.modal = action.payload
-      if (!state.modal) {
-        state.operationType = null
-        state.errors = null
-      }
-    }
-  },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state, action) => {
@@ -89,5 +79,4 @@ export const authSlice = createSlice({
   }
 })
 
-export const { toggleModal } = authSlice.actions
 export default authSlice.reducer
