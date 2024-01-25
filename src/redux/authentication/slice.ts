@@ -1,18 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { login, currentUser, signUp, logout } from '../operation/Operation'
+import { UserResponse } from '../../types'
+import { currentUser, login, logout, signUp } from './operation'
 
-const INITIAL_STATE = {
-  accessTokenn: null,
+export type OperationType = 'Login' | 'SignUp' | 'currentUser'
+
+export type SignUpFormData = {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  repeatPassword: string
+}
+
+type AuthState = {
+  accessToken: string | null
+  user: UserResponse | null
+  isLoggedIn: boolean
+  isLoading: boolean
+  errors: any | null
+  operationType: OperationType | null
+}
+
+const INITIAL_STATE: AuthState = {
+  accessToken: null,
   user: null,
-  isLogedIn: false,
+  isLoggedIn: false,
   isLoading: false,
   errors: null,
-  operationType: null,
+  operationType: null
 }
 
 export const authSlice = createSlice({
   name: 'Auth',
   initialState: INITIAL_STATE,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state, action) => {
@@ -41,8 +62,8 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false
         state.user = action.payload.data.user
-        state.accessTokenn = action.payload.data.access_token
-        state.isLogedIn = true
+        state.accessToken = action.payload.data.access_token
+        state.isLoggedIn = true
         if (state.errors) {
           state.errors = null
         }
@@ -57,7 +78,7 @@ export const authSlice = createSlice({
       })
       .addCase(currentUser.fulfilled, (state, action) => {
         state.isLoading = false
-        state.isLogedIn = true
+        state.isLoggedIn = true
         state.user = action.payload.data
       })
       .addCase(logout.pending, (state) => {
@@ -68,13 +89,12 @@ export const authSlice = createSlice({
         state.errors = action.error
       })
       .addCase(logout.fulfilled, (state) => {
-        state.accessTokenn = null
+        state.accessToken = null
         state.user = null
-        state.isLogedIn = false
+        state.isLoggedIn = false
         state.isLoading = false
         state.errors = null
         state.operationType = null
-        state.modal = false
       })
   }
 })

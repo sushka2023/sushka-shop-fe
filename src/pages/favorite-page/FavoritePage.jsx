@@ -1,12 +1,11 @@
 import IconAddNewItem from '../../icons/add.svg?react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectAllItem } from '../../Redax/Products/selectors/Selectors'
 import styles from './favoritePage.module.scss'
 import ItemCard from '../../components/item-card/ItemCard'
 
 const FavoritePage = () => {
-  const allItem = useSelector(selectAllItem)
+  const allItem = useSelector((state) => state.items.items)
   const favoriteItems = allItem.filter((item) => {
     return item.is_favorite
   })

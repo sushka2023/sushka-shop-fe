@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { selectToken } from '../../Redax/Auth/selectors/Selectors'
-import { logout } from '../../Redax/Auth/operation/Operation'
+import { logout } from '../../redux/authentication/operation'
 
 const AccountPage = () => {
-  const token = useSelector(selectToken)
+  const token = useSelector((state) => state.auth.accessToken)
   const dispatch = useDispatch()
 
   const handleClickLogout = () => {
-    return dispatch(logout({ accessTokenn: token }))
+    return dispatch(logout({ accessToken: token }))
   }
 
   return (

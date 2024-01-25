@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import CrmStatus from '../../components/Crm-status/CrmStatus'
-import CrmImages from '../../components/Crm-images/crmImages'
+import CrmImages from '../../components/Crm-images'
 import ArowIcon from '../../icons/arrow.svg?react'
 import styles from './crmAddNewProduct.module.scss'
 

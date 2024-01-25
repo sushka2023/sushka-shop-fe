@@ -1,17 +1,21 @@
-import { useState, useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect, useRef, ReactNode, FC } from 'react'
 import SettingsIcon from '../../icons/settings.svg?react'
 import styles from './Options.module.scss'
 
-const Options = ({ children, value }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const containerRef = useRef(null)
+type Props = {
+  children: ReactNode
+  value: string
+}
+
+const Options: FC<Props> = ({ children, value }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const containerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const handleClickDropdown = (e) => {
+    const handleClickDropdown = (e: MouseEvent) => {
       setIsOpen(!isOpen)
 
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
+      if (!containerRef.current?.contains(e.target as HTMLElement)) {
         setIsOpen(false)
       }
     }
@@ -23,8 +27,10 @@ const Options = ({ children, value }) => {
     }
   }, [isOpen])
 
-  const applyDropDown = (e) => {
-    if (e.target.nodeName === 'BUTTON' || e.target.nodeName === 'svg') {
+  const applyDropDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const target = e.target as HTMLElement
+
+    if (target.nodeName === 'BUTTON' || target.nodeName === 'svg') {
       return
     }
 
@@ -44,11 +50,6 @@ const Options = ({ children, value }) => {
       )}
     </div>
   )
-}
-
-Options.propTypes = {
-  value: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
 }
 
 export default Options

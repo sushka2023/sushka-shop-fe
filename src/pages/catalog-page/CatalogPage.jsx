@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllItem } from '../../Redax/Products/selectors/Selectors'
 import ItemCard from '../../components/item-card/ItemCard'
 import Pagination from '@mui/material/Pagination'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -8,9 +7,9 @@ import { Link as ScrollLink } from 'react-scroll'
 import { useParams, useNavigate } from 'react-router-dom'
 import styles from './CatalogPage.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
-import Filter from '../../components/Filter/filter'
-import { fetchItems } from '../../Redax/Products/operation/Operation'
+import Filter from '../../components/Filter'
 import CategoriesButtons from '../../components/Categories-button/Categories'
+import { fetchItems } from '../../redux/products/operation'
 
 const theme = createTheme({
   palette: {
@@ -34,9 +33,9 @@ const paginationStyles = {
 const CatalogPage = () => {
   const { params, page } = useParams()
   const [offset, setOffset] = useState(parseInt(page))
-  const [operationType, setOperationType] = useState('fatch')
+  const [operationType, setOperationType] = useState('fetch')
 
-  const allProducts = useSelector(selectAllItem)
+  const allProducts = useSelector((state) => state.items.items)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -52,7 +51,7 @@ const CatalogPage = () => {
   }
 
   const handleClickPagination = (e) => {
-    setOperationType('fatch')
+    setOperationType('fetch')
     const newPage = parseInt(e.target.textContent)
     setOffset(newPage === 1 ? 0 : newPage)
     navigate(`/catalog/${params}/${newPage - 1}`)

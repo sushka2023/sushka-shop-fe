@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { toggleFavorite } from '../../Redax/Products/slices/items-slice'
+import { toggleFavorite } from '../../redux/products/slice'
 
 const ItemCard = ({ item, isFavorite }) => {
   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight)

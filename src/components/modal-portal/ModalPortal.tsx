@@ -2,11 +2,17 @@ import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
+import { FC, ReactNode } from 'react'
 
-const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
+const TIMEOUT_DELAY_MS = 500
 
-  const TIMEOUT_DELAY_MS = 500
+type Props = {
+  children: ReactNode
+  isModalOpen: boolean
+  setIsModalOpen: (isModalOpen: boolean) => void
+}
 
+const ModalPortal: FC<Props> = ({ children, isModalOpen, setIsModalOpen }) => {
   const modalContent = (
     <CSSTransition
       in={isModalOpen}
@@ -32,7 +38,9 @@ const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
               <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => {
+                    return setIsModalOpen(false)
+                  }}
                 />
                 {children}
               </div>
@@ -43,7 +51,10 @@ const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
     </CSSTransition>
   )
 
-  return createPortal(modalContent, document.getElementById('modal-root-form'))
+  return createPortal(
+    modalContent,
+    document.getElementById('modal-root-form') as HTMLElement
+  )
 }
 
 export default ModalPortal

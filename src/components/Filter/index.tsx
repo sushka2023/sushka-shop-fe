@@ -1,6 +1,6 @@
 import { arrayOptionWeigth } from '../../options/options'
-import Options from '../options/Options'
-import Sort from '../sort/sort'
+import Options from '../options'
+import Sort from '../sort'
 import styles from './filter.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
 
