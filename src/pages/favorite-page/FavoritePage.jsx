@@ -1,4 +1,4 @@
-import { ReactComponent as IconAddNewItem } from '../../icons/add.svg'
+import IconAddNewItem from '../../icons/add.svg?react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectAllItem } from '../../Redax/Products/selectors/Selectors'

@@ -1,4 +1,4 @@
-import { ReactComponent as ArowIcon } from '../../icons/arrow.svg'
+import ArowIcon from '../../icons/arrow.svg?react'
 import styles from './sliderSection.module.scss'
 
 const ArrowPrev = (props) => {

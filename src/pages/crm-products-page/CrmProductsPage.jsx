@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ReactComponent as PlusIcon } from '../../icons/plus.svg'
-import { ReactComponent as SearchIcon } from '../../icons/search.svg'
+import PlusIcon from '../../icons/plus.svg?react'
+import SearchIcon from '../../icons/search.svg?react'
 import styles from './crmProductsPage.module.scss'
 
 const CrmProductsPage = () => {

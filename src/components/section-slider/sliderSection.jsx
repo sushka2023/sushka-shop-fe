@@ -5,7 +5,7 @@ import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
 import styles from './sliderSection.module.scss'
-import { ReactComponent as ArrowBtn } from '../../icons/arrow.svg'
+import ArrowBtn from '../../icons/arrow.svg?react'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)

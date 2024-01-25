@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { ReactComponent as IconGear } from '../../../../icons/gear.svg'
+import IconGear from '../../../../icons/gear.svg?react'
 import styles from '../HeaderCRM.module.scss'
 
 const HeaderNavigation = () => {

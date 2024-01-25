@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { ReactComponent as SettingsIcon } from '../../icons/settings.svg'
+import SettingsIcon from '../../icons/settings.svg?react'
 import styles from './Options.module.scss'
 
 const Options = ({ children, value }) => {

@@ -1,8 +1,11 @@
 import styles from './sliderSection.module.scss'
-import { ReactComponent as IconFavorite } from '../../icons/favorite.svg'
+import IconFavorite from '../../icons/favorite.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
+import { FC, HTMLProps } from 'react'
 
-const CustomSlider = ({ ...props }) => {
+type Props = HTMLProps<HTMLDivElement>
+
+const CustomSlider: FC<Props> = ({ ...props }) => {
   return (
     <div className={styles.slideWrapper}>
       <div {...props} className={styles.slideElement}>

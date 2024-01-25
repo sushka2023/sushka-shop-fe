@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import styles from './ModalProductLimits.module.scss'
-import { ReactComponent as IconArrowClose } from '../../icons/closemodal.svg'
-import { ReactComponent as IconTriangle } from '../../icons/triangle.svg'
+import IconArrowClose from '../../icons/closemodal.svg?react'
+import IconTriangle from '../../icons/triangle.svg?react'
 
 const modalRoot = document.querySelector('#modal-root-product-limits')
 

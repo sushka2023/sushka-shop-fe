@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom'
-import { ReactComponent as IconStatistics } from '../../../../icons/statistics.svg'
-import { ReactComponent as IconOrders } from '../../../../icons/orders.svg'
-import { ReactComponent as IconProducts } from '../../../../icons/products.svg'
-import { ReactComponent as IconClients } from '../../../../icons/clients.svg'
-import { ReactComponent as IconOpinion } from '../../../../icons/opinion.svg'
+import IconStatistics from '../../../../icons/statistics.svg?react'
+import IconOrders from '../../../../icons/orders.svg?react'
+import IconProducts from '../../../../icons/products.svg?react'
+import IconClients from '../../../../icons/clients.svg?react'
+import IconOpinion from '../../../../icons/opinion.svg?react'
 import styles from '../AsideCRM.module.scss'
 
 const AsideNavigation = () => {
