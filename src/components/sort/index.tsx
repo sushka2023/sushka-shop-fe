@@ -2,11 +2,11 @@ import { Fragment, useState } from 'react'
 import styles from './sort.module.scss'
 
 const Sort = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSortValue] = useState('За замовчуванням')
+  const [sortValue, setSortValue] = useState('За замовчуванням')
 
-  const clickInput = (e) => {
-    setSortValue(e.target.value)
+  const clickInput = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const target = e.target as HTMLInputElement
+    setSortValue(target.value)
   }
 
   return (
@@ -18,7 +18,7 @@ const Sort = () => {
           type="radio"
           id="default"
           name="sorting"
-          value="За замовчуванням"
+          value={sortValue}
           onClick={clickInput}
           defaultChecked
         />

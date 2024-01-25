@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
 import Auth from '../../../auth/Auth'
 import IconSearch from '../../../../icons/search.svg?react'
@@ -8,14 +8,13 @@ import IconAccount from '../../../../icons/account.svg?react'
 import IconFavorite from '../../../../icons/favorite.svg?react'
 import IconCart from '../../../../icons/cart.svg?react'
 import styles from '../Header.module.scss'
-import { selectIsLogedIn } from '../../../../Redax/Auth/selectors/Selectors'
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const iconRef = useRef(null)
   const inputRef = useRef(null)
-  const isLogedIn = useSelector(selectIsLogedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const handleClick = (event) => {
     const target = event.target
@@ -39,7 +38,7 @@ const HeaderListIcons = () => {
   }, [])
 
   return (
-    <>
+    <Fragment>
       <ul className={styles.listIcons}>
         <li className={styles.listIconsLineContainer}>
           <div
@@ -68,14 +67,16 @@ const HeaderListIcons = () => {
           </div>
         </li>
         <li className={styles.listIconsLine}>
-          {isLogedIn ? (
+          {isLoggedIn ? (
             <Link to="account">
               <IconAccount className={styles.iconsNav} />
             </Link>
           ) : (
             <IconAccount
               className={styles.iconsNav}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                return setIsModalOpen(true)
+              }}
             />
           )}
         </li>
@@ -93,7 +94,7 @@ const HeaderListIcons = () => {
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <Auth setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
-    </>
+    </Fragment>
   )
 }
 

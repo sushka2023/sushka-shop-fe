@@ -6,29 +6,24 @@ import StarIcon from '../../icons/star.svg?react'
 import styles from './crmImages.module.scss'
 
 const CrmImages = () => {
-  const [fileName, setFileName] = useState([])
-  const [activeFile, setActiveFile] = useState(null)
+  const [fileName, setFileName] = useState<string[]>([])
+  const [activeFile, setActiveFile] = useState<string | null>(null)
 
   useEffect(() => {
     if (fileName.length > 4) return setFileName(fileName.slice(0, 4))
   }, [fileName])
 
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files).map((file) => {
-      return file.name
-    })
-    const newFiles =
-      fileName.length === 0
-        ? files
-        : files.filter((file) => {
-            return !fileName.includes(file)
-          })
-    setFileName((prev) => {
-      return [...prev, ...newFiles]
-    })
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+
+    if (files) {
+      const fileNames = Array.from(files).map((file) => file.name)
+      const newFiles = fileNames.filter((file) => !fileName.includes(file))
+      setFileName((prev) => [...prev, ...newFiles])
+    }
   }
 
-  const handleClickDelete = (file) => {
+  const handleClickDelete = (file: string) => {
     return setFileName(
       fileName.filter((item) => {
         return item !== file
@@ -36,7 +31,7 @@ const CrmImages = () => {
     )
   }
 
-  const toggleActiveStar = (file) => {
+  const toggleActiveStar = (file: string) => {
     return setActiveFile(activeFile === file ? null : file)
   }
 

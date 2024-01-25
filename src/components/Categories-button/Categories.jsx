@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectAllCategories } from '../../Redax/Products/selectors/Selectors'
 
 import styles from './Categories.module.scss'
 
 const CategoriesButtons = () => {
   const [activeButton, setActiveButton] = useState(null)
-  const allCategories = useSelector(selectAllCategories)
+  const allCategories = useSelector((state) => state.items.allCategories)
 
   useEffect(() => {
     if (allCategories && allCategories.length > 0) {
