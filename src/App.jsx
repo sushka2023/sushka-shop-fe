@@ -13,6 +13,7 @@ import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
 import CrmAddNewProduct from './pages/crm-add-new-product/CrmAddNewProduct'
 import ConditionsPage from './pages/conditions-page/ConditionsPage'
 import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
+import FeedbackPage from './pages/feedback-page/FeedbackPage'
 
 function App() {
   const navigate = useNavigate()
@@ -38,7 +39,7 @@ function App() {
         </Route>
         <Route
           path="review"
-          element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
+          element={<FeedbackPage/>}
         />
         <Route
           path="cooperation"
