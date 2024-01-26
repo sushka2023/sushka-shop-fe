@@ -12,8 +12,9 @@ import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
 import CrmAddNewProduct from './pages/crm-add-new-product/CrmAddNewProduct'
 import ConditionsPage from './pages/conditions-page/ConditionsPage'
 import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
-import { currentUser } from './redux/authentication/operation'
-import PrivateRoute from './components/privste-route'
+import CooperationPage from './pages/cooperation-page/CooperationPage'
+import { currentUser } from './Redax/Auth/operation/Operation'
+import PrivateRoute from './components/privste-route/PrivateRoute'
 import AccountPage from './pages/account-page/AccountPage'
 
 function App() {
@@ -55,10 +56,6 @@ function App() {
             path="review"
             element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
           />
-          <Route
-            path="cooperation"
-            element={<div style={{ marginBottom: '500px' }}>Співпраця</div>}
-          />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
             path="/account"
@@ -72,22 +69,8 @@ function App() {
           />
           <Route path="conditions" element={<ConditionsPage />} />
           <Route path="policy" element={<PrivacyPolicyPage />} />
+          <Route path="cooperation" element={<CooperationPage />} />
         </Route>
-        <Route
-          path="review"
-          element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
-        />
-        <Route
-          path="cooperation"
-          element={<div style={{ marginBottom: '500px' }}>Співпраця</div>}
-        />
-        <Route path="favorite" element={<FavoritePage />} />
-        <Route
-          path="cart"
-          element={<div style={{ marginBottom: '500px' }}>Корзина</div>}
-        />
-        <Route path="conditions" element={<ConditionsPage />} />
-        <Route path="policy" element={<PrivacyPolicyPage />} />
 
         <Route path="crm" element={<LayoutCRM />}>
           <Route

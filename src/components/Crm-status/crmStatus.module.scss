@@ -64,13 +64,13 @@
   height: 19px;
 }
 
-.statusInput:checked + .statusLabel:before {
-  content: '';
-  position: absolute;
-  background-image: url(/src/icons/crmcheckbox.svg);
-  width: 19px;
-  background-repeat: no-repeat;
-  left: -33px;
-  top: 60%;
-  transform: translate(0, -60%);
+.statusInput:checked+.statusLabel:before {
+    content: "";
+    position: absolute;
+    background-image: url(/src/icons/checkedcrmweight.svg);
+    width: 19px;
+    background-repeat: no-repeat;
+    left: -33px;
+    top: 60%;
+    transform: translate(0, -60%);
 }

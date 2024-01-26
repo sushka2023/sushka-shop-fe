@@ -1,10 +1,13 @@
 @import '../../styles/base/base.scss';
 
-.container {
-  background-color: white;
-  margin: 69px 30px 69px 40px;
-  padding: 20px 30px;
-  border-radius: 8px;
+.form {
+    padding: 20px 30px;
+}
+
+.formWrapp {
+    background-color: $white-200;
+    border-radius: 8px;
+    padding: 30px 20px;
 }
 
 .title {
@@ -82,22 +85,6 @@
   position: relative;
 }
 
-.saveBtns {
-  display: inline-flex;
-  height: 40px;
-  padding: 15px 30px;
-  align-items: center;
-  border-radius: 10px;
-  background: $CRM-accent;
-  color: $white-200;
-  font-family: $open-sans;
-  font-size: 16px;
-  font-weight: $font-weight-600;
-  line-height: 130%;
-  border: none;
-  cursor: pointer;
-}
-
 .inputsWrapp {
   display: flex;
   justify-content: space-between;
@@ -138,4 +125,48 @@
 
 .descriptionTextaria {
   height: 248px;
+}
+
+.descriptionWrapp {
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.categoriesWrapper {
+    position: relative;
+    display: inline-flex;
+    gap: 10px;
+    display: inline-flex;
+    margin-top: 45px;
+}
+
+.iconWrapp {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 1px solid $CRM-accent;
+}
+
+.iconPlus {
+    fill: $CRM-accent;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+}
+
+.errorInput {
+    border-color: red;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
 }
