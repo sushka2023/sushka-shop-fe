@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Link as ScrollLink, scroller } from 'react-scroll'
-import { selectAllCategories } from '../../../../Redax/Products/selectors/Selectors'
-import { fetchAllCategories } from '../../../../Redax/Products/operation/Operation'
+import { fetchAllCategories } from '../../../../redux/products/operation'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from '../Header.module.scss'
@@ -10,7 +9,7 @@ const HeaderNav = () => {
   const location = useLocation()
   const homePath = location.pathname === '/'
 
-  const allCategories = useSelector(selectAllCategories)
+  const allCategories = useSelector((state) => state.items.allCategories)
   const dispatch = useDispatch()
 
   useEffect(() => {

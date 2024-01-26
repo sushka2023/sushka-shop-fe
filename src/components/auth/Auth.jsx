@@ -1,16 +1,10 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, signUp } from '../../Redax/Auth/operation/Operation'
+import { login, signUp } from '../../redux/authentication/operation'
 import { Formik, Form } from 'formik'
 import { SignupSchema, LoginSchema } from './validation'
-import {
-  selectErrors,
-  selectOperationType,
-  selectUser,
-  selectIsLogedIn
-} from '../../Redax/Auth/selectors/Selectors'
 import { useNavigate } from 'react-router-dom'
-import FieldErorr from './FieldErorr'
+import FieldError from './FieldError'
 import FirstNameField from './FirstNameField'
 import LastNameField from './LastNameField'
 import EmailField from './EmailField'
@@ -27,13 +21,13 @@ const Auth = ({ setIsModalOpen }) => {
   const [mailConfirmation, setMailConfirmation] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector(selectUser)
-  const isLogedIn = useSelector(selectIsLogedIn)
-  const operationType = useSelector(selectOperationType)
-  const apiError = useSelector(selectErrors)
+  const user = useSelector((state) => state.auth.user)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const operationType = useSelector((state) => state.auth.operationType)
+  const apiError = useSelector((state) => state.auth.errors)
 
   useEffect(() => {
-    if (user && isLogedIn) {
+    if (user && isLoggedIn) {
       setIsModalOpen(false)
       navigate('account')
     }
@@ -91,7 +85,7 @@ const Auth = ({ setIsModalOpen }) => {
                   <RepeatPassword errors={errors} touched={touched} />
                 )}
 
-                <FieldErorr apiError={apiError} />
+                <FieldError apiError={apiError} />
 
                 {isLoginMode && <RememberPassword />}
 

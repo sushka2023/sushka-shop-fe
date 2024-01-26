@@ -1,9 +1,5 @@
 /* eslint-disable complexity */
 import { useSelector } from 'react-redux'
-import {
-  selectAllCategories,
-  selectAllItem
-} from '../../../Redax/Products/selectors/Selectors'
 import { useLocation, Link } from 'react-router-dom'
 import IconArrow from '../../../icons/arrow.svg?react'
 import styles from './breadcrumbs.module.scss'
@@ -26,8 +22,8 @@ const getUkrainianName = (name) => {
 const Breadcrumbs = () => {
   const location = useLocation()
 
-  const allCategories = useSelector(selectAllCategories)
-  const allProducts = useSelector(selectAllItem)
+  const allCategories = useSelector((state) => state.items.allCategories)
+  const allProducts = useSelector((state) => state.items.items)
 
   const getCategoryName = (id) => {
     if (allCategories) {

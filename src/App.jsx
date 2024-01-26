@@ -1,14 +1,13 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllCategories } from './Redax/Products/selectors/Selectors'
 import Layout from './components/Layout/Layout'
 import MainPage from './pages/main-page/MainPage'
 import CatalogPage from './pages/catalog-page/CatalogPage'
 import FavoritePage from './pages/favorite-page/FavoritePage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 import CrmSettingsPage from './pages/crmSettings-page/CrmSettingsPage'
-import ProductPage from './pages/product-page/ProductPage'
+import ProductPage from './pages/product-page'
 import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
 import CrmAddNewProduct from './pages/crm-add-new-product/CrmAddNewProduct'
 import ConditionsPage from './pages/conditions-page/ConditionsPage'
@@ -16,15 +15,15 @@ import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
 import CooperationPage from './pages/cooperation-page/CooperationPage'
 import { currentUser } from './Redax/Auth/operation/Operation'
 import PrivateRoute from './components/privste-route/PrivateRoute'
-import { selectIsLogedIn, selectToken } from './Redax/Auth/selectors/Selectors'
 import AccountPage from './pages/account-page/AccountPage'
 
 function App() {
   const navigate = useNavigate()
-  const allCategories = useSelector(selectAllCategories)
+  const allCategories = useSelector((state) => state.items.allCategories)
   const dispatch = useDispatch()
-  const token = useSelector(selectToken)
-  const isLogedIn = useSelector(selectIsLogedIn)
+
+  const token = useSelector((state) => state.auth.accessToken)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   useEffect(() => {
     const currentPath = window.location.pathname
@@ -34,12 +33,12 @@ function App() {
   }, [allCategories, navigate])
 
   useEffect(() => {
-    if (token && !isLogedIn) {
+    if (token && !isLoggedIn) {
       dispatch(
-        currentUser({ accessTokenn: token, operationType: 'currentUser' })
+        currentUser({ accessToken: token, operationType: 'currentUser' })
       )
     }
-  }, [token, isLogedIn])
+  }, [token, isLoggedIn])
 
   return (
     <Fragment>

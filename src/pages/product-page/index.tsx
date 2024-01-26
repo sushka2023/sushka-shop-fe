@@ -9,18 +9,21 @@ import IconArrowleft from '../../icons/arrowleft.svg?react'
 import IconArrowRight from '../../icons/arrowright.svg?react'
 import axios from 'axios'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
+import { ProductResponse } from '../../types'
 
-const getProductForId = async (productId) => {
+const PRODUCT_ORDERS_LS_KEY = 'product-orders'
+
+const getProductForId = async (productId: string) => {
   const { data } = await axios.get(`api/product/${productId}`)
-  return data
+  return data as ProductResponse
 }
 
 const ProductPage = () => {
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState<ProductResponse | null>(null)
   const [selectedWeight, setSelectedWeight] = useState('')
   const [selectedPrice, setSelectedPrice] = useState(0)
   const [selectedQuantity, setSelectedQuantity] = useState(1)
-  const [quantity, setQuantity] = useState(null)
+  const [quantity, setQuantity] = useState<number | null>(null)
   const [selectedImage, setSelectedImage] = useState(0)
 
   const [showModal, setShowModal] = useState(false)
@@ -33,7 +36,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const data = await getProductForId(productId)
+        const data = await getProductForId(productId!)
         setProducts(data)
         if (data.prices.length > 0) {
           setSelectedWeight(data.prices[0].weight)
@@ -51,7 +54,7 @@ const ProductPage = () => {
   }, [productId])
 
   //   Обробник події, який викликається при зміні ваги
-  const handleWeightChange = (event) => {
+  const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedWeightValue = event.target.value
 
     // Знайти відповідну ціну та кількість для обраної ваги
@@ -60,8 +63,8 @@ const ProductPage = () => {
     })
 
     setSelectedWeight(selectedWeightValue)
-    setSelectedPrice(selectedPriceData.price)
-    setQuantity(selectedPriceData.quantity)
+    setSelectedPrice(selectedPriceData?.price!)
+    setQuantity(selectedPriceData?.quantity!)
     setSelectedQuantity(1)
   }
 
@@ -79,7 +82,7 @@ const ProductPage = () => {
       return prevQuantity + 1
     })
     setSelectedPrice((prevPrice) => {
-      return prevPrice + selectedPriceData.price
+      return prevPrice + (selectedPriceData?.price || 0)
     })
   }
 
@@ -92,25 +95,23 @@ const ProductPage = () => {
         return prevQuantity - 1
       })
       setSelectedPrice((prevPrice) => {
-        return prevPrice - selectedPriceData.price
+        return prevPrice - (selectedPriceData?.price || 0)
       })
     }
   }
 
-  const PRODUCT_ORDERS_LS_KEY = 'product-orders'
-
   const handleBuyButtonClick = () => {
     const orderInfo = {
-      productId: products.id,
-      productName: products.name,
+      productId: products?.id,
+      productName: products?.name,
       quantity: selectedQuantity,
       price: selectedPrice,
       weight: selectedWeight,
-      img: products.images[selectedImage].image_url
+      img: products?.images[selectedImage].image_url
     }
 
     const productOrders =
-      JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY)) || []
+      JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY) || '{}') || []
 
     productOrders.push(orderInfo)
 
@@ -121,7 +122,7 @@ const ProductPage = () => {
   }
 
   const showNextImage = () => {
-    if (selectedImage < products.images.length - 1) {
+    if (selectedImage < (products?.images.length || 0) - 1) {
       setSelectedImage(selectedImage + 1)
     }
   }
@@ -143,7 +144,7 @@ const ProductPage = () => {
                   <img
                     className={styles.imageProduct}
                     src={products.images[selectedImage].image_url}
-                    alt={products.images.description}
+                    alt={products.images?.[0]?.description}
                   />
 
                   <button

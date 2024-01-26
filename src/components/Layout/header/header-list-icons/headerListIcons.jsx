@@ -8,14 +8,13 @@ import IconAccount from '../../../../icons/account.svg?react'
 import IconFavorite from '../../../../icons/favorite.svg?react'
 import IconCart from '../../../../icons/cart.svg?react'
 import styles from '../Header.module.scss'
-import { selectIsLogedIn } from '../../../../Redax/Auth/selectors/Selectors'
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const iconRef = useRef(null)
   const inputRef = useRef(null)
-  const isLogedIn = useSelector(selectIsLogedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const handleClick = (event) => {
     const target = event.target
@@ -68,7 +67,7 @@ const HeaderListIcons = () => {
           </div>
         </li>
         <li className={styles.listIconsLine}>
-          {isLogedIn ? (
+          {isLoggedIn ? (
             <Link to="account">
               <IconAccount className={styles.iconsNav} />
             </Link>

@@ -10,7 +10,7 @@ import { authSlice } from '../Auth/slices/auth-slice'
 const AUTH_PERSIST_CONFIG = {
   key: 'auth',
   storage: storage,
-  whitelist: ['accessTokenn']
+  whitelist: ['accessToken']
 }
 
 const ITEMS_PERSIST_CONFIG = {
@@ -21,7 +21,6 @@ const ITEMS_PERSIST_CONFIG = {
 const PRODUCT_PERSIST_CONFIG = {
   key: 'newProduct',
   storage: storage
-  // blacklist: ['items', 'newProduct', 'allCategories']
 }
 
 const ALL_CATEGORIES_PERSIST_CONFIG = {
@@ -55,4 +54,8 @@ export const store = configureStore({
   }
 })
 
-export const persistor = persistStore(store)
+export const persister = persistStore(store)
+
+export type RootState = ReturnType<typeof rootReducer>
+
+export type AppDispatch = typeof store.dispatch
