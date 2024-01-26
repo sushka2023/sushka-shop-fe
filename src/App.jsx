@@ -57,10 +57,6 @@ function App() {
             path="review"
             element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
           />
-          <Route
-            path="cooperation"
-            element={<div style={{ marginBottom: '500px' }}>Співпраця</div>}
-          />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
             path="/account"
@@ -74,22 +70,8 @@ function App() {
           />
           <Route path="conditions" element={<ConditionsPage />} />
           <Route path="policy" element={<PrivacyPolicyPage />} />
+          <Route path="cooperation" element={<CooperationPage />} />
         </Route>
-        <Route
-          path="review"
-          element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
-        />
-        <Route
-          path="cooperation"
-          element={<CooperationPage />}
-        />
-        <Route path="favorite" element={<FavoritePage />} />
-        <Route
-          path="cart"
-          element={<div style={{ marginBottom: '500px' }}>Корзина</div>}
-        />
-        <Route path="conditions" element={<ConditionsPage />} />
-        <Route path="policy" element={<PrivacyPolicyPage />} />
 
         <Route path="crm" element={<LayoutCRM />}>
           <Route

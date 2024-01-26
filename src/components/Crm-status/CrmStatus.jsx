@@ -1,15 +1,14 @@
-import { useState } from 'react';
-import PropTypes from "prop-types";
-import styles from './crmStatus.module.scss';
+import { useState } from 'react'
+import PropTypes from 'prop-types'
+import styles from './crmStatus.module.scss'
 
 const CrmStatus = ({ onStatusChange, currentStatus }) => {
-    
-  const [selectedStatus, setSelectedStatus] = useState(currentStatus);
+  const [selectedStatus, setSelectedStatus] = useState(currentStatus)
 
-    const handleLocalStatusChange = (e) => {
-      setSelectedStatus(e.target.labels[0].innerText);
-      onStatusChange(e.target.name, e.target.value, e.target.labels[0].innerText);
-    };
+  const handleLocalStatusChange = (e) => {
+    setSelectedStatus(e.target.labels[0].innerText)
+    onStatusChange(e.target.name, e.target.value, e.target.labels[0].innerText)
+  }
 
   return (
     <div className={styles.statusDropdownContainer}>
@@ -37,7 +36,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="activated"
             name="product_status"
             value="activated"
-            checked={selectedStatus === "Активний"}
+            checked={selectedStatus === 'Активний'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -54,7 +53,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
             id="archived"
             name="product_status"
             value="archived"
-            checked={selectedStatus === "Архівований"}
+            checked={selectedStatus === 'Архівований'}
             onChange={handleLocalStatusChange}
             className={styles.statusInput}
           />
@@ -72,7 +71,7 @@ const CrmStatus = ({ onStatusChange, currentStatus }) => {
 
 CrmStatus.propTypes = {
   onStatusChange: PropTypes.func,
-  currentStatus: PropTypes.string,
-};
+  currentStatus: PropTypes.string
+}
 
-export default CrmStatus;
+export default CrmStatus

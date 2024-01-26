@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
 import Auth from '../../../auth/Auth'
 import IconSearch from '../../../../icons/search.svg?react'
@@ -39,7 +39,7 @@ const HeaderListIcons = () => {
   }, [])
 
   return (
-    <>
+    <Fragment>
       <ul className={styles.listIcons}>
         <li className={styles.listIconsLineContainer}>
           <div
@@ -75,7 +75,9 @@ const HeaderListIcons = () => {
           ) : (
             <IconAccount
               className={styles.iconsNav}
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                return setIsModalOpen(true)
+              }}
             />
           )}
         </li>
@@ -93,7 +95,7 @@ const HeaderListIcons = () => {
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <Auth setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
-    </>
+    </Fragment>
   )
 }
 

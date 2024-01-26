@@ -4,7 +4,6 @@ import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
 
 const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
-
   const TIMEOUT_DELAY_MS = 500
 
   const modalContent = (
@@ -32,7 +31,9 @@ const ModalPortal = ({ children, isModalOpen, setIsModalOpen }) => {
               <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => {
+                    return setIsModalOpen(false)
+                  }}
                 />
                 {children}
               </div>

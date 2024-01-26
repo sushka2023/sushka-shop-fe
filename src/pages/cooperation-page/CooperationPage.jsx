@@ -1,6 +1,6 @@
-import CooperationForm from "../../components/Cooperation-form/CooperationForm";
-import { ReactComponent as AcceptIcon } from "../../icons/crmcheckbox.svg";
-import styles from "./cooperation.module.scss";
+import CooperationForm from '../../components/Cooperation-form/CooperationForm'
+import AcceptIcon from '../../icons/crmcheckbox.svg?react'
+import styles from './cooperation.module.scss'
 
 const CooperationPage = () => {
   return (
@@ -53,12 +53,12 @@ const CooperationPage = () => {
           </li>
         </ul>
         <p className={styles.paragraph}>
-          Залишайте заявку і ми зв'яжемося з Вами протягом дня.
+          Залишайте заявку і ми зв&apos;яжемося з Вами протягом дня.
         </p>
       </div>
       <CooperationForm />
     </section>
-  );
-};
+  )
+}
 
-export default CooperationPage;
+export default CooperationPage

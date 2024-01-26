@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   isLogedIn: false,
   isLoading: false,
   errors: null,
-  operationType: null,
+  operationType: null
 }
 
 export const authSlice = createSlice({

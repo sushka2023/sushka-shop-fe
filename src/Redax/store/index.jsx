@@ -3,22 +3,40 @@ import { persistStore, persistReducer } from 'redux-persist'
 import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
 import { itemsSlice } from '../Products/slices/items-slice'
+import { categoriesSlice } from '../Crm-add-new-product/slices/categories-slice'
+import { productSlice } from '../Crm-add-new-product/slices/product-slice'
 import { authSlice } from '../Auth/slices/auth-slice'
 
-const authPersistConfig = {
+const AUTH_PERSIST_CONFIG = {
   key: 'auth',
   storage: storage,
   whitelist: ['accessTokenn']
 }
 
-const itemsPersistConfig = {
+const ITEMS_PERSIST_CONFIG = {
   key: 'items',
   storage: storage
 }
 
+const PRODUCT_PERSIST_CONFIG = {
+  key: 'newProduct',
+  storage: storage
+  // blacklist: ['items', 'newProduct', 'allCategories']
+}
+
+const ALL_CATEGORIES_PERSIST_CONFIG = {
+  key: 'allCategories',
+  storage: storage
+}
+
 const rootReducer = combineReducers({
-  items: persistReducer(itemsPersistConfig, itemsSlice.reducer),
-  auth: persistReducer(authPersistConfig, authSlice.reducer)
+  items: persistReducer(ITEMS_PERSIST_CONFIG, itemsSlice.reducer),
+  auth: persistReducer(AUTH_PERSIST_CONFIG, authSlice.reducer),
+  newProduct: persistReducer(PRODUCT_PERSIST_CONFIG, productSlice.reducer),
+  allCategories: persistReducer(
+    ALL_CATEGORIES_PERSIST_CONFIG,
+    categoriesSlice.reducer
+  )
 })
 
 const persistedReducer = persistReducer(

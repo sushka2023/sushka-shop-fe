@@ -1,11 +1,23 @@
-export const selectMainCategories = (state) => state.allCategories.mainCategories;
+export const selectMainCategories = (state) => {
+  return state.allCategories.mainCategories
+}
 
-export const selectSubCategories = (state) => state.allCategories.subCategories;
+export const selectSubCategories = (state) => {
+  return state.allCategories.subCategories
+}
 
-export const selectFormData = (state) => state.newProduct;
+export const selectFormData = (state) => {
+  return state.newProduct
+}
 
-export const selectProductId = (state) => state.newProduct.productId;
+export const selectProductId = (state) => {
+  return state.newProduct.productId
+}
 
-export const selectFormErrors = (state) => state.newProduct.formErrors;
+export const selectFormErrors = (state) => {
+  return state.newProduct.formErrors
+}
 
-export const selectIsLoading = (state) => state.newProduct.isLoading;
+export const selectIsLoading = (state) => {
+  return state.newProduct.isLoading
+}

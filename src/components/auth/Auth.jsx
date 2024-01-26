@@ -22,7 +22,7 @@ import styles from './auth.module.scss'
 import AuthButton from './AuthButton'
 import AuthToggle from './AuthToggle'
 
-const Auth = ({setIsModalOpen}) => {
+const Auth = ({ setIsModalOpen }) => {
   const [isLoginMode, setLoginMode] = useState(true)
   const [mailConfirmation, setMailConfirmation] = useState(false)
   const dispatch = useDispatch()
