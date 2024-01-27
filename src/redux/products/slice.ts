@@ -7,12 +7,12 @@ import {
 } from './operation'
 import { ProductCategoryResponse, ProductResponse } from '../../types'
 
-type ItemsState = {
+export type ItemsState = {
   items: ProductResponse[]
   isLoading: boolean
   operation: FetchItemOperationType | FetchAllCategoriesOperationType | null
   error: any | null
-  allCategories: ProductCategoryResponse | null
+  allCategories: ProductCategoryResponse[] | null
 }
 
 const INITIAL_STATE: ItemsState = {

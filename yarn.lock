@@ -940,6 +940,27 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-scroll@^1.8.10":
+  version "1.8.10"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.10.tgz#585a5c4bd0654434f3e55a08e94ed2e048bae7c7"
+  integrity sha512-RD4Z7grbdNGOKwKnUBKar6zNxqaW3n8m9QSrfvljW+gmkj1GArb8AFBomVr6xMOgHPD3v1uV3BrIf01py57daQ==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-slick@^0.23.13":
+  version "0.23.13"
+  resolved "https://registry.yarnpkg.com/@types/react-slick/-/react-slick-0.23.13.tgz#037434e73a58063047b121e08565f7185d811f36"
+  integrity sha512-bNZfDhe/L8t5OQzIyhrRhBr/61pfBcWaYJoq6UDqFtv5LMwfg4NsVDD2J8N01JqdAdxLjOt66OZEp6PX+dGs/A==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-spinner@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@types/react-spinner/-/react-spinner-0.2.3.tgz#e759ffce502a21796eff918352ca171278d78c81"
+  integrity sha512-KmEOJVcAYP1Sg09l1QI4IrHZZF58SYlFKH4fTNYFjokWEgqpslwIC3oPFDfj8AVGNIM9/H+AKvYVY6qWbB+Kgg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.8":
   version "4.4.8"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.8.tgz"
@@ -970,6 +991,11 @@
   version "0.0.3"
   resolved "https://registry.npmjs.org/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz"
   integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
+
+"@types/uuid@^9.0.8":
+  version "9.0.8"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.8.tgz#7545ba4fc3c003d6c756f651f3bf163d8f0f29ba"
+  integrity sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==
 
 "@typescript-eslint/eslint-plugin@^6.19.1":
   version "6.19.1"

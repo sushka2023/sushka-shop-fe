@@ -1,15 +1,15 @@
 import { FC } from 'react'
-import ArrowIcon from '../../icons/arrow.svg?react'
+import ArowIcon from '../../icons/arrow.svg?react'
 import styles from './sliderSection.module.scss'
 
 type Props = {
-  onClick?: () => void
+  onClick: () => void
 }
 
 const ArrowNext: FC<Props> = ({ onClick }) => {
   return (
     <div className={styles.ArrowNextStyle} onClick={onClick}>
-      <ArrowIcon className={styles.arrow} />
+      <ArowIcon />
     </div>
   )
 }

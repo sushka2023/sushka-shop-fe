@@ -35,7 +35,7 @@ export const fetchItems = createAsyncThunk<
 type FetchAllCategoriesOperationType = 'fetchAllCategories'
 
 type FetchAllCategoriesResponse = {
-  data: ProductCategoryResponse
+  data: ProductCategoryResponse[]
   operationType: FetchAllCategoriesOperationType
 }
 

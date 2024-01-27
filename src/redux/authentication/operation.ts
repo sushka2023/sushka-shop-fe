@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TokenModel, UserResponse } from '../../types'
 import { OperationType, SignUpFormData } from './slice'
 
-type LoginBody = {
+export type LoginBody = {
   email: string
   password: string
 }

@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint src --ext js,jsx --fix",
-    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "lint": "eslint src --ext ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview",
     "prepare": "husky install",
     "generate": "openapi -i https://www.test-store.shop/openapi.json -o src/types"
@@ -39,6 +39,10 @@
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
+    "@types/react-scroll": "^1.8.10",
+    "@types/react-slick": "^0.23.13",
+    "@types/react-spinner": "^0.2.3",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "@vitejs/plugin-react": "^4.0.0",
@@ -61,7 +65,6 @@
     "*.{js,jsx,ts,tsx}": [
       "yarn lint",
       "yarn format"
-    ],
-    "*.{js,jsx}": "eslint --cache --fix"
+    ]
   }
 }

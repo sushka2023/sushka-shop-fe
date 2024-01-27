@@ -1,7 +1,7 @@
-import Options from '../options/Options'
-import Sort from '../sort/sort'
 import styles from './filter.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
+import Options from '../options'
+import Sort from '../sort'
 
 const OPTION_WEIGHT = [
   { label: '50 гр', value: 50 },
