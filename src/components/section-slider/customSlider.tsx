@@ -3,7 +3,7 @@ import IconFavorite from '../../icons/favorite.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
 
-type Props = HTMLProps<HTMLDivElement>
+type Props = HTMLProps<HTMLDivElement> & { index: number }
 
 const CustomSlider: FC<Props> = ({ ...props }) => {
   return (

@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
-import { itemsSlice } from '../Products/slices/items-slice'
-import { categoriesSlice } from '../Crm-add-new-product/slices/categories-slice'
-import { productSlice } from '../Crm-add-new-product/slices/product-slice'
-import { authSlice } from '../Auth/slices/auth-slice'
+import { itemsSlice } from '../products/slice'
+import { authSlice } from '../authentication/slice'
+import { productSlice } from '../crm-add-new-product/slice/product'
+import { categoriesSlice } from '../crm-add-new-product/slice/categories'
 
 const AUTH_PERSIST_CONFIG = {
   key: 'auth',

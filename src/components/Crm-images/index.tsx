@@ -1,35 +1,33 @@
 import { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  addData,
-  incrementImagesUploadCount,
-  resetImagesUploadCount,
-  setFormErrors
-} from '../../Redax/Crm-add-new-product/slices/product-slice'
 import * as yup from 'yup'
-import {
-  selectProductId,
-  selectFormErrors
-} from '../../Redax/Crm-add-new-product/selectors/Selectors'
-import { addImages } from '../../Redax/Crm-add-new-product/operation/Operation'
-import { newProductImagesSchema } from '../../Halpers/validateNewProduct'
 import PlusIcon from '../../icons/plus.svg?react'
 import DeleteIcon from '../../icons/delete.svg?react'
 import FileIcon from '../../icons/file.svg?react'
 import StarIcon from '../../icons/star.svg?react'
 import Notiflix from 'notiflix'
 import styles from './crmImages.module.scss'
+import {
+  ProductState,
+  addData,
+  incrementImagesUploadCount,
+  resetImagesUploadCount,
+  setFormErrors
+} from '../../redux/crm-add-new-product/slice/product'
+import { newProductImagesSchema } from '../../helpers/validateNewProduct'
+import { addImages } from '../../redux/crm-add-new-product/operation'
+import { AppDispatch } from '../../redux/store'
 
 const CrmImages = () => {
-  const [activeFile, setActiveFile] = useState(null)
-  const [filePreviews, setFilePreviews] = useState({})
-  const [filesArr, setFilesArr] = useState([])
+  const [activeFile, setActiveFile] = useState<string | null>(null)
+  const [filePreviews, setFilePreviews] = useState<Record<string, string>>({})
+  const [filesArr, setFilesArr] = useState<File[]>([])
   const [fileIsOpen, setFileIsOpen] = useState('')
   const [attemptedUpload, setAttemptedUpload] = useState(false)
-  const fileInputRef = useRef(null)
-  const dispatch = useDispatch()
-  const productId = useSelector(selectProductId)
-  const formErrors = useSelector(selectFormErrors)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useDispatch<AppDispatch>()
+  const productId = useSelector((state: ProductState) => state.productId)
+  const formErrors = useSelector((state: ProductState) => state.formErrors)
 
   useEffect(() => {
     if (filesArr.length > 4) {
@@ -55,7 +53,9 @@ const CrmImages = () => {
         }
       } catch (error) {
         if (attemptedUpload) {
-          dispatch(setFormErrors({ ...formErrors, images: error.message }))
+          dispatch(
+            setFormErrors({ ...formErrors, images: (error as any).message })
+          )
         }
       }
     }
@@ -73,10 +73,20 @@ const CrmImages = () => {
         const formData = new FormData()
         formData.append('image_file', image)
         formData.append('description', image.name)
-        formData.append('main_image', image.name === activeFile)
+        formData.append(
+          'main_image',
+          image.name === activeFile ? 'true' : 'false'
+        )
         formData.append('product_id', productId)
 
-        return dispatch(addImages(formData)).then(() => {
+        const requestBody = {
+          image_file: formData.get('image_file')! as Blob,
+          description: (formData.get('description') ?? '') as string,
+          main_image: Boolean(formData.get('main_image')),
+          product_id: +formData.get('product_id')!
+        }
+
+        return dispatch(addImages(requestBody)).then(() => {
           dispatch(incrementImagesUploadCount())
         })
       })
@@ -89,19 +99,21 @@ const CrmImages = () => {
   }, [productId, filesArr])
 
   const cleaningInput = () => {
-    fileInputRef.current.value = ''
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAttemptedUpload(true)
 
-    const files = Array.from(e.target.files)
+    const files = Array.from(e.target.files || []) as File[]
 
     if (fileInputRef.current) {
       cleaningInput()
     }
 
-    const newFilePreviews = {}
+    const newFilePreviews: { [key: string]: string } = {}
 
     files.forEach((file) => {
       if (
@@ -123,7 +135,7 @@ const CrmImages = () => {
     })
   }
 
-  const handleClickDelete = (file) => {
+  const handleClickDelete = (file: string) => {
     const delletedFiles = filesArr.filter((item) => {
       return item.name !== file
     })
@@ -142,16 +154,16 @@ const CrmImages = () => {
     setFilesArr(delletedFiles)
   }
 
-  const toggleActiveStar = (file) => {
+  const toggleActiveStar = (file: string) => {
     setActiveFile(activeFile === file ? null : file)
   }
 
-  const handleMouseDown = (e, file) => {
-    return setFileIsOpen(file)
+  const handleMouseDown = (file: string) => {
+    setFileIsOpen(file)
   }
 
   const handleMouseUp = () => {
-    return setFileIsOpen('')
+    setFileIsOpen('')
   }
 
   return (
@@ -180,18 +192,16 @@ const CrmImages = () => {
                     activeFile === file.name && styles.starIconActive
                   }`}
                   onClick={() => {
-                    return toggleActiveStar(file.name)
+                    toggleActiveStar(file.name)
                   }}
                 />
                 <div className={styles.fileLineWrrap}>
                   <div
                     className={styles.fileContentWrrap}
-                    onMouseDown={(e) => {
-                      return handleMouseDown(e, file.name)
+                    onMouseDown={() => {
+                      handleMouseDown(file.name)
                     }}
-                    onMouseUp={(e) => {
-                      return handleMouseUp(e, file.name)
-                    }}
+                    onMouseUp={handleMouseUp}
                   >
                     <FileIcon className={styles.fileIcon} />
                     <span className={styles.fileName}>{file.name}</span>
@@ -199,7 +209,7 @@ const CrmImages = () => {
                   <DeleteIcon
                     className={styles.deleteIcon}
                     onClick={() => {
-                      return handleClickDelete(file.name)
+                      handleClickDelete(file.name)
                     }}
                   />
                 </div>
