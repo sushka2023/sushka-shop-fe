@@ -26,8 +26,12 @@ const CrmImages = () => {
   const [attemptedUpload, setAttemptedUpload] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch<AppDispatch>()
-  const productId = useSelector((state: ProductState) => state.productId)
-  const formErrors = useSelector((state: ProductState) => state.formErrors)
+  const productId = useSelector(
+    (state: ProductState) => state.newProduct.productId
+  )
+  const formErrors = useSelector(
+    (state: ProductState) => state.newProduct.formErrors
+  )
 
   useEffect(() => {
     if (filesArr.length > 4) {

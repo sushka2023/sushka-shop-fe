@@ -18,10 +18,11 @@ const ITEMS_PERSIST_CONFIG = {
   storage: storage
 }
 
-const PRODUCT_PERSIST_CONFIG = {
-  key: 'newProduct',
-  storage: storage
-}
+// const PRODUCT_PERSIST_CONFIG = {
+//   key: 'newProduct',
+//   storage: storage,
+//   blacklist: ['productId', 'name', 'description', 'product_status', 'main_category', 'sub_categories', 'price', 'isLoading', 'operation', 'error', 'formErrors', 'imagesUploadCount', 'images']
+// }
 
 const ALL_CATEGORIES_PERSIST_CONFIG = {
   key: 'allCategories',
@@ -31,7 +32,7 @@ const ALL_CATEGORIES_PERSIST_CONFIG = {
 const rootReducer = combineReducers({
   items: persistReducer(ITEMS_PERSIST_CONFIG, itemsSlice.reducer),
   auth: persistReducer(AUTH_PERSIST_CONFIG, authSlice.reducer),
-  newProduct: persistReducer(PRODUCT_PERSIST_CONFIG, productSlice.reducer),
+  newProduct: productSlice.reducer,
   allCategories: persistReducer(
     ALL_CATEGORIES_PERSIST_CONFIG,
     categoriesSlice.reducer
@@ -42,7 +43,7 @@ const persistedReducer = persistReducer(
   {
     key: 'root',
     storage: storage,
-    blacklist: ['auth']
+    blacklist: ['auth', 'newProduct']
   },
   rootReducer
 )

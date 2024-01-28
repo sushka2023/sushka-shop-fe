@@ -10,7 +10,7 @@ type Props = {
 const NumberInput: FC<Props> = ({ value, onChange, className }) => {
   return (
     <input
-      className={`${styles.inputTable} ${className}`}
+      className={`${styles.inputTable} ${value ? styles.inputTableTextEmpty : ''} ${className}`}
       type="number"
       value={value || ''}
       onChange={(e) => {

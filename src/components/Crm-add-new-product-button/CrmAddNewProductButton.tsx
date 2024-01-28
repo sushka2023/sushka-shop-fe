@@ -12,31 +12,36 @@ import {
   addPrice,
   createNewProduct
 } from '../../redux/crm-add-new-product/operation'
-import { AppDispatch, RootState } from '../../redux/store'
-import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
+import { AppDispatch } from '../../redux/store'
+import {
+  ProductState,
+  setFormErrors
+} from '../../redux/crm-add-new-product/slice/product'
 import { ProductStatus } from '../../types'
 
 const CrmAddNewProductButton = () => {
-  const productData = useSelector((state: RootState) => state.newProduct)
+  const productData = useSelector((state: ProductState) => state.newProduct)
+
   const productId = useSelector(
-    (state: RootState) => state.newProduct.productId
+    (state: ProductState) => state.newProduct.productId
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  useEffect(() => {
-    const sendPricesSequentially = async () => {
-      if (productId) {
-        productData.price.forEach((price) => {
-          dispatch(addPrice({ price, productId: productId! }))
-            .unwrap()
-            .catch((error) => {
-              return console.log(error)
-            })
-        })
-      }
+  const sendPricesSequentially = async (productId) => {
+    if (productId) {
+      productData.price.forEach((price) => {
+        dispatch(addPrice({ price, productId: productId! }))
+          .unwrap()
+          .catch((error) => {
+            return console.log(error)
+          })
+      })
     }
-    sendPricesSequentially()
-  }, [dispatch, productId])
+  }
+
+  useEffect(() => {
+    sendPricesSequentially(productId)
+  }, [productId])
 
   const handleClickSaveProduct = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

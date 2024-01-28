@@ -21,8 +21,12 @@ export const newProductPriceSchema = yup.array().of(
     availability: yup
       .number()
       .nullable()
+      .positive('Значення має бути більше 0')
       .required('Поле з кількістю має бути заповненим'),
-    price: yup.number().required('Поле з ціною має бути заповненим'),
+    price: yup
+      .number()
+      .positive('Значення має бути більше 0')
+      .required('Поле з ціною має бути заповненим'),
     sale: yup.boolean(),
     priceSale: yup
       .number()
@@ -30,9 +34,15 @@ export const newProductPriceSchema = yup.array().of(
       .when('sale', {
         is: true,
         then: (schema) => {
-          return schema.required(
-            'Акція активна, поле з акційною ціною має бути заповненим'
-          )
+          return schema
+            .required(
+              'Акція активна, поле з акційною ціною має бути заповненим'
+            )
+            .test(
+              'is-positive',
+              'Значення має бути більше 0',
+              (value) => value > 0
+            )
         },
         otherwise: (schema) => {
           return schema.nullable()
