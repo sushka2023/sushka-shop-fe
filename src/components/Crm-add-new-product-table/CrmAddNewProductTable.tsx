@@ -34,7 +34,7 @@ const CrmAddNewProductTable = () => {
       active: false,
       weight: ARRAY_OPTION_WEIGHT[0],
       availability: 0,
-      price: null,
+      price: 0,
       sale: false,
       priceSale: 0
     }
