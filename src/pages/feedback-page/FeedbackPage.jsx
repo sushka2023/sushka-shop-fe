@@ -1,7 +1,7 @@
 
 import Title from '../../components/feedbacks/Title'
 import ListOfFeedbacks from '../../components/feedbacks/list/ListOfFeedbacks'
-import FeedbackForm from '../../components/feedbacks/FeedbackForm'
+import FeedbackForm from '../../components/feedbacks/form/FeedbackForm'
 import styles from './FeedbackPage.module.scss'
 
 const FeedbackPage = () => {
