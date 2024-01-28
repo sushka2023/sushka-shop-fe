@@ -1,0 +1,210 @@
+@import "../../styles/base/base.scss";
+
+.formWrapp {
+   padding: 70px 100px 40px;
+   display: flex;
+   flex-direction: column;
+};
+
+.loginTitle, .regTitle {
+    text-align: center;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 22px;
+    font-weight: $font-weight-600;
+    line-height: 120%;
+    margin-bottom: 50px;
+};
+
+.label {
+    border-radius: 8px;
+    background: #F4F4F4;
+    max-width: 400px;
+    width: 100%;
+    height: 44px;
+    margin-bottom: 20px;
+
+    &Error {
+            margin-bottom: 0px;
+        }
+};
+
+.email, .password, .firstName, .lastName,  .repeatPassword {
+    box-sizing: border-box;
+    padding: 11px 16px 10px 16px;
+    align-items: center;
+    background-color: inherit;
+    border: none;
+    width: 100%;
+    border-radius: 8px;
+    outline: none;
+    height: 44px;
+
+    &::placeholder {
+        color: $green-dark-400;
+        font-family: $open-sans;
+        font-size: 16px;
+        line-height: 130%;
+    }
+};
+
+.checkboxWrapp {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.editPassWrapp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 14px;
+}
+
+.resetPassBtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 14px;
+}
+
+.loginWrapp, .wrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+};
+
+.loginWrapp {
+   margin-bottom: 53px;
+}
+
+.wrapp {
+    margin-bottom: 45px;
+}
+
+.btn {
+    display: flex;
+    width: 250px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: $yellow-200;
+    color: $white-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 14px;
+    font-weight: $font-weight-700;
+    line-height: 130%;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+}
+
+.toRegWrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paragraph {
+    color: $green-dark-200;
+    font-family: $open-sans;
+}
+
+.linkToRegBtn {
+    border: none;
+    background: none;
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 14px;
+    font-weight: $font-weight-600;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+
+.checkboxWrapper {
+    position: relative;
+    display: inline-block;
+    padding-left: 40px;
+    cursor: pointer;
+}
+
+.hiddenCheckbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.customCheckbox {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 5px;
+    border: 2px solid $green-dark-400;
+}
+
+.customCheckbox::after {
+    content: url('../../icons/checkbox.svg');
+    position: absolute;
+    display: none;
+}
+
+.hiddenCheckbox:checked+.customCheckbox::after {
+    display: block;
+}
+
+.hiddenCheckbox:checked+.customCheckbox {
+    border: 2px solid $green-dark-200;
+    background-color: $green-dark-200;
+}
+
+.fieldError {
+    border: 1px solid $red;
+
+    &::placeholder {
+        color: $red;
+    }
+}
+
+.error {
+    color: $red;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-400;
+    line-height: 130%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.confEmailWrapp {
+    padding: 72px 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.confEmailTitle {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 22px;
+    font-weight: $font-weight-600;
+    line-height: 120%;
+}
+
+.confEmailDescr {
+    color: $green-dark-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 18px;
+    font-weight: $font-weight-400;
+    line-height: 140%;
+}

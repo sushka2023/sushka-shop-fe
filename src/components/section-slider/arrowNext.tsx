@@ -3,7 +3,7 @@ import ArrowIcon from '../../icons/arrow.svg?react'
 import styles from './sliderSection.module.scss'
 
 type Props = {
-  onClick: () => void
+  onClick?: () => void
 }
 
 const ArrowNext: FC<Props> = ({ onClick }) => {
