@@ -43,9 +43,10 @@
 }
 
 .fileWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 28px;
 }
 
 .plusIcon {
@@ -91,16 +92,39 @@
   gap: 13px;
 }
 
-.starIcon,
-.deleteIcon {
-  cursor: pointer;
+.fileName:hover {
+    color: #5D5FEF;
+    cursor: pointer;
+}
+
+.starIcon, .deleteIcon {
+    cursor: pointer;
 }
 
 .starIcon {
-  fill: #d9d9d9;
-  stroke: #d9d9d9;
-  &Active {
-    fill: #5d5fef;
-    stroke: #5d5fef;
-  }
+    fill: #D9D9D9;
+    stroke: #D9D9D9;
+    &Active {
+        fill: #5D5FEF;
+        stroke: #5D5FEF;
+    }
+}
+
+.deleteIcon {
+    width: 16px;
+    height: 20px;
+}
+
+.filePreview {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 250px;
+    right: 500px;
+    object-fit: contain;
+}
+
+.imagesError {
+    margin-top: 10px;
+    color: red;
 }
