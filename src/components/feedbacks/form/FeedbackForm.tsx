@@ -13,15 +13,15 @@ const handleSubmit = (e) => {
   };
 
   return (
-    <div>
+    <div className={styles.formContainer}>
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       <form className={ styles.feedbackForm} onSubmit={handleSubmit}>
         <input type="text" className={styles.feedbackFormInput} />
         <textarea placeholder='Ваш відгук' className={styles.feedbackFormTextarea} name="" id="" cols="30" rows="10"></textarea>
         <input type="file" name="" id="" />
         <div className={styles.submitWrapper}>
-        <Rating onRate={handleRatingChange} />
-        <button type="submit" className={styles.feedbackFormBtn}>Відправити</button>
+           <Rating onRate={handleRatingChange} />
+           <button type="submit" className={styles.feedbackFormBtn}>Відправити</button>
         </div>
       </form>
     </div>

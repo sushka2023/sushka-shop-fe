@@ -17,7 +17,7 @@ import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
-
+import FeedbackPage from './pages/feedback-page/FeedbackPage'
 function App() {
   const navigate = useNavigate()
   const allCategories = useSelector(
@@ -57,7 +57,7 @@ function App() {
           </Route>
           <Route
             path="review"
-            element={<div style={{ marginBottom: '500px' }}>Відгуки</div>}
+            element={<FeedbackPage/>}
           />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
