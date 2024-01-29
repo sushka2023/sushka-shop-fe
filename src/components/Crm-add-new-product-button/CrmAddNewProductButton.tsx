@@ -13,27 +13,25 @@ import {
   createNewProduct
 } from '../../redux/crm-add-new-product/operation'
 import { AppDispatch } from '../../redux/store'
-import {
-  ProductState,
-  setFormErrors
-} from '../../redux/crm-add-new-product/slice/product'
+import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
 import { ProductStatus } from '../../types'
+import { RootState } from '../../redux/store/index'
 
 const CrmAddNewProductButton = () => {
-  const productData = useSelector((state: ProductState) => state.newProduct)
+  const productData = useSelector((state: RootState) => state.newProduct)
 
   const productId = useSelector(
-    (state: ProductState) => state.newProduct.productId
+    (state: RootState) => state.newProduct.productId
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  const sendPricesSequentially = async (productId) => {
+  const sendPricesSequentially = async (productId: string) => {
     if (productId) {
       productData.price.forEach((price) => {
         dispatch(addPrice({ price, productId: productId! }))
           .unwrap()
           .catch((error) => {
-            return console.log(error)
+            console.log(error)
           })
       })
     }

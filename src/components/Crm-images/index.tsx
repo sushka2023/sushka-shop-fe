@@ -8,7 +8,6 @@ import StarIcon from '../../icons/star.svg?react'
 import Notiflix from 'notiflix'
 import styles from './crmImages.module.scss'
 import {
-  ProductState,
   addData,
   incrementImagesUploadCount,
   resetImagesUploadCount,
@@ -17,6 +16,7 @@ import {
 import { newProductImagesSchema } from '../../helpers/validateNewProduct'
 import { addImages } from '../../redux/crm-add-new-product/operation'
 import { AppDispatch } from '../../redux/store'
+import { RootState } from '../../redux/store/index'
 
 const CrmImages = () => {
   const [activeFile, setActiveFile] = useState<string | null>(null)
@@ -27,10 +27,10 @@ const CrmImages = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch<AppDispatch>()
   const productId = useSelector(
-    (state: ProductState) => state.newProduct.productId
+    (state: RootState) => state.newProduct.productId
   )
   const formErrors = useSelector(
-    (state: ProductState) => state.newProduct.formErrors
+    (state: RootState) => state.newProduct.formErrors
   )
 
   useEffect(() => {
