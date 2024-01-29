@@ -61,7 +61,11 @@ gap: 25px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+   
 }
+
+
 .feedbackFormInput {
     width: 374px;
     height: 44px;
@@ -77,6 +81,12 @@ gap: 25px;
     border: none;
     border-radius: 8px;
     background-color: #F4F4F4;
+    color: rgba(86, 115, 67, 0.60);
+        font-family: "Open Sans";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.3;
 }
 .subtitle {
 color: #567343;
@@ -116,4 +126,78 @@ color: #567343;
    border-radius: 10px;
    border: 1px solid #FEEEE1;
    padding: 30px;
+}
+input[type="file"] {
+    display: none;
+}
+.customFileInput{
+    display: inline-flex;
+    height: 50px;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color:  #77CEBC;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.3;
+
+    &.fileSelected {
+            color: #EBEAEA;
+            pointer-events: none;
+        }
+}
+
+.plusIcon {
+    font-size: 24px;
+}
+.wrapperTextarea {
+    position: relative;
+}
+.fileInfo{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #567343;
+
+    :first-child{
+        display:flex;
+        gap: 10px;
+        align-items: center;
+    }
+}
+.deleteBtn {
+    border: none;
+    background-color: transparent;
+    color:#D21C1C;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.fileInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+
+    :last-child {
+        color: rgba(86, 115, 67, 0.60);
+        font-size: 14px;
+        line-height: normal;
+    }
+}
+.counter {
+    position:absolute;
+    left:15px;
+    bottom: 10px;
+    color: rgba(86, 115, 67, 0.40);
+    font-family: "Open Sans";
+    font-size: 14px;
 }

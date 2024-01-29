@@ -1,11 +1,12 @@
 import styles from '../Feedbacks.module.scss'
+import { Rating } from './Rating'
 const FeedbackItem = () => {
   return (
     <li className={styles.feedbackItem}>
       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <h3 className={styles.name}>Ольга</h3> 
-          <div className={styles.score}></div>
+          <Rating rating={4} />
         </div>
         <span className={styles.date}>30.07.2023
 </span>
