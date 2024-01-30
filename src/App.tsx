@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from './components/Layout/Layout'
@@ -25,7 +26,7 @@ function App() {
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  const token = useSelector((state: RootState) => state.auth.accessToken)
+  const accessToken = Cookies.get('token')
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   useEffect(() => {
@@ -36,12 +37,12 @@ function App() {
   }, [allCategories, navigate])
 
   useEffect(() => {
-    if (token && !isLoggedIn) {
+    if (accessToken && !isLoggedIn) {
       dispatch(
-        currentUser({ accessToken: token, operationType: 'currentUser' })
+        currentUser({ accessToken: accessToken, operationType: 'currentUser' })
       )
     }
-  }, [token, isLoggedIn])
+  }, [accessToken, isLoggedIn])
 
   return (
     <Fragment>

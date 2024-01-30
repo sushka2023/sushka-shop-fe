@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import { FC, Fragment, ReactNode } from 'react'
-
-import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
   component: ReactNode
@@ -9,7 +8,7 @@ type Props = {
 }
 
 const PrivateRoute: FC<Props> = ({ component, redirectTo }) => {
-  const { accessToken } = useAuth()
+  const accessToken = Cookies.get('token')
 
   if (accessToken) {
     return <Fragment>{component}</Fragment>

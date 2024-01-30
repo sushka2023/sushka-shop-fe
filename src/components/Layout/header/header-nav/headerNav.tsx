@@ -1,25 +1,21 @@
-import { Link, useLocation } from 'react-router-dom'
-import { Link as ScrollLink, scroller } from 'react-scroll'
-import { fetchAllCategories } from '../../../../redux/products/operation'
-import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { scroller } from 'react-scroll'
+import { AppDispatch, RootState } from '../../../../redux/store/index'
+import { fetchAllCategories } from '../../../../redux/products/operation'
 import styles from '../Header.module.scss'
-import { AppDispatch, RootState } from '../../../../redux/store'
+import HeaderNavList from './HeaderNavList'
 
 const HeaderNav = () => {
-  const location = useLocation()
-  const homePath = location.pathname === '/'
+  const dispatch = useDispatch<AppDispatch>()
 
   const allCategories = useSelector(
     (state: RootState) => state.items.allCategories
   )
-  const dispatch = useDispatch<AppDispatch>()
 
-  useEffect(() => {
-    if (!allCategories) {
-      dispatch(fetchAllCategories({ operationType: 'fetchAllCategories' }))
-    }
-  }, [allCategories])
+  const location = useLocation()
+  const homePath = location.pathname === '/'
 
   useEffect(() => {
     if (homePath) {
@@ -30,61 +26,15 @@ const HeaderNav = () => {
     }
   }, [homePath, location])
 
+  useEffect(() => {
+    if (!allCategories) {
+      dispatch(fetchAllCategories({ operationType: 'fetchAllCategories' }))
+    }
+  }, [allCategories])
+
   return (
     <nav className={styles.navWrapper}>
-      <ul className={styles.listNav}>
-        <li className={`${styles.listNavLine} ${styles.dropdown}`}>
-          <Link
-            to={`catalog/${allCategories && allCategories[0].id}/0`}
-            className={styles.listNavLink}
-          >
-            Каталог
-          </Link>
-          <ul className={styles.dropdownList}>
-            {allCategories &&
-              allCategories.map((category) => {
-                return (
-                  <li className={styles.dropdownListLine} key={category.id}>
-                    <Link to={`/catalog/${category.name}/0`}>
-                      {category.name}
-                    </Link>
-                  </li>
-                )
-              })}
-          </ul>
-        </li>
-        <li className={styles.listNavLine}>
-          <Link to={'/review'} className={styles.listNavLink}>
-            Відгуки
-          </Link>
-        </li>
-        <li className={styles.listNavLine}>
-          {homePath ? (
-            <ScrollLink
-              to="aboutUs"
-              className={styles.listNavLink}
-              smooth={true}
-              duration={500}
-            >
-              Про нас
-            </ScrollLink>
-          ) : (
-            <Link to="/#aboutUs" className={styles.listNavLink}>
-              Про нас
-            </Link>
-          )}
-        </li>
-        <li className={styles.listNavLine}>
-          <Link to="cooperation" className={styles.listNavLink}>
-            Співпраця
-          </Link>
-        </li>
-        <li className={styles.listNavLine}>
-          <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
-            CRM
-          </Link>
-        </li>
-      </ul>
+      <HeaderNavList allCategories={allCategories} />
     </nav>
   )
 }
