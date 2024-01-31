@@ -19,6 +19,8 @@ import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
 
+const COOKIE_TOKEN_NAME = 'token'
+
 function App() {
   const navigate = useNavigate()
   const allCategories = useSelector(
@@ -26,7 +28,7 @@ function App() {
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  const accessToken = Cookies.get('token')
+  const accessToken = Cookies.get(COOKIE_TOKEN_NAME)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   useEffect(() => {
@@ -38,9 +40,7 @@ function App() {
 
   useEffect(() => {
     if (accessToken && !isLoggedIn) {
-      dispatch(
-        currentUser({ accessToken: accessToken, operationType: 'currentUser' })
-      )
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
     }
   }, [accessToken, isLoggedIn])
 

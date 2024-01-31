@@ -15,19 +15,19 @@ const HeaderNav = () => {
   )
 
   const location = useLocation()
-  const homePath = location.pathname === '/'
+  const isHomePath = location.pathname === '/'
 
   useEffect(() => {
-    if (homePath) {
+    if (isHomePath) {
       scroller.scrollTo(location.hash.slice(1), {
         smooth: true,
         duration: 500
       })
     }
-  }, [homePath, location])
+  }, [isHomePath, location])
 
   useEffect(() => {
-    if (!allCategories) {
+    if (!allCategories?.length) {
       dispatch(fetchAllCategories({ operationType: 'fetchAllCategories' }))
     }
   }, [allCategories])

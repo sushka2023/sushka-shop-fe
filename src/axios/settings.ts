@@ -1,16 +1,19 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
+const BASE_URL = 'https://www.test-store.shop/'
+const COOKIE_TOKEN_NAME = 'token'
+
 const axiosInstance = axios.create({
-  baseURL: 'https://www.test-store.shop/'
+  baseURL: BASE_URL
 })
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = Cookies.get('token')
+    const accessToken = Cookies.get(COOKIE_TOKEN_NAME)
 
-    if (accessToken) {
-      if (config.headers) config.headers.Authorization = `Bearer ${accessToken}`
+    if (accessToken && config.headers) {
+      config.headers.Authorization = `Bearer ${accessToken}`
     }
     return config
   },

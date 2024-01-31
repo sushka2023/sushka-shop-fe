@@ -12,7 +12,7 @@ type Props = {
 
 const HeaderNavList: FC<Props> = ({ allCategories }) => {
   const location = useLocation()
-  const homePath = location.pathname === '/'
+  const isHomePath = location.pathname === '/'
 
   return (
     <ul className={styles.listNav}>
@@ -26,12 +26,12 @@ const HeaderNavList: FC<Props> = ({ allCategories }) => {
         <DropdownList allCategories={allCategories} />
       </li>
       <li className={styles.listNavLine}>
-        <Link to={'/review'} className={styles.listNavLink}>
+        <Link to="/review" className={styles.listNavLink}>
           Відгуки
         </Link>
       </li>
       <li className={styles.listNavLine}>
-        {homePath ? (
+        {isHomePath ? (
           <ScrollLink
             to="aboutUs"
             className={styles.listNavLink}

@@ -5,6 +5,8 @@ import { TokenModel, UserResponse } from '../../types'
 import { OperationType, SignUpFormData } from './slice'
 import Cookies from 'js-cookie'
 
+const COOKIE_TOKEN_NAME = 'token'
+
 export type LoginBody = {
   email: string
   password: string
@@ -66,7 +68,7 @@ export const login = createAsyncThunk<LoginResponse, LoginParams>(
         }
       )
 
-      Cookies.set('token', response.data.access_token, { expires: 7 })
+      Cookies.set(COOKIE_TOKEN_NAME, response.data.access_token, { expires: 7 })
 
       return { data: response.data, operationType }
     } catch (e) {
@@ -110,7 +112,7 @@ export const logout = createAsyncThunk<any, LogOutParams>(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.post('api/auth/logout', null)
-      Cookies.remove('token')
+      Cookies.remove(COOKIE_TOKEN_NAME)
       return response
     } catch (e) {
       const error = e as AxiosError
