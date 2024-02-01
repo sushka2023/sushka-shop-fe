@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from './components/Layout/Layout'
@@ -18,8 +17,7 @@ import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
-
-const COOKIE_TOKEN_NAME = 'token'
+import { useCookieMenager } from './hooks/use-cookie'
 
 function App() {
   const navigate = useNavigate()
@@ -28,7 +26,10 @@ function App() {
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  const accessToken = Cookies.get(COOKIE_TOKEN_NAME)
+  const { getToken } = useCookieMenager()
+
+  const accessToken = getToken()
+
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   useEffect(() => {

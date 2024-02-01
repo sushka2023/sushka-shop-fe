@@ -1,8 +1,6 @@
 import { Navigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
 import { FC, Fragment, ReactNode } from 'react'
-
-const COOKIE_TOKEN_NAME = 'token'
+import { useCookieMenager } from '../../hooks/use-cookie'
 
 type Props = {
   component: ReactNode
@@ -10,7 +8,8 @@ type Props = {
 }
 
 const PrivateRoute: FC<Props> = ({ component, redirectTo }) => {
-  const accessToken = Cookies.get(COOKIE_TOKEN_NAME)
+  const { getToken } = useCookieMenager()
+  const accessToken = getToken()
 
   if (accessToken) {
     return <Fragment>{component}</Fragment>

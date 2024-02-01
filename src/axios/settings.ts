@@ -1,8 +1,8 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import { getToken } from '../hooks/use-cookie'
 
-const BASE_URL = 'https://www.test-store.shop/'
-const COOKIE_TOKEN_NAME = 'token'
+export const BASE_URL = 'https://www.test-store.shop/'
+export const COOKIE_TOKEN_NAME = 'token'
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL
@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = Cookies.get(COOKIE_TOKEN_NAME)
+    const accessToken = getToken()
 
     if (accessToken && config.headers) {
       config.headers.Authorization = `Bearer ${accessToken}`
