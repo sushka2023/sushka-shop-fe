@@ -6,6 +6,7 @@ import type { ProductArchiveModel } from '../models/ProductArchiveModel';
 import type { ProductModel } from '../models/ProductModel';
 import type { ProductResponse } from '../models/ProductResponse';
 import type { ProductStatus } from '../models/ProductStatus';
+import type { ProductWithTotalResponse } from '../models/ProductWithTotalResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -31,7 +32,7 @@ export class ProductService {
      * @param weight
      * @param prCategoryId
      * @param sort
-     * @returns ProductResponse Successful Response
+     * @returns ProductWithTotalResponse Successful Response
      * @throws ApiError
      */
     public static productsApiProductAllGet(
@@ -40,7 +41,7 @@ export class ProductService {
         weight?: string,
         prCategoryId?: number,
         sort: string = 'low_price',
-    ): CancelablePromise<Array<ProductResponse>> {
+    ): CancelablePromise<ProductWithTotalResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/product/all',
@@ -70,7 +71,7 @@ export class ProductService {
      * @param offset
      * @param prStatus
      * @param prCategoryId
-     * @returns ProductResponse Successful Response
+     * @returns ProductWithTotalResponse Successful Response
      * @throws ApiError
      */
     public static productsForCrmApiProductAllForCrmGet(
@@ -78,7 +79,7 @@ export class ProductService {
         offset: number,
         prStatus?: ProductStatus,
         prCategoryId?: number,
-    ): CancelablePromise<Array<ProductResponse>> {
+    ): CancelablePromise<ProductWithTotalResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/product/all_for_crm',

@@ -53,6 +53,7 @@ export type { ProductSubCategoryArchiveModel } from './models/ProductSubCategory
 export type { ProductSubCategoryEditModel } from './models/ProductSubCategoryEditModel';
 export type { ProductSubCategoryModel } from './models/ProductSubCategoryModel';
 export type { ProductSubCategoryResponse } from './models/ProductSubCategoryResponse';
+export type { ProductWithTotalResponse } from './models/ProductWithTotalResponse';
 export { Rating } from './models/Rating';
 export type { RequestEmail } from './models/RequestEmail';
 export type { ReviewArchiveModel } from './models/ReviewArchiveModel';

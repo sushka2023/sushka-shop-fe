@@ -36,9 +36,8 @@ const Breadcrumbs = () => {
       return category ? category.name : id
     }
   }
-
   const getProductName = (id: string) => {
-    if (allProducts) {
+    if (allProducts?.length) {
       const product = allProducts.find((product) => {
         return product.id === parseInt(id, 10)
       })

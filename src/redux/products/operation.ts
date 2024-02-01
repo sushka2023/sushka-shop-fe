@@ -1,6 +1,10 @@
 import { AxiosError } from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { ProductCategoryResponse, ProductResponse } from '../../types'
+import {
+  ProductCategoryResponse,
+  ProductResponse,
+  ProductWithTotalResponse
+} from '../../types'
 import axiosInstance from '../../axios/settings'
 
 type FetchItemOperationType = 'loadMore' | 'fetch'
@@ -20,10 +24,10 @@ export const fetchItems = createAsyncThunk<
   FetchItemsParams
 >('api/product', async ({ params, operationType }, thunkAPI) => {
   try {
-    const response = await axiosInstance.get(
-      `api/product/all?limit=9&offset=${params}&sort=name`
+    const response = await axiosInstance.get<ProductWithTotalResponse>(
+      `api/product/all?limit=9&offset=${params}&sort=low_price`
     )
-    return { data: response.data, operationType }
+    return { data: response.data.products, operationType }
   } catch (e) {
     const error = e as AxiosError
 
