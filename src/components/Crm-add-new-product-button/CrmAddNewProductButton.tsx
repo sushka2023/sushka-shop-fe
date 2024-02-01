@@ -63,6 +63,8 @@ const CrmAddNewProductButton = () => {
           name: productData.name!,
           product_status: productData.product_status as ProductStatus,
           sub_categories: productData.sub_categories
+            ? productData.sub_categories
+            : []
         })
       ).unwrap()
     } catch (error) {

@@ -1,5 +1,6 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import axiosInstance from '../../axios/settings'
 import { Report } from 'notiflix/build/notiflix-report-aio'
 import {
   Body_create_image_api_images_create_img_product_post,
@@ -27,7 +28,7 @@ export const fetchMainCategories = createAsyncThunk<
   MainCategoriesParams
 >('api/crm-main-categories', async ({ operationType }, thunkAPI) => {
   try {
-    const response = await axios.get('api/product_category/all')
+    const response = await axiosInstance.get('api/product_category/all_for_crm')
     return { data: response.data, operationType }
   } catch (e) {
     const error = e as AxiosError
@@ -35,9 +36,6 @@ export const fetchMainCategories = createAsyncThunk<
     return thunkAPI.rejectWithValue(error?.response?.status)
   }
 })
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTY5OTI4MDA1NCwiZXhwIjoxNzA0NjM2ODU0LCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.z_KIXuGOq-9irj5FaD8-V_npsKMYG7r6j9BXum1vOtY'
 
 export type CategoriesOperationType = 'fetch-sub-categories'
 
@@ -55,11 +53,9 @@ export const fetchSubCategories = createAsyncThunk<
   CategoriesParams
 >('api/crm-sub-categories', async ({ operationType }, thunkAPI) => {
   try {
-    const response = await axios.get('api/product_sub_category/all_for_crm', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axiosInstance.get(
+      'api/product_sub_category/all_for_crm'
+    )
     return { data: response.data, operationType }
   } catch (e) {
     const error = e as AxiosError
@@ -77,24 +73,16 @@ export const createNewProduct = createAsyncThunk<string, CreateProductParams>(
   'api/create-product',
   async (product, thunkAPI) => {
     try {
-      const response = await axios.post(
-        'api/product/create',
-        {
-          name: product.name,
-          description: product.description,
-          product_category_id: product.main_category,
-          sub_categories_id: product.sub_categories,
-          product_status: product.product_status,
-          promotional: true,
-          new_product: true,
-          is_popular: false
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      const response = await axiosInstance.post('api/product/create', {
+        name: product.name,
+        description: product.description,
+        product_category_id: product.main_category,
+        sub_categories_id: product.sub_categories,
+        product_status: product.product_status,
+        promotional: true,
+        new_product: true,
+        is_popular: false
+      })
 
       return response.data.id
     } catch (e) {
@@ -111,12 +99,12 @@ export const addImages = createAsyncThunk<
   Body_create_image_api_images_create_img_product_post
 >('api/create-images', async (imageFile, thunkAPI) => {
   try {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       'api/images/create_img_product',
       imageFile,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'multipart/form-data'
         }
       }
     )
@@ -125,11 +113,7 @@ export const addImages = createAsyncThunk<
   } catch (e) {
     const error = e as AxiosError
 
-    Report.failure(
-      'Помилка під час завантаження файлів',
-      'Заплатіть своїм розробникам',
-      'Добре'
-    )
+    Report.failure('Помилка', 'Помилка під час завантаження файлів', 'Добре')
     return thunkAPI.rejectWithValue(error.response?.data || error.message)
   }
 })
@@ -150,23 +134,15 @@ export const addPrice = createAsyncThunk<PriceResponse, AddPriceParams>(
   'api/create-price',
   async ({ price, productId }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        'api/price/create',
-        {
-          product_id: productId,
-          weight: price.weight,
-          price: price.price,
-          old_price: price.priceSale,
-          quantity: price.availability,
-          is_active: price.active,
-          promotional: price.sale
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      const response = await axiosInstance.post('api/price/create', {
+        product_id: productId,
+        weight: price.weight,
+        price: price.price,
+        old_price: price.priceSale,
+        quantity: price.availability,
+        is_active: price.active,
+        promotional: price.sale
+      })
       return response.data
     } catch (e) {
       const error = e as AxiosError

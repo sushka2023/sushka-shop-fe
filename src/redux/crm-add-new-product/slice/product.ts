@@ -98,9 +98,7 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createNewProduct.pending, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading += 1
-        }
+        state.isLoading += 1
       })
       .addCase(createNewProduct.rejected, (state, action) => {
         if (state.isLoading !== null) {
@@ -121,34 +119,22 @@ export const productSlice = createSlice({
         state.productId = action.payload
       })
       .addCase(addImages.pending, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading += 1
-        }
+        state.isLoading += 1
       })
       .addCase(addImages.rejected, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading -= 1
-        }
+        state.isLoading -= 1
       })
       .addCase(addImages.fulfilled, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading -= 1
-        }
+        state.isLoading -= 1
       })
       .addCase(addPrice.pending, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading += 1
-        }
+        state.isLoading += 1
       })
       .addCase(addPrice.rejected, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading -= 1
-        }
+        state.isLoading -= 1
       })
       .addCase(addPrice.fulfilled, (state) => {
-        if (state.isLoading !== null) {
-          state.isLoading -= 1
-        }
+        state.isLoading -= 1
       })
   }
 })

@@ -1,7 +1,9 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
+import axiosInstance from '../../axios/settings'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TokenModel, UserResponse } from '../../types'
 import { OperationType, SignUpFormData } from './slice'
+import { setToken, removeToken } from '../../utils/cookie/token'
 
 export type LoginBody = {
   email: string
@@ -22,7 +24,7 @@ export const signUp = createAsyncThunk<SignUpResponse, SignUpParams>(
   'api/signUp',
   async ({ user, operationType }, thunkAPI) => {
     try {
-      const response = await axios.post(`api/auth/signup`, {
+      const response = await axiosInstance.post(`api/auth/signup`, {
         email: user.email,
         first_name: user.firstName,
         last_name: user.lastName,
@@ -51,7 +53,7 @@ export const login = createAsyncThunk<LoginResponse, LoginParams>(
   'api/login',
   async ({ user, operationType }, thunkAPI) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         'api/auth/login',
         {
           username: user.email,
@@ -63,6 +65,9 @@ export const login = createAsyncThunk<LoginResponse, LoginParams>(
           }
         }
       )
+
+      setToken(response.data.access_token)
+
       return { data: response.data, operationType }
     } catch (e) {
       const error = e as AxiosError
@@ -85,13 +90,9 @@ type CurrentUserResponse = {
 export const currentUser = createAsyncThunk<
   CurrentUserResponse,
   CurrentUserParams
->('api/currentUser', async ({ accessToken, operationType }, thunkAPI) => {
+>('api/currentUser', async ({ operationType }, thunkAPI) => {
   try {
-    const response = await axios.get('api/users/me/', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
+    const response = await axiosInstance.get('api/users/me/')
     return { data: response.data, operationType }
   } catch (e) {
     const error = e as AxiosError
@@ -106,13 +107,12 @@ type LogOutParams = {
 
 export const logout = createAsyncThunk<any, LogOutParams>(
   'api/logOut',
-  async ({ accessToken }, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
-      const response = await axios.post('api/auth/logout', null, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+      const response = await axiosInstance.post('api/auth/logout', null)
+
+      removeToken()
+
       return response
     } catch (e) {
       const error = e as AxiosError
