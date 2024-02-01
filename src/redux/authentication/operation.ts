@@ -3,7 +3,7 @@ import axiosInstance from '../../axios/settings'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TokenModel, UserResponse } from '../../types'
 import { OperationType, SignUpFormData } from './slice'
-import { useCookieMenager } from '../../hooks/use-cookie'
+import { setToken, removeToken } from '../../utils/cookie/token'
 
 export type LoginBody = {
   email: string
@@ -65,7 +65,7 @@ export const login = createAsyncThunk<LoginResponse, LoginParams>(
           }
         }
       )
-      const { setToken } = useCookieMenager()
+
       setToken(response.data.access_token)
 
       return { data: response.data, operationType }
@@ -110,8 +110,9 @@ export const logout = createAsyncThunk<any, LogOutParams>(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.post('api/auth/logout', null)
-      const { removeToken } = useCookieMenager()
+
       removeToken()
+
       return response
     } catch (e) {
       const error = e as AxiosError

@@ -17,7 +17,7 @@ import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
-import { useCookieMenager } from './hooks/use-cookie'
+import { getToken } from './utils/cookie/token'
 
 function App() {
   const navigate = useNavigate()
@@ -25,8 +25,6 @@ function App() {
     (state: RootState) => state.items.allCategories
   )
   const dispatch = useDispatch<AppDispatch>()
-
-  const { getToken } = useCookieMenager()
 
   const accessToken = getToken()
 
