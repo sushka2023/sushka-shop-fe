@@ -17,6 +17,7 @@ import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
+import { getToken } from './utils/cookie/token'
 
 function App() {
   const navigate = useNavigate()
@@ -25,7 +26,8 @@ function App() {
   )
   const dispatch = useDispatch<AppDispatch>()
 
-  const token = useSelector((state: RootState) => state.auth.accessToken)
+  const accessToken = getToken()
+
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   useEffect(() => {
@@ -36,12 +38,10 @@ function App() {
   }, [allCategories, navigate])
 
   useEffect(() => {
-    if (token && !isLoggedIn) {
-      dispatch(
-        currentUser({ accessToken: token, operationType: 'currentUser' })
-      )
+    if (accessToken && !isLoggedIn) {
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
     }
-  }, [token, isLoggedIn])
+  }, [accessToken, isLoggedIn])
 
   return (
     <Fragment>
