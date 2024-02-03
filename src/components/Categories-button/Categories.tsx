@@ -4,23 +4,25 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { setOffset, setOperation } from '../../redux/products/slice'
 import { RootState, AppDispatch } from '../../redux/store/index'
 import { ProductCategoryModel } from '../../types/index'
+import { UrlParamsModel } from '../../types/models/UrlParamsModel'
 import styles from './Categories.module.scss'
 
 const CategoriesButtons = () => {
   const navigate = useNavigate()
-  const { category }: any = useParams()
-  const [activeButton, setActiveButton] = useState(parseInt(category) || 'all')
+  const { category } = useParams<UrlParamsModel>() as UrlParamsModel
+  const categoryParams = parseInt(category || '')
+  const [activeButton, setActiveButton] = useState(categoryParams || 'all')
   const allCategories = useSelector(
     (state: RootState) => state.items.allCategories
   )
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    setActiveButton(parseInt(category) || 'all')
-  }, [category])
+    setActiveButton(categoryParams || 'all')
+  }, [categoryParams])
 
   const handleClickButton = (categoryId: number | string) => {
-    navigate(`/catalog/${categoryId}/1`)
+    navigate(`/catalog/${categoryId}`)
     dispatch(setOffset(0))
     dispatch(setOperation('fetch'))
 

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Link as ScrollLink } from 'react-scroll'
-import { useParams } from 'react-router-dom'
 import styles from './CatalogPage.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
 import Filter from '../../components/Filter'
@@ -11,6 +10,8 @@ import CategoriesButtons from '../../components/Categories-button/Categories'
 import { AppDispatch, RootState } from '../../redux/store'
 import { setOffset, setOperation } from '../../redux/products/slice'
 import CatalogList from '../../components/catalog-list/CatalogList'
+
+const PRODUCT_QUANTITY = 9
 
 const theme = createTheme({
   palette: {
@@ -32,26 +33,25 @@ const paginationStyles = {
 }
 
 const CatalogPage = () => {
-  const { page }: any = useParams()
-  const [pageN, setPageN] = useState(parseInt(page) || 1)
+  const [page, setPage] = useState(1)
 
   const totalCount = useSelector((state: RootState) => state.items.totalCount)
   const offset = useSelector((state: RootState) => state.items.offset)
   const dispatch = useDispatch<AppDispatch>()
-  const totalNumberOfPages = Math.ceil(totalCount / 9)
+  const totalNumberOfPages = Math.ceil(totalCount / PRODUCT_QUANTITY)
 
   const handleClickLoadMore = () => {
     dispatch(setOperation('loadMore'))
-    const newOffset = offset + 9
-    setPageN(pageN + 1)
+    const newOffset = offset + PRODUCT_QUANTITY
+    setPage(page + 1)
     dispatch(setOffset(newOffset))
   }
 
   const handleClickPagination = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(setOperation('fetch'))
     const currentPage = parseInt((e.target as HTMLButtonElement).innerText)
-    setPageN(currentPage)
-    dispatch(setOffset((currentPage - 1) * 9))
+    setPage(currentPage)
+    dispatch(setOffset((currentPage - 1) * PRODUCT_QUANTITY))
   }
 
   return (
@@ -68,7 +68,7 @@ const CatalogPage = () => {
           <CatalogList />
         </div>
         <div className={styles.btnWrapper}>
-          {pageN < totalNumberOfPages && (
+          {page < totalNumberOfPages && (
             <button
               type="button"
               className={styles.loadMore}
@@ -90,7 +90,7 @@ const CatalogPage = () => {
                 hideNextButton
                 sx={paginationStyles}
                 onClick={handleClickPagination}
-                page={pageN}
+                page={page}
               />
             </ScrollLink>
           </ThemeProvider>

@@ -23,7 +23,7 @@ type FetchItemsParams = {
   offset: number
   sortValue: string
   operationType: FetchItemOperationType
-  category: string | false | undefined
+  category: string | null | undefined
   weight: string
 }
 

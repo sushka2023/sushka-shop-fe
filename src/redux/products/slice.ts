@@ -7,6 +7,11 @@ import {
 } from './operation'
 import { ProductCategoryResponse, ProductResponse } from '../../types'
 
+enum SortValue {
+  lowPrice = 'low_price',
+  highPrice = 'high_price'
+}
+
 export type ItemsState = {
   items: ProductResponse[]
   isLoading: boolean
@@ -27,7 +32,7 @@ const INITIAL_STATE: ItemsState = {
   totalCount: 0,
   allCategories: null,
   offset: 0,
-  sortValue: 'low_price',
+  sortValue: SortValue.lowPrice,
   selectedWeight: []
 }
 
@@ -76,6 +81,7 @@ export const itemsSlice = createSlice({
         state.isLoading = false
         state.error = null
         state.totalCount = action.payload.totalCount
+        state.operation = action.payload.operationType
 
         switch (action.payload.operationType) {
           case 'loadMore':

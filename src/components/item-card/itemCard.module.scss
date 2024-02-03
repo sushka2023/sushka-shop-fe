@@ -87,6 +87,9 @@
     font-size: 17px;
     font-weight: $font-weight-300;
     line-height: 140%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cardPrice {

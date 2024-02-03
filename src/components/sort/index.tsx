@@ -11,8 +11,6 @@ const Sort = () => {
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     dispatch(setSortValue(e.target.id))
 
-  const checkValue = (id: string) => id === sortValue
-
   return (
     <Fragment>
       <h3 className={styles.title}>Сортировка</h3>
@@ -24,7 +22,7 @@ const Sort = () => {
           name="sorting"
           value="Ціна за зростанням"
           onChange={handleChangeInput}
-          checked={checkValue('low_price')}
+          checked={sortValue === 'low_price'}
         />
         <label htmlFor="low_price" className={styles.label}>
           Ціна за зростанням
@@ -38,7 +36,7 @@ const Sort = () => {
           name="sorting"
           value="Ціна за спаданням"
           onChange={handleChangeInput}
-          checked={checkValue('high_price')}
+          checked={sortValue === 'high_price'}
         />
         <label htmlFor="high_price">Ціна за спаданням</label>
       </div>

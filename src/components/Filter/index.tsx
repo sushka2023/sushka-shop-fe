@@ -7,7 +7,6 @@ import styles from './filter.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
 import { fetchItems } from '../../redux/products/operation'
 import { RootState, AppDispatch } from '../../redux/store'
-import { useCombineString } from '../../hooks/useCombineString'
 
 const OPTION_WEIGHT = [
   { label: '50 гр', value: '50' },
@@ -28,7 +27,6 @@ const Filter = () => {
   const sortValue = useSelector((state: RootState) => state.items.sortValue)
   const { category } = useParams()
   const dispatch = useDispatch<AppDispatch>()
-  const combineString = useCombineString(selectedWeight)
 
   const handleChangeWeight = (weight: string) =>
     dispatch(setSelectedWeight(weight))
@@ -40,14 +38,13 @@ const Filter = () => {
         sortValue,
         operationType: 'fetch',
         category,
-        weight: combineString
+        weight: selectedWeight.join(',')
       })
     )
   }
 
   return (
-    <Options value={'Фільтр'}>
-      <div></div>
+    <Options value="Фільтр">
       <div>
         <Sort />
         <h3 className={styles.title}>Розмір пакування</h3>

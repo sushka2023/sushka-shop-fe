@@ -7,26 +7,18 @@ import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toggleFavorite } from '../../redux/products/slice'
 import { ProductResponse } from '../../types'
+import { gramsToKilograms } from '../../utils/format-weight/formatWeight'
 
 type Props = {
   item: ProductResponse
   isFavorite: boolean
 }
 
-const MAX_DESCRIPTION_LENGTH = 69
-
 const ItemCard: FC<Props> = ({ item, isFavorite }) => {
   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight)
   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price)
 
   const dispatch = useDispatch()
-
-  const truncatedDescription =
-    item.description.length > MAX_DESCRIPTION_LENGTH
-      ? `${item.description.slice(0, MAX_DESCRIPTION_LENGTH)}...`
-      : item.description
-
-  const checedWeight = (weight: string) => (weight === '1000' ? '1кг' : weight)
 
   const handleClickFavorite = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
@@ -67,7 +59,7 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
             <div className={styles.cardTitle}>
               <div className={styles.cardTypography}>
                 <h3 className={styles.cardHeader}>{item.name}</h3>
-                <p className={styles.cardPararaph}>{truncatedDescription}</p>
+                <p className={styles.cardPararaph}>{item.description}</p>
               </div>
               <ul className={styles.listWeight}>
                 {item.prices.map((price) => {
@@ -79,7 +71,7 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
                           handleWeightClick(e, price.weight, price.price)
                         }}
                       >
-                        {checedWeight(price.weight)}
+                        {gramsToKilograms(price.weight)}
                       </button>
                     </li>
                   )
