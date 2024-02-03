@@ -7,6 +7,7 @@ import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toggleFavorite } from '../../redux/products/slice'
 import { ProductResponse } from '../../types'
+import { gramsToKilograms } from '../../utils/format-weight/formatWeight'
 
 type Props = {
   item: ProductResponse
@@ -56,8 +57,10 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
               )}
             </div>
             <div className={styles.cardTitle}>
-              <h3 className={styles.cardHeader}>{item.name}</h3>
-              <p className={styles.cardPararaph}>{item.description}</p>
+              <div className={styles.cardTypography}>
+                <h3 className={styles.cardHeader}>{item.name}</h3>
+                <p className={styles.cardPararaph}>{item.description}</p>
+              </div>
               <ul className={styles.listWeight}>
                 {item.prices.map((price) => {
                   return (
@@ -68,7 +71,7 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
                           handleWeightClick(e, price.weight, price.price)
                         }}
                       >
-                        {price.weight}
+                        {gramsToKilograms(price.weight)}
                       </button>
                     </li>
                   )

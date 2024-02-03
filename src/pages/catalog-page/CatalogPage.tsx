@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ItemCard from '../../components/item-card/ItemCard'
 import Pagination from '@mui/material/Pagination'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Link as ScrollLink } from 'react-scroll'
-import { useParams, useNavigate } from 'react-router-dom'
 import styles from './CatalogPage.module.scss'
 import ArowIcon from '../../icons/arrowdown.svg?react'
 import Filter from '../../components/Filter'
 import CategoriesButtons from '../../components/Categories-button/Categories'
-import {
-  FetchItemOperationType,
-  fetchItems
-} from '../../redux/products/operation'
 import { AppDispatch, RootState } from '../../redux/store'
+import { setOffset, setOperation } from '../../redux/products/slice'
+import CatalogList from '../../components/catalog-list/CatalogList'
+
+const PRODUCT_QUANTITY = 9
 
 const theme = createTheme({
   palette: {
@@ -35,33 +33,25 @@ const paginationStyles = {
 }
 
 const CatalogPage = () => {
-  const { params, page } = useParams()
-  const [offset, setOffset] = useState<number>(parseInt(page!))
-  const [operationType, setOperationType] =
-    useState<FetchItemOperationType>('fetch')
+  const [page, setPage] = useState(1)
 
-  const allProducts = useSelector((state: RootState) => state.items.items)
+  const totalCount = useSelector((state: RootState) => state.items.totalCount)
+  const offset = useSelector((state: RootState) => state.items.offset)
   const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    dispatch(fetchItems({ params: offset, operationType: operationType }))
-  }, [dispatch, offset, operationType])
+  const totalNumberOfPages = Math.ceil(totalCount / PRODUCT_QUANTITY)
 
   const handleClickLoadMore = () => {
-    setOperationType('loadMore')
-    const newOffset = offset + 1
-    setOffset(newOffset === 1 ? newOffset + 1 : newOffset)
-    navigate(`/catalog/${params}/${parseInt(page!) + 1}`)
+    dispatch(setOperation('loadMore'))
+    const newOffset = offset + PRODUCT_QUANTITY
+    setPage(page + 1)
+    dispatch(setOffset(newOffset))
   }
 
-  const handleClickPagination = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    setOperationType('fetch')
-    const newPage = parseInt((e.target as HTMLElement).textContent!)
-    setOffset(newPage === 1 ? 0 : newPage)
-    navigate(`/catalog/${params}/${newPage - 1}`)
+  const handleClickPagination = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(setOperation('fetch'))
+    const currentPage = parseInt((e.target as HTMLButtonElement).innerText)
+    setPage(currentPage)
+    dispatch(setOffset((currentPage - 1) * PRODUCT_QUANTITY))
   }
 
   return (
@@ -75,20 +65,10 @@ const CatalogPage = () => {
           </div>
         </div>
         <div>
-          <ul className={styles.catalogList}>
-            {allProducts.map((item, index) => {
-              return (
-                <ItemCard
-                  item={item}
-                  key={index}
-                  isFavorite={item.is_favorite}
-                />
-              )
-            })}
-          </ul>
+          <CatalogList />
         </div>
         <div className={styles.btnWrapper}>
-          {offset < 3 && (
+          {page < totalNumberOfPages && (
             <button
               type="button"
               className={styles.loadMore}
@@ -103,14 +83,14 @@ const CatalogPage = () => {
           <ThemeProvider theme={theme}>
             <ScrollLink to="nav">
               <Pagination
-                count={3}
+                count={totalNumberOfPages}
                 color="primary"
                 size="large"
                 hidePrevButton
                 hideNextButton
                 sx={paginationStyles}
                 onClick={handleClickPagination}
-                page={offset === 0 ? 1 : offset}
+                page={page}
               />
             </ScrollLink>
           </ThemeProvider>
