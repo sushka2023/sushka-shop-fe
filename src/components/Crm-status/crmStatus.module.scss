@@ -1,73 +1,73 @@
 @import '../../styles/base/base.scss';
 
 .statusDropdownContainer {
-    position: absolute;
-    top: 50px;
-    width: 200px;
-    padding: 10px 0px;
-    border-radius: 10px;
-    border: 1px solid $CRM-accent;
-    background: $white-200;
+  position: absolute;
+  top: 50px;
+  width: 200px;
+  padding: 10px 0px;
+  border-radius: 10px;
+  border: 1px solid $CRM-accent;
+  background: $white-200;
 }
 
 .statusList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .statusLine {
-    display: inline;
-    padding: 10px 14px;
+  display: inline;
+  padding: 10px 14px;
 }
 
 .statusLabel {
-    border-radius: 10px;
-    padding: 5px 10px;
-    font-family: $open-sans;
-    font-size: 16px;
-    font-weight: $font-weight-600;
-    line-height: 130%;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
 
-    &New {
-        color: $CRM-accent;
-        background: rgba(224, 231, 255, 0.50);
-    }
+  &New {
+    color: $CRM-accent;
+    background: rgba(224, 231, 255, 0.5);
+  }
 
-    &Active {
-        color: #059691;
-        background: rgba(209, 250, 229, 0.50);
-    }
+  &Active {
+    color: #059691;
+    background: rgba(209, 250, 229, 0.5);
+  }
 
-    &Archive {
-        color: $CRM-grey;
-        background: rgba(241, 245, 249, 0.50);
-    }
+  &Archive {
+    color: $CRM-grey;
+    background: rgba(241, 245, 249, 0.5);
+  }
 }
 
 .statusInput {
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }
 
-.statusInput+.statusLabel {
-    position: relative;
-    cursor: pointer;
-    margin-left: 32px;
+.statusInput + .statusLabel {
+  position: relative;
+  cursor: pointer;
+  margin-left: 32px;
 }
 
-.statusInput+.statusLabel:before {
-    content: '';
-    position: absolute;
-    width: 19px;
-    height: 19px;
+.statusInput + .statusLabel:before {
+  content: '';
+  position: absolute;
+  width: 19px;
+  height: 19px;
 }
 
 .statusInput:checked+.statusLabel:before {
     content: "";
     position: absolute;
-    background-image: url(/src/icons/crmcheckbox.svg);
+    background-image: url(/src/icons/checkedcrmweight.svg);
     width: 19px;
     background-repeat: no-repeat;
     left: -33px;

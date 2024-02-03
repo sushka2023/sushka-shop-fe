@@ -1,0 +1,37 @@
+@import '../../styles/base/base.scss';
+
+.saveBtns {
+    width: 135px;
+    display: inline-flex;
+    height: 40px;
+    padding: 15px 30px;
+    gap: 10px;
+    align-items: center;
+    border-radius: 10px;
+    background: $CRM-accent;
+    color: $white-200;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-600;
+    line-height: 130%;
+    border: none;
+    cursor: pointer;
+    justify-content: space-evenly;
+
+    &:disabled {
+        cursor: not-allowed
+    }
+
+};
+
+.isLoadingText {
+    color: red;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    width: 270px;
+}
+
+.saveBtnWrapp {
+ position: relative;
+}
