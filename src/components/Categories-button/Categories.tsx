@@ -7,7 +7,11 @@ import { ProductCategoryModel } from '../../types/index'
 import { UrlParamsModel } from '../../types/models/UrlParamsModel'
 import styles from './Categories.module.scss'
 
-const CategoriesButtons = () => {
+type Props = {
+  setPage: (newPage: number) => void
+}
+
+const CategoriesButtons: React.FC<Props> = ({ setPage }) => {
   const navigate = useNavigate()
   const { category } = useParams<UrlParamsModel>() as UrlParamsModel
   const categoryParams = parseInt(category || '')
@@ -32,7 +36,7 @@ const CategoriesButtons = () => {
       dispatch(setOperation('fetch'))
       return
     }
-
+    setPage(1)
     setActiveButton(categoryId)
   }
 

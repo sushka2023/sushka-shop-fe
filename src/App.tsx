@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from './components/Layout/Layout'
@@ -20,22 +20,11 @@ import AccountPage from './pages/account-page'
 import { getToken } from './utils/cookie/token'
 
 function App() {
-  const navigate = useNavigate()
-  const allCategories = useSelector(
-    (state: RootState) => state.items.allCategories
-  )
   const dispatch = useDispatch<AppDispatch>()
 
   const accessToken = getToken()
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-
-  useEffect(() => {
-    const currentPath = window.location.pathname
-    if (currentPath === '/catalog' && allCategories) {
-      navigate(`catalog/${allCategories[0].id}/0`)
-    }
-  }, [allCategories, navigate])
 
   useEffect(() => {
     if (accessToken && !isLoggedIn) {
