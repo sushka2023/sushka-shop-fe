@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from './components/Layout/Layout'
@@ -18,30 +18,20 @@ import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
+import { getToken } from './utils/cookie/token'
+
 function App() {
-  const navigate = useNavigate()
-  const allCategories = useSelector(
-    (state: RootState) => state.items.allCategories
-  )
   const dispatch = useDispatch<AppDispatch>()
 
-  const token = useSelector((state: RootState) => state.auth.accessToken)
+  const accessToken = getToken()
+
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   useEffect(() => {
-    const currentPath = window.location.pathname
-    if (currentPath === '/catalog' && allCategories) {
-      navigate(`catalog/${allCategories[0].id}/0`)
+    if (accessToken && !isLoggedIn) {
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
     }
-  }, [allCategories, navigate])
-
-  useEffect(() => {
-    if (token && !isLoggedIn) {
-      dispatch(
-        currentUser({ accessToken: token, operationType: 'currentUser' })
-      )
-    }
-  }, [token, isLoggedIn])
+  }, [accessToken, isLoggedIn])
 
   return (
     <Fragment>
@@ -49,7 +39,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="catalog">
-            <Route path=":category/:page" element={<CatalogPage />} />
+            <Route path="all" element={<CatalogPage />} />
+            <Route path=":category" element={<CatalogPage />} />
             <Route
               path=":category/:productId/details"
               element={<ProductPage />}

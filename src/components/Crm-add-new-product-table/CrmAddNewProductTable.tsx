@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import PlusIcon from '../../icons/plus1.svg?react'
 import styles from './CrmAddNewProduct.module.scss'
-import { AppDispatch, RootState } from '../../redux/store'
+import { AppDispatch } from '../../redux/store'
+import { ProductState } from '../../redux/crm-add-new-product/slice/product'
 import { addData } from '../../redux/crm-add-new-product/slice/product'
 import { Price } from '../../redux/crm-add-new-product/operation'
 import TableRow from './TableRow'
@@ -40,10 +41,10 @@ const CrmAddNewProductTable = () => {
   ])
   const dispatch = useDispatch<AppDispatch>()
   const productId = useSelector(
-    (state: RootState) => state.newProduct.productId
+    (state: ProductState) => state.newProduct.productId
   )
   const validationErrors = useSelector(
-    (state: RootState) => state.newProduct.formErrors
+    (state: ProductState) => state.newProduct.formErrors
   )
 
   const hasError = (rowIndex: number, columnName: string) => {

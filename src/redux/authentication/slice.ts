@@ -13,7 +13,6 @@ export type SignUpFormData = {
 }
 
 type AuthState = {
-  accessToken: string | null
   user: UserResponse | null
   isLoggedIn: boolean
   isLoading: boolean
@@ -22,7 +21,6 @@ type AuthState = {
 }
 
 const INITIAL_STATE: AuthState = {
-  accessToken: null,
   user: null,
   isLoggedIn: false,
   isLoading: false,
@@ -62,7 +60,6 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false
         state.user = action.payload.data.user
-        state.accessToken = action.payload.data.access_token
         state.isLoggedIn = true
         if (state.errors) {
           state.errors = null
@@ -89,7 +86,6 @@ export const authSlice = createSlice({
         state.errors = action.error
       })
       .addCase(logout.fulfilled, (state) => {
-        state.accessToken = null
         state.user = null
         state.isLoggedIn = false
         state.isLoading = false

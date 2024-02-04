@@ -60,7 +60,7 @@ export const categoriesSlice = createSlice({
         state.isLoading = false
         state.operation = null
         state.error = null
-        state.mainCategories = action.payload.data
+        state.subCategories = action.payload.data
       })
   }
 })
