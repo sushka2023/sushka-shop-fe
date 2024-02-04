@@ -86,7 +86,7 @@ const Breadcrumbs = () => {
                 className={`${styles.breadLink} ${
                   index === pathnames().length - 1 && styles.currentPath
                 }`}
-                to={`/${item}`}
+                to={`/${item}/${allCategories?.[0]?.id}`}
               >
                 {getUkrainianName(item!)}
               </Link>

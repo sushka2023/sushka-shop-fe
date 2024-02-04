@@ -59,7 +59,7 @@ const CatalogPage = () => {
       <div className={styles.catalogBorder}></div>
       <div className={styles.container}>
         <div className={styles.catalogOption}>
-          <CategoriesButtons />
+          <CategoriesButtons setPage={setPage} />
           <div className={styles.optionsWrapper}>
             <Filter />
           </div>
