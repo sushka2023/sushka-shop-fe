@@ -1,19 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchReviews } from './operations';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { fetchReviews } from './operations'
 
-const handlePending = (state) => {
-  state.isLoading = true;
+export type Review = {
+  id: number
+  user_id: number
+  product_id: number
+  rating: number
+  description: string
+  created_at: Date
+  is_deleted: boolean
+  is_checked: boolean
+  images: {
+    id: number
+    product_id: number
+    review_id: number
+    image_url: string
+    description: string
+    image_type: string
+  }[]
 }
 
-const handleRejected = (state, action) => {
-  state.isLoading = false;
-  state.error = action.payload;
+type ReviewsState = {
+  items: Review[]
+  isLoading: boolean
+  error: string | null
 }
 
-const initialState = {
+const handlePending = (state: ReviewsState) => {
+  state.isLoading = true
+}
+
+const handleRejected = (state: ReviewsState, action: PayloadAction<string>) => {
+  state.isLoading = false
+  state.error = action.payload
+}
+
+const initialState: ReviewsState = {
   items: [],
   isLoading: false,
-  error: null,
+  error: null
 }
 
 export const reviewsSlice = createSlice({
@@ -22,13 +47,12 @@ export const reviewsSlice = createSlice({
   extraReducers: {
     [fetchReviews.pending]: handlePending,
     [fetchReviews.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.items = action.payload;
+      state.isLoading = false
+      state.error = null
+      state.items = action.payload
     },
-    [fetchReviews.rejected]: handleRejected,
-  },
+    [fetchReviews.rejected]: handleRejected
+  }
 })
 
-
-export const reviewsReducer = reviewsSlice.reducer;
+export const reviewsReducer = reviewsSlice.reducer
