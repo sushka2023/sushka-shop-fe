@@ -1,6 +1,7 @@
 import styles from '../Feedbacks.module.scss'
 import FeedbackItem from './FeedbackItem'
-const ListOfFeedbacks = () => {
+const ListOfFeedbacks = ({ reviews }) => {
+  console.log(reviews)
   return (
     <ul className={styles.feedbackList}>
       <FeedbackItem/>

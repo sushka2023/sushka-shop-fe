@@ -1,6 +1,7 @@
 import styles from '../Feedbacks.module.scss'
 import { Rating } from './Rating'
-const FeedbackItem = () => {
+const FeedbackItem = ({ reviews }) => {
+  console.log(reviews)
   return (
     <li className={styles.feedbackItem}>
       <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%'}}>

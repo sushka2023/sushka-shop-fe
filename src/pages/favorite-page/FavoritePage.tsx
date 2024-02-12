@@ -5,6 +5,8 @@ import styles from './favoritePage.module.scss'
 import ItemCard from '../../components/item-card/ItemCard'
 import { RootState } from '../../redux/store'
 
+
+
 const FavoritePage = () => {
   const allItem = useSelector((state: RootState) => state.items.items)
   const favoriteItems = allItem.filter((item) => {

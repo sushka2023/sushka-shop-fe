@@ -6,6 +6,7 @@ import { itemsSlice } from '../products/slice'
 import { authSlice } from '../authentication/slice'
 import { productSlice } from '../crm-add-new-product/slice/product'
 import { categoriesSlice } from '../crm-add-new-product/slice/categories'
+import { reviewsReducer } from '../feedbacks/slice'
 
 const AUTH_PERSIST_CONFIG = {
   key: 'auth',
@@ -25,7 +26,9 @@ const rootReducer = combineReducers({
   allCategories: persistReducer(
     ALL_CATEGORIES_PERSIST_CONFIG,
     categoriesSlice.reducer
-  )
+  ),
+  reviews: reviewsReducer,
+
 })
 
 const persistedReducer = persistReducer(
