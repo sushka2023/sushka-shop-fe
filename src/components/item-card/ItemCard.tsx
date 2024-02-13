@@ -26,7 +26,7 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
   ) => {
     e.preventDefault()
     const accessToken = getToken()
-    setIsModalOpen(!accessToken && true)
+    setIsModalOpen(!accessToken)
   }
 
   const handleWeightClick = (

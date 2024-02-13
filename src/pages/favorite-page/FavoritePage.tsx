@@ -20,7 +20,7 @@ const FavoritePage = () => {
 
   const handleClickAuth = () => {
     const accessToken = getToken()
-    setIsModalOpen(!accessToken && true)
+    setIsModalOpen(!accessToken)
   }
 
   return (
