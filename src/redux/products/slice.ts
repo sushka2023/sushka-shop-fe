@@ -22,6 +22,7 @@ export type ItemsState = {
   offset: number
   sortValue: string
   selectedWeight: string[]
+  isFavorite: []
 }
 
 const INITIAL_STATE: ItemsState = {
@@ -33,20 +34,14 @@ const INITIAL_STATE: ItemsState = {
   allCategories: null,
   offset: 0,
   sortValue: SortValue.lowPrice,
-  selectedWeight: []
+  selectedWeight: [],
+  isFavorite: []
 }
 
 export const itemsSlice = createSlice({
   name: 'AllItems',
   initialState: INITIAL_STATE,
   reducers: {
-    toggleFavorite: (state, action) => {
-      state.items.map((item) => {
-        if (item.id === action.payload.id) {
-          item.is_favorite = !action.payload.is_favorite
-        }
-      })
-    },
     setOffset: (state, action) => {
       state.offset = action.payload || 0
     },

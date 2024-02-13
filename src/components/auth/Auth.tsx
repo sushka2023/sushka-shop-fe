@@ -48,7 +48,7 @@ const Auth: FC<Props> = ({ setIsModalOpen }) => {
   useEffect(() => {
     if (user && isLoggedIn) {
       setIsModalOpen(false)
-      navigate('account')
+      navigate('/account')
     }
     if (user && !isLoginMode) {
       setMailConfirmation(true)

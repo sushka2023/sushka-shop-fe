@@ -51,7 +51,7 @@ function App() {
           />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
-            path="/account"
+            path="account"
             element={
               <PrivateRoute redirectTo="/" component={<AccountPage />} />
             }
