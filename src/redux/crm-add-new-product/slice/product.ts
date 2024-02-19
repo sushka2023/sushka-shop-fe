@@ -1,7 +1,13 @@
 /* eslint-disable complexity */
 import { createSlice } from '@reduxjs/toolkit'
-import { Price, addImages, addPrice, createNewProduct } from '../operation'
-import { ProductSubCategoryResponse } from '../../../types'
+import {
+  Price,
+  addImages,
+  addPrice,
+  createNewProduct,
+  fetchProductsForCrm
+} from '../operation'
+import { ProductResponse, ProductSubCategoryResponse } from '../../../types'
 
 export type ProductState = {
   productId: string | null
@@ -12,6 +18,10 @@ export type ProductState = {
   sub_categories: ProductSubCategoryResponse[]
   price: Price[]
   isLoading: number | null
+  isLoadingForCrm: boolean
+  productsForCrm: ProductResponse[]
+  productsForCrmPageNumber: number
+  productsForCrmTotalCount: number
   operation: string | null
   error: unknown | null
   formErrors: Record<string, string>
@@ -28,6 +38,10 @@ const INITIAL_STATE: ProductState = {
   sub_categories: [],
   price: [],
   isLoading: null,
+  isLoadingForCrm: false,
+  productsForCrm: [],
+  productsForCrmPageNumber: 0,
+  productsForCrmTotalCount: 0,
   operation: null,
   error: null,
   formErrors: {},
@@ -135,6 +149,23 @@ export const productSlice = createSlice({
       })
       .addCase(addPrice.fulfilled, (state) => {
         state.isLoading -= 1
+      })
+      .addCase(fetchProductsForCrm.pending, (state) => {
+        state.isLoadingForCrm = true
+      })
+      .addCase(fetchProductsForCrm.rejected, (state, action) => {
+        state.isLoadingForCrm = false
+        state.productsForCrm = []
+        state.error = action.payload
+        state.productsForCrmTotalCount = 0
+        state.productsForCrmPageNumber = 0
+      })
+      .addCase(fetchProductsForCrm.fulfilled, (state, action) => {
+        state.isLoadingForCrm = false
+        state.error = null
+        state.productsForCrm = action.payload.products
+        state.productsForCrmTotalCount = action.payload.totalCount
+        state.productsForCrmPageNumber = action.payload.pageNumber
       })
   }
 })

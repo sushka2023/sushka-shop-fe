@@ -11,6 +11,12 @@
 
 .flexWrapper {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.selectorWrapper {
+  display: flex;
   gap: 20px;
 }
 
@@ -75,4 +81,69 @@
 
 .iconPlus {
   fill: $white-200;
+}
+
+.statusSelector {
+  width: 220px;
+  background-color: #ffffff;
+  border-radius: 10px !important;
+  border: none;
+  padding: 0 14px;
+
+  font-family: Open Sans !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 21px !important;
+  letter-spacing: 0em !important;
+  text-align: left !important;
+  color: #64748b !important;
+
+  :global {
+    .MuiOutlinedInput-notchedOutline {
+      border: none;
+    }
+  }
+}
+
+.statusSelectorPopup {
+  margin-top: 10px;
+
+  :global {
+    .MuiList-root {
+      padding: 10px 0px;
+      border-radius: 8px;
+
+      .MuiMenuItem-root {
+        padding: 10px 14px;
+
+        font-family: Open Sans;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: #64748b;
+        background-color: #ffffff !important;
+
+        &::before {
+          content: ' ';
+          width: 24px;
+          height: 24px;
+          margin-right: 1.5px;
+        }
+
+        &.Mui-selected {
+          color: #5d5fef;
+
+          &::before {
+            background-image: url('../../icons/SelectedItem.svg');
+          }
+        }
+      }
+    }
+  }
+}
+
+.statusSelectorIcon {
+  width: 40px;
 }

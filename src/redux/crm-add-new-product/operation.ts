@@ -9,6 +9,7 @@ import {
   PriceResponse,
   ProductCategoryResponse,
   ProductResponse,
+  ProductStatus,
   ProductSubCategoryResponse
 } from '../../types'
 
@@ -63,6 +64,48 @@ export const fetchSubCategories = createAsyncThunk<
     return thunkAPI.rejectWithValue(error?.response?.status)
   }
 })
+
+type FetchProductsForCrmParams = {
+  limit: number
+  offset: number
+  productStatus?: ProductStatus
+  productCategoryId?: number
+}
+
+type FetchProductsForCrmResponse = {
+  products: ProductResponse[]
+  totalCount: number
+  pageNumber: number
+}
+
+export const fetchProductsForCrm = createAsyncThunk<
+  FetchProductsForCrmResponse,
+  FetchProductsForCrmParams
+>(
+  'api/product/all_for_crm',
+  async ({ limit, offset, productStatus, productCategoryId }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get('api/product/all_for_crm', {
+        params: {
+          limit,
+          offset,
+          pr_status: productStatus,
+          pr_category_id: productCategoryId
+        }
+      })
+
+      return {
+        products: response.data.products,
+        totalCount: response.data.total_count,
+        pageNumber: Math.floor(offset / limit)
+      }
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
 
 export type CreateProductParams = Pick<
   ProductResponse,
