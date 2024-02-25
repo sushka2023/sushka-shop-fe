@@ -13,18 +13,13 @@ const AUTH_PERSIST_CONFIG = {
   whitelist: ['accessToken']
 }
 
-const ITEMS_PERSIST_CONFIG = {
-  key: 'items',
-  storage: storage
-}
-
 const ALL_CATEGORIES_PERSIST_CONFIG = {
   key: 'allCategories',
   storage: storage
 }
 
 const rootReducer = combineReducers({
-  items: persistReducer(ITEMS_PERSIST_CONFIG, itemsSlice.reducer),
+  items: itemsSlice.reducer,
   auth: persistReducer(AUTH_PERSIST_CONFIG, authSlice.reducer),
   newProduct: productSlice.reducer,
   allCategories: persistReducer(
@@ -37,7 +32,7 @@ const persistedReducer = persistReducer(
   {
     key: 'root',
     storage: storage,
-    blacklist: ['auth', 'newProduct']
+    blacklist: ['auth', 'newProduct', 'items']
   },
   rootReducer
 )

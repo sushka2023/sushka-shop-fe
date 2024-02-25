@@ -1,39 +1,30 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSortValue } from '../../redux/products/slice'
+import { RootState } from '../../redux/store/index'
 import styles from './sort.module.scss'
 
 const Sort = () => {
-  const [sortValue, setSortValue] = useState('За замовчуванням')
+  const sortValue = useSelector((state: RootState) => state.items.sortValue)
+  const dispatch = useDispatch()
 
-  const clickInput = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    const target = e.target as HTMLInputElement
-    setSortValue(target.value)
-  }
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    dispatch(setSortValue(e.target.id))
 
   return (
     <Fragment>
-      <h3 className={styles.title}>Сортування</h3>
+      <h3 className={styles.title}>Сортировка</h3>
       <div className={styles.inputWrapper}>
         <input
           className={styles.radio}
           type="radio"
-          id="default"
-          name="sorting"
-          value={sortValue}
-          onClick={clickInput}
-          defaultChecked
-        />
-        <label htmlFor="default">За замовчуванням</label>
-      </div>
-      <div className={styles.inputWrapper}>
-        <input
-          className={styles.radio}
-          type="radio"
-          id="byGrowth"
+          id="low_price"
           name="sorting"
           value="Ціна за зростанням"
-          onClick={clickInput}
+          onChange={handleChangeInput}
+          checked={sortValue === 'low_price'}
         />
-        <label htmlFor="byGrowth" className={styles.label}>
+        <label htmlFor="low_price" className={styles.label}>
           Ціна за зростанням
         </label>
       </div>
@@ -41,12 +32,13 @@ const Sort = () => {
         <input
           className={styles.radio}
           type="radio"
-          id="byDecline"
+          id="high_price"
           name="sorting"
           value="Ціна за спаданням"
-          onClick={clickInput}
+          onChange={handleChangeInput}
+          checked={sortValue === 'high_price'}
         />
-        <label htmlFor="byDecline">Ціна за спаданням</label>
+        <label htmlFor="high_price">Ціна за спаданням</label>
       </div>
     </Fragment>
   )

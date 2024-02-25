@@ -18,7 +18,7 @@ const HeaderNavList: FC<Props> = ({ allCategories }) => {
     <ul className={styles.listNav}>
       <li className={`${styles.listNavLine} ${styles.dropdown}`}>
         <Link
-          to={`catalog/${allCategories && allCategories[0].id}/0`}
+          to={`catalog/${allCategories && allCategories[0].id}`}
           className={styles.listNavLink}
         >
           Каталог

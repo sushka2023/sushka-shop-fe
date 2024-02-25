@@ -13,7 +13,7 @@ const DropdownList: FC<Props> = ({ allCategories }) => {
       {allCategories?.map((category) => {
         return (
           <li className={styles.dropdownListLine} key={category.id}>
-            <Link to={`/catalog/${category.name}/0`}>{category.name}</Link>
+            <Link to={`/catalog/${category.id}`}>{category.name}</Link>
           </li>
         )
       })}

@@ -2,11 +2,13 @@ import styles from './itemCard.module.scss'
 import IconFavorite from '../../icons/favorite.svg?react'
 import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
-import { useDispatch } from 'react-redux'
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { toggleFavorite } from '../../redux/products/slice'
 import { ProductResponse } from '../../types'
+import { gramsToKilograms } from '../../utils/format-weight/formatWeight'
+import { getToken } from '../../utils/cookie/token'
+import ModalPortal from '../modal-portal/ModalPortal'
+import Auth from '../auth/Auth'
 
 type Props = {
   item: ProductResponse
@@ -14,16 +16,17 @@ type Props = {
 }
 
 const ItemCard: FC<Props> = ({ item, isFavorite }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight)
   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price)
-
-  const dispatch = useDispatch()
 
   const handleClickFavorite = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     e.preventDefault()
-    dispatch(toggleFavorite(item))
+    const accessToken = getToken()
+    setIsModalOpen(!accessToken)
   }
 
   const handleWeightClick = (
@@ -56,8 +59,10 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
               )}
             </div>
             <div className={styles.cardTitle}>
-              <h3 className={styles.cardHeader}>{item.name}</h3>
-              <p className={styles.cardPararaph}>{item.description}</p>
+              <div className={styles.cardTypography}>
+                <h3 className={styles.cardHeader}>{item.name}</h3>
+                <p className={styles.cardPararaph}>{item.description}</p>
+              </div>
               <ul className={styles.listWeight}>
                 {item.prices.map((price) => {
                   return (
@@ -68,7 +73,7 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
                           handleWeightClick(e, price.weight, price.price)
                         }}
                       >
-                        {price.weight}
+                        {gramsToKilograms(price.weight)}
                       </button>
                     </li>
                   )
@@ -80,6 +85,9 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
         </div>
         <button className={styles.cardButtom}>Купити</button>
       </div>
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <Auth setIsModalOpen={setIsModalOpen} />
+      </ModalPortal>
     </li>
   )
 }

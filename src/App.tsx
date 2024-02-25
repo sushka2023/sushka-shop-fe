@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Layout from './components/Layout/Layout'
@@ -21,22 +21,11 @@ import LayoutCRM from './components/layoutCRM/LayoutCRM'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 
 function App() {
-  const navigate = useNavigate()
-  const allCategories = useSelector(
-    (state: RootState) => state.items.allCategories
-  )
   const dispatch = useDispatch<AppDispatch>()
 
   const accessToken = getToken()
 
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-
-  useEffect(() => {
-    const currentPath = window.location.pathname
-    if (currentPath === '/catalog' && allCategories) {
-      navigate(`catalog/${allCategories[0].id}/0`)
-    }
-  }, [allCategories, navigate])
 
   useEffect(() => {
     if (accessToken && !isLoggedIn) {
@@ -50,7 +39,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="catalog">
-            <Route path=":category/:page" element={<CatalogPage />} />
+            <Route path="all" element={<CatalogPage />} />
+            <Route path=":category" element={<CatalogPage />} />
             <Route
               path=":category/:productId/details"
               element={<ProductPage />}
@@ -62,7 +52,7 @@ function App() {
           />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
-            path="/account"
+            path="account"
             element={
               <PrivateRoute redirectTo="/" component={<AccountPage />} />
             }

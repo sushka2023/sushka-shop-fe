@@ -7,12 +7,22 @@ import {
 } from './operation'
 import { ProductCategoryResponse, ProductResponse } from '../../types'
 
+enum SortValue {
+  lowPrice = 'low_price',
+  highPrice = 'high_price'
+}
+
 export type ItemsState = {
   items: ProductResponse[]
   isLoading: boolean
   operation: FetchItemOperationType | FetchAllCategoriesOperationType | null
   error: any | null
+  totalCount: number
   allCategories: ProductCategoryResponse[] | null
+  offset: number
+  sortValue: string
+  selectedWeight: string[]
+  isFavorite: []
 }
 
 const INITIAL_STATE: ItemsState = {
@@ -20,19 +30,35 @@ const INITIAL_STATE: ItemsState = {
   isLoading: false,
   operation: null,
   error: null,
-  allCategories: null
+  totalCount: 0,
+  allCategories: null,
+  offset: 0,
+  sortValue: SortValue.lowPrice,
+  selectedWeight: [],
+  isFavorite: []
 }
 
 export const itemsSlice = createSlice({
   name: 'AllItems',
   initialState: INITIAL_STATE,
   reducers: {
-    toggleFavorite: (state, action) => {
-      state.items.map((item) => {
-        if (item.id === action.payload.id) {
-          item.is_favorite = !action.payload.is_favorite
-        }
-      })
+    setOffset: (state, action) => {
+      state.offset = action.payload || 0
+    },
+    setOperation: (state, action) => {
+      state.operation = action.payload
+    },
+    setSortValue: (state, action) => {
+      state.sortValue = action.payload
+    },
+    setSelectedWeight: (state, action) => {
+      if (!state.selectedWeight.includes(action.payload)) {
+        state.selectedWeight = [...state.selectedWeight, action.payload]
+      } else {
+        state.selectedWeight = state.selectedWeight.filter(
+          (weight) => weight !== action.payload
+        )
+      }
     }
   },
   extraReducers: (builder) => {
@@ -48,8 +74,9 @@ export const itemsSlice = createSlice({
       })
       .addCase(fetchItems.fulfilled, (state, action) => {
         state.isLoading = false
-        state.operation = null
         state.error = null
+        state.totalCount = action.payload.totalCount
+        state.operation = action.payload.operationType
 
         switch (action.payload.operationType) {
           case 'loadMore':
@@ -80,5 +107,11 @@ export const itemsSlice = createSlice({
   }
 })
 
-export const { toggleFavorite } = itemsSlice.actions
+export const {
+  toggleFavorite,
+  setOffset,
+  setOperation,
+  setSortValue,
+  setSelectedWeight
+} = itemsSlice.actions
 export default itemsSlice.reducer

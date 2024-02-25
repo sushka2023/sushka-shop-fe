@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 // eslint-disable-next-line max-lines
 import styles from './ShoppingListPage.module.scss'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import BasketItem from './BasketItem'
 import BasketEmpty from './BasketEmpty'
 import { useNavigate } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import axiosInstance from '../../axios/settings'
 import { BasketItemsResponse, ProductResponse } from '../../types'
+import * as React from 'react'
 
 type OrderType = {
   id: number
