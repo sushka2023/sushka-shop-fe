@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import styles from "./ShoppingListPage.module.scss";
+import { useNavigate } from 'react-router-dom'
+import styles from './ShoppingListPage.module.scss'
 
 const BasketEmpty = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div className={styles.container}>
@@ -12,14 +12,14 @@ const BasketEmpty = () => {
           Наповніть його, та повертайтеся - ми раді вас бачити!
         </h2>
         <button
-          onClick={() => navigate("/catalog")}
+          onClick={() => navigate('/catalog')}
           className={styles.btnEmpty}
         >
           Наповнити кошик
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BasketEmpty;
+export default BasketEmpty

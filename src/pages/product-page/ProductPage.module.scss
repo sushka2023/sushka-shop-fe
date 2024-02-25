@@ -62,6 +62,14 @@
   background-color: transparent;
   border: none;
 }
+.activeImg {
+  border-radius: 30px;
+
+  box-shadow:
+    0px 1px 3px $yellow-600,
+    0px 1px 1px $yellow-600,
+    0px 2px 1px $yellow-600;
+}
 
 .iconArrow {
   width: 12px;
@@ -109,7 +117,7 @@
 .orderForm {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   margin-bottom: 40px;
   max-width: 435px;
 }
@@ -130,10 +138,9 @@
 
 .labelWeight {
   display: flex;
+  width: 75px;
+  height: 45px;
 
-  min-width: 56px;
-
-  padding: 10px 15px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
@@ -142,7 +149,7 @@
   font-family: $open-sans;
   font-size: 18px;
   font-weight: $font-weight-400;
-  line-height: 140%;
+  line-height: calc(25 / 18);
   color: $green-dark-200;
 }
 
@@ -155,38 +162,48 @@
   position: relative;
 
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  width: 122px;
-  gap: 8px;
-  border: 1px solid rgba(#fcc812, 0.2);
-  border-radius: 4px;
+  width: 116px;
+  height: 40px;
+  border: 2px solid $pink-600;
+  border-radius: 20px;
   margin-bottom: 30px;
 }
 
 .btnQuantity {
   display: flex;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
+  justify-content: space-between;
+  width: 30px;
+  height: 30px;
+
   justify-content: center;
   align-items: center;
   background-color: $white-200;
   border: none;
+  border-radius: 50%;
   cursor: pointer;
   transition-duration: border $transition-duration background-color
     $transition-duration;
 
   &:hover,
   &:focus {
-    border: 1px solid #fcc812;
-    background-color: #fcc812;
-    border-radius: 4px;
+    background-color: $green-500;
+    border-radius: 50%;
+
+    .iconPlus {
+      fill: $green-dark-300;
+    }
   }
 
   &:disabled {
     background-color: transparent;
     border: 1px solid transparent;
     cursor: not-allowed;
+
+    .iconPlus {
+      fill: $CRM-grey-400;
+    }
   }
 }
 
@@ -200,8 +217,8 @@
 }
 
 .iconPlus {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   fill: $green-dark-200;
 }
 
@@ -233,6 +250,16 @@
   font-weight: $font-weight-700;
   line-height: 130%;
   color: $green-dark-200;
+
+  margin-bottom: 50px;
+}
+
+.promotionalSelectPrice {
+  font-family: $comfortaa;
+  font-size: 32px;
+  font-weight: $font-weight-700;
+  line-height: 130%;
+  color: $red;
 
   margin-bottom: 50px;
 }
@@ -278,13 +305,14 @@
   width: 50px;
   height: 50px;
   padding: 10px;
+  cursor: pointer;
 }
 
 .iconHeart {
   width: 30px;
   height: 30px;
 
-  fill: #567343;
+  fill: $red;
 
   .btnFavorite:hover &,
   .btnFavorite:focus & {

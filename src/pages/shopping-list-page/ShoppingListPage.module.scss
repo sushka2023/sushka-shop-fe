@@ -1,4 +1,4 @@
-@import "../../styles/base/base.scss";
+@import '../../styles/base/base.scss';
 
 .container {
   @include page-container;
@@ -156,7 +156,7 @@
   height: 120px;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 130px;
     bottom: 0;
@@ -167,7 +167,7 @@
   }
 
   &:first-child::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -10px;
     bottom: 0;
@@ -229,20 +229,33 @@
 .btnQuantityWrapper {
   position: relative;
 
-  display: flex;
-  align-items: center;
-  width: 113px;
-  height: 40px;
+  // display: flex;
+  // align-items: center;
+  // width: 113px;
+  // height: 40px;
+  // border: 1px solid rgba(#fcc812, 0.2);
 
-  border: 1px solid rgba(#fcc812, 0.2);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 116px;
+  height: 40px;
+  border: 2px solid $pink-600;
+  border-radius: 20px;
+
   margin-right: 104px;
 }
 
 .btnQuantity {
   display: flex;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  // width: 40px;
+  // height: 40px;
+  // padding: 5px;
   justify-content: center;
   align-items: center;
   background-color: $white-200;
@@ -251,16 +264,30 @@
   transition-duration: border $transition-duration background-color
     $transition-duration;
 
+  // &:hover,
+  // &:focus {
+  //   border: 1px solid #fcc812;
+  //   background-color: #fcc812;
+  // }
+
   &:hover,
   &:focus {
-    border: 1px solid #fcc812;
-    background-color: #fcc812;
+    background-color: $green-500;
+    border-radius: 50%;
+
+    .iconPlus {
+      fill: $green-dark-300;
+    }
   }
 
   &:disabled {
     background-color: transparent;
     border: 1px solid transparent;
     cursor: not-allowed;
+
+    .iconPlus {
+      fill: $CRM-grey-400;
+    }
   }
 }
 
@@ -269,12 +296,19 @@
   &:focus {
     border: 1px solid #c4c4c4;
     background-color: #c4c4c4;
+    border-radius: 4px;
+
+    // border: 1px solid #c4c4c4;
+    // background-color: #c4c4c4;
   }
 }
 
 .iconPlus {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+
+  // width: 20px;
+  // height: 20px;
   fill: $green-dark-200;
 }
 
@@ -285,7 +319,9 @@
   line-height: 120%;
   color: $green-dark-200;
   text-align: center;
-  width: 33px;
+
+  width: 28px;
+  // width: 33px;
 }
 
 .btnCloseModal {
