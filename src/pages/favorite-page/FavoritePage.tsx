@@ -1,22 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Auth from '../../components/auth/Auth'
 import ModalPortal from '../../components/modal-portal/ModalPortal'
 import IconAddNewItem from '../../icons/add.svg?react'
 import ErrorDog from '../../images/error-dog.png'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './favoritePage.module.scss'
 import ItemCard from '../../components/item-card/ItemCard'
-import { RootState } from '../../redux/store'
+import { RootState, AppDispatch } from '../../redux/store'
 import { getToken } from '../../utils/cookie/token'
+import { fetchFavoriteItems } from '../../redux/products/operation'
 
 const FavoritePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const allItem = useSelector((state: RootState) => state.items.items)
+  const favoriteItems = useSelector(
+    (state: RootState) => state.items.isFavorite
+  )
   const accessToken = getToken()
-  const favoriteItems = allItem.filter((item) => {
-    return item.is_favorite
-  })
+
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    favoriteItems.length === 0 && dispatch(fetchFavoriteItems())
+  }, [])
 
   const handleClickAuth = () => {
     const accessToken = getToken()
@@ -30,14 +36,8 @@ const FavoritePage = () => {
         <h2 className={styles.title}>Улюблене</h2>
         {accessToken ? (
           <ul className={styles.list}>
-            {favoriteItems.map((item) => {
-              return (
-                <ItemCard
-                  item={item}
-                  key={item.id}
-                  isFavorite={item.is_favorite}
-                />
-              )
+            {favoriteItems?.map((item) => {
+              return <ItemCard item={item.product} key={item.id} />
             })}
             <li className={styles.addNewItem}>
               <Link className={styles.link} to="/catalog">

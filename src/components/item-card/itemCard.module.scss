@@ -31,15 +31,27 @@
   background-color: $white-200;
 }
 
+
 .cardFavorite {
   position: absolute;
   top: 40px;
   right: 34px;
-  fill: $green-dark-200;
+  fill: #E11D48;
+  animation: heartbeat 0.3s ease-in-out;
+  cursor: pointer;
+}
 
-  &:hover {
-    fill: $yellow-200;
-    cursor: pointer;
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 

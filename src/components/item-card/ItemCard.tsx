@@ -2,31 +2,50 @@ import styles from './itemCard.module.scss'
 import IconFavorite from '../../icons/favorite.svg?react'
 import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
 import ShopItem from '../../images/shop-item.jpg'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ProductResponse } from '../../types'
+import { FavoriteItemsResponse, ProductResponse } from '../../types'
 import { gramsToKilograms } from '../../utils/format-weight/formatWeight'
 import { getToken } from '../../utils/cookie/token'
 import ModalPortal from '../modal-portal/ModalPortal'
 import Auth from '../auth/Auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToFavorite, removeFavorite } from '../../redux/products/operation'
+import { AppDispatch, RootState } from '../../redux/store'
 
 type Props = {
   item: ProductResponse
-  isFavorite: boolean
 }
 
-const ItemCard: FC<Props> = ({ item, isFavorite }) => {
+const ItemCard: FC<Props> = ({ item }) => {
+  const [isFavorite, setIsFavorite] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight)
   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price)
 
+  const favorites = useSelector((state: RootState) => state.items.isFavorite)
+
+  const dispatch = useDispatch<AppDispatch>()
+
+  const toggleFavorite = (favorite: FavoriteItemsResponse) =>
+    favorite.product.id === item.id
+
+  useEffect(() => {
+    setIsFavorite(favorites.some(toggleFavorite))
+  }, [favorites])
+
   const handleClickFavorite = (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    product_id: number
   ) => {
     e.preventDefault()
     const accessToken = getToken()
     setIsModalOpen(!accessToken)
+    dispatch(
+      !isFavorite
+        ? addToFavorite({ product_id })
+        : removeFavorite({ product_id })
+    )
   }
 
   const handleWeightClick = (
@@ -49,12 +68,12 @@ const ItemCard: FC<Props> = ({ item, isFavorite }) => {
               {!isFavorite ? (
                 <IconFavorite
                   className={styles.cardFavorite}
-                  onClick={handleClickFavorite}
+                  onClick={(e) => handleClickFavorite(e, item.id)}
                 />
               ) : (
                 <IconFavoriteIsActive
                   className={styles.cardFavorite}
-                  onClick={handleClickFavorite}
+                  onClick={(e) => handleClickFavorite(e, item.id)}
                 />
               )}
             </div>

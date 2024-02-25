@@ -3,9 +3,16 @@ import {
   FetchAllCategoriesOperationType,
   FetchItemOperationType,
   fetchAllCategories,
-  fetchItems
+  fetchItems,
+  addToFavorite,
+  fetchFavoriteItems,
+  removeFavorite
 } from './operation'
-import { ProductCategoryResponse, ProductResponse } from '../../types'
+import {
+  FavoriteItemsResponse,
+  ProductCategoryResponse,
+  ProductResponse
+} from '../../types'
 
 enum SortValue {
   lowPrice = 'low_price',
@@ -22,7 +29,7 @@ export type ItemsState = {
   offset: number
   sortValue: string
   selectedWeight: string[]
-  isFavorite: []
+  isFavorite: FavoriteItemsResponse[]
 }
 
 const INITIAL_STATE: ItemsState = {
@@ -104,14 +111,47 @@ export const itemsSlice = createSlice({
         state.error = null
         state.allCategories = action.payload.data
       })
+      .addCase(fetchFavoriteItems.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(fetchFavoriteItems.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(fetchFavoriteItems.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.error = null
+        state.isFavorite = action.payload.data
+      })
+      .addCase(addToFavorite.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(addToFavorite.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.error = null
+        state.isFavorite = [...state.isFavorite, action.payload.data]
+      })
+      .addCase(removeFavorite.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(removeFavorite.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(removeFavorite.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.error = null
+        state.isFavorite = state.isFavorite.filter(
+          (item) => item.product.id !== action.payload.data
+        )
+      })
   }
 })
 
-export const {
-  toggleFavorite,
-  setOffset,
-  setOperation,
-  setSortValue,
-  setSelectedWeight
-} = itemsSlice.actions
+export const { setOffset, setOperation, setSortValue, setSelectedWeight } =
+  itemsSlice.actions
 export default itemsSlice.reducer
