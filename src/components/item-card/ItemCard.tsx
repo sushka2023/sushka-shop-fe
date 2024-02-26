@@ -52,7 +52,7 @@ const ItemCard: FC<Props> = ({ item }) => {
         ? addToFavorite({ product_id })
         : removeFavorite({ product_id })
     )
-    setIsFavorite(!isFavorite)
+    accessToken && setIsFavorite(!isFavorite)
   }
 
   const handleWeightClick = (
