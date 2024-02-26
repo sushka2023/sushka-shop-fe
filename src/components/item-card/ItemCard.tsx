@@ -24,6 +24,7 @@ const ItemCard: FC<Props> = ({ item }) => {
   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price)
 
   const favorites = useSelector((state: RootState) => state.items.isFavorite)
+  const isLoading = useSelector((state: RootState) => state.items.isLoading)
 
   const dispatch = useDispatch<AppDispatch>()
 
@@ -39,6 +40,11 @@ const ItemCard: FC<Props> = ({ item }) => {
     product_id: number
   ) => {
     e.preventDefault()
+
+    if (isLoading) {
+      return
+    }
+
     const accessToken = getToken()
     setIsModalOpen(!accessToken)
     dispatch(
@@ -46,6 +52,7 @@ const ItemCard: FC<Props> = ({ item }) => {
         ? addToFavorite({ product_id })
         : removeFavorite({ product_id })
     )
+    setIsFavorite(!isFavorite)
   }
 
   const handleWeightClick = (
