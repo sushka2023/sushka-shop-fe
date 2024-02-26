@@ -39,10 +39,6 @@
   fill: #E11D48;
   animation: heartbeat 0.3s ease-in-out;
   cursor: pointer;
-
-  &Disabled {
-    pointer-events: none;
-  }
 }
 
 @keyframes heartbeat {
