@@ -17,8 +17,8 @@ import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
 import { getToken } from './utils/cookie/token'
-import LayoutCRM from './components/layoutCRM/LayoutCRM'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
+import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
