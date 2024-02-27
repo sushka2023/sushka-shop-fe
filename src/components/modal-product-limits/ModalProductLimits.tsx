@@ -5,12 +5,15 @@ import { FC } from 'react'
 
 type Props = {
   onClick: () => void
-  customStyles: string
+  customClassNames: React.CSSProperties
 }
 
-export const ModalProductLimits: FC<Props> = ({ onClick, customStyles }) => {
+export const ModalProductLimits: FC<Props> = ({
+  onClick,
+  customClassNames
+}) => {
   return (
-    <div className={`${styles.modal} ${customStyles}`}>
+    <div style={customClassNames} className={styles.modal}>
       <p className={styles.modalText}>
         При замовленні більше, ніж 10 одиниць одного виду товару, термін
         виготовлення замовлення може бути більшим. Менеджер зв’яжеться з Вами

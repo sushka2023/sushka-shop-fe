@@ -4,11 +4,17 @@ import IconPlus from '../../icons/plus.svg?react'
 import IconArrowClose from '../../icons/closemodal.svg?react'
 import { FC, useEffect, useState } from 'react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
-import customStyles from '../../components/modal-product-limits/CustomStylesBasket.module.scss'
 import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import axiosInstance from '../../axios/settings'
 import { PriceResponse, ProductResponse } from '../../types'
+
+const customStyles = {
+  position: {
+    bottom: '130%',
+    left: '-120%'
+  }
+}
 
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
@@ -192,7 +198,7 @@ const BasketItem: FC<Props> = ({
           {showModal && (
             <ModalProductLimits
               onClick={handleClick}
-              customStyles={customStyles.position}
+              customClassNames={customStyles.position}
             />
           )}
         </div>

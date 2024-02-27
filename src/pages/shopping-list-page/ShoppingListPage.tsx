@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-// eslint-disable-next-line max-lines
 import styles from './ShoppingListPage.module.scss'
 import { useEffect, useState } from 'react'
 import BasketItem from './BasketItem'
@@ -21,15 +20,17 @@ type OrderType = {
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
 const getProductForId = async (productId: string) => {
-  const { data } = await axiosInstance.get(`api/product/${productId}`)
-  console.log(data)
-  return data as ProductResponse
+  const { data } = await axiosInstance.get<ProductResponse>(
+    `api/product/${productId}`
+  )
+  return data
 }
 
 const getBasketItems = async () => {
-  const { data } = await axiosInstance.get(`api/basket_items/`)
+  const { data } =
+    await axiosInstance.get<BasketItemsResponse[]>(`api/basket_items/`)
 
-  return data as BasketItemsResponse
+  return data
 }
 
 const removeProduct = async (id: number) => {
@@ -61,9 +62,7 @@ const ShoppingListPage = () => {
         try {
           setIsLoading(true)
           const data = await getBasketItems()
-          setBasketList(data as unknown as BasketItemsResponse[])
-
-          console.log('список', data)
+          setBasketList(data)
         } catch (error) {
           setIsLoading(false)
           console.error('Помилка запиту:', error)
@@ -129,8 +128,6 @@ const ShoppingListPage = () => {
 
       setTotalAmount(total)
 
-      console.log('Prices', prices)
-
       return updatedPrices
     })
   }
@@ -139,9 +136,7 @@ const ShoppingListPage = () => {
       if (isAuth) {
         await removeProduct(id)
         const updatedBasket = await getBasketItems()
-        setBasketList(updatedBasket as unknown as BasketItemsResponse[])
-
-        // console.log(data);
+        setBasketList(updatedBasket)
       } else {
         const productOrders = JSON.parse(
           localStorage.getItem(PRODUCT_ORDERS_LS_KEY) ?? '[]'
@@ -173,17 +168,8 @@ const ShoppingListPage = () => {
   }
 
   const calculateTotalAmount = () => {
-    let total = 0
-    basketList.forEach(({ price_id_by_the_user, quantity, product }) => {
-      const userPrice = product.prices.find(
-        (price) => price.id === price_id_by_the_user
-      )
-      if (userPrice) {
-        total += userPrice.price * quantity
-      }
-    })
-
-    console.log(total)
+    const pricesValue = Object.values(prices)
+    const total = pricesValue.reduce((acc, price) => acc + price, 0)
     setTotalAmount(total)
   }
 
@@ -197,7 +183,7 @@ const ShoppingListPage = () => {
                 <h2 className={styles.shopTitle}>Ваше замовлення</h2>
                 <button
                   type="button"
-                  onClick={() => navigate('/catalog')}
+                  onClick={() => navigate('/catalog/all')}
                   className={styles.btnBackCatalog}
                 >
                   Продовжити покупки

@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-// eslint-disable-next-line prettier/prettier
 import { Fragment, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './ProductPage.module.scss'
@@ -10,18 +9,26 @@ import IconArrowleft from '../../icons/arrowleft.svg?react'
 import IconArrowRight from '../../icons/arrowright.svg?react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
 import { ProductResponse } from '../../types'
-import customStyles from '../../components/modal-product-limits/CustomStylesProductPage.module.scss'
 import axiosInstance from '../../axios/settings'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { Notify } from 'notiflix'
+import { formatWeight } from '../../helpers/formatWeightToString'
+
+const customStyles = {
+  position: {
+    bottom: '130%',
+    left: '-120%'
+  }
+}
 
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
 const getProductForId = async (productId: string) => {
-  const { data } = await axiosInstance.get(`api/product/${productId}`)
-  console.log(data)
-  return data as ProductResponse
+  const { data } = await axiosInstance.get<ProductResponse>(
+    `api/product/${productId}`
+  )
+  return data
 }
 
 const addProductToBasket = async (
@@ -70,7 +77,6 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       try {
         const data = await getProductForId(productId)
-        console.log(productId)
 
         setProducts(data)
 
@@ -141,7 +147,6 @@ const ProductPage = () => {
     }
   }
 
-  // eslint-disable-next-line complexity
   const handleBuyButtonClick = async () => {
     try {
       if (isAuth) {
@@ -180,7 +185,6 @@ const ProductPage = () => {
           JSON.stringify(productOrders)
         )
 
-        console.log(orderInfo)
         Notify.success('Товар добавлено в кошик!')
       }
     } catch (error) {
@@ -198,15 +202,6 @@ const ProductPage = () => {
   const showPreviousImage = () => {
     if (selectedImage > 0) {
       setSelectedImage(selectedImage - 1)
-    }
-  }
-
-  function formatWeight(weight: string): string {
-    const numWeight = parseInt(weight, 10)
-    if (numWeight >= 1000) {
-      return `${numWeight / 1000} кг`
-    } else {
-      return `${numWeight} г`
     }
   }
 
@@ -335,7 +330,7 @@ const ProductPage = () => {
                     {showModal && (
                       <ModalProductLimits
                         onClick={handleClick}
-                        customStyles={customStyles.position}
+                        customClassNames={customStyles.position}
                       />
                     )}
                   </div>

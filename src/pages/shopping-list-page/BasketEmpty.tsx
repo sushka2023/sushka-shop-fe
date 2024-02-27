@@ -12,7 +12,7 @@ const BasketEmpty = () => {
           Наповніть його, та повертайтеся - ми раді вас бачити!
         </h2>
         <button
-          onClick={() => navigate('/catalog')}
+          onClick={() => navigate('/catalog/all')}
           className={styles.btnEmpty}
         >
           Наповнити кошик

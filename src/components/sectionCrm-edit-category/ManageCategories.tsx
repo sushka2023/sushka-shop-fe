@@ -2,15 +2,12 @@
 /* eslint-disable complexity */
 import { FC, useEffect, useState } from 'react'
 import styles from './EditCategory.module.scss'
-import axios from 'axios'
 import CategoriesList from './CategoriesList'
 import ArchivedCategoriesList from './ArchivedCategories'
 import { Notify } from 'notiflix/build/notiflix-notify-aio'
 import FormAddCategory from './FormAddCategory'
 import { ProductCategoryResponse } from '../../types'
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdG9yZS5zdXNoa2EubW9kQGdtYWlsLmNvbSIsImlhdCI6MTcwNDcwMjY1MiwiZXhwIjoxNzEwMDU5NDUyLCJzY29wZSI6ImFjY2Vzc190b2tlbiJ9.Mw17_D-7jMLiwfhCs9QupbGoPMSIRmemPvhCZnU3MNc'
+import axiosInstance from '../../axios/settings'
 
 type Props = {
   type: 'product_category' | 'product_sub_category'
@@ -32,13 +29,8 @@ const ManageCategories: FC<Props> = ({ type }) => {
   useEffect(() => {
     const fetchCrmCategories = async () => {
       try {
-        const { data } = await axios.get<ProductCategoryResponse[]>(
-          `api/${type}/all_for_crm`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
+        const { data } = await axiosInstance.get<ProductCategoryResponse[]>(
+          `api/${type}/all_for_crm`
         )
 
         const filteredData = data.filter((item) => {
@@ -94,17 +86,9 @@ const ManageCategories: FC<Props> = ({ type }) => {
         Notify.failure(`Категорія <${newCategory}> вже існує у вашому списку!`)
         return
       } else {
-        const { data } = await axios.post(
-          `api/${type}/create`,
-          {
-            name: newCategory.trim()
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
+        const { data } = await axiosInstance.post(`api/${type}/create`, {
+          name: newCategory.trim()
+        })
 
         setCategories([...categories, data])
         setNewCategory('')
@@ -125,17 +109,9 @@ const ManageCategories: FC<Props> = ({ type }) => {
 
   const deleteCrmCategory = async (categoryId: number) => {
     try {
-      const { data } = await axios.put(
-        `api/${type}/archive`,
-        {
-          id: categoryId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      const { data } = await axiosInstance.put(`api/${type}/archive`, {
+        id: categoryId
+      })
 
       const updatedCategories = categories.filter((category) => {
         return category.id !== categoryId
@@ -180,15 +156,7 @@ const ManageCategories: FC<Props> = ({ type }) => {
         setCurrentlyEditing(null)
         setEditedCategory({ id: 0, name: '' })
       } else {
-        await axios.patch(
-          `api/${type}/edit`,
-          { id, name },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        )
+        await axiosInstance.patch(`api/${type}/edit`, { id, name })
 
         const updatedCategories = categories.map((category) => {
           return category.id === id ? { ...category, name: name! } : category
@@ -226,17 +194,9 @@ const ManageCategories: FC<Props> = ({ type }) => {
   // unarchive category
   const unarchiveCrmCategory = async (categoryId: number) => {
     try {
-      const { data } = await axios.put(
-        `api/${type}/unarchive`,
-        {
-          id: categoryId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      const { data } = await axiosInstance.put(`api/${type}/unarchive`, {
+        id: categoryId
+      })
 
       const updatedArchivedCategories = archivedCategories.filter(
         (category) => {
