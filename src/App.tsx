@@ -5,7 +5,6 @@ import Layout from './components/Layout/Layout'
 import MainPage from './pages/main-page/MainPage'
 import CatalogPage from './pages/catalog-page/CatalogPage'
 import FavoritePage from './pages/favorite-page/FavoritePage'
-import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 import CrmSettingsPage from './pages/crmSettings-page/CrmSettingsPage'
 import ProductPage from './pages/product-page'
 import CrmProductsPage from './pages/crm-products-page/CrmProductsPage'
@@ -18,6 +17,8 @@ import { currentUser } from './redux/authentication/operation'
 import PrivateRoute from './components/privste-route'
 import AccountPage from './pages/account-page'
 import { getToken } from './utils/cookie/token'
+import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
+import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -56,10 +57,7 @@ function App() {
               <PrivateRoute redirectTo="/" component={<AccountPage />} />
             }
           />
-          <Route
-            path="cart"
-            element={<div style={{ marginBottom: '500px' }}>Корзина</div>}
-          />
+          <Route path="cart" element={<ShoppingListPage />} />
           <Route path="conditions" element={<ConditionsPage />} />
           <Route path="policy" element={<PrivacyPolicyPage />} />
           <Route path="cooperation" element={<CooperationPage />} />

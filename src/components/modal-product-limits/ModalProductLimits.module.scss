@@ -2,14 +2,13 @@
 
 .modal {
   box-sizing: border-box;
-  top: 355px;
-  right: 220px;
+
   position: absolute;
   display: block;
   border-radius: 10px;
   background: #e8fdf2;
   padding: 20px 50px 20px 20px;
-  width: 600px;
+  width: 400px;
   height: 145px;
 }
 
@@ -32,6 +31,7 @@
   top: 10px;
   right: 15px;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .iconTriangle {
@@ -40,4 +40,8 @@
   height: 13px;
   bottom: -13px;
   right: 190px;
+}
+
+.iconCloseModal {
+  fill: #059691;
 }
