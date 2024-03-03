@@ -36,7 +36,6 @@ const CategoriesButtons: React.FC<Props> = ({ setPage }) => {
       dispatch(setOperation('fetch'))
       return
     }
-
     setPage(1)
     setActiveButton(categoryId)
   }

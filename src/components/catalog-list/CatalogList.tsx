@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchItems } from '../../redux/products/operation'
+import { fetchFavoriteItems, fetchItems } from '../../redux/products/operation'
 import ItemCard from '../item-card/ItemCard'
 import styles from './catalog-list.module.scss'
 import { RootState, AppDispatch } from '../../redux/store/index'
@@ -30,12 +30,13 @@ const CatalogList = () => {
         weight: weight.join(',')
       })
     )
+    dispatch(fetchFavoriteItems())
   }, [category, pathname, offset])
 
   return (
     <ul className={styles.catalogList}>
       {allProducts.map((item) => (
-        <ItemCard item={item} key={item.id} isFavorite={item.is_favorite} />
+        <ItemCard item={item} key={item.id} />
       ))}
     </ul>
   )

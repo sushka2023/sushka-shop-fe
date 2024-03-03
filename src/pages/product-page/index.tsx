@@ -7,44 +7,91 @@ import IconPlus from '../../icons/plus.svg?react'
 import IconHeart from '../../icons/favorite.svg?react'
 import IconArrowleft from '../../icons/arrowleft.svg?react'
 import IconArrowRight from '../../icons/arrowright.svg?react'
-import axios from 'axios'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
 import { ProductResponse } from '../../types'
+import axiosInstance from '../../axios/settings'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
+import { Notify } from 'notiflix'
+import { formatWeight } from '../../helpers/formatWeightToString'
+
+const customStyles = {
+  position: {
+    bottom: '130%',
+    left: '-120%'
+  }
+}
 
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
 const getProductForId = async (productId: string) => {
-  const { data } = await axios.get(`api/product/${productId}`)
-  return data as ProductResponse
+  const { data } = await axiosInstance.get<ProductResponse>(
+    `api/product/${productId}`
+  )
+  return data
+}
+
+const addProductToBasket = async (
+  productId: string,
+  selectedQuantity: number,
+  selectedPriceId: number
+) => {
+  const response = await axiosInstance.post(
+    `api/basket_items/add`,
+
+    {
+      product_id: productId,
+      quantity: selectedQuantity,
+      price_id_by_the_user: selectedPriceId
+    }
+  )
+  return response
 }
 
 const ProductPage = () => {
   const [products, setProducts] = useState<ProductResponse | null>(null)
   const [selectedWeight, setSelectedWeight] = useState('')
   const [selectedPrice, setSelectedPrice] = useState(0)
+  const [selectedPriceId, setSelectedPriceId] = useState(0)
+  const [selectedOldPrice, setselectedOldPrice] = useState(0)
   const [selectedQuantity, setSelectedQuantity] = useState(1)
-  const [quantity, setQuantity] = useState<number | null>(null)
   const [selectedImage, setSelectedImage] = useState(0)
+
+  const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const [showModal, setShowModal] = useState(false)
   const handleClick = () => {
     return setShowModal(false)
   }
 
-  const { productId } = useParams()
+  const { productId } = useParams() as { productId: string }
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: 'instant'
+    })
+  }, [])
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const data = await getProductForId(productId!)
-        setProducts(data)
-        if (data.prices.length > 0) {
-          setSelectedWeight(data.prices[0].weight)
-          setSelectedPrice(data.prices[0].price)
-          setQuantity(data.prices[0].quantity)
-        }
+        const data = await getProductForId(productId)
 
-        console.log(data)
+        setProducts(data)
+
+        if (data.prices.length > 0) {
+          const minWeightItem = data.prices.reduce((prev, curr) => {
+            const prevWeight = parseInt(prev.weight, 10) // Конвертуємо рядок у ціле число
+            const currWeight = parseInt(curr.weight, 10)
+            return prevWeight < currWeight ? prev : curr
+          })
+
+          setSelectedWeight(minWeightItem.weight)
+          setSelectedPrice(minWeightItem.price)
+          setSelectedPriceId(minWeightItem.id)
+          setselectedOldPrice(minWeightItem.old_price || 0)
+        }
       } catch (error) {
         console.error('Помилка запиту:', error)
       }
@@ -53,18 +100,20 @@ const ProductPage = () => {
     fetchProduct()
   }, [productId])
 
-  //   Обробник події, який викликається при зміні ваги
   const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setShowModal(false)
+
     const selectedWeightValue = event.target.value
 
-    // Знайти відповідну ціну та кількість для обраної ваги
+    // знайти ціну та кількість для обраної ваги
     const selectedPriceData = products?.prices?.find((price) => {
       return price.weight === selectedWeightValue
     })
 
     setSelectedWeight(selectedWeightValue)
-    setSelectedPrice(selectedPriceData?.price!)
-    setQuantity(selectedPriceData?.quantity!)
+    setSelectedPrice(selectedPriceData?.price || 0)
+    setSelectedPriceId(selectedPriceData?.id || 0)
+    setselectedOldPrice(selectedPriceData?.old_price || 0)
     setSelectedQuantity(1)
   }
 
@@ -73,52 +122,75 @@ const ProductPage = () => {
       setShowModal(true)
     }
 
-    console.log(selectedQuantity)
-
-    const selectedPriceData = products?.prices?.find((price) => {
-      return price.weight === selectedWeight
-    })
-    setSelectedQuantity((prevQuantity) => {
-      return prevQuantity + 1
-    })
-    setSelectedPrice((prevPrice) => {
-      return prevPrice + (selectedPriceData?.price || 0)
-    })
+    const selectedPriceData = products?.prices?.find(
+      (price) => price.weight === selectedWeight
+    )
+    setSelectedQuantity((prevQuantity) => prevQuantity + 1)
+    setSelectedPrice((prevPrice) => prevPrice + (selectedPriceData?.price || 0))
+    setselectedOldPrice(
+      (prevOldPrice) => prevOldPrice + (selectedPriceData?.old_price || 0)
+    )
   }
 
   const decreaseQuantity = () => {
     if (selectedQuantity > 1) {
-      const selectedPriceData = products?.prices?.find((price) => {
-        return price.weight === selectedWeight
-      })
-      setSelectedQuantity((prevQuantity) => {
-        return prevQuantity - 1
-      })
-      setSelectedPrice((prevPrice) => {
-        return prevPrice - (selectedPriceData?.price || 0)
-      })
+      const selectedPriceData = products?.prices?.find(
+        (price) => price.weight === selectedWeight
+      )
+      setSelectedQuantity((prevQuantity) => prevQuantity - 1)
+      setSelectedPrice(
+        (prevPrice) => prevPrice - (selectedPriceData?.price || 0)
+      )
+      setselectedOldPrice(
+        (prevOldPrice) => prevOldPrice - (selectedPriceData?.old_price || 0)
+      )
     }
   }
 
-  const handleBuyButtonClick = () => {
-    const orderInfo = {
-      productId: products?.id,
-      productName: products?.name,
-      quantity: selectedQuantity,
-      price: selectedPrice,
-      weight: selectedWeight,
-      img: products?.images[selectedImage].image_url
+  const handleBuyButtonClick = async () => {
+    try {
+      if (isAuth) {
+        await addProductToBasket(productId, selectedQuantity, selectedPriceId)
+        Notify.success('Товар добавлено в кошик!')
+      } else {
+        const orderInfo = {
+          id: selectedPriceId,
+          productId: products?.id,
+          price_id_by_the_user: selectedPriceId,
+          quantity: selectedQuantity
+        }
+
+        const productOrders = JSON.parse(
+          localStorage.getItem(PRODUCT_ORDERS_LS_KEY) ?? '[]'
+        )
+
+        const existingProduct = productOrders.findIndex(
+          (order: {
+            productId: number
+            price_id_by_the_user: number
+            quantity: number
+          }) =>
+            order.productId === orderInfo.productId &&
+            order.price_id_by_the_user === orderInfo.price_id_by_the_user
+        )
+
+        if (existingProduct !== -1) {
+          productOrders[existingProduct].quantity += orderInfo.quantity
+        } else {
+          productOrders.push(orderInfo)
+        }
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        )
+
+        Notify.success('Товар добавлено в кошик!')
+      }
+    } catch (error) {
+      console.error('Помилка при додаванні товару до кошика:', error)
+      throw error
     }
-
-    const productOrders =
-      JSON.parse(localStorage.getItem(PRODUCT_ORDERS_LS_KEY) || '{}') || []
-
-    productOrders.push(orderInfo)
-
-    localStorage.setItem(PRODUCT_ORDERS_LS_KEY, JSON.stringify(productOrders))
-
-    console.log(orderInfo)
-    alert('Товар додано в кошик!')
   }
 
   const showNextImage = () => {
@@ -132,6 +204,10 @@ const ProductPage = () => {
       setSelectedImage(selectedImage - 1)
     }
   }
+
+  const isPromotional = products?.prices?.find(
+    (price) => price.weight === selectedWeight
+  )?.promotional
 
   return (
     <Fragment>
@@ -163,9 +239,13 @@ const ProductPage = () => {
                 </div>
                 <ul className={styles.imageList}>
                   {products.images.map((image, index) => {
+                    const isActive = index === selectedImage
+                    const activeImg = isActive
+                      ? `${styles.imageListItem} ${styles.activeImg}`
+                      : styles.imageListItem
                     return (
                       <li
-                        className={styles.imageListItem}
+                        className={activeImg}
                         key={image.id}
                         onClick={() => {
                           setSelectedImage(index)
@@ -183,14 +263,26 @@ const ProductPage = () => {
               </div>
 
               <div className={styles.ordertWrapper}>
-                <h2 className={styles.titleProduct}>
-                  Структурна йогуртова пастила з малиною, бананом та вівсянкою
-                </h2>
-                {showModal && <ModalProductLimits onClick={handleClick} />}
-                <p className={styles.orderWeight}>Оберіть вагу упаковки:</p>
+                <h2 className={styles.titleProduct}>{products.name}</h2>
+
+                <ul className={styles.sub_categories_list}>
+                  {products.sub_categories?.map((sub_category) => (
+                    <li
+                      key={sub_category.id}
+                      className={styles.sub_categories_item}
+                    >
+                      {sub_category.name}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className={styles.orderWeight}>Оберіть розмір пакування</p>
                 <form className={styles.orderForm}>
-                  {products.prices.map((price) => {
-                    return (
+                  {products.prices
+                    .sort(
+                      (a, b) => parseInt(a.weight, 10) - parseInt(b.weight, 10)
+                    )
+                    .map((price) => (
                       <div key={price.id}>
                         <label
                           className={`${styles.labelWeight} ${
@@ -207,14 +299,15 @@ const ProductPage = () => {
                             checked={selectedWeight === price.weight}
                             onChange={handleWeightChange}
                           />
-                          {price.weight}
+                          {formatWeight(price.weight)}
                         </label>
                       </div>
-                    )
-                  })}
+                    ))}
                 </form>
+
                 <div>
-                  <p className={styles.orderWeight}>Оберіть кількість:</p>
+                  <p className={styles.orderWeight}>Кількість одиниць товару</p>
+
                   <div className={styles.btnQuantityWrapper}>
                     <button
                       className={styles.btnQuantity}
@@ -229,20 +322,37 @@ const ProductPage = () => {
                     <button
                       className={styles.btnQuantity}
                       onClick={increaseQuantity}
-                      disabled={
-                        quantity === selectedQuantity ||
-                        selectedQuantity === 100
-                      }
+                      disabled={selectedQuantity === 100}
                     >
                       <IconPlus className={styles.iconPlus} />
                     </button>
+
+                    {showModal && (
+                      <ModalProductLimits
+                        onClick={handleClick}
+                        customClassNames={customStyles.position}
+                      />
+                    )}
                   </div>
                 </div>
-                {selectedWeight && (
-                  <div>
-                    <p className={styles.selectPrice}>{selectedPrice} грн</p>
-                  </div>
-                )}
+
+                <div className={styles.selectPriceWrapper}>
+                  {isPromotional && (
+                    <p className={styles.selectOldPrice}>
+                      {selectedOldPrice} ₴
+                    </p>
+                  )}
+                  <p
+                    className={
+                      isPromotional
+                        ? styles.promotionalSelectPrice
+                        : styles.selectPrice
+                    }
+                  >
+                    {selectedPrice} ₴
+                  </p>
+                </div>
+
                 <div className={styles.btnByWrapper}>
                   <button
                     type="button"
