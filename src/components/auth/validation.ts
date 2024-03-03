@@ -32,7 +32,13 @@ export const SignupSchema = Yup.object().shape({
     .required('Поле має бути заповненим')
 })
 
-export const LoginSchema = Yup.object().shape({
-  email: Yup.string().required('Поле має бути заповненим'),
-  password: Yup.string().required('Поле має бути заповненим')
-})
+export const LoginSchema = (resetPass: boolean) => {
+  return Yup.object().shape({
+    email: resetPass
+      ? Yup.string().required('Поле має бути заповненим')
+      : Yup.string(),
+    password: resetPass
+      ? Yup.string()
+      : Yup.string().required('Поле має бути заповненим')
+  })
+}

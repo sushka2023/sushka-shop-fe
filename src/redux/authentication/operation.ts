@@ -121,3 +121,40 @@ export const logout = createAsyncThunk<any, LogOutParams>(
     }
   }
 )
+
+type confirmedEmailParams = {
+  confirmedEmailToken: string
+}
+
+export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
+  'api/rconfirmedEmail',
+  async ({ confirmedEmailToken }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `api/auth/confirmed_email/${confirmedEmailToken}`
+      )
+      return response.data.message
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+type ResetPassParams = {
+  email: string
+}
+
+export const resetPassword = createAsyncThunk<any, ResetPassParams>(
+  'api/resetPass',
+  async ({ email }, thunkAPI) => {
+    try {
+      await axiosInstance.get(`api/auth/reset_password/${email}`)
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
