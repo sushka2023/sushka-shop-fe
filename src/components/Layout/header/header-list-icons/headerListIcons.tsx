@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
@@ -16,6 +16,13 @@ const HeaderListIcons = () => {
   const iconRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
+
+  const [searchParams] = useSearchParams()
+  const confirmedEmailToken = searchParams.get('confirmed_email')
+
+  useEffect(() => {
+    confirmedEmailToken && setIsModalOpen(true)
+  }, [confirmedEmailToken])
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement
@@ -93,7 +100,10 @@ const HeaderListIcons = () => {
         </li>
       </ul>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth setIsModalOpen={setIsModalOpen} />
+        <Auth
+          confirmedEmailToken={confirmedEmailToken}
+          setIsModalOpen={setIsModalOpen}
+        />
       </ModalPortal>
     </Fragment>
   )
