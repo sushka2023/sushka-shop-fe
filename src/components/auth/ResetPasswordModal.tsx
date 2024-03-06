@@ -1,35 +1,55 @@
+import { Fragment } from 'react/jsx-runtime'
 import { FormikErrors, FormikTouched } from 'formik'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 import { SignUpValues } from './Auth'
-import EmailField from './EmailField'
+import Notification from '../Notification/Notification'
+import ResetPassForm from './ResetPassForm'
+import { ActionType } from './Auth'
 
 type Props = {
+  resetPassToken: string | null
   errors: FormikErrors<SignUpValues>
   touched: FormikTouched<SignUpValues>
   apiError?: number
   setResetPass: (value: boolean) => void
+  resetPass: boolean
+  setActionType: (actionType: ActionType) => void
 }
 
 const ResetPasswordModal: React.FC<Props> = ({
+  setActionType,
+  resetPassToken,
   setResetPass,
   errors,
   touched,
-  apiError
+  apiError,
+  resetPass
 }) => {
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading)
+  const error = useSelector((state: RootState) => state.auth.errors)
+  const sendEmail = useSelector((state: RootState) => state.auth.sendEmail)
+
   return (
-    <div>
-      <h2>Змінити пароль на новий?</h2>
-      <EmailField errors={errors} touched={touched} apiError={apiError} />
-      <p>
-        Ми відправимо лист на вашу електронну пошту з інструкціями, щоб змінити
-        старий пароль
-      </p>
-      <div>
-        <button type="button" onClick={() => setResetPass(false)}>
-          Скасувати
-        </button>
-        <button type="submit">Так, змінити</button>
-      </div>
-    </div>
+    <Fragment>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : error && !resetPass ? (
+        <Notification mode={'error'} />
+      ) : !sendEmail ? (
+        <ResetPassForm
+          setActionType={setActionType}
+          resetPass={resetPass}
+          errors={errors}
+          touched={touched}
+          apiError={apiError}
+          setResetPass={setResetPass}
+          resetPassToken={resetPassToken}
+        />
+      ) : (
+        <Notification mode={'resetPass'} />
+      )}
+    </Fragment>
   )
 }
 

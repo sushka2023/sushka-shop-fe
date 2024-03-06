@@ -13,15 +13,23 @@ type Props = {
   setIsModalOpen: (isModalOpen: boolean) => void
 }
 
-const ModalPortal: FC<Props> = ({ children, isModalOpen, setIsModalOpen }) => {
+const ModalPortal: FC<Props> = ({
+  children,
+  isModalOpen,
+  setIsModalOpen,
+  searchToken
+}) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const searchKey = Object.keys(searchToken)[0]
 
   const closeModal = () => {
+    if (searchKey) {
+      searchParams.delete(searchKey)
+      navigate({ search: searchParams.toString() })
+      return
+    }
     setIsModalOpen(false)
-
-    searchParams.delete('confirmed_email')
-    navigate({ search: searchParams.toString() })
   }
 
   const modalContent = (

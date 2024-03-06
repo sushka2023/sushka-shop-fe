@@ -1,6 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserResponse } from '../../types'
-import { confirmedEmail, currentUser, login, logout, signUp } from './operation'
+import {
+  confirmedEmail,
+  currentUser,
+  login,
+  logout,
+  saveNewPassword,
+  signUp,
+  resetPassword
+} from './operation'
 
 export type OperationType = 'Login' | 'SignUp' | 'currentUser'
 
@@ -12,6 +20,11 @@ export type SignUpFormData = {
   repeatPassword: string
 }
 
+export enum sendEmailType {
+  forPass = 'forPass',
+  forEmail = 'forEmail'
+}
+
 type AuthState = {
   user: UserResponse | null
   isLoggedIn: boolean
@@ -19,6 +32,8 @@ type AuthState = {
   errors: any | null
   operationType: OperationType | null
   confEmail: string | null
+  resPass: string | null
+  sendEmail: sendEmailType | null
 }
 
 const INITIAL_STATE: AuthState = {
@@ -27,7 +42,9 @@ const INITIAL_STATE: AuthState = {
   isLoading: false,
   errors: null,
   operationType: null,
-  confEmail: null
+  confEmail: null,
+  resPass: null,
+  sendEmail: null
 }
 
 export const authSlice = createSlice({
@@ -104,6 +121,28 @@ export const authSlice = createSlice({
       .addCase(confirmedEmail.fulfilled, (state, action) => {
         state.isLoading = false
         state.confEmail = action.payload
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.errors = action.payload
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false
+        state.sendEmail = sendEmailType.forPass
+      })
+      .addCase(saveNewPassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(saveNewPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.errors = action.error
+      })
+      .addCase(saveNewPassword.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.resPass = action.payload
       })
   }
 })

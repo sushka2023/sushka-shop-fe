@@ -153,6 +153,30 @@ export const resetPassword = createAsyncThunk<any, ResetPassParams>(
       await axiosInstance.get(`api/auth/reset_password/${email}`)
     } catch (e) {
       const error = e as AxiosError
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+type SaveNewPassParams = {
+  newPass: string
+  token: string | null
+}
+
+export const saveNewPassword = createAsyncThunk<any, SaveNewPassParams>(
+  'api/saveNewPass',
+  async ({ newPass, token }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        `api/auth/reset_password/confirmed/${token}`,
+        {
+          password_checksum: newPass
+        }
+      )
+
+      return response.data.message
+    } catch (e) {
+      const error = e as AxiosError
 
       return thunkAPI.rejectWithValue(error?.response?.status)
     }

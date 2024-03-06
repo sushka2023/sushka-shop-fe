@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { Formik, Form } from 'formik'
 import { useAuth } from '../../hooks/use-auth'
-import { SignupSchema, LoginSchema } from './validation'
+import { SignupSchema, LoginSchema, ResetPasswordSchema } from './validation'
 import {
   login,
   resetPassword,
+  saveNewPassword,
   signUp
 } from '../../redux/authentication/operation'
 import MailConfirmation from './MailConfirmation'
@@ -23,6 +24,12 @@ export type SignUpValues = {
   repeatPassword: string
 }
 
+export type ActionType = 'login' | 'signup' | 'reset' | 'saveNewPass'
+
+type ActionHandlers = {
+  [key in ActionType]: (values: SignUpValues) => void
+}
+
 const INITIAL_VALUES: SignUpValues = {
   firstName: '',
   lastName: '',
@@ -32,17 +39,22 @@ const INITIAL_VALUES: SignUpValues = {
 }
 
 type Props = {
-  confirmedEmailToken: string | null
   setIsModalOpen: (value: boolean) => void
+  searchToken: { [key: string]: string | null }
 }
 
-const Auth: FC<Props> = ({ setIsModalOpen, confirmedEmailToken }) => {
+const CONFIRMED_EMAIL = 'confirmed_email'
+const RESET_PASS = 'reset_password'
+
+const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
   const [isLoginMode, setLoginMode] = useState(true)
   const [mailConfirmation, setMailConfirmation] = useState(false)
   const [resetPass, setResetPass] = useState(false)
+  const [actionType, setActionType] = useState<ActionType>('login')
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { user, isLoggedIn, operationType, errors: apiError } = useAuth()
+  const searchKeys = Object.keys(searchToken)[0]
 
   useEffect(() => {
     if (user && isLoggedIn) {
@@ -56,39 +68,47 @@ const Auth: FC<Props> = ({ setIsModalOpen, confirmedEmailToken }) => {
 
   const toggleLoginMode = () => setLoginMode(!isLoginMode)
 
-  const actionHandlers = {
+  const actionHandlers: ActionHandlers = {
     login: (values: SignUpValues) =>
       dispatch(login({ user: values, operationType: 'Login' })),
     signup: (values: SignUpValues) =>
       dispatch(signUp({ user: values, operationType: 'SignUp' })),
     reset: (values: SignUpValues) =>
-      dispatch(resetPassword({ email: values.email }))
+      dispatch(resetPassword({ email: values.email })),
+    saveNewPass: (value: SignUpValues) =>
+      dispatch(
+        saveNewPassword({
+          newPass: value.repeatPassword,
+          token: searchToken[searchKeys]
+        })
+      )
   }
 
-  const handleSubmit = (values: SignUpValues) => {
-    const actionType =
-      isLoginMode && !resetPass
-        ? 'login'
-        : !isLoginMode && !resetPass
-          ? 'signup'
-          : 'reset'
+  const authSchema = isLoginMode ? LoginSchema(resetPass) : SignupSchema
+
+  const validationSchema =
+    searchKeys === RESET_PASS ? ResetPasswordSchema : authSchema
+
+  const handleSubmit = (values: SignUpValues) =>
     actionHandlers[actionType](values)
-  }
 
   return (
     <Fragment>
-      {mailConfirmation || confirmedEmailToken ? (
-        <MailConfirmation confirmedEmailToken={confirmedEmailToken} />
+      {mailConfirmation || searchKeys === CONFIRMED_EMAIL ? (
+        <MailConfirmation confirmedEmailToken={searchToken[searchKeys]} />
       ) : (
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
-          validationSchema={isLoginMode ? LoginSchema(resetPass) : SignupSchema}
+          validationSchema={validationSchema}
         >
           {({ errors, touched }) => (
             <Form className={styles.formWrapp}>
-              {resetPass ? (
+              {resetPass || searchKeys === RESET_PASS ? (
                 <ResetPasswordModal
+                  setActionType={setActionType}
+                  resetPass={resetPass}
+                  resetPassToken={searchToken[searchKeys]}
                   setResetPass={setResetPass}
                   errors={errors}
                   touched={touched}
@@ -96,6 +116,7 @@ const Auth: FC<Props> = ({ setIsModalOpen, confirmedEmailToken }) => {
                 />
               ) : (
                 <AuthModal
+                  setActionType={setActionType}
                   isLoginMode={isLoginMode}
                   errors={errors}
                   touched={touched}

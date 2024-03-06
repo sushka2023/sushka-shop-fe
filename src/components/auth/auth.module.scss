@@ -6,7 +6,7 @@
    flex-direction: column;
 };
 
-.loginTitle, .regTitle {
+.title {
     text-align: center;
     color: $green-dark-200;
     font-family: $open-sans;
@@ -14,6 +14,10 @@
     font-weight: $font-weight-600;
     line-height: 120%;
     margin-bottom: 50px;
+
+    &NewPass {
+        margin-bottom: 10px
+    }
 };
 
 .label {
@@ -238,3 +242,52 @@
 .crossIcon {
     fill: $white-200;
 }
+
+// .modalContainer {
+//     padding-bottom: 44px;
+// }
+
+.text {
+    margin: 20px 0px 50px;
+    color: $green-dark-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 16px;
+    font-weight: $font-weight-400;
+    line-height: 140%;
+
+    &NewPass {
+        font-size: 18px;
+        margin-top: 0;
+        margin-bottom: 50px;
+    }
+}
+
+.btnsWrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 10px 30px 10px 30px;
+
+    &Cancel {
+        background: inherit;
+        border: 2px solid $yellow-200;
+        color: $yellow-200;
+    }
+}
+
+.btnWrapp {
+    display: flex;
+    justify-content: center;
+}
+
+.fieldsWrapp {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+

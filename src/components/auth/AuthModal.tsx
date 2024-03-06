@@ -10,6 +10,7 @@ import FieldError from './FieldError'
 import AuthButton from './AuthButton'
 import ResetPasswordBtn from './ResetPasswordBtn'
 import AuthToggle from './AuthToggle'
+import { ActionType } from './Auth'
 import styles from './auth.module.scss'
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   setResetPass: (value: boolean) => void
   toggleLoginMode: () => void
   apiError?: number
+  setActionType: (actionType: ActionType) => void
 }
 
 const AuthModal: React.FC<Props> = ({
@@ -27,11 +29,12 @@ const AuthModal: React.FC<Props> = ({
   touched,
   setResetPass,
   toggleLoginMode,
-  apiError
+  apiError,
+  setActionType
 }) => {
   return (
     <Fragment>
-      <h2 className={styles.loginTitle}>
+      <h2 className={styles.title}>
         {isLoginMode ? 'Увійти до особистого кабінету' : 'Зареєструватись'}
       </h2>
       {!isLoginMode && (
@@ -49,7 +52,7 @@ const AuthModal: React.FC<Props> = ({
 
       {isLoginMode && <ResetPasswordBtn setResetPass={setResetPass} />}
 
-      <AuthButton isLoginMode={isLoginMode} />
+      <AuthButton setActionType={setActionType} isLoginMode={isLoginMode} />
 
       <AuthToggle isLoginMode={isLoginMode} toggleLoginMode={toggleLoginMode} />
     </Fragment>

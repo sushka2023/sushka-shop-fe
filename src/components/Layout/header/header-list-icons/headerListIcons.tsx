@@ -18,11 +18,12 @@ const HeaderListIcons = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const [searchParams] = useSearchParams()
-  const confirmedEmailToken = searchParams.get('confirmed_email')
+
+  const searchToken = Object.fromEntries(searchParams.entries())
 
   useEffect(() => {
-    confirmedEmailToken && setIsModalOpen(true)
-  }, [confirmedEmailToken])
+    Object.keys(searchToken).length > 0 && setIsModalOpen(true)
+  }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement
@@ -99,11 +100,12 @@ const HeaderListIcons = () => {
           </Link>
         </li>
       </ul>
-      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth
-          confirmedEmailToken={confirmedEmailToken}
-          setIsModalOpen={setIsModalOpen}
-        />
+      <ModalPortal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        searchToken={searchToken}
+      >
+        <Auth searchToken={searchToken} setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
     </Fragment>
   )
