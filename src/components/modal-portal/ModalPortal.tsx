@@ -10,6 +10,7 @@ const TIMEOUT_DELAY_MS = 500
 type Props = {
   children: ReactNode
   isModalOpen: boolean
+  searchToken: { [key: string]: string | null }
   setIsModalOpen: (isModalOpen: boolean) => void
 }
 
