@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserResponse } from '../../types'
-import { currentUser, login, logout, signUp } from './operation'
+import { confirmedEmail, currentUser, login, logout, signUp } from './operation'
 
 export type OperationType = 'Login' | 'SignUp' | 'currentUser'
 
@@ -18,6 +18,7 @@ type AuthState = {
   isLoading: boolean
   errors: any | null
   operationType: OperationType | null
+  confEmail: string | null
 }
 
 const INITIAL_STATE: AuthState = {
@@ -25,7 +26,8 @@ const INITIAL_STATE: AuthState = {
   isLoggedIn: false,
   isLoading: false,
   errors: null,
-  operationType: null
+  operationType: null,
+  confEmail: null
 }
 
 export const authSlice = createSlice({
@@ -91,6 +93,17 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = null
         state.operationType = null
+      })
+      .addCase(confirmedEmail.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(confirmedEmail.rejected, (state, action) => {
+        state.isLoading = false
+        state.errors = action.error
+      })
+      .addCase(confirmedEmail.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.confEmail = action.payload
       })
   }
 })

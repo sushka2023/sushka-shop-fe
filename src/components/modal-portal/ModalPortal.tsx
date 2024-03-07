@@ -1,3 +1,4 @@
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
@@ -13,6 +14,16 @@ type Props = {
 }
 
 const ModalPortal: FC<Props> = ({ children, isModalOpen, setIsModalOpen }) => {
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+
+    searchParams.delete('confirmed_email')
+    navigate({ search: searchParams.toString() })
+  }
+
   const modalContent = (
     <CSSTransition
       in={isModalOpen}
@@ -38,9 +49,7 @@ const ModalPortal: FC<Props> = ({ children, isModalOpen, setIsModalOpen }) => {
               <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
-                  onClick={() => {
-                    return setIsModalOpen(false)
-                  }}
+                  onClick={() => closeModal()}
                 />
                 {children}
               </div>
