@@ -72,7 +72,19 @@ type FetchProductsForCrmParams = {
   productCategoryId?: number
 }
 
+type SearchProductsForCrmParams = {
+  limit: number
+  offset: number
+  searchQuery: string
+}
+
 type FetchProductsForCrmResponse = {
+  products: ProductResponse[]
+  totalCount: number
+  pageNumber: number
+}
+
+type SearchProductsForCrmResponse = {
   products: ProductResponse[]
   totalCount: number
   pageNumber: number
@@ -91,6 +103,34 @@ export const fetchProductsForCrm = createAsyncThunk<
           offset,
           pr_status: productStatus,
           pr_category_id: productCategoryId
+        }
+      })
+
+      return {
+        products: response.data.products,
+        totalCount: response.data.total_count,
+        pageNumber: Math.floor(offset / limit)
+      }
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+export const searchProductsForCrm = createAsyncThunk<
+  SearchProductsForCrmResponse,
+  SearchProductsForCrmParams
+>(
+  'api/product/search_for_crm/',
+  async ({ limit, offset, searchQuery }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get('api/product/search_for_crm/', {
+        params: {
+          limit,
+          offset,
+          search_query: searchQuery
         }
       })
 

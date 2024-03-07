@@ -5,7 +5,8 @@ import {
   addImages,
   addPrice,
   createNewProduct,
-  fetchProductsForCrm
+  fetchProductsForCrm,
+  searchProductsForCrm
 } from '../operation'
 import { ProductResponse, ProductSubCategoryResponse } from '../../../types'
 
@@ -27,6 +28,10 @@ export type ProductState = {
   formErrors: Record<string, string>
   imagesUploadCount: number
   images: boolean
+  isLoadingForCrmSearch: boolean
+  searchProductForCrm: ProductResponse[]
+  searchProductsForCrmPageNumber: number
+  searchProductsForCrmTotalCount: number
 }
 
 const INITIAL_STATE: ProductState = {
@@ -46,7 +51,11 @@ const INITIAL_STATE: ProductState = {
   error: null,
   formErrors: {},
   imagesUploadCount: 0,
-  images: false
+  images: false,
+  isLoadingForCrmSearch: false,
+  searchProductForCrm: [],
+  searchProductsForCrmPageNumber: 0,
+  searchProductsForCrmTotalCount: 0
 }
 
 export type AddDataAction = {
@@ -166,6 +175,24 @@ export const productSlice = createSlice({
         state.productsForCrm = action.payload.products
         state.productsForCrmTotalCount = action.payload.totalCount
         state.productsForCrmPageNumber = action.payload.pageNumber
+      })
+      .addCase(searchProductsForCrm.pending, (state) => {
+        state.isLoadingForCrmSearch = true
+      })
+      .addCase(searchProductsForCrm.rejected, (state, action) => {
+        state.isLoadingForCrmSearch = false
+        state.searchProductForCrm = []
+        state.error = action.payload
+        state.searchProductsForCrmTotalCount = 0
+        state.searchProductsForCrmPageNumber = 0
+      })
+
+      .addCase(searchProductsForCrm.fulfilled, (state, action) => {
+        state.isLoadingForCrmSearch = false
+        state.error = null
+        state.searchProductForCrm = action.payload.products
+        state.searchProductsForCrmTotalCount = action.payload.totalCount
+        state.searchProductsForCrmPageNumber = action.payload.pageNumber
       })
   }
 })

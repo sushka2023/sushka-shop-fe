@@ -7,6 +7,7 @@
 .spaceBetweenWrapper {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .flexWrapper {
@@ -146,4 +147,20 @@
 
 .statusSelectorIcon {
   width: 40px;
+}
+
+.deleteIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.editIcon {
+  width: 100%;
+  height: 100%;
+}
+
+.customPaginationButtonsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

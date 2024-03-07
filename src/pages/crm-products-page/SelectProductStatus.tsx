@@ -7,7 +7,7 @@ import {
 import SortIcon from '../../icons/sort.svg?react'
 import styles from './crmProductsPage.module.scss'
 import ExpandMoreIcon from '../../icons/ExpandMoreIcon.svg?react'
-import { options } from './CrmProductsPage'
+import { OPTIONS } from './CrmProductsPage'
 
 type SelectProductStatusProps = {
   status: string
@@ -33,7 +33,7 @@ const SelectProductStatus = ({
       )}
       MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
       renderValue={(selected) =>
-        options.find((option) => option.value === selected)?.label
+        OPTIONS.find((option) => option.value === selected)?.label
       }
     >
       <MenuItem value="">Усі статуси</MenuItem>
