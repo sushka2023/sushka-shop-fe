@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
-export default function useDebounce(
-  value: any,
+export default function useDebounce<Type>(
+  value: Type,
   delay: number,
   cb?: () => void
 ) {

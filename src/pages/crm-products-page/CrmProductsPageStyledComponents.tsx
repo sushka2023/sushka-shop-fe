@@ -1,4 +1,6 @@
-export const StyledProductNumberCell = ({ children }: any) => {
+import { PropsWithChildren } from 'react'
+
+export const StyledProductNumberCell = ({ children }: PropsWithChildren) => {
   return (
     <span
       style={{
@@ -16,7 +18,7 @@ export const StyledProductNumberCell = ({ children }: any) => {
   )
 }
 
-export const StyledCategoryTextCell = ({ children }: any) => {
+export const StyledCategoryTextCell = ({ children }: PropsWithChildren) => {
   return (
     <span
       style={{
@@ -40,7 +42,7 @@ interface ChipStatus {
   archived: { color: string; backgroundColor: string }
 }
 
-interface CellProps {
+type CellProps = {
   value: string
   status: keyof ChipStatus
   style?: React.CSSProperties

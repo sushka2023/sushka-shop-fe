@@ -9,14 +9,26 @@ import {
 import styles from './crmProductsPage.module.scss'
 import { PAGE_SIZE } from './CrmProductsPage'
 
-const PaginationWrapper = (props: any) => {
+const PaginationWrapper = (props: CustomPaginationProps) => {
   return <GridPagination ActionsComponent={CustomPagination} {...props} />
 }
 
-const CustomPagination: React.FC<any> = (props) => {
-  const isPreviousButtonDisabled = props.page === 0
-  const isNextButtonDisabled =
-    props.page === Math.floor(props.count / PAGE_SIZE)
+type CustomPaginationProps = {
+  count: number
+  onPageChange: (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ) => void
+  page: number
+}
+
+const CustomPagination: React.FC<CustomPaginationProps> = ({
+  page,
+  count,
+  onPageChange
+}: CustomPaginationProps) => {
+  const isPreviousButtonDisabled = page === 0
+  const isNextButtonDisabled = page === Math.floor(count / PAGE_SIZE)
 
   const buttonStyles = (disabled: boolean) => ({
     backgroundColor: disabled ? '#F1F2F4' : 'transparent',
@@ -26,10 +38,10 @@ const CustomPagination: React.FC<any> = (props) => {
 
   return (
     <div className={styles.customPaginationButtonsWrapper}>
-      <StyledNumberOfPagesTypography>{`${props.page + 1} з ${Math.ceil(props.count / 10)}`}</StyledNumberOfPagesTypography>
+      <StyledNumberOfPagesTypography>{`${page + 1} з ${count === 0 ? page + 1 : Math.ceil(count / 10)}`}</StyledNumberOfPagesTypography>
       <StyledButton
         disabled={isPreviousButtonDisabled}
-        onClick={(event) => props.onPageChange(event, props.page - 1)}
+        onClick={(event) => onPageChange(event, page - 1)}
         sx={buttonStyles(isPreviousButtonDisabled)}
       >
         <ArrowBackIcon />
@@ -44,7 +56,7 @@ const CustomPagination: React.FC<any> = (props) => {
       </StyledButton>
       <StyledButton
         disabled={isNextButtonDisabled}
-        onClick={(event) => props.onPageChange(event, props.page + 1)}
+        onClick={(event) => onPageChange(event, page + 1)}
         sx={buttonStyles(isNextButtonDisabled)}
       >
         <StyledButtonTypography

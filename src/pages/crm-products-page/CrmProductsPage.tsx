@@ -19,9 +19,10 @@ import CustomPagination from './CrmProductPageCustomPagination'
 import { StyledDataGrid } from './CrmProductPageStyledDataGrid'
 import { columns } from './CrmProductDataGridColumns'
 import useDebounce from '../../hooks/useDebounce'
+import CustomNoRowsOverlay from './CustomNoRowsOverlay'
 
 export const PAGE_SIZE = 10
-
+const DEBOUNCE_DELAY = 300
 export const OPTIONS = [
   { value: '', label: 'Статус' },
   { value: ProductStatus.NEW, label: 'Новий' },
@@ -33,7 +34,7 @@ const CrmProductsPage = () => {
   const [status, setStatus] = useState('')
   const [category, setCategory] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
-  const searchDebounce = useDebounce(searchQuery, 300)
+  const searchDebounce = useDebounce(searchQuery, DEBOUNCE_DELAY)
   const dispatch = useDispatch<AppDispatch>()
   const {
     productsForCrmTotalCount,
@@ -89,12 +90,9 @@ const CrmProductsPage = () => {
     [status, productsForCrmPageNumber, category, searchDebounce]
   )
 
-  const searchTextChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(event.target.value)
-    },
-    []
-  )
+  const searchTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value)
+  }
 
   useEffect(() => {
     if (!searchDebounce) {
@@ -180,14 +178,16 @@ const CrmProductsPage = () => {
         </div>
         <div>
           <StyledDataGrid
+            autoHeight
             rows={searchQuery ? searchProductForCrm : productsForCrm}
             columns={columns(mainCategories)}
             paginationModel={paginationModel}
             slots={{
-              pagination: CustomPagination
+              pagination: CustomPagination,
+              noRowsOverlay: CustomNoRowsOverlay
             }}
             onPaginationModelChange={handlePaginationModelChange}
-            pageSizeOptions={[10]}
+            pageSizeOptions={[PAGE_SIZE]}
             paginationMode="server"
             rowCount={
               searchQuery
@@ -195,9 +195,9 @@ const CrmProductsPage = () => {
                 : productsForCrmTotalCount
             }
             disableRowSelectionOnClick
-            disableColumnFilter={true}
+            disableColumnFilter
             loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
-            disableColumnMenu={true}
+            disableColumnMenu
           />
         </div>
       </div>

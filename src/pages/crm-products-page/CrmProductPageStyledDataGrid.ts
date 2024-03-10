@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid'
 export const StyledDataGrid = styled(DataGrid)({
   'border': 'none',
   'borderRadius': '8px',
+  'height': '100%',
   '& .MuiDataGrid-columnHeader': {
     fontFamily: 'Open Sans, sans-serif',
     fontSize: '14px',
@@ -28,6 +29,18 @@ export const StyledDataGrid = styled(DataGrid)({
   '& .MuiDataGrid-row:last-child': {
     '& .MuiDataGrid-cell': {
       border: 'none'
+    }
+  },
+  '& .MuiDataGrid-virtualScrollerContent': {
+    backgroundColor: 'white'
+  },
+  '& .MuiDataGrid-virtualScroller': {
+    '& .MuiDataGrid-overlayWrapper': {
+      height: 'auto !important'
+    },
+
+    '& .MuiDataGrid-overlayWrapperInner': {
+      height: 'auto !important'
     }
   }
 })
