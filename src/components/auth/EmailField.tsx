@@ -1,59 +1,33 @@
 import { FC, Fragment } from 'react'
-import clsx from 'clsx'
 import { Field, FormikErrors, FormikTouched } from 'formik'
 import FieldError from './FieldError'
-import { SignUpValues } from './Auth'
+import { AuthFormData } from '../../redux/authentication/slice'
 import styles from './auth.module.scss'
+import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
-  errors: FormikErrors<SignUpValues>
-  touched: FormikTouched<SignUpValues>
-  apiError?: number
-  resetPass?: boolean
+  errors: FormikErrors<AuthFormData>
+  touched: FormikTouched<AuthFormData>
 }
 
-const computeEmailFieldClassName = (
-  errors: FormikErrors<SignUpValues>,
-  touched: FormikTouched<SignUpValues>,
-  apiError?: number
-) => {
-  return clsx(styles.email, {
-    [styles.fieldError]:
-      (errors.email && touched.email) || apiError === 403 || apiError === 400
-  })
-}
+const EmailField: FC<Props> = ({ errors, touched }) => {
+  const { errors: apiError } = useAuth()
 
-const computeLabelClassName = (
-  errors: FormikErrors<SignUpValues>,
-  touched: FormikTouched<SignUpValues>
-) => {
-  return clsx(styles.label, errors.email && touched.email && styles.labelError)
-}
-
-const EmailField: FC<Props> = ({ errors, touched, apiError, resetPass }) => {
-  const emailFieldClassName = computeEmailFieldClassName(
-    errors,
-    touched,
-    apiError
-  )
-  const labelClassName = computeLabelClassName(errors, touched)
+  const isError = errors.email && touched.email
 
   return (
     <Fragment>
-      <label className={labelClassName}>
+      <label
+        className={`${styles.label} ${isError ? styles.labelError : ''} ${apiError && styles.labelErrorApi}`}
+      >
         <Field
           type="email"
           name="email"
           placeholder="Електронна пошта"
-          className={emailFieldClassName}
+          className={`${styles.email} ${isError ? styles.fieldError : ''}`}
         />
       </label>
-      <FieldError
-        errors={errors.email!}
-        touched={touched.email!}
-        resetPass={resetPass}
-        apiError={apiError}
-      />
+      <FieldError errors={errors.email!} touched={touched.email!} />
     </Fragment>
   )
 }

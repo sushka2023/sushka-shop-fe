@@ -2,16 +2,11 @@ import { AxiosError } from 'axios'
 import axiosInstance from '../../axios/settings'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TokenModel, UserResponse } from '../../types'
-import { OperationType, SignUpFormData } from './slice'
+import { OperationType, AuthFormData } from './slice'
 import { setToken, removeToken } from '../../utils/cookie/token'
 
-export type LoginBody = {
-  email: string
-  password: string
-}
-
 type SignUpParams = {
-  user: SignUpFormData
+  user: AuthFormData
   operationType: OperationType
 }
 
@@ -40,7 +35,7 @@ export const signUp = createAsyncThunk<SignUpResponse, SignUpParams>(
 )
 
 type LoginParams = {
-  user: LoginBody
+  user: AuthFormData
   operationType: OperationType
 }
 
@@ -123,7 +118,7 @@ export const logout = createAsyncThunk<any, LogOutParams>(
 )
 
 type confirmedEmailParams = {
-  confirmedEmailToken: string
+  confirmedEmailToken: string | null
 }
 
 export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
@@ -143,7 +138,7 @@ export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
 )
 
 type ResetPassParams = {
-  email: string
+  email: string | undefined
 }
 
 export const resetPassword = createAsyncThunk<any, ResetPassParams>(
@@ -159,7 +154,7 @@ export const resetPassword = createAsyncThunk<any, ResetPassParams>(
 )
 
 type SaveNewPassParams = {
-  newPass: string
+  newPass: string | undefined
   token: string | null
 }
 

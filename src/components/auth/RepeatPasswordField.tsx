@@ -1,12 +1,12 @@
 import { Field, FormikErrors, FormikTouched } from 'formik'
+import { AuthFormData } from '../../redux/authentication/slice'
 import FieldError from './FieldError'
 import styles from './auth.module.scss'
 import { FC, Fragment } from 'react'
-import { SignUpValues } from './Auth'
 
 type Props = {
-  errors: FormikErrors<SignUpValues>
-  touched: FormikTouched<SignUpValues>
+  errors: FormikErrors<AuthFormData>
+  touched: FormikTouched<AuthFormData>
 }
 
 const RepeatPassword: FC<Props> = ({ errors, touched }) => {

@@ -14,7 +14,7 @@ type MessageType = {
 }
 
 type NotificationMessagesType = {
-  resetPass: MessageType
+  resetPassRequest: MessageType
   saveNewPass: MessageType
   mailSendEmail: MessageType
   mailConf: MessageType
@@ -22,7 +22,7 @@ type NotificationMessagesType = {
 }
 
 const MESSAGES: NotificationMessagesType = {
-  resetPass: {
+  resetPassRequest: {
     title: 'Зміна паролю',
     message:
       'Ми відправили лист з посиланням для зміни паролю на вашу електронну пошту!',
@@ -48,8 +48,8 @@ const MESSAGES: NotificationMessagesType = {
 }
 
 const Notification: React.FC<Props> = ({ mode }) => {
-  const selectedMessage = MESSAGES[mode as keyof NotificationMessagesType]
-  const { title, message, hasIcon } = selectedMessage
+  const { title, message, hasIcon } =
+    MESSAGES[mode as keyof NotificationMessagesType]
 
   return (
     <div className={styles.container}>

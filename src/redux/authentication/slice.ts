@@ -12,17 +12,12 @@ import {
 
 export type OperationType = 'Login' | 'SignUp' | 'currentUser'
 
-export type SignUpFormData = {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  repeatPassword: string
-}
-
-export enum sendEmailType {
-  forPass = 'forPass',
-  forEmail = 'forEmail'
+export type AuthFormData = {
+  firstName?: string
+  lastName?: string
+  email?: string
+  password?: string
+  repeatPassword?: string
 }
 
 type AuthState = {
@@ -31,9 +26,8 @@ type AuthState = {
   isLoading: boolean
   errors: any | null
   operationType: OperationType | null
-  confEmail: string | null
-  resPass: string | null
-  sendEmail: sendEmailType | null
+  authRequest: boolean | null
+  userDataChanged: boolean
 }
 
 const INITIAL_STATE: AuthState = {
@@ -42,15 +36,16 @@ const INITIAL_STATE: AuthState = {
   isLoading: false,
   errors: null,
   operationType: null,
-  confEmail: null,
-  resPass: null,
-  sendEmail: null
+  authRequest: null,
+  userDataChanged: false
 }
 
 export const authSlice = createSlice({
   name: 'Auth',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    resetAuth: () => INITIAL_STATE
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state, action) => {
@@ -61,9 +56,9 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = action.payload
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false
-        state.user = action.payload.data
+        state.authRequest = true
         if (state.errors) {
           state.errors = null
         }
@@ -118,9 +113,9 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = action.error
       })
-      .addCase(confirmedEmail.fulfilled, (state, action) => {
+      .addCase(confirmedEmail.fulfilled, (state) => {
         state.isLoading = false
-        state.confEmail = action.payload
+        state.userDataChanged = true
       })
       .addCase(resetPassword.pending, (state) => {
         state.isLoading = true
@@ -131,7 +126,7 @@ export const authSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state) => {
         state.isLoading = false
-        state.sendEmail = sendEmailType.forPass
+        state.authRequest = true
       })
       .addCase(saveNewPassword.pending, (state) => {
         state.isLoading = true
@@ -140,11 +135,12 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = action.error
       })
-      .addCase(saveNewPassword.fulfilled, (state, action) => {
+      .addCase(saveNewPassword.fulfilled, (state) => {
         state.isLoading = false
-        state.resPass = action.payload
+        state.userDataChanged = true
       })
   }
 })
 
+export const { resetAuth } = authSlice.actions
 export default authSlice.reducer

@@ -29,9 +29,13 @@
     margin-bottom: 20px;
 
     &Error {
+        margin-bottom: 0px;
+
+        &Api:last-of-type {
             margin-bottom: 0px;
         }
-};
+    }
+}
 
 .email, .password, .firstName, .lastName,  .repeatPassword {
     box-sizing: border-box;
@@ -242,10 +246,6 @@
 .crossIcon {
     fill: $white-200;
 }
-
-// .modalContainer {
-//     padding-bottom: 44px;
-// }
 
 .text {
     margin: 20px 0px 50px;

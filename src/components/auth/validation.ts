@@ -32,25 +32,25 @@ export const SignupSchema = Yup.object().shape({
     .required('Поле має бути заповненим')
 })
 
-export const LoginSchema = (resetPass: boolean) =>
-  Yup.object().shape({
-    email: Yup.string().required('Поле має бути заповненим'),
-    password: !resetPass
-      ? Yup.string().required('Поле має бути заповненим')
-      : Yup.string()
-  })
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string().required('Поле має бути заповненим'),
+  password: Yup.string().required('Поле має бути заповненим')
+})
 
-export const ResetPasswordSchema = () =>
-  Yup.object().shape({
-    password: Yup.string()
-      .min(8, 'Мінімальна кількість символів 8')
-      .max(255, 'Максимальна кількість символів 255')
-      .matches(PASS_REGEXP, {
-        message:
-          'Пароль повинен містити хоча б одну велику літеру, цифру та спеціальний символ'
-      })
-      .required('Поле має бути заповненим'),
-    repeatPassword: Yup.string()
-      .oneOf([Yup.ref('password'), undefined], 'Паролі повинні співпадати')
-      .required('Поле має бути заповненим')
-  })
+export const ResetPassRequestSchema = Yup.object().shape({
+  email: Yup.string().required('Поле має бути заповненим')
+})
+
+export const ResetPasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .min(8, 'Мінімальна кількість символів 8')
+    .max(255, 'Максимальна кількість символів 255')
+    .matches(PASS_REGEXP, {
+      message:
+        'Пароль повинен містити хоча б одну велику літеру, цифру та спеціальний символ'
+    })
+    .required('Поле має бути заповненим'),
+  repeatPassword: Yup.string()
+    .oneOf([Yup.ref('password'), undefined], 'Паролі повинні співпадати')
+    .required('Поле має бути заповненим')
+})

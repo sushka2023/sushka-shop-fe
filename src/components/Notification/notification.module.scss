@@ -1,8 +1,10 @@
 @import '../../styles/base/base.scss';
 
 .container {
+    padding: 72px 96px 72px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 30px;
 }

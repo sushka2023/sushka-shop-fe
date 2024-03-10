@@ -1,24 +1,24 @@
 import styles from './auth.module.scss'
 import { FC } from 'react'
 import { useAuth } from '../../hooks/use-auth'
-import { ActionType } from './Auth'
+import { AuthModeType } from './Auth'
 
 type Props = {
-  isLoginMode: boolean
-  setActionType: (actionType: ActionType) => void
+  authMode: AuthModeType
 }
 
-const AuthButton: FC<Props> = ({ isLoginMode, setActionType }) => {
+const AuthButton: FC<Props> = ({ authMode }) => {
   const { isLoading } = useAuth()
+  const { login } = AuthModeType
 
   return (
     <div className={styles.wrapp}>
-      <button
-        type="submit"
-        onClick={() => setActionType(isLoginMode ? 'login' : 'signup')}
-        className={styles.btn}
-      >
-        {isLoading ? 'loading...' : isLoginMode ? 'Увійти' : 'Зареєструватись'}
+      <button type="submit" className={styles.btn}>
+        {isLoading
+          ? 'loading...'
+          : authMode === login
+            ? 'Увійти'
+            : 'Зареєструватись'}
       </button>
     </div>
   )

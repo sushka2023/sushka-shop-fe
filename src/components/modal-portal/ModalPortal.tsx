@@ -4,6 +4,9 @@ import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
 import { FC, ReactNode } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { resetAuth } from '../../redux/authentication/slice'
 
 const TIMEOUT_DELAY_MS = 500
 
@@ -22,12 +25,15 @@ const ModalPortal: FC<Props> = ({
 }) => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const searchKey = Object.keys(searchToken)[0]
+  const dispatch = useDispatch<AppDispatch>()
 
   const closeModal = () => {
-    if (searchKey) {
+    dispatch(resetAuth())
+    if (searchToken) {
+      const searchKey = Object.keys(searchToken)[0]
       searchParams.delete(searchKey)
       navigate({ search: searchParams.toString() })
+      setIsModalOpen(false)
       return
     }
     setIsModalOpen(false)

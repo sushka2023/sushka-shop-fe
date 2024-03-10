@@ -1,23 +1,35 @@
 import { FC } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../redux/store'
+import { resetAuth } from '../../redux/authentication/slice'
+import { AuthModeType } from './Auth'
 import styles from './auth.module.scss'
 
 type Props = {
-  isLoginMode: boolean
-  toggleLoginMode: () => void
+  authMode: AuthModeType
+  setAuthMode: (authMode: AuthModeType) => void
 }
 
-const AuthToggle: FC<Props> = ({ isLoginMode, toggleLoginMode }) => {
+const AuthToggle: FC<Props> = ({ authMode, setAuthMode }) => {
+  const { login, signUp } = AuthModeType
+  const dispatch = useDispatch<AppDispatch>()
+
+  const handleClickSwitchModal = () => {
+    dispatch(resetAuth())
+    setAuthMode(authMode === login ? signUp : login)
+  }
+
   return (
     <div className={styles.toRegWrapp}>
       <p className={styles.paragraph}>
-        {isLoginMode ? 'Ще не маєте акаунт?' : 'Вже маєте акаунт ?'}
+        {authMode === login ? 'Ще не маєте акаунт?' : 'Вже маєте акаунт ?'}
       </p>
       <button
         type="button"
         className={styles.linkToRegBtn}
-        onClick={toggleLoginMode}
+        onClick={handleClickSwitchModal}
       >
-        {isLoginMode ? 'Зареєструватись' : 'Увійти'}
+        {authMode === login ? 'Зареєструватись' : 'Увійти'}
       </button>
     </div>
   )
