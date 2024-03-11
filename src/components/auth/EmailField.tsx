@@ -1,34 +1,30 @@
 import { FC, Fragment } from 'react'
-import clsx from 'clsx'
 import { Field, FormikErrors, FormikTouched } from 'formik'
 import FieldError from './FieldError'
-import { SignUpValues } from './Auth'
+import { AuthFormData } from '../../redux/authentication/slice'
 import styles from './auth.module.scss'
+import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
-  errors: FormikErrors<SignUpValues>
-  touched: FormikTouched<SignUpValues>
-  apiError?: number
+  errors: FormikErrors<AuthFormData>
+  touched: FormikTouched<AuthFormData>
 }
 
-const EmailField: FC<Props> = ({ errors, touched, apiError }) => {
-  const emailFieldClassName = clsx(styles.email, {
-    [styles.fieldError]: (errors.email && touched.email) || apiError === 403
-  })
+const EmailField: FC<Props> = ({ errors, touched }) => {
+  const { errors: apiError } = useAuth()
+
+  const isError = errors.email && touched.email
 
   return (
     <Fragment>
       <label
-        className={clsx(
-          styles.label,
-          errors.email && touched.email && styles.labelError
-        )}
+        className={`${styles.label} ${isError ? styles.labelError : ''} ${apiError && styles.labelErrorApi}`}
       >
         <Field
           type="email"
           name="email"
           placeholder="Електронна пошта"
-          className={emailFieldClassName}
+          className={`${styles.email} ${isError ? styles.fieldError : ''}`}
         />
       </label>
       <FieldError errors={errors.email!} touched={touched.email!} />

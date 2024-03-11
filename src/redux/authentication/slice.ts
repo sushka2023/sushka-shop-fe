@@ -1,15 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserResponse } from '../../types'
-import { confirmedEmail, currentUser, login, logout, signUp } from './operation'
+import {
+  confirmedEmail,
+  currentUser,
+  login,
+  logout,
+  saveNewPassword,
+  signUp,
+  resetPassword
+} from './operation'
 
 export type OperationType = 'Login' | 'SignUp' | 'currentUser'
 
-export type SignUpFormData = {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  repeatPassword: string
+export type AuthFormData = {
+  firstName?: string
+  lastName?: string
+  email?: string
+  password?: string
+  repeatPassword?: string
 }
 
 type AuthState = {
@@ -18,7 +26,8 @@ type AuthState = {
   isLoading: boolean
   errors: any | null
   operationType: OperationType | null
-  confEmail: string | null
+  authRequest: boolean | null
+  userDataChanged: boolean
 }
 
 const INITIAL_STATE: AuthState = {
@@ -27,13 +36,16 @@ const INITIAL_STATE: AuthState = {
   isLoading: false,
   errors: null,
   operationType: null,
-  confEmail: null
+  authRequest: null,
+  userDataChanged: false
 }
 
 export const authSlice = createSlice({
   name: 'Auth',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    resetAuth: () => INITIAL_STATE
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state, action) => {
@@ -44,9 +56,9 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = action.payload
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false
-        state.user = action.payload.data
+        state.authRequest = true
         if (state.errors) {
           state.errors = null
         }
@@ -101,11 +113,34 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.errors = action.error
       })
-      .addCase(confirmedEmail.fulfilled, (state, action) => {
+      .addCase(confirmedEmail.fulfilled, (state) => {
         state.isLoading = false
-        state.confEmail = action.payload
+        state.userDataChanged = true
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.errors = action.payload
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false
+        state.authRequest = true
+      })
+      .addCase(saveNewPassword.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(saveNewPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.errors = action.error
+      })
+      .addCase(saveNewPassword.fulfilled, (state) => {
+        state.isLoading = false
+        state.userDataChanged = true
       })
   }
 })
 
+export const { resetAuth } = authSlice.actions
 export default authSlice.reducer

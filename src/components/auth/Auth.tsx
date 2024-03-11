@@ -1,113 +1,94 @@
 import { FC, Fragment, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import { Formik, Form } from 'formik'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/use-auth'
-import { SignupSchema, LoginSchema } from './validation'
-import {
-  login,
-  resetPassword,
-  signUp
-} from '../../redux/authentication/operation'
-import MailConfirmation from './MailConfirmation'
-import ResetPasswordModal from './ResetPasswordModal'
-import AuthModal from './AuthModal'
-import styles from './auth.module.scss'
+import { confirmedEmail } from '../../redux/authentication/operation'
+import Notification from '../Notification/Notification'
+import LoginForm from './LoginForm'
+import RegisterModal from './RegisterModal'
+import ResetPasswordRequestModal from './ResetPasswordRequestModal'
+import ResetPassModal from './ResetPassModal'
 
-export type SignUpValues = {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  repeatPassword: string
-}
-
-const INITIAL_VALUES: SignUpValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  repeatPassword: ''
+export enum AuthModeType {
+  login = 'login',
+  signUp = 'signUp',
+  resetPassRequest = 'resetPassRequest',
+  reset_password = 'reset_password',
+  confirmed_email = 'confirmed_email'
 }
 
 type Props = {
-  confirmedEmailToken: string | null
   setIsModalOpen: (value: boolean) => void
+  searchToken: { [key: string]: string | null }
 }
 
-const Auth: FC<Props> = ({ setIsModalOpen, confirmedEmailToken }) => {
-  const [isLoginMode, setLoginMode] = useState(true)
-  const [mailConfirmation, setMailConfirmation] = useState(false)
-  const [resetPass, setResetPass] = useState(false)
-  const dispatch = useDispatch<AppDispatch>()
+const CONFIRMED_EMAIL = 'confirmed_email'
+
+const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
+  const [authMode, setAuthMode] = useState(AuthModeType.login)
+  const { user, isLoggedIn, userDataChanged, errors } = useAuth()
   const navigate = useNavigate()
-  const { user, isLoggedIn, operationType, errors: apiError } = useAuth()
+  const dispatch = useDispatch<AppDispatch>()
+  const searchKey = searchToken && Object.keys(searchToken)[0]
+
+  const { login, signUp, resetPassRequest, reset_password } = AuthModeType
 
   useEffect(() => {
+    handleUserLogin()
+    handleSearchToken()
+  }, [user, searchToken])
+
+  const handleUserLogin = () => {
     if (user && isLoggedIn) {
       setIsModalOpen(false)
       navigate('/account')
     }
-    if (user && !isLoginMode) {
-      setMailConfirmation(true)
-    }
-  }, [user, operationType])
-
-  const toggleLoginMode = () => setLoginMode(!isLoginMode)
-
-  const actionHandlers = {
-    login: (values: SignUpValues) =>
-      dispatch(login({ user: values, operationType: 'Login' })),
-    signup: (values: SignUpValues) =>
-      dispatch(signUp({ user: values, operationType: 'SignUp' })),
-    reset: (values: SignUpValues) =>
-      dispatch(resetPassword({ email: values.email }))
   }
 
-  const handleSubmit = (values: SignUpValues) => {
-    const actionType =
-      isLoginMode && !resetPass
-        ? 'login'
-        : !isLoginMode && !resetPass
-          ? 'signup'
-          : 'reset'
-    actionHandlers[actionType](values)
+  const handleSearchToken = () => {
+    if (searchKey && searchToken) {
+      searchKey === CONFIRMED_EMAIL &&
+        dispatch(
+          confirmedEmail({ confirmedEmailToken: searchToken.confirmed_email })
+        )
+      setAuthMode(searchKey as AuthModeType)
+    }
+  }
+
+  const renderAuthComponent = () => {
+    switch (authMode) {
+      case login:
+        return <LoginForm authMode={authMode} setAuthMode={setAuthMode} />
+      case signUp:
+        return <RegisterModal authMode={authMode} setAuthMode={setAuthMode} />
+      case resetPassRequest:
+        return <ResetPasswordRequestModal setAuthMode={setAuthMode} />
+      case reset_password:
+        return <ResetPassModal searchToken={searchToken} />
+      default:
+        return null
+    }
+  }
+
+  const renderNotificationComponent = () => {
+    if (userDataChanged) {
+      return (
+        <Notification
+          mode={searchKey === CONFIRMED_EMAIL ? 'mailConf' : 'saveNewPass'}
+        />
+      )
+    }
+
+    if (errors && ![resetPassRequest, login, signUp].includes(authMode)) {
+      return <Notification mode="error" />
+    }
   }
 
   return (
     <Fragment>
-      {mailConfirmation || confirmedEmailToken ? (
-        <MailConfirmation confirmedEmailToken={confirmedEmailToken} />
-      ) : (
-        <Formik
-          initialValues={INITIAL_VALUES}
-          onSubmit={handleSubmit}
-          validationSchema={isLoginMode ? LoginSchema(resetPass) : SignupSchema}
-        >
-          {({ errors, touched }) => (
-            <Form className={styles.formWrapp}>
-              {resetPass ? (
-                <ResetPasswordModal
-                  setResetPass={setResetPass}
-                  errors={errors}
-                  touched={touched}
-                  apiError={apiError}
-                />
-              ) : (
-                <AuthModal
-                  isLoginMode={isLoginMode}
-                  errors={errors}
-                  touched={touched}
-                  setResetPass={setResetPass}
-                  toggleLoginMode={toggleLoginMode}
-                  apiError={apiError}
-                />
-              )}
-            </Form>
-          )}
-        </Formik>
-      )}
+      {renderAuthComponent()}
+      {renderNotificationComponent()}
     </Fragment>
   )
 }
