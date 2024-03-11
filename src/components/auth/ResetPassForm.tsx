@@ -7,7 +7,6 @@ import { AuthFormData } from '../../redux/authentication/slice'
 import { ResetPasswordSchema } from './validation'
 import PasswordField from './PasswordField'
 import RepeatPassword from './RepeatPasswordField'
-import { useAuth } from '../../hooks/use-auth'
 import styles from './auth.module.scss'
 
 type Props = {
@@ -15,9 +14,7 @@ type Props = {
 }
 
 const ResetPassForm: React.FC<Props> = ({ searchToken }) => {
-  const { errors: apiError } = useAuth()
   const dispatch = useDispatch<AppDispatch>()
-  console.log(searchToken)
 
   const INITIAL_VALUES: AuthFormData = {
     password: '',
@@ -48,11 +45,7 @@ const ResetPassForm: React.FC<Props> = ({ searchToken }) => {
               Введіть новий пароль
             </p>
             <div className={styles.fieldsWrapp}>
-              <PasswordField
-                errors={errors}
-                touched={touched}
-                apiError={apiError}
-              />
+              <PasswordField errors={errors} touched={touched} />
               <RepeatPassword errors={errors} touched={touched} />
             </div>
             <div className={styles.btnWrapp}>
