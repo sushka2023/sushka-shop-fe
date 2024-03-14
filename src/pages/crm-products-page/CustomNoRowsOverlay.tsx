@@ -3,6 +3,7 @@ import {
   StyledCustomNoRowsOverlay,
   StyledCustomNoRowsOverlayTypography
 } from './CrmCustomPaginationStyles'
+
 const CustomNoRowsOverlay = () => {
   return (
     <StyledCustomNoRowsOverlay>
