@@ -1,7 +1,14 @@
 /* eslint-disable complexity */
 import { createSlice } from '@reduxjs/toolkit'
-import { Price, addImages, addPrice, createNewProduct } from '../operation'
-import { ProductSubCategoryResponse } from '../../../types'
+import {
+  Price,
+  addImages,
+  addPrice,
+  createNewProduct,
+  fetchProductsForCrm,
+  searchProductsForCrm
+} from '../operation'
+import { ProductResponse, ProductSubCategoryResponse } from '../../../types'
 
 export type ProductState = {
   productId: string | null
@@ -12,11 +19,19 @@ export type ProductState = {
   sub_categories: ProductSubCategoryResponse[]
   price: Price[]
   isLoading: number | null
+  isLoadingForCrm: boolean
+  productsForCrm: ProductResponse[]
+  productsForCrmPageNumber: number
+  productsForCrmTotalCount: number
   operation: string | null
   error: unknown | null
   formErrors: Record<string, string>
   imagesUploadCount: number
   images: boolean
+  isLoadingForCrmSearch: boolean
+  searchProductForCrm: ProductResponse[]
+  searchProductsForCrmPageNumber: number
+  searchProductsForCrmTotalCount: number
 }
 
 const INITIAL_STATE: ProductState = {
@@ -28,11 +43,19 @@ const INITIAL_STATE: ProductState = {
   sub_categories: [],
   price: [],
   isLoading: null,
+  isLoadingForCrm: false,
+  productsForCrm: [],
+  productsForCrmPageNumber: 0,
+  productsForCrmTotalCount: 0,
   operation: null,
   error: null,
   formErrors: {},
   imagesUploadCount: 0,
-  images: false
+  images: false,
+  isLoadingForCrmSearch: false,
+  searchProductForCrm: [],
+  searchProductsForCrmPageNumber: 0,
+  searchProductsForCrmTotalCount: 0
 }
 
 export type AddDataAction = {
@@ -135,6 +158,41 @@ export const productSlice = createSlice({
       })
       .addCase(addPrice.fulfilled, (state) => {
         state.isLoading -= 1
+      })
+      .addCase(fetchProductsForCrm.pending, (state) => {
+        state.isLoadingForCrm = true
+      })
+      .addCase(fetchProductsForCrm.rejected, (state, action) => {
+        state.isLoadingForCrm = false
+        state.productsForCrm = []
+        state.error = action.payload
+        state.productsForCrmTotalCount = 0
+        state.productsForCrmPageNumber = 0
+      })
+      .addCase(fetchProductsForCrm.fulfilled, (state, action) => {
+        state.isLoadingForCrm = false
+        state.error = null
+        state.productsForCrm = action.payload.products
+        state.productsForCrmTotalCount = action.payload.totalCount
+        state.productsForCrmPageNumber = action.payload.pageNumber
+      })
+      .addCase(searchProductsForCrm.pending, (state) => {
+        state.isLoadingForCrmSearch = true
+      })
+      .addCase(searchProductsForCrm.rejected, (state, action) => {
+        state.isLoadingForCrmSearch = false
+        state.searchProductForCrm = []
+        state.error = action.payload
+        state.searchProductsForCrmTotalCount = 0
+        state.searchProductsForCrmPageNumber = 0
+      })
+
+      .addCase(searchProductsForCrm.fulfilled, (state, action) => {
+        state.isLoadingForCrmSearch = false
+        state.error = null
+        state.searchProductForCrm = action.payload.products
+        state.searchProductsForCrmTotalCount = action.payload.totalCount
+        state.searchProductsForCrmPageNumber = action.payload.pageNumber
       })
   }
 })
