@@ -4,7 +4,7 @@ import SearchIcon from '../../icons/search.svg?react'
 import styles from './crmProductsPage.module.scss'
 import { GridPaginationModel } from '@mui/x-data-grid'
 import { SelectChangeEvent } from '@mui/material'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import {
   fetchMainCategories,
   fetchProductsForCrm,
@@ -63,32 +63,30 @@ const CrmProductsPage = () => {
     setStatus(event.target.value)
   }
 
-  const handlePaginationModelChange = useCallback(
-    (paginationModel: GridPaginationModel) => {
-      const categoryId = category === '' ? undefined : parseInt(category)
-      const productStatus =
-        status === '' ? undefined : (status as ProductStatus)
-      if (searchDebounce) {
-        dispatch(
-          searchProductsForCrm({
-            limit: PAGE_SIZE,
-            offset: paginationModel.page * PAGE_SIZE,
-            searchQuery: searchDebounce
-          })
-        )
-      } else {
-        dispatch(
-          fetchProductsForCrm({
-            limit: PAGE_SIZE,
-            offset: paginationModel.page * PAGE_SIZE,
-            productStatus,
-            productCategoryId: categoryId
-          })
-        )
-      }
-    },
-    [status, productsForCrmPageNumber, category, searchDebounce]
-  )
+  const handlePaginationModelChange = (
+    paginationModel: GridPaginationModel
+  ) => {
+    const categoryId = category === '' ? undefined : parseInt(category)
+    const productStatus = status === '' ? undefined : (status as ProductStatus)
+    if (searchDebounce) {
+      dispatch(
+        searchProductsForCrm({
+          limit: PAGE_SIZE,
+          offset: paginationModel.page * PAGE_SIZE,
+          searchQuery: searchDebounce
+        })
+      )
+    } else {
+      dispatch(
+        fetchProductsForCrm({
+          limit: PAGE_SIZE,
+          offset: paginationModel.page * PAGE_SIZE,
+          productStatus,
+          productCategoryId: categoryId
+        })
+      )
+    }
+  }
 
   const searchTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
@@ -108,8 +106,8 @@ const CrmProductsPage = () => {
   }, [searchDebounce])
 
   useEffect(() => {
-    setPaginationModel((model) => ({
-      ...model,
+    setPaginationModel(() => ({
+      pageSize: PAGE_SIZE,
       page: searchDebounce
         ? searchProductsForCrmPageNumber
         : productsForCrmPageNumber
