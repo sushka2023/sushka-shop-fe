@@ -20,7 +20,7 @@ const FirstNameField: FC<Props> = ({ errors, touched }) => {
         <Field
           type="text"
           name="firstName"
-          placeholder="ім'я"
+          placeholder="Ім'я"
           className={`${styles.firstName} ${
             errors.firstName && touched.firstName && styles.fieldError
           }`}

@@ -70,6 +70,8 @@ const Breadcrumbs = () => {
     })
   }
 
+  console.log(pathnames())
+
   return (
     <div className={styles.breadBlock}>
       <ul className={styles.breadList}>
@@ -83,10 +85,12 @@ const Breadcrumbs = () => {
           return (
             <li className={styles.breadLine} key={item}>
               <Link
-                className={`${styles.breadLink} ${
-                  index === pathnames().length - 1 && styles.currentPath
-                }`}
-                to={`/${item}/${allCategories?.[0]?.id}`}
+                className={`${styles.breadLink} ${index === pathnames().length - 1 && styles.currentPath}`}
+                to={
+                  index === 1
+                    ? `/catalog/${allCategories?.find((category) => category.name === item)?.id}`
+                    : `/${item}`
+                }
               >
                 {getUkrainianName(item!)}
               </Link>
