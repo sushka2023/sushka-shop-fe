@@ -70,8 +70,6 @@ const Breadcrumbs = () => {
     })
   }
 
-  console.log(pathnames())
-
   return (
     <div className={styles.breadBlock}>
       <ul className={styles.breadList}>
