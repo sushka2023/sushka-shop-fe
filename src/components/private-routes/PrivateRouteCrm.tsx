@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { FC, Fragment, ReactNode } from 'react'
 import { useAuth } from '../../hooks/use-auth'
+import { Role } from '../../types'
 
 type Props = {
   component: ReactNode
@@ -10,7 +11,7 @@ type Props = {
 const PrivateRouteCrm: FC<Props> = ({ component, redirectTo }) => {
   const { user } = useAuth()
 
-  if (user?.role === 'admin' || user?.role === 'moderator') {
+  if ([Role.ADMIN, Role.MODERATOR].includes(user?.role!)) {
     return <Fragment>{component}</Fragment>
   }
 
