@@ -19,21 +19,25 @@ export const Rating: FC<Props> = ({ onRate }) => {
 
   return (
     <div className={styles.rating}>
-      {[...Array(STAR_NUMBER)].map((_, index) =>
-        index < rating ? (
-          <StarOutlinedIcon
-            key={index}
-            size={24}
-            onClick={() => handleStarClick(index + 1)}
-          />
-        ) : (
+      {[...Array(STAR_NUMBER)].map((_, index) => {
+        if (index < rating) {
+          return (
+            <StarOutlinedIcon
+              key={index}
+              onClick={() => handleStarClick(index + 1)}
+              sx={{ fontSize: 24 }}
+            />
+          )
+        }
+
+        return (
           <StarOutlineOutlinedIcon
             key={index}
-            size="24px"
+            sx={{ fontSize: 24 }}
             onClick={() => handleStarClick(index + 1)}
           />
         )
-      )}
+      })}
     </div>
   )
 }

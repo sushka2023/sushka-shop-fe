@@ -48,10 +48,7 @@ function App() {
               element={<ProductPage />}
             />
           </Route>
-          <Route
-            path="review"
-            element={<FeedbackPage/>}
-          />
+          <Route path="review" element={<FeedbackPage />} />
           <Route path="favorite" element={<FavoritePage />} />
           <Route
             path="account"

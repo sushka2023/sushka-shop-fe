@@ -6,8 +6,9 @@ type Props = {
   reviews: []
 }
 
+// TODO: remove this comment
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FeedbackItem: FC<Props> = ({ reviews }) => {
-  console.log(reviews)
   return (
     <li className={styles.feedbackItem}>
       <div

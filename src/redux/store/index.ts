@@ -27,8 +27,7 @@ const rootReducer = combineReducers({
     ALL_CATEGORIES_PERSIST_CONFIG,
     categoriesSlice.reducer
   ),
-  reviews: reviewsReducer,
-
+  reviews: reviewsReducer
 })
 
 const persistedReducer = persistReducer(

@@ -4,10 +4,16 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import { FileInfo } from './FileInfo'
 import { CustomTextarea } from './CustomTextarea'
 
+const DEFAULT_VALUE = {
+  name: '',
+  size: 0
+}
+
+const MAX_LENGTH = 250
+
 const FeedbackForm = () => {
-  const MAX_LENGTH = 250
   const [rating, setRating] = useState(0)
-  const [file, setFile] = useState('')
+  const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
   const [fileSelected, setFileSelected] = useState(false)
 
   const handleSubmit = async (event: FormEvent) => {
@@ -37,17 +43,13 @@ const FeedbackForm = () => {
   const handleRatingChange = (value: number) => {
     setRating(value)
   }
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault()
-    console.log(rating)
-  }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const fileInput = event.target
-    if (fileInput.files.length > 0) {
+    if ((fileInput.files?.length || 0) > 0) {
       setFile({
-        name: fileInput.files[0].name,
-        size: fileInput.files[0].size
+        name: fileInput.files?.[0].name!,
+        size: fileInput.files?.[0].size!
       })
       setFileSelected(true)
     } else {
@@ -55,7 +57,7 @@ const FeedbackForm = () => {
     }
   }
   const handleFileDelete = () => {
-    setFile('')
+    setFile(DEFAULT_VALUE)
     setFileSelected(false)
   }
 

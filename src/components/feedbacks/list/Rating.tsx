@@ -15,9 +15,9 @@ export const Rating: FC<Props> = ({ rating }) => {
       {[...Array(STAR_NUMBER)].map((_, index) => (
         <span key={index}>
           {index < rating ? (
-            <StarOutlinedIcon fontSize="24px" />
+            <StarOutlinedIcon sx={{ fontSize: '24px' }} />
           ) : (
-            <StarOutlineOutlinedIcon fontSize="24px" />
+            <StarOutlineOutlinedIcon sx={{ fontSize: '24px' }} />
           )}
         </span>
       ))}

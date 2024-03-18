@@ -11,8 +11,6 @@ import { RootState, AppDispatch } from '../../redux/store'
 import { getToken } from '../../utils/cookie/token'
 import { fetchFavoriteItems } from '../../redux/products/operation'
 
-
-
 const FavoritePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const favoriteItems = useSelector(

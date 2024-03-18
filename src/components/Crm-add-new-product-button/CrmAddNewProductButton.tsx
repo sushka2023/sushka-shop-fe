@@ -31,14 +31,16 @@ const CrmAddNewProductButton = () => {
         dispatch(addPrice({ price, productId: productId! }))
           .unwrap()
           .catch((error) => {
-            console.log(error)
+            console.error(error)
           })
       })
     }
   }
 
   useEffect(() => {
-    sendPricesSequentially(productId)
+    if (productId) {
+      sendPricesSequentially(productId)
+    }
   }, [productId])
 
   const handleClickSaveProduct = async (
