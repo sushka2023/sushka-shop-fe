@@ -88,11 +88,7 @@ export const productSlice = createSlice({
             })
           break
         case 'main_category':
-          state[type!] =
-            value &&
-            value.find((category: any) => {
-              return category
-            })
+          state[type!] = value
           break
         case 'price':
           state[type] = value

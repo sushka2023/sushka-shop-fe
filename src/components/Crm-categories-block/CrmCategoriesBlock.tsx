@@ -7,6 +7,7 @@ import {
   fetchMainCategories,
   fetchSubCategories
 } from '../../redux/crm-add-new-product/operation'
+import MuiSelect from '../Crm-categories/MuiSelect'
 
 const CrmCategoriesBlock = () => {
   const mainCategories = useSelector(
@@ -24,7 +25,8 @@ const CrmCategoriesBlock = () => {
 
   return (
     <div className={styles.categoriesOptionWrapp}>
-      <CrmCategories categories={mainCategories} type="main_category" />
+      <MuiSelect mainCategories={mainCategories} />
+      {/* <CrmCategories categories={mainCategories} type="main_category" /> */}
       <CrmCategories categories={subCategories} type="sub_categories" />
     </div>
   )
