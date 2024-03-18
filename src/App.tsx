@@ -19,7 +19,6 @@ import AccountPage from './pages/account-page'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
-import PrivateRouteCrm from './components/private-routes/PrivateRouteCrm'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -64,10 +63,7 @@ function App() {
           <Route path="cooperation" element={<CooperationPage />} />
         </Route>
 
-        <Route
-          path="crm"
-          element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
-        >
+        <Route path="crm" element={<LayoutCRM />}>
           <Route
             path="dashbord"
             element={

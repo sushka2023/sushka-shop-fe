@@ -1,5 +1,50 @@
 @import '../../styles/base/base.scss';
 
+.statusSelectorPopup {
+    margin-top: 10px;
+    box-shadow: none !important;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+    border-radius: 8px !important;
+
+    :global {
+
+        .MuiPaper-root {
+            box-shadow: none;
+        }
+
+        .MuiList-root {
+            .MuiMenuItem-root {
+                padding: 10px 10px;
+                gap: 10px;
+                font-family: $open-sans;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 21px;
+                letter-spacing: 0em;
+                text-align: left;
+                color: #64748b;
+                background-color: #ffffff !important;
+
+                &::before {
+                    content: ' ';
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 1.5px;
+                }
+
+                &.Mui-selected {
+                    color: #5d5fef;
+
+                    &::before {
+                        background-image: url('../../icons/SelectedItem.svg');
+                    }
+                    }
+            }
+     
+        }
+    }
+}
+
 .iconWrapp {
     width: 50px;
     height: 50px;
@@ -25,6 +70,10 @@
 }
 
 .iconArrow {
+    position: absolute;
+    pointer-events: none;
+    right: 20px;
+    top: calc(50% - 0.6em);
     fill: $CRM-grey;
     width: 14px;
     transform: rotate(90deg);
