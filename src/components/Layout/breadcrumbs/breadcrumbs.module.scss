@@ -29,6 +29,7 @@
 
 .currentPath {
   color: $green-dark-200;
+  pointer-events: none;
 }
 
 .breadList {

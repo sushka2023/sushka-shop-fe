@@ -48,7 +48,7 @@ const SlideSection = () => {
       return (
         <div className={styles.lastSlider}>
           <Link
-            to="catalog"
+            to="catalog/11"
             className={`${styles.customButton} ${styles.customLink}`}
           >
             переглянути каталог
