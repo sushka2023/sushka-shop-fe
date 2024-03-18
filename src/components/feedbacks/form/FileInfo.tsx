@@ -13,7 +13,8 @@ type Props = {
   onDelete: () => void
 }
 
-const units = ['KB', 'MB', 'GB']
+const UNITS = ['KB', 'MB', 'GB']
+const SIZE = 1024
 
 export const FileInfo: FC<Props> = ({ file, onDelete }) => {
   const formatFileSize = (size: number | null): string => {
@@ -21,9 +22,9 @@ export const FileInfo: FC<Props> = ({ file, onDelete }) => {
       return 'Невідомий розмір'
     }
 
-    const [formattedSize, unit] = units.reduce(
+    const [formattedSize, unit] = UNITS.reduce(
       ([currentSize, currentUnit], nextUnit) => {
-        return currentSize >= 1024
+        return currentSize >= SIZE
           ? [currentSize / 1024, nextUnit]
           : [currentSize, currentUnit]
       },

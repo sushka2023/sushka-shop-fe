@@ -7,7 +7,7 @@ type Props = {
   onRate: (value: number) => void
 }
 
-const starsNumber = 5
+const STAR_NUMBER = 5
 
 export const Rating: FC<Props> = ({ onRate }) => {
   const [rating, setRating] = useState(0)
@@ -19,11 +19,11 @@ export const Rating: FC<Props> = ({ onRate }) => {
 
   return (
     <div className={styles.rating}>
-      {[...Array(starsNumber)].map((_, index) =>
+      {[...Array(STAR_NUMBER)].map((_, index) =>
         index < rating ? (
           <StarOutlinedIcon
             key={index}
-            size="24px"
+            size={24}
             onClick={() => handleStarClick(index + 1)}
           />
         ) : (

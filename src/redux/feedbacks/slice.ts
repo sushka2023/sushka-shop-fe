@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { fetchReviews } from './operations'
+import { fetchReviews, submitReview } from './operations'
 
 export type Review = {
   id: number
@@ -51,7 +51,13 @@ export const reviewsSlice = createSlice({
       state.error = null
       state.items = action.payload
     },
-    [fetchReviews.rejected]: handleRejected
+    [fetchReviews.rejected]: handleRejected,
+    [submitReview.pending]: handlePending,
+    [submitReview.fulfilled](state) {
+      state.isLoading = false
+      state.error = null
+    },
+    [submitReview.rejected]: handleRejected
   }
 })
 

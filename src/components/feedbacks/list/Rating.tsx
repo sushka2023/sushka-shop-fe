@@ -7,12 +7,12 @@ type Props = {
   rating: number
 }
 
-const starsNumber = 5
+const STAR_NUMBER = 5
 
 export const Rating: FC<Props> = ({ rating }) => {
   return (
     <div className={styles.rating}>
-      {[...Array(starsNumber)].map((_, index) => (
+      {[...Array(STAR_NUMBER)].map((_, index) => (
         <span key={index}>
           {index < rating ? (
             <StarOutlinedIcon fontSize="24px" />

@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Rating } from './Rating'
 
 type Props = {
-  reviews: any[]
+  reviews: []
 }
 
 const FeedbackItem: FC<Props> = ({ reviews }) => {

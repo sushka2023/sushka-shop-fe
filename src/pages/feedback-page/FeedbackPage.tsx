@@ -4,12 +4,12 @@ import { useEffect } from 'react'
 import { fetchReviews } from '../../redux/feedbacks/operations'
 import { useDispatch /*, useSelector*/ } from 'react-redux'
 import FeedbackItem from '../../components/feedbacks/list/FeedbackItem'
-const limit = 5
-const offset = 0
+const LIMIT = 5
+const OFFSET = 0
 const FeedbackPage = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchReviews({ limit, offset }))
+    dispatch(fetchReviews({ LIMIT, OFFSET }))
   }, [])
   // const reviews = useSelector((state: RootState) => state.reviews.items)
 

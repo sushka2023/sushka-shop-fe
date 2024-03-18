@@ -3,10 +3,36 @@ import { Rating } from './Rating'
 import { useState, ChangeEvent, FormEvent } from 'react'
 import { FileInfo } from './FileInfo'
 import { CustomTextarea } from './CustomTextarea'
+
 const FeedbackForm = () => {
+  const MAX_LENGTH = 250
   const [rating, setRating] = useState(0)
   const [file, setFile] = useState('')
   const [fileSelected, setFileSelected] = useState(false)
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault()
+
+    const formData = new FormData()
+    formData.append('product_id', '0')
+    formData.append('rating', rating.toString())
+    formData.append('description', 'stringstri')
+
+    try {
+      const response = await fetch('/api/reviews/create', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (response.ok) {
+        console.log('Review submitted successfully')
+      } else {
+        console.error('Failed to submit review')
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error)
+    }
+  }
 
   const handleRatingChange = (value: number) => {
     setRating(value)
@@ -25,8 +51,7 @@ const FeedbackForm = () => {
       })
       setFileSelected(true)
     } else {
-      setFile('')
-      setFileSelected(false)
+      handleFileDelete()
     }
   }
   const handleFileDelete = () => {
@@ -40,7 +65,7 @@ const FeedbackForm = () => {
       <form className={styles.feedbackForm} onSubmit={handleSubmit}>
         <input type="text" className={styles.feedbackFormInput} />
         <div className={styles.wrapperTextarea}>
-          <CustomTextarea maxLength={250} />
+          <CustomTextarea maxLength={MAX_LENGTH} />
           <label
             htmlFor="fileInput"
             className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}

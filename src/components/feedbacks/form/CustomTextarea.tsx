@@ -1,6 +1,11 @@
-import React, { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, FC, Fragment } from 'react'
 import styles from '../Feedbacks.module.scss'
-export const CustomTextarea = ({ maxLength }) => {
+
+type Props = {
+  maxLength: number
+}
+
+export const CustomTextarea: FC<Props> = ({ maxLength }) => {
   const [text, setText] = useState('')
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -11,7 +16,7 @@ export const CustomTextarea = ({ maxLength }) => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <textarea
         value={text}
         onChange={handleChange}
@@ -21,6 +26,6 @@ export const CustomTextarea = ({ maxLength }) => {
       <div className={styles.counter}>
         {text.length}/{maxLength}
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
