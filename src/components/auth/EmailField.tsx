@@ -1,30 +1,30 @@
+import { FC, Fragment } from 'react'
 import { Field, FormikErrors, FormikTouched } from 'formik'
 import FieldError from './FieldError'
+import { AuthFormData } from '../../redux/authentication/slice'
 import styles from './auth.module.scss'
-import { FC, Fragment } from 'react'
-import { SignUpValues } from './Auth'
+import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
-  errors: FormikErrors<SignUpValues>
-  touched: FormikTouched<SignUpValues>
-  apiError?: number
+  errors: FormikErrors<AuthFormData>
+  touched: FormikTouched<AuthFormData>
 }
 
-// eslint-disable-next-line complexity
-const EmailField: FC<Props> = ({ errors, touched, apiError }) => {
+const EmailField: FC<Props> = ({ errors, touched }) => {
+  const { errors: apiError } = useAuth()
+
+  const isError = errors.email && touched.email
+
   return (
     <Fragment>
       <label
-        className={`${styles.label} ${errors.email && touched.email && styles.labelError}`}
+        className={`${styles.label} ${isError ? styles.labelError : ''} ${apiError && styles.labelErrorApi}`}
       >
         <Field
           type="email"
           name="email"
           placeholder="Електронна пошта"
-          className={`${styles.email} ${
-            (errors.email && touched.email && styles.fieldError) ||
-            (apiError === 403 && styles.fieldError)
-          }`}
+          className={`${styles.email} ${isError ? styles.fieldError : ''}`}
         />
       </label>
       <FieldError errors={errors.email!} touched={touched.email!} />

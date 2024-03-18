@@ -1,0 +1,50 @@
+@import '../../styles/base/base.scss';
+
+.container {
+    padding: 72px 96px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.iconWrapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    &Access {
+        background-color: $yellow-200;
+    }
+
+    &Cross {
+        background-color: #FD6769;
+    }
+}
+
+.icon {
+    fill: $white-200;
+    width: 23px;
+    height: 23px;
+}
+
+.title {
+    color: $green-dark-200;
+    font-family: $open-sans;
+    font-size: 22px;
+    font-weight: $font-weight-600;
+    line-height: 120%;
+}
+
+.text {
+    color: $green-dark-200;
+    text-align: center;
+    font-family: $open-sans;
+    font-size: 18px;
+    font-weight: $font-weight-400;
+    line-height: 140%;
+}

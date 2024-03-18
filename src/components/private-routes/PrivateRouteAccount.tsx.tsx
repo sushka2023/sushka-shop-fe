@@ -7,7 +7,7 @@ type Props = {
   redirectTo: string
 }
 
-const PrivateRoute: FC<Props> = ({ component, redirectTo }) => {
+const PrivateRouteAccount: FC<Props> = ({ component, redirectTo }) => {
   const accessToken = getToken()
 
   if (accessToken) {
@@ -17,4 +17,4 @@ const PrivateRoute: FC<Props> = ({ component, redirectTo }) => {
   return <Navigate to={redirectTo} replace />
 }
 
-export default PrivateRoute
+export default PrivateRouteAccount

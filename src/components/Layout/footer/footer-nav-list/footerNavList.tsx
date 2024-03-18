@@ -19,7 +19,7 @@ const FooterNavList = () => {
   return (
     <ul className={styles.footerNavList}>
       <li className={styles.footerNavListLine}>
-        <Link to="catalog" className={styles.footerListNavLink}>
+        <Link to="catalog/11" className={styles.footerListNavLink}>
           Каталог
         </Link>
       </li>

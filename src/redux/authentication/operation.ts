@@ -2,16 +2,11 @@ import { AxiosError } from 'axios'
 import axiosInstance from '../../axios/settings'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { TokenModel, UserResponse } from '../../types'
-import { OperationType, SignUpFormData } from './slice'
+import { OperationType, AuthFormData } from './slice'
 import { setToken, removeToken } from '../../utils/cookie/token'
 
-export type LoginBody = {
-  email: string
-  password: string
-}
-
 type SignUpParams = {
-  user: SignUpFormData
+  user: AuthFormData
   operationType: OperationType
 }
 
@@ -40,7 +35,7 @@ export const signUp = createAsyncThunk<SignUpResponse, SignUpParams>(
 )
 
 type LoginParams = {
-  user: LoginBody
+  user: AuthFormData
   operationType: OperationType
 }
 
@@ -114,6 +109,67 @@ export const logout = createAsyncThunk<any, LogOutParams>(
       removeToken()
 
       return response
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+type confirmedEmailParams = {
+  confirmedEmailToken: string | null
+}
+
+export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
+  'api/rconfirmedEmail',
+  async ({ confirmedEmailToken }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `api/auth/confirmed_email/${confirmedEmailToken}`
+      )
+      return response.data.message
+    } catch (e) {
+      const error = e as AxiosError
+
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+type ResetPassParams = {
+  email: string | undefined
+}
+
+export const resetPassword = createAsyncThunk<any, ResetPassParams>(
+  'api/resetPass',
+  async ({ email }, thunkAPI) => {
+    try {
+      await axiosInstance.get(`api/auth/reset_password/${email}`)
+    } catch (e) {
+      const error = e as AxiosError
+      return thunkAPI.rejectWithValue(error?.response?.status)
+    }
+  }
+)
+
+type SaveNewPassParams = {
+  newPass: string | undefined
+  token: string | null
+}
+
+export const saveNewPassword = createAsyncThunk<any, SaveNewPassParams>(
+  'api/saveNewPass',
+  async ({ newPass, token }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        `api/auth/reset_password/confirmed/${token}`,
+        {
+          password_checksum: newPass
+        }
+      )
+
+      return response.data.message
     } catch (e) {
       const error = e as AxiosError
 

@@ -14,12 +14,13 @@ import PrivacyPolicyPage from './pages/conditions-page/RrivacyPolicyPage'
 import CooperationPage from './pages/cooperation-page/CooperationPage'
 import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
-import PrivateRoute from './components/privste-route'
+import PrivateRouteAccount from './components/private-routes/PrivateRouteAccount.tsx'
 import AccountPage from './pages/account-page'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
+import PrivateRouteCrm from './components/private-routes/PrivateRouteCrm'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -55,7 +56,7 @@ function App() {
           <Route
             path="account"
             element={
-              <PrivateRoute redirectTo="/" component={<AccountPage />} />
+              <PrivateRouteAccount redirectTo="/" component={<AccountPage />} />
             }
           />
           <Route path="cart" element={<ShoppingListPage />} />
@@ -64,7 +65,10 @@ function App() {
           <Route path="cooperation" element={<CooperationPage />} />
         </Route>
 
-        <Route path="crm" element={<LayoutCRM />}>
+        <Route
+          path="crm"
+          element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
+        >
           <Route
             path="dashbord"
             element={

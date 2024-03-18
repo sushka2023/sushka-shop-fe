@@ -1,8 +1,14 @@
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.jpg'
+import { RootState } from '../../redux/store'
 import styles from './HeroSection.module.scss'
 
 const HeroSection = () => {
+  const allCategories = useSelector(
+    (state: RootState) => state.allCategories.mainCategories
+  )
+
   return (
     <section className={styles.mainContainer}>
       <div className={styles.mainBlock}>
@@ -17,7 +23,7 @@ const HeroSection = () => {
             натуральної фруктової <br /> пастили та фріпсів
           </p>
           <Link
-            to="catalog"
+            to={`/catalog/${allCategories[0].id}`}
             className={`${styles.sloganButton} ${styles.sloganLink} `}
           >
             Переглянути каталог
