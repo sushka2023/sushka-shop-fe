@@ -23,7 +23,7 @@ const HeroSection = () => {
             натуральної фруктової <br /> пастили та фріпсів
           </p>
           <Link
-            to={`/catalog/${allCategories[0].id}`}
+            to={`/catalog/${allCategories && allCategories[0].id}`}
             className={`${styles.sloganButton} ${styles.sloganLink} `}
           >
             Переглянути каталог

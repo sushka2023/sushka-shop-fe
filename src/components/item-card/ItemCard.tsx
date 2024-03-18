@@ -1,7 +1,6 @@
 import styles from './itemCard.module.scss'
 import IconFavorite from '../../icons/favorite.svg?react'
 import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
-import ShopItem from '../../images/shop-item.jpg'
 import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FavoriteItemsResponse, ProductResponse } from '../../types'
@@ -71,7 +70,7 @@ const ItemCard: FC<Props> = ({ item }) => {
         <div className={styles.cardContent}>
           <Link to={`/catalog/${item.product_category_id}/${item.id}/details`}>
             <div className={styles.slideImage}>
-              <img src={ShopItem} alt="mandarin pastille" />
+              <img src={item.images[0].image_url} alt="mandarin pastille" />
               {!isFavorite ? (
                 <IconFavorite
                   className={styles.cardFavorite}
