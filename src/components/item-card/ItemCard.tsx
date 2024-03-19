@@ -43,19 +43,17 @@ const ItemCard: FC<Props> = ({ item }) => {
   ) => {
     e.preventDefault()
 
-    if (isLoading) {
-      return
-    }
-
     const accessToken = getToken()
     setIsModalOpen(!accessToken)
-    user &&
-      dispatch(
-        !isFavorite
-          ? addToFavorite({ product_id })
-          : removeFavorite({ product_id })
-      )
-    user && setIsFavorite(!isFavorite)
+
+    if (isLoading || !user?.id) return
+
+    dispatch(
+      !isFavorite
+        ? addToFavorite({ product_id })
+        : removeFavorite({ product_id })
+    )
+    setIsFavorite(!isFavorite)
   }
 
   const handleWeightClick = (
