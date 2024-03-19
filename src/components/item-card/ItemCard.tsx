@@ -11,6 +11,7 @@ import Auth from '../auth/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToFavorite, removeFavorite } from '../../redux/products/operation'
 import { AppDispatch, RootState } from '../../redux/store'
+import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
   item: ProductResponse
@@ -26,6 +27,8 @@ const ItemCard: FC<Props> = ({ item }) => {
   const isLoading = useSelector((state: RootState) => state.items.isLoading)
 
   const dispatch = useDispatch<AppDispatch>()
+
+  const { user } = useAuth()
 
   const toggleFavorite = (favorite: FavoriteItemsResponse) =>
     favorite.product.id === item.id
@@ -46,12 +49,13 @@ const ItemCard: FC<Props> = ({ item }) => {
 
     const accessToken = getToken()
     setIsModalOpen(!accessToken)
-    dispatch(
-      !isFavorite
-        ? addToFavorite({ product_id })
-        : removeFavorite({ product_id })
-    )
-    accessToken && setIsFavorite(!isFavorite)
+    user &&
+      dispatch(
+        !isFavorite
+          ? addToFavorite({ product_id })
+          : removeFavorite({ product_id })
+      )
+    user && setIsFavorite(!isFavorite)
   }
 
   const handleWeightClick = (

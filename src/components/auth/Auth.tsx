@@ -20,7 +20,7 @@ export enum AuthModeType {
 
 type Props = {
   setIsModalOpen: (value: boolean) => void
-  searchToken: { [key: string]: string | null }
+  searchToken?: { [key: string]: string | null }
 }
 
 const CONFIRMED_EMAIL = 'confirmed_email'
@@ -35,9 +35,12 @@ const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
   const { login, signUp, resetPassRequest, reset_password } = AuthModeType
 
   useEffect(() => {
-    handleUserLogin()
     handleSearchToken()
-  }, [user, searchToken])
+  }, [searchToken])
+
+  useEffect(() => {
+    handleUserLogin()
+  }, [user, isLoggedIn])
 
   const handleUserLogin = () => {
     if (user && isLoggedIn) {
@@ -65,7 +68,7 @@ const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
       case resetPassRequest:
         return <ResetPasswordRequestModal setAuthMode={setAuthMode} />
       case reset_password:
-        return <ResetPassModal searchToken={searchToken} />
+        return <ResetPassModal searchToken={searchToken!} />
       default:
         return null
     }
