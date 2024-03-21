@@ -5,6 +5,7 @@ import { fetchFavoriteItems, fetchItems } from '../../redux/products/operation'
 import ItemCard from '../item-card/ItemCard'
 import styles from './catalog-list.module.scss'
 import { RootState, AppDispatch } from '../../redux/store/index'
+import { useAuth } from '../../hooks/use-auth'
 
 const CatalogList = () => {
   const { pathname } = useLocation()
@@ -16,6 +17,7 @@ const CatalogList = () => {
   const weight = useSelector((state: RootState) => state.items.selectedWeight)
   const { category } = useParams()
   const dispatch = useDispatch<AppDispatch>()
+  const { user } = useAuth()
 
   useEffect(() => {
     dispatch(
@@ -30,7 +32,7 @@ const CatalogList = () => {
         weight: weight.join(',')
       })
     )
-    dispatch(fetchFavoriteItems())
+    user && dispatch(fetchFavoriteItems())
   }, [category, pathname, offset])
 
   return (
