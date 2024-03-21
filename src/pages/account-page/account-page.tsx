@@ -3,16 +3,13 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../redux/store'
-import { logout } from '../../redux/authentication/operation'
 import { styled } from '@mui/material'
 import styles from './AccountPage.module.scss'
-import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
-import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
+import BasicModal from '../../components/Account-panel/Delivery-address/Delivery-address'
+import ModalCustomBtn from '../../components/Modal-custom-btn/ModalCustomBtn'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -82,15 +79,7 @@ function a11yProps(index: number) {
   }
 }
 
-export default function BasicTabs() {
-  const token = useSelector((state: RootState) => state.auth.accessToken)
-  const dispatch = useDispatch<AppDispatch>()
-  const { user } = useAuth()
-  console.log('✌️user --->', user)
-
-  const handleClickLogout = () => {
-    return dispatch(logout({ accessToken: token! }))
-  }
+export default function AccountPage() {
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -111,16 +100,14 @@ export default function BasicTabs() {
             <StyledTab label={`Історія замовлень`} {...a11yProps(2)} />
             <StyledTab label={`Змінити пароль`} {...a11yProps(3)} />
           </StyledTabs>
-          <button className={styles.btnEdit} onClick={handleClickLogout}>
-            Вийти
-          </button>
+          <ModalCustomBtn></ModalCustomBtn>
         </Box>
       </div>
       <CustomTabPanel value={value} index={0}>
         <ContactInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <DeliveryAddress />
+        <BasicModal />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <OrderHistory />
