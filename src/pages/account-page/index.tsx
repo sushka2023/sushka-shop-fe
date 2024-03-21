@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/authentication/operation'
 import { AppDispatch, RootState } from '../../redux/store'

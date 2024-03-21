@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import FeedbackForm from '../../components/feedbacks/form/FeedbackForm'
 import styles from './FeedbackPage.module.scss'
 import { useEffect } from 'react'

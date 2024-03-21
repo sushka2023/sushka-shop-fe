@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import styles from '../Feedbacks.module.scss'
 import { Rating } from './Rating'
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react'
