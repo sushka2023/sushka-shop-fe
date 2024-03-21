@@ -9,6 +9,10 @@ import { logout } from '../../redux/authentication/operation'
 import { styled } from '@mui/material'
 import styles from './AccountPage.module.scss'
 import { useAuth } from '../../hooks/use-auth'
+import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
+import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
+import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
+import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -59,7 +63,7 @@ function CustomTabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       className={styles.customTabPanel}
-      style={{ backgroundColor: '#FEECEE' }} // Стиль фонового кольору червоний
+      style={{ backgroundColor: '#FEECEE' }}
       {...other}
     >
       {value === index && (
@@ -113,16 +117,16 @@ export default function BasicTabs() {
         </Box>
       </div>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        <ContactInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <DeliveryAddress />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <OrderHistory />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item
+        <ChangePassword />
       </CustomTabPanel>
       <div className={styles.wave}> </div>
     </Box>
