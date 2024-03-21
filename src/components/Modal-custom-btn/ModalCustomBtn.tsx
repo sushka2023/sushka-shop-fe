@@ -4,7 +4,6 @@ import Divider from '@mui/joy/Divider'
 import DialogTitle from '@mui/joy/DialogTitle'
 import DialogContent from '@mui/joy/DialogContent'
 import DialogActions from '@mui/joy/DialogActions'
-import Modal from '@mui/joy/Modal'
 import ModalDialog from '@mui/joy/ModalDialog'
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,9 +11,9 @@ import { logout } from '../../redux/authentication/operation'
 import { AppDispatch, RootState } from '../../redux/store'
 import { useAuth } from '../../hooks/use-auth'
 import styles from './ModalCustomBtn.module.scss'
-
+import ModalPortal from '../modal-portal/ModalPortal'
 export default function ModalCustomBtn() {
-  const [open, setOpen] = React.useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const token = useSelector((state: RootState) => state.auth.accessToken)
   const dispatch = useDispatch<AppDispatch>()
@@ -41,15 +40,13 @@ export default function ModalCustomBtn() {
     'backgroundColor': '#FCA1A9'
   }
 
-  const window = {}
-
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={() => setOpen(true)} sx={edit}>
+      <Button variant="outlined" onClick={() => setIsModalOpen(true)} sx={edit}>
         Вийти
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <ModalDialog sx={window} variant="outlined" role="alertdialog">
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <ModalDialog>
           <DialogTitle>
             <WarningRoundedIcon />
             Confirmation
@@ -75,7 +72,7 @@ export default function ModalCustomBtn() {
             </Button>
           </DialogActions>
         </ModalDialog>
-      </Modal>
+      </ModalPortal>
     </React.Fragment>
   )
 }
