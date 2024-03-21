@@ -1,5 +1,9 @@
 @import "../../styles/base/base.scss";
 
+body.modalOpen {
+    overflow: hidden;
+}
+
 .overlay {
     z-index: 1;
     position: fixed;
@@ -53,6 +57,7 @@
 
 .modal {
     position: fixed;
+    overflow: hidden;
     top: 50%;
     left: 50%;
     z-index: 2;
