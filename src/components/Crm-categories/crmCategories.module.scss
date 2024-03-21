@@ -7,11 +7,6 @@
     border-radius: 8px !important;
 
     :global {
-
-        .MuiPaper-root {
-            box-shadow: none;
-        }
-
         .MuiList-root {
             .MuiMenuItem-root {
                 padding: 10px 10px;
@@ -42,30 +37,6 @@
             }
      
         }
-    }
-}
-
-.iconWrapp {
-    width: 50px;
-    height: 50px;
-    border-radius: 30px;
-    border: 1px solid $CRM-accent;
-
-    &Disabled {
-        pointer-events: none;
-        border: 1px solid #D9D9D9;
-    }
-}
-
-.iconPlus {
-    fill: $CRM-accent;
-    width: 30px;
-    height: 30px;
-    padding: 10px;
-    cursor: pointer;
-
-    &Disabled {
-        fill: #D9D9D9;
     }
 }
 

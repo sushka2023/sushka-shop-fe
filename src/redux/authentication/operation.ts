@@ -66,7 +66,7 @@ export const login = createAsyncThunk<LoginResponse, LoginParams>(
       return { data: response.data, operationType }
     } catch (e) {
       const error = e as AxiosError
-
+      removeToken()
       return thunkAPI.rejectWithValue(error?.response?.status)
     }
   }
@@ -91,7 +91,7 @@ export const currentUser = createAsyncThunk<
     return { data: response.data, operationType }
   } catch (e) {
     const error = e as AxiosError
-
+    removeToken()
     return thunkAPI.rejectWithValue(error?.response?.status)
   }
 })
@@ -122,7 +122,7 @@ type confirmedEmailParams = {
 }
 
 export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
-  'api/rconfirmedEmail',
+  'api/confirmedEmail',
   async ({ confirmedEmailToken }, thunkAPI) => {
     try {
       const response = await axiosInstance.get(

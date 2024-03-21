@@ -65,6 +65,7 @@ export type AddDataAction = {
     | { type: 'images'; value: boolean }
     | { type: 'main_category'; value: any }
     | { type: 'sub_categories'; value: any }
+    | { type: 'remove'; value: any }
   type: string
 }
 
@@ -74,6 +75,7 @@ export const productSlice = createSlice({
   reducers: {
     addData: (state, action: AddDataAction) => {
       const { type, value } = action.payload
+      const categoryExists = state.sub_categories.includes(value)
 
       switch (type) {
         case 'isLoading':
@@ -81,11 +83,14 @@ export const productSlice = createSlice({
           state.productId = null
           break
         case 'sub_categories':
-          state[type] =
-            value &&
-            value.filter((value: any) => {
-              return value
-            })
+          if (!categoryExists) {
+            state[type] = [...state.sub_categories, value]
+          }
+          break
+        case 'remove':
+          state.sub_categories = state.sub_categories.filter(
+            (category) => category !== value
+          )
           break
         case 'main_category':
           state[type!] = value

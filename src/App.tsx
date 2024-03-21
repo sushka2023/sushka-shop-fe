@@ -15,6 +15,7 @@ import CooperationPage from './pages/cooperation-page/CooperationPage'
 import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRouteAccount from './components/private-routes/PrivateRouteAccount.tsx'
+import PrivateRouteCrm from './components/private-routes/PrivateRouteCrm'
 import AccountPage from './pages/account-page'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
@@ -61,7 +62,10 @@ function App() {
           <Route path="cooperation" element={<CooperationPage />} />
         </Route>
 
-        <Route path="crm" element={<LayoutCRM />}>
+        <Route
+          path="crm"
+          element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
+        >
           <Route
             path="dashbord"
             element={
