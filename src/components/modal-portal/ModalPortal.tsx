@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
-import { FC, ReactNode, useRef } from 'react'
+import { FC, ReactNode } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { resetAuth } from '../../redux/authentication/slice'
@@ -26,7 +26,6 @@ const ModalPortal: FC<Props> = ({
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const dispatch = useDispatch<AppDispatch>()
-  const modalRef = useRef<HTMLDivElement>(null)
 
   const closeModal = (e: React.MouseEvent<Element, MouseEvent>) => {
     if (e.target !== e.currentTarget) return
@@ -64,10 +63,7 @@ const ModalPortal: FC<Props> = ({
         >
           {(state) => {
             return (
-              <div
-                ref={modalRef}
-                className={`${styles.modal} ${styles[state]}`}
-              >
+              <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
                   onClick={(e) => closeModal(e)}
