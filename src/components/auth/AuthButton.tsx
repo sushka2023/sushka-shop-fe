@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styles from './auth.module.scss'
 import { FC } from 'react'
 import { useAuth } from '../../hooks/use-auth'

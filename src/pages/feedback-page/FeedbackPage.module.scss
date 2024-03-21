@@ -8,7 +8,11 @@
 .feedbacksWrapper {
    display: flex;
    justify-content: space-between;
+   align-items: flex-start;
    
+}
+.feedbackList {
+   max-width: 840px;
 }
 .title {
    color: #567343;

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import FeedbackForm from '../../components/feedbacks/form/FeedbackForm'
 import styles from './FeedbackPage.module.scss'
 import { useEffect } from 'react'
@@ -7,10 +8,8 @@ import FeedbackItem from '../../components/feedbacks/list/FeedbackItem'
 
 const LIMIT = 5
 const OFFSET = 0
-
 const FeedbackPage = () => {
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
   }, [])
