@@ -148,7 +148,7 @@ const BasketItem: FC<Props> = ({
         )
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
