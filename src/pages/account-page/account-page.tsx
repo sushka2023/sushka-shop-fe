@@ -23,6 +23,7 @@ const StyledTabs = styled(Tabs)(() => ({
     backgroundColor: '#FCC812',
     borderRadius: '20px',
     zIndex: -1
+    // marginBottom: '5px'
   }
 }))
 
@@ -39,15 +40,15 @@ const StyledTab = styled((props: StyledTabProps) => (
   'marginRight': theme.spacing(1),
   'color': '#567343',
   'borderRadius': '20px',
-  'height': '60px',
   'fontStyle': '26px',
   'fontWeight': 600,
+  'height': '65px',
   'wordWrap': 'break-word',
   'padding': '21px 40px',
+
   '&.Mui-selected': {
     color: '#FFFFFF'
-  },
-  '&.Mui-focusVisible': {}
+  }
 }))
 
 function CustomTabPanel(props: TabPanelProps) {

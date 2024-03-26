@@ -1,30 +1,55 @@
 import * as React from 'react'
-import Button from '@mui/joy/Button'
-import Divider from '@mui/joy/Divider'
-import DialogTitle from '@mui/joy/DialogTitle'
-import DialogContent from '@mui/joy/DialogContent'
-import DialogActions from '@mui/joy/DialogActions'
-import ModalDialog from '@mui/joy/ModalDialog'
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded'
-import { useDispatch, useSelector } from 'react-redux'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Modal from '@mui/material/Modal'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
+import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../redux/store'
-import { useAuth } from '../../hooks/use-auth'
-import styles from './ModalCustomBtn.module.scss'
-import ModalPortal from '../modal-portal/ModalPortal'
-export default function ModalCustomBtn() {
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
 
-  const token = useSelector((state: RootState) => state.auth.accessToken)
+export default function BasicModal() {
   const dispatch = useDispatch<AppDispatch>()
-  const { user } = useAuth()
-  const handleClickLogout = () => {
-    return dispatch(logout({ accessToken: token! }))
-  }
+  const token = useSelector((state: RootState) => state.auth.accessToken)
+  const [open, setOpen] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
 
-  console.log('✌️user --->', user)
+  const BootstrapButton = styled(Button)({
+    'boxShadow': 'none',
+    'textTransform': 'none',
+    'fontSize': 16,
+    'padding': '6px 12px',
+    'border': '1px solid',
+    'lineHeight': 1.5,
+    'backgroundColor': '#0063cc',
+    'borderColor': '#0063cc',
+    'fontFamily': [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(','),
+    '&:hover': {
+      backgroundColor: '#0069d9',
+      borderColor: '#0062cc',
+      boxShadow: 'none'
+    },
+    '&:active': {
+      boxShadow: 'none',
+      backgroundColor: '#0062cc',
+      borderColor: '#005cbf'
+    }
+  })
 
-  const edit = {
+  const editBtnAccount = {
     '&.MuiButton-root:hover': {
       backgroundColor: '#EDA4A4'
     },
@@ -39,40 +64,93 @@ export default function ModalCustomBtn() {
     'padding': '21px 40px',
     'backgroundColor': '#FCA1A9'
   }
-
+  const styleBoxModalWindow = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 580,
+    height: '291px',
+    bgcolor: 'background.paper',
+    borderRadius: '20px',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: '#567343'
+  }
+  const styleBtnModalWindow = {
+    'width': 250,
+    'height': 50,
+    'bgcolor': 'background.paper',
+    'borderRadius': '10px',
+    'color': '#FCC812',
+    'border': '2px solid #FCC812',
+    'lineHeight': '18.2px',
+    '&:hover': {
+      backgroundColor: '#FCC812',
+      boxShadow: 'none',
+      border: '2px solid #FCC812',
+      color: '#FFFFFF'
+    }
+  }
+  const styleBtnEditModalWindow = {
+    'width': 250,
+    'height': 50,
+    'bgcolor': '#D21C1C',
+    'borderRadius': '10px',
+    'color': '#FFFFFF',
+    'border': '0',
+    'lineHeight': '18.2px',
+    '&:hover': {
+      backgroundColor: '#DB4949'
+    }
+  }
+  const handleClickLogout = () => {
+    return dispatch(logout({ accessToken: token! }))
+  }
   return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={() => setIsModalOpen(true)} sx={edit}>
+    <div>
+      <Button onClick={handleOpen} sx={editBtnAccount}>
         Вийти
       </Button>
-      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <ModalDialog>
-          <DialogTitle>
-            <WarningRoundedIcon />
-            Confirmation
-          </DialogTitle>
-          <Divider />
-          <DialogContent>
-            Ви впевнені, що хочете вийти зі свого профілю?
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="solid"
-              className={styles.controlEdit}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={styleBoxModalWindow}>
+          <Typography
+            id="modal-modal-title"
+            component="p"
+            style={{ fontSize: '22px', fontWeight: 600 }}
+          >
+            Вийти з аккаунта
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 3 }}>
+            Ви точно бажаєте вийти зі свого аккаунта?
+          </Typography>
+          <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
+            <BootstrapButton
+              onClick={handleClose}
+              variant="contained"
+              sx={styleBtnModalWindow}
+              disableRipple
+            >
+              Скасувати
+            </BootstrapButton>
+            <BootstrapButton
               onClick={handleClickLogout}
+              variant="contained"
+              sx={styleBtnEditModalWindow}
+              disableRipple
             >
               Вийти
-            </Button>
-            <Button
-              variant="plain"
-              color="neutral"
-              onClick={() => setOpen(false)}
-            >
-              Назад
-            </Button>
-          </DialogActions>
-        </ModalDialog>
-      </ModalPortal>
-    </React.Fragment>
+            </BootstrapButton>
+          </Stack>
+        </Box>
+      </Modal>
+    </div>
   )
 }
