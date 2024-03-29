@@ -5,11 +5,11 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material'
 import styles from './AccountPage.module.scss'
-import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import BasicModal from '../../components/Account-panel/Delivery-address/Delivery-address'
 import ModalCustomBtn from '../../components/Modal-custom-btn/ModalCustomBtn'
+import ContactInfo from '../../components/Account-panel/Contact-info/Contact-info'
 
 interface TabPanelProps {
   children?: React.ReactNode
