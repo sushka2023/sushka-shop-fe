@@ -9,7 +9,7 @@ import { Report } from 'notiflix/build/notiflix-report-aio'
 import { AppDispatch, RootState } from '../../redux/store'
 import { addData } from '../../redux/crm-add-new-product/slice/product'
 
-const LayoutCRM = () => {
+export const LayoutCRM = () => {
   const isLoading = useSelector(
     (state: RootState) => state.newProduct.isLoading
   )
@@ -38,5 +38,3 @@ const LayoutCRM = () => {
     </div>
   )
 }
-
-export default LayoutCRM
