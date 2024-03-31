@@ -10,10 +10,16 @@ import IconArrowRight from '../../icons/arrowright.svg?react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
 import { ProductResponse } from '../../types'
 import axiosInstance from '../../axios/settings'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { Notify } from 'notiflix'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../redux/store'
+import Notiflix, { Notify } from 'notiflix'
 import { formatWeight } from '../../helpers/formatWeightToString'
+import { fetchBasketItemsThunk } from '../../redux/basket-item-count/operations'
+import { updateCount } from '../../redux/basket-item-count/slice'
+
+Notiflix.Notify.init({
+  position: 'center-top'
+})
 
 const customStyles = {
   position: {
@@ -59,6 +65,8 @@ const ProductPage = () => {
 
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
 
+  const dispatch = useDispatch<AppDispatch>()
+
   const [showModal, setShowModal] = useState(false)
   const handleClick = () => {
     return setShowModal(false)
@@ -82,7 +90,7 @@ const ProductPage = () => {
 
         if (data.prices.length > 0) {
           const minWeightItem = data.prices.reduce((prev, curr) => {
-            const prevWeight = parseInt(prev.weight, 10) // Конвертуємо рядок у ціле число
+            const prevWeight = parseInt(prev.weight, 10)
             const currWeight = parseInt(curr.weight, 10)
             return prevWeight < currWeight ? prev : curr
           })
@@ -151,6 +159,8 @@ const ProductPage = () => {
     try {
       if (isAuth) {
         await addProductToBasket(productId, selectedQuantity, selectedPriceId)
+        dispatch(fetchBasketItemsThunk())
+
         Notify.success('Товар добавлено в кошик!')
       } else {
         const orderInfo = {
@@ -184,6 +194,8 @@ const ProductPage = () => {
           PRODUCT_ORDERS_LS_KEY,
           JSON.stringify(productOrders)
         )
+
+        dispatch(updateCount(productOrders))
 
         Notify.success('Товар добавлено в кошик!')
       }

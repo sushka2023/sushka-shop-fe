@@ -7,9 +7,9 @@ import Auth from '../../../auth/Auth'
 import IconSearch from '../../../../icons/search.svg?react'
 import IconAccount from '../../../../icons/account.svg?react'
 import IconFavorite from '../../../../icons/favorite.svg?react'
-import IconCart from '../../../../icons/cart.svg?react'
 import styles from '../Header.module.scss'
 import { RootState } from '../../../../redux/store'
+import BasketCountIcon from '../../../basket-count-icon/BasketCountIcon'
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
@@ -97,7 +97,7 @@ const HeaderListIcons = () => {
         </li>
         <li className={styles.listIconsLine}>
           <Link to="cart">
-            <IconCart className={styles.iconsNav} />
+            <BasketCountIcon />
           </Link>
         </li>
       </ul>
