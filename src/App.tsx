@@ -21,7 +21,7 @@ import AccountPage from './pages/account-page'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
-import { LayoutCRM } from './components/layoutCRM/LayoutCRM'
+import LayoutCRM from './components/layoutCRM/LayoutCRM'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
