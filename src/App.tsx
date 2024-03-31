@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import LayoutCRM from './components/layoutCRM/LayoutCRM'
 import Layout from './components/Layout/Layout'
 import MainPage from './pages/main-page/MainPage'
 import CatalogPage from './pages/catalog-page/CatalogPage'
@@ -20,8 +21,6 @@ import AccountPage from './pages/account-page'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
-
-import LayoutCRM from './components/layoutCRM/LayoutCRM'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
