@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
 import { resetAuth } from '../../redux/authentication/slice'
@@ -27,7 +27,15 @@ const ModalPortal: FC<Props> = ({
   const [searchParams] = useSearchParams()
   const dispatch = useDispatch<AppDispatch>()
 
-  const closeModal = () => {
+  useEffect(() => {
+    isModalOpen
+      ? document.body.classList.add(styles.modalOpen)
+      : document.body.classList.remove(styles.modalOpen)
+  }, [isModalOpen])
+
+  const closeModal = (e: React.MouseEvent<Element, MouseEvent>) => {
+    if (e.target !== e.currentTarget) return
+
     dispatch(resetAuth())
     if (searchToken) {
       const searchKey = Object.keys(searchToken)[0]
@@ -52,7 +60,7 @@ const ModalPortal: FC<Props> = ({
       unmountOnExit
       mountOnEnter
     >
-      <div className={styles.overlay}>
+      <div className={styles.overlay} onClick={(e) => closeModal(e)}>
         <Transition
           in={isModalOpen}
           timeout={TIMEOUT_DELAY_MS}
@@ -64,7 +72,7 @@ const ModalPortal: FC<Props> = ({
               <div className={`${styles.modal} ${styles[state]}`}>
                 <IconClose
                   className={styles.closeIcon}
-                  onClick={() => closeModal()}
+                  onClick={(e) => closeModal(e)}
                 />
                 {children}
               </div>

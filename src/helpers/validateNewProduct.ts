@@ -22,10 +22,12 @@ export const newProductPriceSchema = yup.array().of(
       .number()
       .nullable()
       .positive('Значення має бути більше 0')
+      .min(1)
       .required('Поле з кількістю має бути заповненим'),
     price: yup
       .number()
       .positive('Значення має бути більше 0')
+      .min(1)
       .required('Поле з ціною має бути заповненим'),
     sale: yup.boolean(),
     priceSale: yup
@@ -38,6 +40,7 @@ export const newProductPriceSchema = yup.array().of(
             .required(
               'Акція активна, поле з акційною ціною має бути заповненим'
             )
+            .min(1)
             .test(
               'is-positive',
               'Значення має бути більше 0',
