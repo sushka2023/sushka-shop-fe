@@ -1,40 +1,68 @@
 import { Form, Formik } from 'formik'
-import { CustomInput } from '../../auth/InputCustom'
 import * as yup from 'yup'
 import { Box, Grid } from '@mui/material'
+import { CustomInput } from '../../auth/InputCustom'
+import axiosInstance from '../../../axios/settings'
 
-export default function ContactInfo() {
-  const stContainerContactInfo = {
-    h3: {
-      fontFamily: 'Comfortaa',
-      fontSize: '32px',
-      fontWeight: 500
-    },
-    p: {
-      fontFamily: 'Open Sans',
-      fontSize: '18px'
+interface UserData {
+  email: string
+  first_name: string
+  last_name: string
+  phone_number: string
+}
+
+interface ContactInfoProps {
+  user: UserData
+}
+
+export default function ContactInfo({ user }: ContactInfoProps) {
+  console.log('✌️user --->', user)
+  const stH3 = {
+    fontFamily: 'Comfortaa',
+    fontSize: '32px',
+    fontWeight: 500
+  }
+
+  const stP = {
+    fontFamily: 'Open Sans',
+    fontSize: '18px'
+  }
+
+  const validationSchema = yup.object().shape({
+    first_name: yup.string().required('First name is required'),
+    last_name: yup.string().required('Last name is required'),
+    phone_number: yup
+      .string()
+      .matches(/^[0-9+]*$/, 'Invalid telephone number')
+      .nullable()
+  })
+
+  const onSubmit = async (values: UserData) => {
+    console.log('Form submitted:', values)
+
+    try {
+      const response = await axiosInstance.put('/api/users/me/', values)
+      return response
+    } catch (error) {
+      console.error('Error updating user data:', error)
     }
   }
 
   return (
     <Box>
-      <Box sx={stContainerContactInfo}>
-        <h3>Ваша контактна інформація</h3>
-        <p>Тут ви можете змінити ваші дані</p>
+      <Box>
+        <h3 style={stH3}>Ваша контактна інформація</h3>
+        <p style={stP}>Тут ви можете змінити ваші дані</p>
       </Box>
       <Formik
-        initialValues={{ email: '', password: '' }} // Заглушка для initialValues
-        validationSchema={yup.object({
-          email: yup
-            .string()
-            .email('Invalid email format')
-            .required('Email is required'),
-          password: yup.string().required('Password is required')
-        })}
-        onSubmit={(values) => {
-          console.log('Form submitted:', values) // Заглушка для onSubmit
-          // Тут можна реалізувати вашу логіку обробки форми
+        initialValues={{
+          email: user.email || '',
+          first_name: user.first_name || '',
+          last_name: user.last_name || '',
+          phone_number: user.phone_number || ''
         }}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
       >
         {(props) => (
           <Form>
@@ -44,29 +72,42 @@ export default function ContactInfo() {
               sx={{ display: 'grid', gridTemplateColumns: '300px 300px' }}
             >
               <Grid>
-                <CustomInput name="firstName" label="Ім'я" htmlFor="Ім'я" />
+                <CustomInput
+                  name="first_name"
+                  label="Ім'я"
+                  htmlFor="first_name"
+                  value={props.values.first_name}
+                  onChange={props.handleChange}
+                />
               </Grid>
               <Grid>
                 <CustomInput
-                  name="lastName"
+                  name="last_name"
                   label="Прізвище"
-                  htmlFor="Прізвище"
+                  htmlFor="last_name"
+                  value={props.values.last_name}
+                  onChange={props.handleChange}
                 />
               </Grid>
               <Grid>
                 <CustomInput
                   name="email"
                   label="Електрона пошта"
-                  type="password"
-                  htmlFor="Пароль"
+                  type="email"
+                  htmlFor="email"
+                  value={props.values.email}
+                  onChange={props.handleChange}
+                  disabled={true}
                 />
               </Grid>
               <Grid>
                 <CustomInput
-                  name="tel"
+                  name="phone_number"
                   label="Номер телефону"
                   type="tel"
-                  htmlFor="Пароль"
+                  htmlFor="phone_number"
+                  value={props.values.phone_number}
+                  onChange={props.handleChange}
                 />
               </Grid>
             </Grid>

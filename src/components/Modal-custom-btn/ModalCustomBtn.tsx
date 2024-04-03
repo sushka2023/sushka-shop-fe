@@ -7,14 +7,23 @@ import { styled } from '@mui/material/styles'
 import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../redux/store'
-
+import { AppDispatch } from '../../redux/store'
+interface AuthState {
+  accessToken: string
+  // інші властивості, які має ваш стан автентифікації
+}
+interface RootState {
+  auth: AuthState
+  // інші редюсери та їх стани
+}
 export default function BasicModal() {
   const dispatch = useDispatch<AppDispatch>()
-  const token = useSelector((state: RootState) => state.auth.accessToken)
+
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const token = useSelector((state: RootState) => state.auth.accessToken)
 
   const BootstrapButton = styled(Button)({
     'boxShadow': 'none',
@@ -23,8 +32,6 @@ export default function BasicModal() {
     'padding': '6px 12px',
     'border': '1px solid',
     'lineHeight': 1.5,
-    'backgroundColor': '#0063cc',
-    'borderColor': '#0063cc',
     'fontFamily': [
       '-apple-system',
       'BlinkMacSystemFont',
