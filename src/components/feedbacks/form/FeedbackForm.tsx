@@ -7,6 +7,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
+import { HoverPopUp } from './HoverPopUp'
 const DEFAULT_VALUE = {
   name: '',
   size: 0
@@ -19,6 +20,7 @@ const FeedbackForm = () => {
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
   const [fileSelected, setFileSelected] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const { isLoggedIn } = useAuth()
 
   const [searchParams] = useSearchParams()
@@ -85,7 +87,10 @@ const FeedbackForm = () => {
             <label
               htmlFor="fileInput"
               className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
+              {isHovered && <HoverPopUp />}
               <span>Додати фото</span>
               <span className={styles.plusIcon}>+</span>
               <input
