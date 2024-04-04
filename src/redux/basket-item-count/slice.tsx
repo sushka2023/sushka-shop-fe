@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchBasketItemsThunk } from './operations'
 
-const initialState: { basketItemCount: number } = {
+type InitialStateType = {
+  basketItemCount: number
+}
+
+const initialState: InitialStateType = {
   basketItemCount: 0
 }
 

@@ -13,6 +13,7 @@ const BasketCountIcon = () => {
   const basketCount = useSelector(
     (state: RootState) => state.basketCount.basketItemCount
   )
+
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const dispatch = useDispatch<AppDispatch>()
