@@ -13,8 +13,10 @@ interface InputProps {
   type?: 'text' | 'password' | 'tel' | 'email'
   htmlFor: string
   value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   yourStBox?: React.CSSProperties
   yourStInput?: React.CSSProperties
+  disabled?: boolean
 }
 
 const CustomInput: React.FC<InputProps> = ({
