@@ -93,6 +93,10 @@ export default function ContactInfo({ user }: ContactInfoProps) {
                   value={props.values.email}
                   onChange={props.handleChange}
                   disabled={true}
+                  yourStInput={{
+                    opacity: 0.7,
+                    cursor: 'auto'
+                  }}
                 />
               </Grid>
               <Grid>
