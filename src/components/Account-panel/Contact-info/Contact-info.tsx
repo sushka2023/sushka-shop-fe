@@ -1,8 +1,10 @@
 import { Form, Formik } from 'formik'
 import * as yup from 'yup'
 import { Box, Grid } from '@mui/material'
-import { CustomInput } from '../../auth/InputCustom'
 import axiosInstance from '../../../axios/settings'
+import { Button } from 'react-scroll'
+import { btnCustom, stH3, stP } from '../../auth/style'
+import CustomInput from '../../auth/InputCustom'
 
 interface UserData {
   email: string
@@ -17,16 +19,6 @@ interface ContactInfoProps {
 
 export default function ContactInfo({ user }: ContactInfoProps) {
   console.log('✌️user --->', user)
-  const stH3 = {
-    fontFamily: 'Comfortaa',
-    fontSize: '32px',
-    fontWeight: 500
-  }
-
-  const stP = {
-    fontFamily: 'Open Sans',
-    fontSize: '18px'
-  }
 
   const validationSchema = yup.object().shape({
     first_name: yup.string().required('First name is required'),
@@ -39,7 +31,6 @@ export default function ContactInfo({ user }: ContactInfoProps) {
 
   const onSubmit = async (values: UserData) => {
     console.log('Form submitted:', values)
-
     try {
       const response = await axiosInstance.put('/api/users/me/', values)
       return response
@@ -69,7 +60,11 @@ export default function ContactInfo({ user }: ContactInfoProps) {
             <Grid
               container
               columnGap={15}
-              sx={{ display: 'grid', gridTemplateColumns: '300px 300px' }}
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: '300px 300px',
+                marginTop: 5
+              }}
             >
               <Grid>
                 <CustomInput
@@ -111,10 +106,14 @@ export default function ContactInfo({ user }: ContactInfoProps) {
                 />
               </Grid>
             </Grid>
-
-            <button type="submit" disabled={props.isSubmitting}>
-              Go
-            </button>
+            <Button
+              to=""
+              type="submit"
+              disabled={props.isSubmitting}
+              style={btnCustom}
+            >
+              ЗБЕРЕГТИ
+            </Button>
           </Form>
         )}
       </Formik>

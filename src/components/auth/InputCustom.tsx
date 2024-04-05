@@ -1,55 +1,62 @@
-import { Field, ErrorMessage } from 'formik'
+// CustomInput.tsx
+import React from 'react'
 import { Box } from '@mui/material'
-import React, { ChangeEvent } from 'react'
-import { styleBoxInput, styleLabel, styleInput } from './style'
+import { useFormikContext } from 'formik'
+import { styleBoxInput } from './style'
+import ErrorDisplay from './ErrorCustom'
+import { Label } from './LabelCustom'
+import InputField from './FieldCustom'
+
 interface InputProps {
   name: string
   label: string
   type?: 'text' | 'password' | 'tel' | 'email'
   htmlFor: string
   value?: string
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  style?: React.CSSProperties
   yourStBox?: React.CSSProperties
   yourStInput?: React.CSSProperties
-  yourStLabel?: React.CSSProperties
-  disabled?: boolean
 }
 
-export const CustomInput: React.FC<InputProps> = ({
+const CustomInput: React.FC<InputProps> = ({
   name,
   label,
   type = 'text',
   value,
   htmlFor,
   yourStBox,
-  yourStInput,
-  yourStLabel,
-  disabled = false
+  yourStInput
 }) => {
+  const { errors, touched } = useFormikContext<InputProps>()
+  const error =
+    touched[name as keyof InputProps] && errors[name as keyof InputProps]
+  const styleLabelError = error ? { color: '#D21C1C' } : undefined
+
   return (
     <Box
       sx={{
-        ...styleBoxInput,
-        ...yourStLabel,
-        opacity: disabled ? 0.7 : 1,
-        cursor: disabled ? 'auto' : 'pointer'
+        ...styleBoxInput
       }}
     >
-      <label style={{ ...styleLabel, ...yourStBox }} htmlFor={htmlFor}>
+      <Label
+        htmlFor={htmlFor}
+        style={yourStBox}
+        errorStyle={styleLabelError}
+        hasError={!!error}
+      >
         {label}
-      </label>
-      <Field
-        as="input"
-        style={{ ...styleInput, ...yourStInput }}
+      </Label>
+      <InputField
         type={type}
         id={htmlFor}
         name={name}
-        placeholder={label}
+        label={label}
         value={value}
-        disabled={disabled}
+        yourStInput={yourStInput}
+        error={typeof error === 'string' ? error : undefined}
       />
-      <ErrorMessage name={name} />
+      {typeof error === 'string' && <ErrorDisplay error={error} />}
     </Box>
   )
 }
+
+export default CustomInput
