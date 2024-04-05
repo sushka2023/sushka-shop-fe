@@ -2,7 +2,6 @@ import { Form, Formik } from 'formik'
 import * as yup from 'yup'
 import { Box, Grid } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
-import { Button } from 'react-scroll'
 import { btnCustom, stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
 
@@ -110,14 +109,13 @@ export default function ContactInfo({ user }: ContactInfoProps) {
                 />
               </Grid>
             </Grid>
-            <Button
-              to=""
+            <button
               type="submit"
               disabled={props.isSubmitting}
               style={btnCustom}
             >
               ЗБЕРЕГТИ
-            </Button>
+            </button>
           </Form>
         )}
       </Formik>
