@@ -4,12 +4,14 @@ import { Box, Grid } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
 import { btnCustom, stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
+import EmailConfirmationModal from '../../Modal-custom-btn/ModalCustomBtnEmail'
 
 interface UserData {
   email: string
   first_name: string
   last_name: string
   phone_number: string
+  is_active?: boolean
 }
 
 interface ContactInfoProps {
@@ -17,7 +19,7 @@ interface ContactInfoProps {
 }
 
 export default function ContactInfo({ user }: ContactInfoProps) {
-  console.log('✌️user --->', user)
+  const { is_active } = user
 
   const validationSchema = yup.object().shape({
     first_name: yup.string().required('First name is required'),
@@ -44,6 +46,7 @@ export default function ContactInfo({ user }: ContactInfoProps) {
         <h3 style={stH3}>Ваша контактна інформація</h3>
         <p style={stP}>Тут ви можете змінити ваші дані</p>
       </Box>
+      <EmailConfirmationModal is_active={is_active} />
       <Formik
         initialValues={{
           email: user.email || '',

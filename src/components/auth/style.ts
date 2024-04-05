@@ -1,3 +1,5 @@
+import { Button, styled } from '@mui/material'
+
 export const styleLabel: React.CSSProperties = {
   color: '#567343',
   fontSize: 14,
@@ -51,4 +53,67 @@ export const btnCustom = {
   fontSize: 14,
   fontWeight: 700,
   fontFamily: 'Open Sans'
+}
+
+export const BootstrapButton = styled(Button)({
+  'boxShadow': 'none',
+  'textTransform': 'none',
+  'fontSize': 16,
+  'padding': '6px 12px',
+  'border': '1px solid',
+  'lineHeight': 1.5,
+  'fontFamily': [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"'
+  ].join(','),
+  '&:hover': {
+    backgroundColor: '#0069d9',
+    borderColor: '#0062cc',
+    boxShadow: 'none'
+  },
+  '&:active': {
+    boxShadow: 'none',
+    backgroundColor: '#0062cc',
+    borderColor: '#005cbf'
+  }
+})
+
+export const styleBoxModalWindow = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  height: '291px',
+  bgcolor: 'background.paper',
+  borderRadius: '20px',
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  color: '#567343'
+}
+export const styleBtnModalWindow = {
+  'width': 250,
+  'height': 50,
+  'bgcolor': 'background.paper',
+  'borderRadius': '10px',
+  'border': '2px solid #FCC812',
+  'lineHeight': '18.2px',
+  'backgroundColor': '#FCC812',
+  'color': '#FFFFFF',
+  'textTransform': 'uppercase',
+  '&:hover': {
+    backgroundColor: '#FCC812',
+    boxShadow: 'none',
+    border: '2px solid #FCC812'
+  }
 }
