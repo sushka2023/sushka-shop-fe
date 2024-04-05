@@ -1,0 +1,10 @@
+@import '../../styles/base/base.scss';
+
+.iconsNav {
+  fill: $green-dark-200;
+
+  &:hover {
+    cursor: pointer;
+    fill: $yellow-200;
+  }
+}

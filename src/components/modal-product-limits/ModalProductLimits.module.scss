@@ -1,23 +1,28 @@
 @import '../../styles/base/base.scss';
 
-.modal {
-  box-sizing: border-box;
+.popover {
+  position: relative;
+  width: 400px;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+  margin-bottom: -15px;
+}
 
-  position: absolute;
-  display: block;
+.modal {
+  position: relative;
+  box-sizing: border-box;
   border-radius: 10px;
-  background: #e8fdf2;
-  padding: 20px 50px 20px 20px;
+  background: #dfdffc;
+  padding: 20px 40px 20px 20px;
   width: 400px;
   height: 145px;
 }
 
-.modalText {
-  color: #059691;
-
-  font-family: $open-sans;
+.modal .modalText {
+  color: #5d5fef;
+  font-family: 'Open Sans';
   font-size: 16px;
-  font-weight: $font-weight-600;
+  font-weight: 600;
   line-height: 130%;
 }
 
@@ -35,13 +40,15 @@
 }
 
 .iconTriangle {
+  fill: #dfdffc;
   position: absolute;
   width: 20px;
   height: 13px;
   bottom: -13px;
   right: 190px;
+  z-index: 1000;
 }
 
 .iconCloseModal {
-  fill: #059691;
+  fill: #5d5fef;
 }

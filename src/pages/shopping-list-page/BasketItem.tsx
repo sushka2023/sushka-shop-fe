@@ -2,19 +2,12 @@ import styles from './ShoppingListPage.module.scss'
 import IconMinus from '../../icons/minus.svg?react'
 import IconPlus from '../../icons/plus.svg?react'
 import IconArrowClose from '../../icons/closemodal.svg?react'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
 import { RootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import axiosInstance from '../../axios/settings'
 import { PriceResponse, ProductResponse } from '../../types'
-
-const customStyles = {
-  position: {
-    bottom: '130%',
-    left: '-120%'
-  }
-}
 
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
@@ -53,9 +46,13 @@ const BasketItem: FC<Props> = ({
 }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1)
   const [totalPrice, setTotalPrice] = useState(0)
-  const [showModal, setShowModal] = useState(false)
 
-  const handleClick = () => setShowModal(false)
+  const [open, setOpen] = useState(false)
+  const btnQuantityWrapperRef = useRef(null)
+  const handleClick = () => {
+    setOpen(!open)
+  }
+
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const handlePriceChange = (total: number) => {
@@ -90,7 +87,7 @@ const BasketItem: FC<Props> = ({
   // eslint-disable-next-line complexity
   const increaseQuantity = async () => {
     if (selectedQuantity === 10) {
-      setShowModal(true)
+      handleClick()
     }
 
     try {
@@ -178,7 +175,7 @@ const BasketItem: FC<Props> = ({
       </div>
 
       <div>
-        <div className={styles.btnQuantityWrapper}>
+        <div ref={btnQuantityWrapperRef} className={styles.btnQuantityWrapper}>
           <button
             className={styles.btnQuantity}
             onClick={decreaseQuantity}
@@ -195,12 +192,11 @@ const BasketItem: FC<Props> = ({
             <IconPlus className={styles.iconPlus} />
           </button>
 
-          {showModal && (
-            <ModalProductLimits
-              onClick={handleClick}
-              customClassNames={customStyles.position}
-            />
-          )}
+          <ModalProductLimits
+            open={open}
+            anchorEl={btnQuantityWrapperRef.current}
+            onClick={handleClick}
+          />
         </div>
       </div>
 
