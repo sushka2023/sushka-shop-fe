@@ -92,6 +92,7 @@ export default function ContactInfo({ user }: ContactInfoProps) {
                   htmlFor="email"
                   value={props.values.email}
                   onChange={props.handleChange}
+                  disabled={true}
                 />
               </Grid>
               <Grid>

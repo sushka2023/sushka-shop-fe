@@ -16,7 +16,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   yourStBox?: React.CSSProperties
   yourStInput?: React.CSSProperties
-  disabled?: boolean
+  disabled?: boolean | undefined
 }
 
 const CustomInput: React.FC<InputProps> = ({
@@ -26,7 +26,8 @@ const CustomInput: React.FC<InputProps> = ({
   value,
   htmlFor,
   yourStBox,
-  yourStInput
+  yourStInput,
+  disabled = false
 }) => {
   const { errors, touched } = useFormikContext<InputProps>()
   const error =
@@ -55,6 +56,7 @@ const CustomInput: React.FC<InputProps> = ({
         value={value}
         yourStInput={yourStInput}
         error={typeof error === 'string' ? error : undefined}
+        disabled={disabled}
       />
       {typeof error === 'string' && <ErrorDisplay error={error} />}
     </Box>
