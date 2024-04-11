@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styles from './ProductPage.module.scss'
 import IconMinus from '../../icons/minus.svg?react'
@@ -10,17 +10,16 @@ import IconArrowRight from '../../icons/arrowright.svg?react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
 import { ProductResponse } from '../../types'
 import axiosInstance from '../../axios/settings'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { Notify } from 'notiflix'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../redux/store'
+import Notiflix, { Notify } from 'notiflix'
 import { formatWeight } from '../../helpers/formatWeightToString'
+import { fetchBasketItemsThunk } from '../../redux/basket-item-count/operations'
+import { updateCount } from '../../redux/basket-item-count/slice'
 
-const customStyles = {
-  position: {
-    bottom: '130%',
-    left: '-120%'
-  }
-}
+Notiflix.Notify.init({
+  position: 'center-top'
+})
 
 const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
@@ -56,15 +55,16 @@ const ProductPage = () => {
   const [selectedOldPrice, setselectedOldPrice] = useState(0)
   const [selectedQuantity, setSelectedQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [open, setOpen] = useState(false)
 
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
-
-  const [showModal, setShowModal] = useState(false)
-  const handleClick = () => {
-    return setShowModal(false)
-  }
-
+  const btnQuantityWrapperRef = useRef(null)
   const { productId } = useParams() as { productId: string }
+  const dispatch = useDispatch<AppDispatch>()
+
+  const handleClick = () => {
+    setOpen(!open)
+  }
 
   useEffect(() => {
     window.scroll({
@@ -82,7 +82,7 @@ const ProductPage = () => {
 
         if (data.prices.length > 0) {
           const minWeightItem = data.prices.reduce((prev, curr) => {
-            const prevWeight = parseInt(prev.weight, 10) // Конвертуємо рядок у ціле число
+            const prevWeight = parseInt(prev.weight, 10)
             const currWeight = parseInt(curr.weight, 10)
             return prevWeight < currWeight ? prev : curr
           })
@@ -101,8 +101,6 @@ const ProductPage = () => {
   }, [productId])
 
   const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setShowModal(false)
-
     const selectedWeightValue = event.target.value
 
     // знайти ціну та кількість для обраної ваги
@@ -119,7 +117,7 @@ const ProductPage = () => {
 
   const increaseQuantity = () => {
     if (selectedQuantity === 10) {
-      setShowModal(true)
+      handleClick()
     }
 
     const selectedPriceData = products?.prices?.find(
@@ -151,6 +149,8 @@ const ProductPage = () => {
     try {
       if (isAuth) {
         await addProductToBasket(productId, selectedQuantity, selectedPriceId)
+        dispatch(fetchBasketItemsThunk())
+
         Notify.success('Товар добавлено в кошик!')
       } else {
         const orderInfo = {
@@ -184,6 +184,8 @@ const ProductPage = () => {
           PRODUCT_ORDERS_LS_KEY,
           JSON.stringify(productOrders)
         )
+
+        dispatch(updateCount(productOrders))
 
         Notify.success('Товар добавлено в кошик!')
       }
@@ -308,7 +310,10 @@ const ProductPage = () => {
                 <div>
                   <p className={styles.orderWeight}>Кількість одиниць товару</p>
 
-                  <div className={styles.btnQuantityWrapper}>
+                  <div
+                    ref={btnQuantityWrapperRef}
+                    className={styles.btnQuantityWrapper}
+                  >
                     <button
                       className={styles.btnQuantity}
                       onClick={decreaseQuantity}
@@ -327,12 +332,11 @@ const ProductPage = () => {
                       <IconPlus className={styles.iconPlus} />
                     </button>
 
-                    {showModal && (
-                      <ModalProductLimits
-                        onClick={handleClick}
-                        customClassNames={customStyles.position}
-                      />
-                    )}
+                    <ModalProductLimits
+                      open={open}
+                      anchorEl={btnQuantityWrapperRef.current}
+                      onClick={handleClick}
+                    />
                   </div>
                 </div>
 

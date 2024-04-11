@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Layout from './components/Layout/Layout'
 import MainPage from './pages/main-page/MainPage'
 import CatalogPage from './pages/catalog-page/CatalogPage'

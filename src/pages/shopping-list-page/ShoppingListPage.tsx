@@ -5,10 +5,12 @@ import BasketItem from './BasketItem'
 import BasketEmpty from './BasketEmpty'
 import { useNavigate } from 'react-router-dom'
 import { RootState } from '../../redux/store'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axiosInstance from '../../axios/settings'
 import { BasketItemsResponse, ProductResponse } from '../../types'
 import * as React from 'react'
+
+import { updateCount } from '../../redux/basket-item-count/slice'
 
 type OrderType = {
   id: number
@@ -55,6 +57,7 @@ const ShoppingListPage = () => {
 
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (isAuth) {
@@ -137,6 +140,8 @@ const ShoppingListPage = () => {
         await removeProduct(id)
         const updatedBasket = await getBasketItems()
         setBasketList(updatedBasket)
+
+        dispatch(updateCount(updatedBasket))
       } else {
         const productOrders = JSON.parse(
           localStorage.getItem(PRODUCT_ORDERS_LS_KEY) ?? '[]'
@@ -151,6 +156,8 @@ const ShoppingListPage = () => {
           PRODUCT_ORDERS_LS_KEY,
           JSON.stringify(productOrders)
         )
+
+        dispatch(updateCount(productOrders))
 
         const updatedBasketList = basketList.filter((item) => item.id !== id)
 
