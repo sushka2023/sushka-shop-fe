@@ -26,34 +26,12 @@ export default function BasicModal() {
   const token = useSelector((state: RootState) => state.auth.accessToken)
 
   const BootstrapButton = styled(Button)({
-    'boxShadow': 'none',
-    'textTransform': 'none',
-    'fontSize': 16,
-    'padding': '6px 12px',
-    'border': '1px solid',
-    'lineHeight': 1.5,
-    'fontFamily': [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
-    ].join(','),
-    '&:hover': {
-      backgroundColor: '#0069d9',
-      borderColor: '#0062cc',
-      boxShadow: 'none'
-    },
-    '&:active': {
-      boxShadow: 'none',
-      backgroundColor: '#0062cc',
-      borderColor: '#005cbf'
-    }
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 12px',
+    border: '1px solid',
+    lineHeight: 1.5
   })
 
   const editBtnAccount = {
@@ -84,6 +62,7 @@ export default function BasicModal() {
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    fontFamily: 'Open Sans',
     color: '#567343'
   }
   const styleBtnModalWindow = {
@@ -94,6 +73,9 @@ export default function BasicModal() {
     'color': '#FCC812',
     'border': '2px solid #FCC812',
     'lineHeight': '18.2px',
+    'fontStyle': '14px',
+    'fontFamily': 'Open Sans',
+    'fontWeight': 700,
     '&:hover': {
       backgroundColor: '#FCC812',
       boxShadow: 'none',
@@ -109,6 +91,9 @@ export default function BasicModal() {
     'color': '#FFFFFF',
     'border': '0',
     'lineHeight': '18.2px',
+    'fontStyle': '14px',
+    'fontFamily': 'Open Sans',
+    'fontWeight': 700,
     '&:hover': {
       backgroundColor: '#DB4949'
     }
@@ -131,11 +116,15 @@ export default function BasicModal() {
           <Typography
             id="modal-modal-title"
             component="p"
-            style={{ fontSize: '22px', fontWeight: 600 }}
+            style={{ fontSize: 22, fontWeight: 600 }}
           >
             Вийти з аккаунта
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 3 }}>
+
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
+          >
             Ви точно бажаєте вийти зі свого аккаунта?
           </Typography>
           <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>

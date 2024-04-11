@@ -40,20 +40,6 @@ export const stP = {
   fontSize: '18px',
   fontWeight: 300
 }
-export const btnCustom = {
-  width: 200,
-  height: 50,
-  padding: '15px 30px',
-  borderRadius: 10,
-  color: '#FFFFFF',
-  backgroundColor: '#FCC812',
-  border: 'none',
-  cursor: 'pointer',
-  marginTop: 20,
-  fontSize: 14,
-  fontWeight: 700,
-  fontFamily: 'Open Sans'
-}
 
 export const BootstrapButton = styled(Button)({
   'boxShadow': 'none',
@@ -91,15 +77,14 @@ export const styleBoxModalWindow = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
-  height: '291px',
   bgcolor: 'background.paper',
   borderRadius: '20px',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
   alignItems: 'center',
-  color: '#567343'
+  color: '#567343',
+  padding: '40px 0'
 }
 export const styleBtnModalWindow = {
   'width': 250,

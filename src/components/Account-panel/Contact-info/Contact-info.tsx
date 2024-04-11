@@ -1,16 +1,24 @@
 import { Form, Formik } from 'formik'
 import * as yup from 'yup'
-import { Box, Grid } from '@mui/material'
+import { Box, Button, Grid, Typography, styled } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
-import { btnCustom, stH3, stP } from '../../auth/style'
+import { stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
-import EmailConfirmationModal from '../../Modal-custom-btn/ModalCustomBtnEmail'
+import { useDispatch } from 'react-redux'
+import { currentUser } from '../../../redux/authentication/operation'
+import { getToken } from '../../../utils/cookie/token'
+import { AppDispatch } from '../../../redux/store'
+import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
+import { GridCheckCircleIcon } from '@mui/x-data-grid'
+import { MouseEventHandler, useEffect, useState } from 'react'
+import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
+import React from 'react'
 
 interface UserData {
   email: string
   first_name: string
   last_name: string
-  phone_number: string
+  phone_number?: string
   is_active?: boolean
 }
 
@@ -18,26 +26,81 @@ interface ContactInfoProps {
   user: UserData
 }
 
-export default function ContactInfo({ user }: ContactInfoProps) {
-  const { is_active } = user
+export const ContactInfo = ({ user }: ContactInfoProps) => {
+  const [openModal, setOpenModal] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
+  const accessToken = getToken()
+  const { is_active, email } = user
 
   const validationSchema = yup.object().shape({
-    first_name: yup.string().required('First name is required'),
-    last_name: yup.string().required('Last name is required'),
+    first_name: yup
+      .string()
+      .min(3, 'Ім`я повинно містити щонайменше 3 символи')
+      .max(150, 'Ім`я повинно бути менше 150 символів')
+      .required('Ім`я обов`язкове для заповнення'),
+    last_name: yup
+      .string()
+      .min(3, 'Прізвище повинно містити щонайменше 3 символи')
+      .max(150, 'Прізвище повинно бути менше 150 символів')
+      .required('Прізвище обов`язкове для заповнення'),
     phone_number: yup
       .string()
-      .matches(/^[0-9+]*$/, 'Invalid telephone number')
+      .matches(/^(\+?380|380|0)\d{9}$/, 'Недійсний український номер телефону')
       .nullable()
   })
+
+  const [originalValues, setOriginalValues] = useState<UserData>({
+    email: user.email,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    phone_number: user.phone_number || ''
+  })
+
+  useEffect(() => {
+    setOriginalValues(initialValues)
+  }, [user])
 
   const onSubmit = async (values: UserData) => {
     console.log('Form submitted:', values)
     try {
       const response = await axiosInstance.put('/api/users/me/', values)
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
+      setOpenModal(true)
+      setTimeout(() => {
+        setOpenModal(false)
+      }, 2000)
       return response
     } catch (error) {
       console.error('Error updating user data:', error)
     }
+  }
+
+  const BootstrapButton = styled(Button)({
+    'width': 200,
+    'height': 50,
+    'padding': '15px 30px',
+    'borderRadius': 10,
+    'color': '#FFFFFF',
+    'backgroundColor': '#FCC812',
+    'border': 'none',
+    'cursor': 'pointer',
+    'marginTop': 20,
+    'fontSize': 14,
+    'fontWeight': 700,
+    'fontFamily': 'Open Sans',
+    'boxShadow': 'none',
+    'transition': 'background-color 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: 'rgba(252, 200, 18, 0.8)',
+      boxShadow: 'none'
+    }
+  })
+
+  const initialValues = {
+    email: user.email,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    phone_number: user.phone_number || ''
   }
 
   return (
@@ -46,14 +109,9 @@ export default function ContactInfo({ user }: ContactInfoProps) {
         <h3 style={stH3}>Ваша контактна інформація</h3>
         <p style={stP}>Тут ви можете змінити ваші дані</p>
       </Box>
-      <EmailConfirmationModal is_active={is_active} />
+      <EmailConfirmationModal is_active={is_active ?? false} email={email} />
       <Formik
-        initialValues={{
-          email: user.email || '',
-          first_name: user.first_name || '',
-          last_name: user.last_name || '',
-          phone_number: user.phone_number || ''
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
@@ -112,16 +170,38 @@ export default function ContactInfo({ user }: ContactInfoProps) {
                 />
               </Grid>
             </Grid>
-            <button
-              type="submit"
-              disabled={props.isSubmitting}
-              style={btnCustom}
+            <BootstrapButton
+              variant="contained"
+              disableRipple
+              disabled={
+                !props.dirty ||
+                props.isSubmitting ||
+                JSON.stringify(originalValues) === JSON.stringify(props.values)
+              }
+              onClick={
+                props.handleSubmit as unknown as MouseEventHandler<HTMLButtonElement>
+              }
             >
               ЗБЕРЕГТИ
-            </button>
+            </BootstrapButton>
           </Form>
         )}
       </Formik>
+      <InfoConfirmationModal openModal={openModal} setOpenModal={setOpenModal}>
+        <React.Fragment>
+          <GridCheckCircleIcon
+            sx={{
+              color: '#FCC812',
+              width: 40,
+              height: 40,
+              paddingBottom: '30px'
+            }}
+          />
+          <Typography variant="h4" sx={{ fontWeight: 600, fontSize: 22 }}>
+            Ваші зміни успішно збережені!
+          </Typography>
+        </React.Fragment>
+      </InfoConfirmationModal>
     </Box>
   )
 }

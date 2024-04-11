@@ -8,9 +8,9 @@ import { OrderHistory } from '../../components/Account-panel/Order-history/Order
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import BasicModal from '../../components/Account-panel/Delivery-address/Delivery-address'
 import ModalCustomBtn from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
-import ContactInfo from '../../components/Account-panel/Contact-info/Contact-info'
 import { useAuth } from '../../hooks/use-auth'
 import { Fragment, SyntheticEvent, useEffect, useState } from 'react'
+import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -114,7 +114,7 @@ export default function AccountPage() {
                 <StyledTab label={`Історія замовлень`} {...a11yProps(2)} />
                 <StyledTab label={`Змінити пароль`} {...a11yProps(3)} />
               </StyledTabs>
-              <ModalCustomBtn></ModalCustomBtn>
+              <ModalCustomBtn />
             </Box>
           </div>
           <CustomTabPanel value={value} index={0}>
