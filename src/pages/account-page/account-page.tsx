@@ -6,7 +6,7 @@ import { styled } from '@mui/material'
 import styles from './AccountPage.module.scss'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
-import BasicModal from '../../components/Account-panel/Delivery-address/Delivery-address'
+import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 import ModalCustomBtn from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { useAuth } from '../../hooks/use-auth'
 import { Fragment, SyntheticEvent, useEffect, useState } from 'react'
@@ -121,7 +121,7 @@ export default function AccountPage() {
             {user && <ContactInfo user={user} />}
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            <BasicModal />
+            <DeliveryAddress />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
             <OrderHistory />
