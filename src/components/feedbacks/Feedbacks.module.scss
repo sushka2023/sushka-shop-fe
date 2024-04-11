@@ -105,6 +105,19 @@
   border-radius: 10px;
   background: $green-dark-200;
   cursor: pointer;
+  &:disabled {
+    background-color: #ebeaea;
+    pointer-events: none;
+  }
+}
+.emailActivation {
+  color: #e11d48;
+  text-align: right;
+  font-size: 14px;
+  a {
+    font-weight: $font-weight-700;
+    text-decoration: underline;
+  }
 }
 .submitWrapper {
   width: 100%;

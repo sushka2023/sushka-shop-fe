@@ -15,22 +15,20 @@ const DEFAULT_VALUE = {
 
 const MAX_LENGTH = 250
 
+// eslint-disable-next-line complexity
 const FeedbackForm = () => {
   const [rating, setRating] = useState(0)
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
   const [fileSelected, setFileSelected] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
-  const { isLoggedIn } = useAuth()
-
+  const { isLoggedIn, user } = useAuth()
   const [searchParams] = useSearchParams()
-
   const searchToken = Object.fromEntries(searchParams.entries())
-
   useEffect(() => {
     Object.keys(searchToken).length > 0 && setIsModalOpen(true)
   }, [searchToken])
-
+  const isUserNotActive = !user?.is_active
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -105,10 +103,19 @@ const FeedbackForm = () => {
           {fileSelected && <FileInfo file={file} onDelete={handleFileDelete} />}
           <div className={styles.submitWrapper}>
             <Rating onRate={handleRatingChange} />
-            <button type="submit" className={styles.feedbackFormBtn}>
+            <button
+              type="submit"
+              disabled={isUserNotActive}
+              className={styles.feedbackFormBtn}
+            >
               Відправити
             </button>
           </div>
+          {isUserNotActive && (
+            <p className={styles.emailActivation}>
+              <a href="#">Підтвердіть</a> пошту, щоб залишити відгук
+            </p>
+          )}
         </form>
       ) : (
         <div className={styles.feedbackUnauth}>
