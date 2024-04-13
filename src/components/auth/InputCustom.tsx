@@ -1,6 +1,6 @@
 // CustomInput.tsx
 import React from 'react'
-import { Box } from '@mui/material'
+import { Typography } from '@mui/material'
 import { useFormikContext } from 'formik'
 import { styleBoxInput } from './style'
 import ErrorDisplay from './ErrorCustom'
@@ -35,7 +35,7 @@ const CustomInput: React.FC<InputProps> = ({
   const styleLabelError = error ? { color: '#D21C1C' } : undefined
 
   return (
-    <Box
+    <Typography
       sx={{
         ...styleBoxInput
       }}
@@ -59,7 +59,7 @@ const CustomInput: React.FC<InputProps> = ({
         disabled={disabled}
       />
       {typeof error === 'string' && <ErrorDisplay error={error} />}
-    </Box>
+    </Typography>
   )
 }
 

@@ -16,7 +16,7 @@ interface RootState {
   auth: AuthState
   // інші редюсери та їх стани
 }
-export default function BasicModal() {
+export const BasicModal = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   const [open, setOpen] = React.useState(false)
@@ -98,9 +98,11 @@ export default function BasicModal() {
       backgroundColor: '#DB4949'
     }
   }
+
   const handleClickLogout = () => {
     return dispatch(logout({ accessToken: token! }))
   }
+
   return (
     <div>
       <Button onClick={handleOpen} sx={editBtnAccount}>

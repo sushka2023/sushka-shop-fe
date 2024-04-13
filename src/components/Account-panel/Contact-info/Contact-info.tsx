@@ -25,11 +25,11 @@ interface UserData {
 interface ContactInfoProps {
   user: UserData
 }
+const accessToken = getToken()
 
 export const ContactInfo = ({ user }: ContactInfoProps) => {
   const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
-  const accessToken = getToken()
   const { is_active, email } = user
 
   const validationSchema = yup.object().shape({
