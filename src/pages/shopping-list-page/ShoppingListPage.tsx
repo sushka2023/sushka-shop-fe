@@ -3,7 +3,7 @@ import styles from './ShoppingListPage.module.scss'
 import { useEffect, useState } from 'react'
 import BasketItem from './BasketItem'
 import BasketEmpty from './BasketEmpty'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import axiosInstance from '../../axios/settings'
@@ -230,9 +230,9 @@ const ShoppingListPage = () => {
                 </p>
               </div>
 
-              <button className={styles.informationBtn} type="button">
+              <Link to="order" className={styles.informationBtn}>
                 Оформити замовлення
-              </button>
+              </Link>
             </div>
           </div>
         ) : (
