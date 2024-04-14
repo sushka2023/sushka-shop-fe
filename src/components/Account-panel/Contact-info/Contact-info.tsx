@@ -1,6 +1,5 @@
 import { Form, Formik } from 'formik'
-import * as yup from 'yup'
-import { Box, Button, Grid, Typography, styled } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
 import { stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
@@ -13,55 +12,41 @@ import { GridCheckCircleIcon } from '@mui/x-data-grid'
 import { MouseEventHandler, useEffect, useState } from 'react'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
 import React from 'react'
+import { UserResponse } from '../../../types'
+import { ChangeDataSchema } from '../../auth/validation'
+import { BootstrapButton } from './style'
 
-interface UserData {
-  email: string
-  first_name: string
-  last_name: string
-  phone_number?: string
-  is_active?: boolean
-}
+type FormInitialValues = Omit<
+  UserResponse,
+  | 'id'
+  | 'role'
+  | 'created_at'
+  | 'updated_at'
+  | 'refresh_token'
+  | 'is_deleted'
+  | 'is_blocked'
+  | 'is_active'
+>
 
-interface ContactInfoProps {
-  user: UserData
-}
 const accessToken = getToken()
 
-export const ContactInfo = ({ user }: ContactInfoProps) => {
+export const ContactInfo = ({ user }: { user: UserResponse }) => {
   const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const { is_active, email } = user
 
-  const validationSchema = yup.object().shape({
-    first_name: yup
-      .string()
-      .min(3, 'Ім`я повинно містити щонайменше 3 символи')
-      .max(150, 'Ім`я повинно бути менше 150 символів')
-      .required('Ім`я обов`язкове для заповнення'),
-    last_name: yup
-      .string()
-      .min(3, 'Прізвище повинно містити щонайменше 3 символи')
-      .max(150, 'Прізвище повинно бути менше 150 символів')
-      .required('Прізвище обов`язкове для заповнення'),
-    phone_number: yup
-      .string()
-      .matches(/^(\+?380|380|0)\d{9}$/, 'Недійсний український номер телефону')
-      .nullable()
-  })
-
-  const [originalValues, setOriginalValues] = useState<UserData>({
+  const [originalValues, setOriginalValues] = useState<FormInitialValues>({
     email: user.email,
     first_name: user.first_name,
-    last_name: user.last_name,
-    phone_number: user.phone_number || ''
+    last_name: user.last_name
+    // phone_number: user.phone_number || ''
   })
 
   useEffect(() => {
     setOriginalValues(initialValues)
   }, [user])
 
-  const onSubmit = async (values: UserData) => {
-    console.log('Form submitted:', values)
+  const onSubmit = async (values: FormInitialValues) => {
     try {
       const response = await axiosInstance.put('/api/users/me/', values)
       dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
@@ -75,32 +60,11 @@ export const ContactInfo = ({ user }: ContactInfoProps) => {
     }
   }
 
-  const BootstrapButton = styled(Button)({
-    'width': 200,
-    'height': 50,
-    'padding': '15px 30px',
-    'borderRadius': 10,
-    'color': '#FFFFFF',
-    'backgroundColor': '#FCC812',
-    'border': 'none',
-    'cursor': 'pointer',
-    'marginTop': 20,
-    'fontSize': 14,
-    'fontWeight': 700,
-    'fontFamily': 'Open Sans',
-    'boxShadow': 'none',
-    'transition': 'background-color 0.3s ease-in-out',
-    '&:hover': {
-      backgroundColor: 'rgba(252, 200, 18, 0.8)',
-      boxShadow: 'none'
-    }
-  })
-
   const initialValues = {
     email: user.email,
     first_name: user.first_name,
-    last_name: user.last_name,
-    phone_number: user.phone_number || ''
+    last_name: user.last_name
+    // phone_number: user.phone_number || ''
   }
 
   return (
@@ -112,7 +76,7 @@ export const ContactInfo = ({ user }: ContactInfoProps) => {
       <EmailConfirmationModal is_active={is_active ?? false} email={email} />
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={ChangeDataSchema}
         onSubmit={onSubmit}
       >
         {(props) => (
@@ -165,7 +129,7 @@ export const ContactInfo = ({ user }: ContactInfoProps) => {
                   label="Номер телефону"
                   type="tel"
                   htmlFor="phone_number"
-                  value={props.values.phone_number}
+                  // value={props.values.phone_number}
                   onChange={props.handleChange}
                 />
               </Grid>

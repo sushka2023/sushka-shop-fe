@@ -1,11 +1,10 @@
-// LabelCustom.tsx
 import React from 'react'
 
-interface LabelProps {
+type LabelProps = {
   htmlFor: string
   style?: React.CSSProperties
-  errorStyle?: React.CSSProperties // New prop for error style
-  hasError?: boolean // New prop to indicate if there's an error
+  errorStyle?: React.CSSProperties
+  hasError?: boolean
   children: React.ReactNode
 }
 

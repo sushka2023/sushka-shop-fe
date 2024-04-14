@@ -57,3 +57,17 @@ export const ResetPasswordSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), undefined], 'Паролі повинні співпадати')
     .required('Поле має бути заповненим')
 })
+
+export const ChangeDataSchema = Yup.object().shape({
+  first_name: Yup.string()
+    .min(3, 'Ім`я повинно містити щонайменше 3 символи')
+    .max(150, 'Ім`я повинно бути менше 150 символів')
+    .required('Ім`я обов`язкове для заповнення'),
+  last_name: Yup.string()
+    .min(3, 'Прізвище повинно містити щонайменше 3 символи')
+    .max(150, 'Прізвище повинно бути менше 150 символів')
+    .required('Прізвище обов`язкове для заповнення'),
+  phone_number: Yup.string()
+    .matches(/^(\+?380|380|0)\d{9}$/, 'Недійсний український номер телефону')
+    .nullable()
+})
