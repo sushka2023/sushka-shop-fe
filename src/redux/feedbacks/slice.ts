@@ -4,6 +4,7 @@ import { fetchReviews, submitReview } from './operations'
 export type Review = {
   id: number
   user_id: number
+  user_name: string
   product_id: number
   rating: number
   description: string

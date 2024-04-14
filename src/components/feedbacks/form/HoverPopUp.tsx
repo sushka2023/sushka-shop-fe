@@ -4,7 +4,10 @@ type Props = {
   isVisible: boolean
 }
 export const HoverPopUp: FC<Props> = ({ isVisible }) => {
-  return isVisible ? (
+  if (!isVisible) {
+    return null
+  }
+  return (
     <div className={styles.wrapperPopUp}>
       <div className={styles.main}>
         <p>Максимальний розмір файлу 10 МВ .png .jpeg .jpg .dng .svg</p>
@@ -22,5 +25,5 @@ export const HoverPopUp: FC<Props> = ({ isVisible }) => {
         />
       </svg>
     </div>
-  ) : null
+  )
 }

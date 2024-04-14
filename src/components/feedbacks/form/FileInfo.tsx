@@ -34,8 +34,10 @@ export const FileInfo: FC<Props> = ({ file, onDelete, isVisible }) => {
 
     return `${formattedSize.toFixed(2)} ${unit}`
   }
-
-  return isVisible ? (
+  if (!isVisible) {
+    return null
+  }
+  return (
     <div className={styles.fileInfo}>
       <div>
         <PermMediaOutlinedIcon />
@@ -48,5 +50,5 @@ export const FileInfo: FC<Props> = ({ file, onDelete, isVisible }) => {
         <DeleteOutlineOutlinedIcon />
       </button>
     </div>
-  ) : null
+  )
 }
