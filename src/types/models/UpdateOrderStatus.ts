@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductCategoryModel = {
-    name: string;
+import type { OrdersStatus } from './OrdersStatus';
+export type UpdateOrderStatus = {
+    new_status: OrdersStatus;
 };
 

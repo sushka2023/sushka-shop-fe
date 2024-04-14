@@ -16,8 +16,6 @@ export const EmailConfirmationModal = ({
   is_active,
   email
 }: EmailConfirmationModalProps) => {
-  console.log('✌️email --->', email)
-  console.log('✌️is_active --->', is_active)
   const [openModal, setOpenModal] = useState(false)
 
   const requestEmail = async (email: string) => {

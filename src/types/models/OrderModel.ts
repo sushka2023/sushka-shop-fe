@@ -2,9 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PaymentTypes } from './PaymentTypes';
+import type { PaymentsTypes } from './PaymentsTypes';
 export type OrderModel = {
-    payment_type: PaymentTypes;
+    selected_nova_poshta_id?: number;
+    selected_ukr_poshta_id?: number;
+    payment_type: PaymentsTypes;
     call_manager: boolean;
+    is_another_recipient?: boolean;
+    full_name_another_recipient?: string;
+    phone_number_another_recipient?: string;
+    comment?: string;
 };
 

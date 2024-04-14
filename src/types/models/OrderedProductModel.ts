@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductCategoryModel = {
-    name: string;
+export type OrderedProductModel = {
+    product_id: number;
+    price_id?: number;
+    quantity?: number;
 };
 

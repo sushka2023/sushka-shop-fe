@@ -3,10 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ImageResponse } from './ImageResponse';
-import type { PriceResponse } from './PriceResponse';
 import type { ProductStatus } from './ProductStatus';
-import type { ProductSubCategoryResponse } from './ProductSubCategoryResponse';
-export type ProductResponse = {
+export type ProductResponseForOrder = {
     id: number;
     name: string;
     description: string;
@@ -15,8 +13,6 @@ export type ProductResponse = {
     is_popular: boolean;
     is_favorite: boolean;
     product_status: ProductStatus;
-    sub_categories?: Array<ProductSubCategoryResponse>;
     images: Array<ImageResponse>;
-    prices: Array<PriceResponse>;
 };
 

@@ -16,37 +16,32 @@ import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
 import { BootstrapButton } from './style'
 
-type FormInitialValues = Omit<
+export type UserSubset = Pick<
   UserResponse,
-  | 'id'
-  | 'role'
-  | 'created_at'
-  | 'updated_at'
-  | 'refresh_token'
-  | 'is_deleted'
-  | 'is_blocked'
-  | 'is_active'
+  'email' | 'first_name' | 'last_name' | 'phone_number'
 >
 
 const accessToken = getToken()
 
 export const ContactInfo = ({ user }: { user: UserResponse }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const { is_active, email } = user
 
-  const [originalValues, setOriginalValues] = useState<FormInitialValues>({
+  const [originalValues, setOriginalValues] = useState<UserSubset>({
     email: user.email,
     first_name: user.first_name,
-    last_name: user.last_name
-    // phone_number: user.phone_number || ''
+    last_name: user.last_name,
+    phone_number: user.phone_number || ''
   })
 
   useEffect(() => {
     setOriginalValues(initialValues)
   }, [user])
 
-  const onSubmit = async (values: FormInitialValues) => {
+  const onSubmit = async (values: UserSubset) => {
+    setIsLoading(true)
     try {
       const response = await axiosInstance.put('/api/users/me/', values)
       dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
@@ -57,14 +52,16 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
       return response
     } catch (error) {
       console.error('Error updating user data:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const initialValues = {
     email: user.email,
     first_name: user.first_name,
-    last_name: user.last_name
-    // phone_number: user.phone_number || ''
+    last_name: user.last_name,
+    phone_number: user.phone_number || ''
   }
 
   return (
@@ -129,7 +126,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
                   label="Номер телефону"
                   type="tel"
                   htmlFor="phone_number"
-                  // value={props.values.phone_number}
+                  value={props.values.phone_number}
                   onChange={props.handleChange}
                 />
               </Grid>
@@ -138,6 +135,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
               variant="contained"
               disableRipple
               disabled={
+                isLoading ||
                 !props.dirty ||
                 props.isSubmitting ||
                 JSON.stringify(originalValues) === JSON.stringify(props.values)
@@ -146,7 +144,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
                 props.handleSubmit as unknown as MouseEventHandler<HTMLButtonElement>
               }
             >
-              ЗБЕРЕГТИ
+              {isLoading ? 'Завантаження...' : 'ЗБЕРЕГТИ'}
             </BootstrapButton>
           </Form>
         )}

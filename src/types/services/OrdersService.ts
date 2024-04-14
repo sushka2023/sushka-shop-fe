@@ -2,15 +2,143 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { OrderAdminNotesModel } from '../models/OrderAdminNotesModel';
+import type { OrderAnonymUserModel } from '../models/OrderAnonymUserModel';
 import type { OrderConfirmModel } from '../models/OrderConfirmModel';
+import type { OrderMessageResponse } from '../models/OrderMessageResponse';
 import type { OrderModel } from '../models/OrderModel';
 import type { OrderResponse } from '../models/OrderResponse';
+import type { OrdersCRMResponse } from '../models/OrdersCRMResponse';
+import type { OrdersCRMWithTotalCountResponse } from '../models/OrdersCRMWithTotalCountResponse';
+import type { OrdersCurrentUserWithTotalCountResponse } from '../models/OrdersCurrentUserWithTotalCountResponse';
+import type { OrdersResponseWithMessage } from '../models/OrdersResponseWithMessage';
+import type { OrdersStatus } from '../models/OrdersStatus';
+import type { OrdersWithMessage } from '../models/OrdersWithMessage';
+import type { UpdateOrderStatus } from '../models/UpdateOrderStatus';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class OrdersService {
     /**
-     * Get Orders
+     * Create Order Auth User
+     * The create of order function creates a new order in the database.
+     *
+     * Args:
+     * order_data: OrderModel: Validate the request body
+     * background_tasks: BackgroundTasks: Add a task to the background tasks queue
+     * db: Session: Pass the database session to the repository layer
+     * current_user (User): the current user attempting to create the order
+     *
+     * Returns:
+     * An order object
+     * @param requestBody
+     * @returns OrdersWithMessage Successful Response
+     * @throws ApiError
+     */
+    public static createOrderAuthUserApiOrdersCreateForAuthUserPost(
+        requestBody: OrderModel,
+    ): CancelablePromise<OrdersWithMessage> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/orders/create_for_auth_user',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Create Order Anonym User
+     * The create of order function creates a new order in the database.
+     *
+     * Args:
+     * order_data: OrderAnonymUserModel: Validate the request body
+     * (post_type: (permitted: "nova_poshta_warehouse", "nova_poshta_address", "ukr_poshta"))
+     *
+     * background_tasks: BackgroundTasks: Add a task to the background tasks queue
+     * db: Session: Pass the database session to the repository layer
+     * Returns:
+     * An order object
+     * @param requestBody
+     * @returns OrdersResponseWithMessage Successful Response
+     * @throws ApiError
+     */
+    public static createOrderAnonymUserApiOrdersCreateForAnonymUserPost(
+        requestBody: OrderAnonymUserModel,
+    ): CancelablePromise<OrdersResponseWithMessage> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/orders/create_for_anonym_user',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Orders For Crm
+     * The orders_for_crm function returns a list of orders for the CRM.
+     *
+     * :param limit: int: Limit the number of orders returned
+     * :param offset: int: Indicate the number of records to skip
+     * :param order_status: OrdersStatus: Filter orders by status
+     * :param db: Session: Pass the database connection to the function
+     *
+     * :return: A list of orders
+     * @param limit
+     * @param offset
+     * @param orderStatus
+     * @returns OrdersCRMWithTotalCountResponse Successful Response
+     * @throws ApiError
+     */
+    public static getOrdersForCrmApiOrdersAllForCrmGet(
+        limit: number,
+        offset: number,
+        orderStatus?: OrdersStatus,
+    ): CancelablePromise<OrdersCRMWithTotalCountResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/orders/all_for_crm',
+            query: {
+                'limit': limit,
+                'offset': offset,
+                'order_status': orderStatus,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Order By Id For Crm
+     * The get_order_by_id_for_crm function returns an order by id for the CRM.
+     *
+     * :param order_id: Get the id of the order
+     * :param db: Session: Pass the database connection to the function
+     *
+     * :return: An order
+     * @param orderId
+     * @returns OrdersCRMResponse Successful Response
+     * @throws ApiError
+     */
+    public static getOrderByIdForCrmApiOrdersOrderIdForCrmGet(
+        orderId: number,
+    ): CancelablePromise<OrdersCRMResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/orders/{order_id}/for_crm',
+            path: {
+                'order_id': orderId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Orders Current User
      * The function returns a list of all orders in the database which were created by a current user.
      *
      * Args:
@@ -23,16 +151,16 @@ export class OrdersService {
      * A list of orders
      * @param limit
      * @param offset
-     * @returns OrderResponse Successful Response
+     * @returns OrdersCurrentUserWithTotalCountResponse Successful Response
      * @throws ApiError
      */
-    public static getOrdersApiOrdersGet(
+    public static getOrdersCurrentUserApiOrdersForCurrentUserGet(
         limit: number,
         offset: number,
-    ): CancelablePromise<Array<OrderResponse>> {
+    ): CancelablePromise<OrdersCurrentUserWithTotalCountResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/orders/',
+            url: '/api/orders/for_current_user',
             query: {
                 'limit': limit,
                 'offset': offset,
@@ -43,31 +171,28 @@ export class OrdersService {
         });
     }
     /**
-     * Get Orders For Crm
-     * The function returns a list of all orders in the database.
+     * Get Order By Id For Current User
+     * The function returns an order in the database which was created by a current user.
      *
      * Args:
-     * limit: int: Limit the number of orders returned
-     * offset: int: Specify the offset of the first order to be returned
+     * order_id: Get the id of the order of current user
+     * current_user (User): the current user who created the orders'
      * db: Session: Access the database
      *
      * Returns:
-     * A list of orders
-     * @param limit
-     * @param offset
+     * An order
+     * @param orderId
      * @returns OrderResponse Successful Response
      * @throws ApiError
      */
-    public static getOrdersForCrmApiOrdersAllForCrmGet(
-        limit: number,
-        offset: number,
-    ): CancelablePromise<Array<OrderResponse>> {
+    public static getOrderByIdForCurrentUserApiOrdersOrderIdForCurrentUserGet(
+        orderId: number,
+    ): CancelablePromise<OrderResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/orders/all_for_crm',
-            query: {
-                'limit': limit,
-                'offset': offset,
+            url: '/api/orders/{order_id}/for_current_user',
+            path: {
+                'order_id': orderId,
             },
             errors: {
                 422: `Validation Error`,
@@ -75,26 +200,25 @@ export class OrdersService {
         });
     }
     /**
-     * Create Order
-     * The create_order function creates a new order in the database.
+     * Confirm Payment Of Order
+     * The confirm_payment_of_order function confirms a payment of order.
      *
      * Args:
-     * order_data: OrderModel: Validate the request body
-     * db: Session: Pass the database session to the repository layer
-     * current_user (User): the current user attempting to create the order
+     * order_data: OrderConfirmModel: Get the id of the order to confirm the payment of the orders'
+     * db: Session: Access the database
      *
      * Returns:
-     * An order object
+     * Message that the payment of the order was confirmed successfully
      * @param requestBody
-     * @returns OrderResponse Successful Response
+     * @returns OrderMessageResponse Successful Response
      * @throws ApiError
      */
-    public static createOrderApiOrdersCreatePost(
-        requestBody: OrderModel,
-    ): CancelablePromise<OrderResponse> {
+    public static confirmPaymentOfOrderApiOrdersConfirmPaymentOfOrderPut(
+        requestBody: OrderConfirmModel,
+    ): CancelablePromise<OrderMessageResponse> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/orders/create',
+            method: 'PUT',
+            url: '/api/orders/confirm_payment_of_order',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -103,25 +227,66 @@ export class OrdersService {
         });
     }
     /**
-     * Confirm Order
-     * The confirm_order function confirms an order.
+     * Change Order Status
+     * The change_order_status function changes an order status.
      *
      * Args:
-     * order: OrderConfirmModel: Get the id of the order to confirm and changed status of field confirmation_manager
+     * update_data: UpdateOrderStatus: the order status to be changed
+     * (permitted: "new", "in processing", "shipped", "delivered", "cancelled")
+     *
+     * order_id: Get the id of the order to change it status
      * db: Session: Access the database
      *
      * Returns:
-     * An order confirmed model object
+     * Message that the status of the order was changed successfully
+     * @param orderId
      * @param requestBody
-     * @returns OrderResponse Successful Response
+     * @returns OrderMessageResponse Successful Response
      * @throws ApiError
      */
-    public static confirmOrderApiOrdersConfirmOrderPut(
-        requestBody: OrderConfirmModel,
-    ): CancelablePromise<OrderResponse> {
+    public static changeOrderStatusApiOrdersOrderIdUpdateStatusPut(
+        orderId: number,
+        requestBody: UpdateOrderStatus,
+    ): CancelablePromise<OrderMessageResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/orders/confirm_order',
+            url: '/api/orders/{order_id}/update_status',
+            path: {
+                'order_id': orderId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Add Notes To Order
+     * The add_notes_to_order function adds notes to the order.
+     *
+     * Args:
+     * data: OrderAdminNotesModel: adding notes to the order by admin or moderator
+     * order_id: Get the id of the order to add comment
+     * db: Session: Access the database
+     *
+     * Returns:
+     * Message that the note to the order was added successfully
+     * @param orderId
+     * @param requestBody
+     * @returns OrderMessageResponse Successful Response
+     * @throws ApiError
+     */
+    public static addNotesToOrderApiOrdersOrderIdAddNotesPut(
+        orderId: number,
+        requestBody: OrderAdminNotesModel,
+    ): CancelablePromise<OrderMessageResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/orders/{order_id}/add_notes',
+            path: {
+                'order_id': orderId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {

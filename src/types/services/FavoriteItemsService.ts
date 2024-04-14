@@ -10,16 +10,6 @@ import { request as __request } from '../core/request';
 export class FavoriteItemsService {
     /**
      * Favorite Items
-     * The favorite_items function returns a list of favorite items for the current user.
-     * The function takes in a User object and Session object as parameters, which are used to query the database.
-     * If no favorite items are found, an HTTP 404 error is raised.
-     *
-     * Args:
-     * current_user: User: Get the current user
-     * db: Session: Get the database session
-     *
-     * Returns:
-     * A list of favorite items
      * @returns FavoriteItemsResponse Successful Response
      * @throws ApiError
      */

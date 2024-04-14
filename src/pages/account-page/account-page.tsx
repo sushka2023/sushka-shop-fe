@@ -16,11 +16,9 @@ import {
   stBoxTabPanel
 } from './style'
 
-export const AccountPage = () => {
+const AccountPage = () => {
+  const { isLoading, user } = useAuth()
   const [value, setValue] = useState('1')
-
-  const { isLoading } = useAuth()
-  const { user } = useAuth()
 
   const handleChange = (_: SyntheticEvent, newValue: string) => {
     setValue(newValue)
@@ -36,30 +34,47 @@ export const AccountPage = () => {
                 onChange={handleChange}
                 aria-label="lab API tabs example"
               >
-                <StyledTab label={`Контактна інформація`} value="1" />
-                <StyledTab label={`Ваші адреси доставки`} value="2" />
-                <StyledTab label={`Історія замовлень`} value="3" />
-                <StyledTab label={`Змінити пароль`} value="4" />
+                <StyledTab
+                  disableRipple
+                  label={`Контактна інформація`}
+                  value="1"
+                />
+                <StyledTab
+                  disableRipple
+                  label={`Ваші адреси доставки`}
+                  value="2"
+                />
+                <StyledTab
+                  disableRipple
+                  label={`Історія замовлень`}
+                  value="3"
+                />
+                <StyledTab disableRipple label={`Змінити пароль`} value="4" />
               </StyledTabs>
             </Box>
             <BasicModal />
           </Box>
         </Box>
         <Box sx={stContainerTabPanel}>
-          {isLoading ? (
-            'loading...'
-          ) : (
-            <Box sx={{ ...stBoxNav, ...stBoxTabPanel }}>
-              <TabPanel value="1">
-                {user && <ContactInfo user={user} />}
-              </TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
-            </Box>
-          )}
+          <Box sx={{ ...stBoxNav, ...stBoxTabPanel }}>
+            {isLoading ? (
+              'loading...'
+            ) : (
+              <React.Fragment>
+                <TabPanel value="1">
+                  {user && <ContactInfo user={user} />}
+                </TabPanel>
+                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="3">Item Three</TabPanel>
+                <TabPanel value="4">Item Three</TabPanel>
+              </React.Fragment>
+            )}
+          </Box>
         </Box>
       </TabContext>
       <Box sx={stWavePink}> </Box>
     </React.Fragment>
   )
 }
+
+export default AccountPage

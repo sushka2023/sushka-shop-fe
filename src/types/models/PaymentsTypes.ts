@@ -2,7 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductCategoryModel = {
-    name: string;
-};
-
+/**
+ * Payment types.
+ */
+export enum PaymentsTypes {
+    CASH_ON_DELIVERY_NP = 'cash_on_delivery_np',
+    LIQPAY = 'liqpay',
+}

@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductCategoryModel = {
-    name: string;
+export type AdminEmailsResponse = {
+    address: string;
+    is_send_message: boolean;
 };
 
