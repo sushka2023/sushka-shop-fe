@@ -2,7 +2,7 @@ import { useState, Fragment } from 'react'
 import Box from '@mui/material/Box'
 import { STEPS } from './constants'
 import { containerStyle } from './style'
-import CustomStepper from '../../components/Stepper'
+import OrderStepper from '../../components/Order-stepper'
 import StapperButtons from '../../components/Stapper-buttons'
 
 const OrderPage = () => {
@@ -23,7 +23,7 @@ const OrderPage = () => {
 
   return (
     <Box sx={containerStyle}>
-      <CustomStepper activeStep={activeStep} />
+      <OrderStepper activeStep={activeStep} />
       {activeStep === STEPS.length ? (
         <Fragment>{/* notification  */}</Fragment>
       ) : (

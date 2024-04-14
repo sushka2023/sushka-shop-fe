@@ -8,7 +8,7 @@ type Props = {
   activeStep: number
 }
 
-const CustomStepper: React.FC<Props> = ({ activeStep }) => {
+const OrderStepper: React.FC<Props> = ({ activeStep }) => {
   return (
     <Stepper activeStep={activeStep} sx={stepperStyle}>
       {STEPS.map((label) => (
@@ -20,4 +20,4 @@ const CustomStepper: React.FC<Props> = ({ activeStep }) => {
   )
 }
 
-export default CustomStepper
+export default OrderStepper
