@@ -15,7 +15,6 @@ const DEFAULT_VALUE = {
 
 const MAX_LENGTH = 250
 
-// eslint-disable-next-line complexity
 const FeedbackForm = () => {
   const [rating, setRating] = useState(0)
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
@@ -88,7 +87,7 @@ const FeedbackForm = () => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              {isHovered && <HoverPopUp />}
+              <HoverPopUp isVisible={isHovered} />
               <span>Додати фото</span>
               <span className={styles.plusIcon}>+</span>
               <input
@@ -100,7 +99,11 @@ const FeedbackForm = () => {
               />
             </label>
           </div>
-          {fileSelected && <FileInfo file={file} onDelete={handleFileDelete} />}
+          <FileInfo
+            file={file}
+            onDelete={handleFileDelete}
+            isVisible={fileSelected}
+          />
           <div className={styles.submitWrapper}>
             <Rating onRate={handleRatingChange} />
             <button

@@ -11,12 +11,13 @@ type File = {
 type Props = {
   file: File
   onDelete: () => void
+  isVisible: boolean
 }
 
 const UNITS = ['KB', 'MB', 'GB']
 const SIZE = 1024
 
-export const FileInfo: FC<Props> = ({ file, onDelete }) => {
+export const FileInfo: FC<Props> = ({ file, onDelete, isVisible }) => {
   const formatFileSize = (size: number | null): string => {
     if (size === undefined || size === null) {
       return 'Невідомий розмір'
@@ -34,7 +35,7 @@ export const FileInfo: FC<Props> = ({ file, onDelete }) => {
     return `${formattedSize.toFixed(2)} ${unit}`
   }
 
-  return (
+  return isVisible ? (
     <div className={styles.fileInfo}>
       <div>
         <PermMediaOutlinedIcon />
@@ -47,5 +48,5 @@ export const FileInfo: FC<Props> = ({ file, onDelete }) => {
         <DeleteOutlineOutlinedIcon />
       </button>
     </div>
-  )
+  ) : null
 }

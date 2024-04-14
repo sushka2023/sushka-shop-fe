@@ -1,7 +1,10 @@
 import styles from '../Feedbacks.module.scss'
-
-export const HoverPopUp = () => {
-  return (
+import { FC } from 'react'
+type Props = {
+  isVisible: boolean
+}
+export const HoverPopUp: FC<Props> = ({ isVisible }) => {
+  return isVisible ? (
     <div className={styles.wrapperPopUp}>
       <div className={styles.main}>
         <p>Максимальний розмір файлу 10 МВ .png .jpeg .jpg .dng .svg</p>
@@ -19,5 +22,5 @@ export const HoverPopUp = () => {
         />
       </svg>
     </div>
-  )
+  ) : null
 }
