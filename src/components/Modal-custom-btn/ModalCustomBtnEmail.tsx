@@ -80,7 +80,6 @@ export const EmailConfirmationModal = ({
             id="modal-modal-description"
             component="p"
             style={{
-              // border: '1px solid',
               fontSize: 18,
               fontWeight: 400,
               textAlign: 'center',
