@@ -1,8 +1,7 @@
-import { styled } from '@mui/material'
-import { TabList } from '@mui/lab'
+import { Tabs, Theme, styled } from '@mui/material'
 import Tab from '@mui/material/Tab'
 
-export const StyledTab = styled(Tab)(({ theme }) => ({
+export const StyledTab = styled(Tab)(({ theme }: { theme: Theme }) => ({
   'whiteSpace': 'pre-line',
   'textTransform': 'none',
   'fontSize': theme.typography.pxToRem(15),
@@ -20,7 +19,7 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
   }
 }))
 
-export const StyledTabs = styled(TabList)(() => ({
+export const StyledTabs = styled(Tabs)(() => ({
   '& .MuiTabs-indicator': {
     height: '100%',
     backgroundColor: '#FCC812',
@@ -49,7 +48,7 @@ export const stTabsNav = {
   padding: '10px',
   border: '1px solid #FEEEE1',
   borderRadius: '30px',
-  margin: '40px 50px'
+  margin: '40px'
 }
 
 export const stContainerTabPanel = {
