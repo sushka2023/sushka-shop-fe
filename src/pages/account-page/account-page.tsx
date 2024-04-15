@@ -14,6 +14,7 @@ import {
   StyledTab
 } from './style'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
+import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 
 type TabPanelProps = {
   children?: React.ReactNode
@@ -47,7 +48,7 @@ function a11yProps(index: number) {
 
 export default function AccountPage() {
   const [value, setValue] = useState(0)
-  const { isLoading, user } = useAuth()
+  const { user } = useAuth()
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -89,24 +90,20 @@ export default function AccountPage() {
         </Box>
         <Box sx={stContainerTabPanel}>
           <Box sx={{ ...stBoxNav, ...stBoxTabPanel }}>
-            {isLoading ? (
-              'loading...'
-            ) : (
-              <Fragment>
-                <CustomTabPanel value={value} index={0}>
-                  {user && <ContactInfo user={user} />}
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                  <p>2</p>
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                  <OrderHistory />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
-                  <ChangePassword />
-                </CustomTabPanel>
-              </Fragment>
-            )}
+            <Fragment>
+              <CustomTabPanel value={value} index={0}>
+                {user && <ContactInfo user={user} />}
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                <DeliveryAddress />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <OrderHistory />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <ChangePassword />
+              </CustomTabPanel>
+            </Fragment>
           </Box>
         </Box>
       </Fragment>
