@@ -45,25 +45,7 @@ export const EmailConfirmationModal = ({
 
   return (
     <React.Fragment>
-      {is_active ? (
-        <Link
-          to="/account"
-          style={stLinkEmail}
-          onClick={() => {
-            setOpenModal(true)
-            requestEmail(email)
-          }}
-        >
-          <IconinfoMessage style={stIconEmail} />
-          <Typography
-            id="modal-modal-title"
-            component="span"
-            sx={stIconLinkEmail}
-          >
-            Ваша електронна пошта не підтверджена
-          </Typography>
-        </Link>
-      ) : (
+      {is_active ? null : (
         <Link
           to="/account"
           style={stLinkEmail}
