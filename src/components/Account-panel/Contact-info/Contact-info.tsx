@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
 import { stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
@@ -91,8 +91,12 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
         />
       </Box>
       <Box>
-        <h3 style={stH3}>Ваша контактна інформація</h3>
-        <p style={stP}>Тут ви можете змінити ваші дані</p>
+        <Typography variant="h3" sx={stH3}>
+          Ваша контактна інформація
+        </Typography>
+        <Typography variant="body1" sx={stP}>
+          Тут ви можете змінити ваші дані
+        </Typography>
       </Box>
       <EmailConfirmationModal is_active={is_active ?? false} email={email} />
       {isLoading ? (

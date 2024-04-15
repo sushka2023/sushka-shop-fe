@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
-
+import { stBoxModalWindow } from './style'
 type TModalWindow = {
   yourStBoxModalWindow?: React.CSSProperties
   children: React.ReactNode
@@ -20,25 +20,6 @@ export default function InfoConfirmationModal({
     setOpenModal(false)
   }
 
-  const styleBoxModalWindow: React.CSSProperties = {
-    width: '100%',
-    maxWidth: 600,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: 'background.paper',
-    borderRadius: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    color: '#567343',
-    padding: '30px 20px 50px 20px',
-    border: 'none',
-    fontFamily: 'Open Sans'
-  }
-
   return (
     <div>
       <Modal
@@ -47,7 +28,7 @@ export default function InfoConfirmationModal({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...styleBoxModalWindow, ...yourStBoxModalWindow }}>
+        <Box sx={{ ...stBoxModalWindow, ...yourStBoxModalWindow }}>
           <React.Fragment>
             <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
               <CloseIcon

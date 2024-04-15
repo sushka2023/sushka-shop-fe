@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface ErrorDisplayProps {
+type ErrorDisplayProps = {
   error: string | undefined
 }
 

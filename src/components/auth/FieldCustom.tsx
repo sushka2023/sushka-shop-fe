@@ -1,14 +1,13 @@
-// InputField.tsx
 import React from 'react'
 import { Field } from 'formik'
 
 import { styleInput, styleInputError } from './style'
+import { InputProps } from './InputCustom'
 
-interface InputFieldProps {
-  type: 'text' | 'password' | 'tel' | 'email'
+type InputSubset = Pick<InputProps, 'name' | 'label' | 'type'>
+
+type InputFieldProps = InputSubset & {
   id: string
-  name: string
-  label: string
   value?: string
   yourStInput?: React.CSSProperties
   error?: string | undefined
@@ -21,7 +20,7 @@ const InputField: React.FC<InputFieldProps> = ({
   name,
   label,
   value,
-  yourStInput,
+  yourStInput = {},
   error,
   disabled = false
 }) => {

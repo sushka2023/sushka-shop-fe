@@ -3,18 +3,22 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
 import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
+import {
+  BootstrapButton,
+  editBtnAccount,
+  styleBoxModalWindow,
+  styleBtnEditModalWindow,
+  styleBtnModalWindow
+} from './style'
 interface AuthState {
   accessToken: string
-  // інші властивості, які має ваш стан автентифікації
 }
 interface RootState {
   auth: AuthState
-  // інші редюсери та їх стани
 }
 export const BasicModal = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -25,82 +29,8 @@ export const BasicModal = () => {
 
   const token = useSelector((state: RootState) => state.auth.accessToken)
 
-  const BootstrapButton = styled(Button)({
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 16,
-    padding: '6px 12px',
-    border: '1px solid',
-    lineHeight: 1.5
-  })
-
-  const editBtnAccount = {
-    '&.MuiButton-root:hover': {
-      backgroundColor: '#EDA4A4'
-    },
-    'borderRadius': '20px',
-    'border': 0,
-    'cursor': 'pointer',
-    'fontFamily': 'Open Sans',
-    'fontWeight': 600,
-    'fontStyle': '16px',
-    'textAlign': 'center',
-    'color': '#FFFFFF',
-    'padding': '21px 40px',
-    'backgroundColor': '#FCA1A9'
-  }
-  const styleBoxModalWindow = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 580,
-    height: '291px',
-    bgcolor: 'background.paper',
-    borderRadius: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    fontFamily: 'Open Sans',
-    color: '#567343'
-  }
-  const styleBtnModalWindow = {
-    'width': 250,
-    'height': 50,
-    'bgcolor': 'background.paper',
-    'borderRadius': '10px',
-    'color': '#FCC812',
-    'border': '2px solid #FCC812',
-    'lineHeight': '18.2px',
-    'fontStyle': '14px',
-    'fontFamily': 'Open Sans',
-    'fontWeight': 700,
-    '&:hover': {
-      backgroundColor: '#FCC812',
-      boxShadow: 'none',
-      border: '2px solid #FCC812',
-      color: '#FFFFFF'
-    }
-  }
-  const styleBtnEditModalWindow = {
-    'width': 250,
-    'height': 50,
-    'bgcolor': '#D21C1C',
-    'borderRadius': '10px',
-    'color': '#FFFFFF',
-    'border': '0',
-    'lineHeight': '18.2px',
-    'fontStyle': '14px',
-    'fontFamily': 'Open Sans',
-    'fontWeight': 700,
-    '&:hover': {
-      backgroundColor: '#DB4949'
-    }
-  }
-
   const handleClickLogout = () => {
-    return dispatch(logout({ accessToken: token! }))
+    dispatch(logout({ accessToken: token! }))
   }
 
   return (
