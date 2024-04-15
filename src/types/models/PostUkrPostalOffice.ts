@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type PostUkrPostalOffice = {
-    post_id: number;
     ukr_poshta_id?: number;
 };
 

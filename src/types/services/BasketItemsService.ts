@@ -64,8 +64,8 @@ export class BasketItemsService {
      * Remove Product
      * The remove_product function removes a product from the basket.
      * The function takes in a body of type BasketItemsRemoveModel, which contains the id of the product to be removed.
-     * It also takes in an optional current_user parameter, which is used to identify who's basket we are removing from.
-     * Finally it takes in an optional db parameter, which is used for database access.
+     * It also takes in an optional current_user parameter, which is used to identify whose basket we are removing from.
+     * Finally, it takes in an optional db parameter, which is used for database access.
      *
      * Args:
      * body: BasketItemsRemoveModel: Get the product_id from the request body

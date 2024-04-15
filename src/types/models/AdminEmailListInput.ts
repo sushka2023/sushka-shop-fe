@@ -2,10 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-/**
- * Payment types.
- */
-export enum PaymentTypes {
-    CASH_ON_DELIVERY_NP = 'cash_on_delivery_np',
-    LIQPAY = 'liqpay',
-}
+export type AdminEmailListInput = {
+    is_send_message?: boolean;
+    emails: Array<string>;
+};
+

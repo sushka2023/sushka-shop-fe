@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { PostResponseOrder } from './PostResponseOrder';
 import type { Role } from './Role';
 export type UserResponseForCRM = {
     id: number;
@@ -15,5 +16,6 @@ export type UserResponseForCRM = {
     is_deleted: boolean;
     is_blocked: boolean;
     is_active: boolean;
+    posts: PostResponseOrder;
 };
 

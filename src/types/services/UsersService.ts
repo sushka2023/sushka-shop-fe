@@ -2,8 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AdminEmailListInput } from '../models/AdminEmailListInput';
+import type { AdminEmailsResponse } from '../models/AdminEmailsResponse';
+import type { PasswordChangeModel } from '../models/PasswordChangeModel';
 import type { UserBlockOrRemoveModel } from '../models/UserBlockOrRemoveModel';
 import type { UserChangeRole } from '../models/UserChangeRole';
+import type { UserMessageResponse } from '../models/UserMessageResponse';
 import type { UserResponse } from '../models/UserResponse';
 import type { UserResponseAfterUpdate } from '../models/UserResponseAfterUpdate';
 import type { UserResponseForCRM } from '../models/UserResponseForCRM';
@@ -226,6 +230,99 @@ export class UsersService {
             errors: {
                 422: `Validation Error`,
             },
+        });
+    }
+    /**
+     * Change Password
+     * The change_password function takes a body as input.
+     * The body contains the new password for that user, which is hashed using pwd_context.hash() before being stored in
+     * the database.
+     *
+     * Args:
+     * body: PasswordChangeModel: Get the password from the request body
+     * db: Session: Get the database session
+     * current_user (User): the current user
+     *
+     * Returns:
+     * A message to the user
+     * @param requestBody
+     * @returns UserMessageResponse Successful Response
+     * @throws ApiError
+     */
+    public static changePasswordApiUsersMeChangePasswordPost(
+        requestBody: PasswordChangeModel,
+    ): CancelablePromise<UserMessageResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/users/me/change_password',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Add Email Addresses
+     * Add email addresses by admin.
+     *
+     * Args:
+     * data: AdminEmailListInput: Get the email data from the request body
+     * db: Session: Get the database session
+     *
+     * Returns:
+     * A message about successful adding of email addresses
+     * @param requestBody
+     * @returns UserMessageResponse Successful Response
+     * @throws ApiError
+     */
+    public static addEmailAddressesApiUsersAdminAddressesAddEmailAddressesPost(
+        requestBody: AdminEmailListInput,
+    ): CancelablePromise<UserMessageResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/users/admin_addresses/add_email_addresses',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Email Addresses
+     * Obtain email addresses by admin.
+     *
+     * Args:
+     * db: Session: Get the database session
+     *
+     * Returns:
+     * Email addresses object
+     * @returns AdminEmailsResponse Successful Response
+     * @throws ApiError
+     */
+    public static getEmailAddressesApiUsersAdminAddressesObtainAllAddressesGet(): CancelablePromise<Array<AdminEmailsResponse>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/users/admin_addresses/obtain_all_addresses',
+        });
+    }
+    /**
+     * Change Send Status
+     * Changes message sending status: obtains email addresses and changes message sending status by admin.
+     *
+     * Args:
+     * db: Session: Get the database session
+     *
+     * Returns:
+     * A message about successful changing message sending status
+     * @returns UserMessageResponse Successful Response
+     * @throws ApiError
+     */
+    public static changeSendStatusApiUsersAdminAddressesChangeSendStatusPut(): CancelablePromise<UserMessageResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/users/admin_addresses/change_send_status',
         });
     }
 }

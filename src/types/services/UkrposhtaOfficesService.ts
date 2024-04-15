@@ -2,40 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { UkrPoshtaCreate } from '../models/UkrPoshtaCreate';
 import type { UkrPoshtaPartialUpdate } from '../models/UkrPoshtaPartialUpdate';
 import type { UkrPoshtaResponse } from '../models/UkrPoshtaResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UkrposhtaOfficesService {
-    /**
-     * Create Ukr Poshta Office
-     * The create function creates a new ukrposhta office.
-     *
-     * Args:
-     * ukr_postal_office: UkrPoshtaCreate: Validate the request body
-     * db: Session: Access the database
-     *
-     * Returns:
-     * An ukrposhta object
-     * @param requestBody
-     * @returns UkrPoshtaResponse Successful Response
-     * @throws ApiError
-     */
-    public static createUkrPoshtaOfficeApiUkrPoshtaCreatePost(
-        requestBody: UkrPoshtaCreate,
-    ): CancelablePromise<UkrPoshtaResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/ukr_poshta/create',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
     /**
      * Update Ukr Poshta Data
      * Change the ukrposhta data
