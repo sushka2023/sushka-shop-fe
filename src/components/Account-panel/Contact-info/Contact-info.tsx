@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
 import { Box, Grid, SnackbarOrigin } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
@@ -66,7 +66,6 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
 
     try {
       const response = await axiosInstance.put('/api/users/me/', values)
-      console.log('✌️response --->', response)
 
       setSnackbarData({
         open: true,

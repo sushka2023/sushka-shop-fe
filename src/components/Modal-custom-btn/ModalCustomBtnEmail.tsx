@@ -38,6 +38,23 @@ export const EmailConfirmationModal = ({
     }
   }
 
+  const stBtn = {
+    'borderRadius': 3,
+    'padding': '15px 80px',
+    'backgroundColor': '#FCC812',
+    'fontFamily': 'Open Sans',
+    'fontWeight': 700,
+    'fontSize': 14,
+    'border': '2px solid transparent',
+    'boxShadow': 'none !important',
+    '&:hover': {
+      backgroundColor: '#FFFFFF',
+      color: '#FCC812',
+      border: '2px solid #FCC812',
+      cursor: 'pointer'
+    }
+  }
+
   return (
     <div>
       {is_active ? null : (
@@ -91,9 +108,9 @@ export const EmailConfirmationModal = ({
           </Typography>
           <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
             <Button
+              sx={stBtn}
               onClick={() => setOpenModal(false)}
               variant="contained"
-              disableRipple
             >
               Зрозуміло
             </Button>
