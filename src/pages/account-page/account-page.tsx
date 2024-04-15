@@ -22,9 +22,7 @@ type TabPanelProps = {
   value: number
 }
 
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props
-
+function CustomTabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
     <div
       role="tabpanel"
