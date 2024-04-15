@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import axiosInstance from '../../axios/settings'
