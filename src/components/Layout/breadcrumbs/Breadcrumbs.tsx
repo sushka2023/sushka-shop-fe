@@ -13,7 +13,8 @@ const ukrainianNames = {
   cooperation: 'Співпраця',
   conditions: 'Умови та Положення',
   policy: 'Політика конфіденційності',
-  account: 'Особистий кабінет'
+  account: 'Особистий кабінет',
+  order: 'Оформлення замовлення'
 }
 
 const getUkrainianName = (name: string) => {

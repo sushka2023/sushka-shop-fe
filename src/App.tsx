@@ -22,6 +22,7 @@ import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
+import OrderPage from './pages/order-page'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -58,6 +59,7 @@ function App() {
             }
           />
           <Route path="cart" element={<ShoppingListPage />} />
+          <Route path="cart/order" element={<OrderPage />} />
           <Route path="conditions" element={<ConditionsPage />} />
           <Route path="policy" element={<PrivacyPolicyPage />} />
           <Route path="cooperation" element={<CooperationPage />} />
