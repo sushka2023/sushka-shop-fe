@@ -5,16 +5,14 @@ import { fetchReviews } from '../../redux/feedbacks/operations'
 import { useDispatch, useSelector } from 'react-redux'
 import FeedbackItem from '../../components/feedbacks/list/FeedbackItem'
 import { RootState, AppDispatch } from '../../redux/store'
-
 const LIMIT = 5
 const OFFSET = 0
 const FeedbackPage = () => {
   const dispatch: AppDispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
-  }, [dispatch])
+  }, [])
   const reviews = useSelector((state: RootState) => state.reviews.items)
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Відгуки</h2>

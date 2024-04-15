@@ -2,18 +2,13 @@ import styles from '../Feedbacks.module.scss'
 import { FC } from 'react'
 import { Rating } from './Rating'
 import { Review } from '../../../redux/feedbacks/slice'
+import { formatDate } from '../../../utils/format-date/formatDate'
 type Props = {
   review: Review
 }
 
 const FeedbackItem: FC<Props> = ({ review }) => {
-  const date = new Date(review.created_at)
-  const day = date.getDate()
-  const month = date.getMonth() + 1
-  const year = date.getFullYear()
-
-  const formattedDate = `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}.${year}`
-
+  const formattedDate = formatDate(review.created_at)
   return (
     <li className={styles.feedbackItem}>
       <div
