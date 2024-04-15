@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Form, Formik } from 'formik'
-import { Box, Grid, SnackbarOrigin } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import axiosInstance from '../../../axios/settings'
 import { stH3, stP } from '../../auth/style'
 import CustomInput from '../../auth/InputCustom'
@@ -20,20 +20,13 @@ export type UserSubset = Pick<
   'email' | 'first_name' | 'last_name' | 'phone_number'
 >
 
-const accessToken = getToken()
-
-export interface ISnackbarData {
+type ISnackbarData = {
   open: boolean
   error: boolean
   message?: string | undefined
 }
 
-export interface CustomSnackbarProps {
-  handleClose: () => void
-  snackbarData: ISnackbarData
-  anchorOrigin: SnackbarOrigin
-  message?: string
-}
+const accessToken = getToken()
 
 export const ContactInfo = ({ user }: { user: UserResponse }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false)
