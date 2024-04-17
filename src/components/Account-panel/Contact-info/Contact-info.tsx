@@ -11,7 +11,7 @@ import { AppDispatch } from '../../../redux/store'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
 import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
-import { BootstrapButton } from './style'
+import { ContactInfoBtn } from '../style'
 import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
 
@@ -162,7 +162,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
                   />
                 </Grid>
               </Grid>
-              <BootstrapButton
+              <ContactInfoBtn
                 variant="contained"
                 disableRipple
                 disabled={
@@ -175,7 +175,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
                 type="submit"
               >
                 {isLoadingBtn ? 'Завантаження...' : 'ЗБЕРЕГТИ'}
-              </BootstrapButton>
+              </ContactInfoBtn>
             </Form>
           )}
         </Formik>
