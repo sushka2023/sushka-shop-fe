@@ -15,7 +15,8 @@ export const ContactInfoBtn = styled(Button)({
   'boxShadow': 'none',
   'transition': 'background-color 0.3s ease-in-out',
   '&:hover': {
-    backgroundColor: 'rgba(252, 200, 18, 0.8)',
+    backgroundColor: '',
+    border: 'rgba(252, 200, 18, 0.8)',
     boxShadow: 'none'
   }
 })
@@ -34,7 +35,9 @@ export const DelivetyAddressBtn = styled(Button)({
   'boxShadow': 'none',
   'transition': 'background-color 0.3s ease-in-out',
   '&:hover': {
-    backgroundColor: 'rgba(252, 200, 18, 0.8)',
+    backgroundColor: '#FFFFFF',
+    color: '#FCC812',
+    border: '2px solid rgba(252, 200, 18, 0.8)',
     boxShadow: 'none'
   }
 })

@@ -2,6 +2,8 @@ import { Box, Grid, Paper, Typography, styled } from '@mui/material'
 import { stH3, stP } from '../../auth/style'
 import AddIcon from '@mui/icons-material/Add'
 import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
+import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
+// import IconPen from '../../../icons/pen.svg?react'
 import { DelivetyAddressBtn } from '../style'
 export const DeliveryAddress = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -164,7 +166,7 @@ export const DeliveryAddress = () => {
                 padding: 2
               }}
             >
-              <IconNovaPoshta style={{ margin: '10px 20px 10px 10px' }} />
+              <IconUkrPoshta style={{ margin: '10px 20px 10px 10px' }} />
               <Box>
                 <Typography
                   variant="body1"

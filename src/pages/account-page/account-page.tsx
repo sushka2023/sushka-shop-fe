@@ -15,6 +15,7 @@ import {
 } from './style'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
+// import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 
 type TabPanelProps = {
   children?: React.ReactNode
@@ -47,6 +48,7 @@ function a11yProps(index: number) {
 export default function AccountPage() {
   const [value, setValue] = useState(0)
   const { user } = useAuth()
+  console.log('✌️user --->', user)
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setValue(newValue)
