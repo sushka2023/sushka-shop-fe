@@ -3,6 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type BasketItemsRemoveModel = {
-    product_id: number;
+    id: number;
 };
 

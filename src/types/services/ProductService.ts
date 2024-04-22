@@ -65,10 +65,12 @@ export class ProductService {
      * :param offset: int: Indicate the number of records to skip
      * :param pr_status: ProductStatus: Filter products by status
      * :param pr_category_id: int: Filter the products by category
+     * :param search_query: product search criterion (by name or id of the product)
      * :param db: Session: Pass the database connection to the function
      * :return: A list of products
      * @param limit
      * @param offset
+     * @param searchQuery
      * @param prStatus
      * @param prCategoryId
      * @returns ProductWithTotalResponse Successful Response
@@ -77,6 +79,7 @@ export class ProductService {
     public static productsForCrmApiProductAllForCrmGet(
         limit: number,
         offset: number,
+        searchQuery?: (number | string),
         prStatus?: ProductStatus,
         prCategoryId?: number,
     ): CancelablePromise<ProductWithTotalResponse> {
@@ -86,6 +89,7 @@ export class ProductService {
             query: {
                 'limit': limit,
                 'offset': offset,
+                'search_query': searchQuery,
                 'pr_status': prStatus,
                 'pr_category_id': prCategoryId,
             },
@@ -200,6 +204,40 @@ export class ProductService {
             url: '/api/product/{product_id}',
             path: {
                 'product_id': productId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Search All Products
+     * The search_all_products function returns a list of products after search.
+     *
+     * :param limit: int: Limit the number of products returned
+     * :param offset: int: Indicate the number of records to skip
+     * :param search_query: product search criterion (by name or id of the product)
+     * :param db: Session: Pass the database connection to the function
+     *
+     * Return: A list of products
+     * @param limit
+     * @param offset
+     * @param searchQuery
+     * @returns ProductWithTotalResponse Successful Response
+     * @throws ApiError
+     */
+    public static searchAllProductsApiProductSearchGet(
+        limit: number,
+        offset: number,
+        searchQuery: (number | string),
+    ): CancelablePromise<ProductWithTotalResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/product/search/',
+            query: {
+                'limit': limit,
+                'offset': offset,
+                'search_query': searchQuery,
             },
             errors: {
                 422: `Validation Error`,

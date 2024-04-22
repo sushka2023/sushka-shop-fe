@@ -3,8 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export type ProductCategoryModel = {
-    id: number
-    name: string
-    is_deleted: boolean
+    name: string;
 };
 
