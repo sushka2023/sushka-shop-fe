@@ -11,18 +11,20 @@ import { BasketItemsResponse } from '../../types'
 
 const OrderPage = () => {
   const [activeStep, setActiveStep] = useState(0)
-  const [orderList, setOrderList] = useState<BasketItemsResponse[] | null>(null)
+  const [orderList, setOrderList] = useState<BasketItemsResponse[]>([])
 
   useEffect(() => {
-    if (!orderList) {
-      ;(async () => {
-        try {
-          const products = await getBasketItems()
-          setOrderList(products)
-        } catch (error) {
-          console.error('Помилка під час завандаження замовлення:', error)
-        }
-      })()
+    const fetchBasketItems = async () => {
+      try {
+        const products = await getBasketItems()
+        setOrderList(products)
+      } catch (error) {
+        console.error('Помилка під час завандаження замовлення:', error)
+      }
+    }
+
+    if (!orderList.length) {
+      fetchBasketItems()
     }
   }, [orderList])
 

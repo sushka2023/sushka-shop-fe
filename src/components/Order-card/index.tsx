@@ -7,11 +7,21 @@ import { SUM, TARIFF, DELIVERY } from '../../pages/order-page/constants'
 import { cardStyle, cardContentStyle, dividerStyle } from './style'
 
 type Props = {
-  orderList: BasketItemsResponse[] | null
+  orderList: BasketItemsResponse[]
 }
 
 const OrderCard: React.FC<Props> = ({ orderList }) => {
-  const totalPrice = `${orderList?.reduce((total, order) => total + order.quantity * order.product.prices[0].price, 0)}₴`
+  const totalPrice = orderList.reduce(
+    (total, order) => total + order.quantity * order.product.prices[0].price,
+    0
+  )
+  const formatter = new Intl.NumberFormat('uk-UA', {
+    style: 'currency',
+    currency: 'UAH',
+    currencyDisplay: 'symbol'
+  })
+
+  const formattedTotalPrice = formatter.format(totalPrice).replace('грн', '₴')
 
   return (
     <Grid item xs={3}>
@@ -31,7 +41,7 @@ const OrderCard: React.FC<Props> = ({ orderList }) => {
           <Divider sx={dividerStyle} />
           <OrderPrice label={DELIVERY} content={TARIFF} />
           <Divider sx={dividerStyle} />
-          <OrderPrice label={SUM} content={totalPrice} />
+          <OrderPrice label={SUM} content={formattedTotalPrice} />
         </CardContent>
       </Card>
     </Grid>
