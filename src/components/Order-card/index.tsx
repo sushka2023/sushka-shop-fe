@@ -18,10 +18,10 @@ const OrderCard: React.FC<Props> = ({ orderList }) => {
   const formatter = new Intl.NumberFormat('uk-UA', {
     style: 'currency',
     currency: 'UAH',
-    currencyDisplay: 'symbol'
+    currencyDisplay: 'narrowSymbol'
   })
 
-  const formattedTotalPrice = formatter.format(totalPrice).replace('грн', '₴')
+  const formattedTotalPrice = formatter.format(totalPrice)
 
   return (
     <Grid item xs={3}>
@@ -31,8 +31,8 @@ const OrderCard: React.FC<Props> = ({ orderList }) => {
           fontFamily="Comfortaa"
           fontWeight="500"
           fontSize="32px"
-          pt={'20px'}
-          pl={'20px'}
+          pt="20px"
+          pl="20px"
         >
           Ваше замовлення
         </Typography>
