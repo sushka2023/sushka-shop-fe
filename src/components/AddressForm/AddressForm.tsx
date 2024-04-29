@@ -9,11 +9,12 @@ import {
   RadioProps
 } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import { BpIcon } from './style'
+import { BpCheckedIcon, BpIcon } from './style'
 import CustomAutocomplete from '../auth/AutocompleteSelect/AutocompleteSelect'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
-export type FormValue = {
-  value: string
+type FormValue = Partial<{
   city_np_office: string | null
   separation_np_office: string | null
   city_np_parcel_locker: string | null
@@ -29,10 +30,18 @@ export type FormValue = {
   street_urk: string | null
   house_urk: string | null
   apartment_urk: string | null
-}
+}>
 
 function BpRadio(props: RadioProps) {
-  return <Radio disableRipple color="default" icon={<BpIcon />} {...props} />
+  return (
+    <Radio
+      disableRipple
+      color="default"
+      icon={<BpIcon />}
+      checkedIcon={<BpCheckedIcon />}
+      {...props}
+    />
+  )
 }
 
 const allOffice = [{ office: '#1' }, { office: '#2' }, { office: '#3' }]
@@ -44,13 +53,81 @@ const allCity = [
   { city: 'Dnipro' }
 ]
 
+const schema = yup.object().shape({
+  city_np_office: yup.string().nullable(),
+  separation_np_office: yup.string().nullable(),
+  city_np_parcel_locker: yup.string().nullable(),
+  box_np_parcel_locker: yup.string().nullable(),
+  city_np_address: yup.string().nullable(),
+  street_np_address: yup.string().nullable(),
+  house_np_address: yup.string().nullable(),
+  apartment_np_address: yup.string().nullable(),
+  country_urk: yup.string().nullable(),
+  region_urk: yup.string().nullable(),
+  city_urk: yup.string().nullable(),
+  postalCode_urk: yup.string().nullable(),
+  street_urk: yup.string().nullable(),
+  house_urk: yup.string().nullable(),
+  apartment_urk: yup.string().nullable()
+})
+
 export const AddressForm = () => {
-  const { register, handleSubmit, watch, setValue } = useForm<FormValue>()
-  const [selectedValue, setSelectedValue] = useState('np-office')
+  const { register, handleSubmit, watch, setValue } = useForm<FormValue>({
+    resolver: yupResolver(schema)
+  })
+
+  const [selectedValue, setSelectedValue] = useState('np_office')
 
   const onSubmit = (data: FormValue) => {
     console.log('Selected Radio Value:', selectedValue)
     console.log('Form Data:', data)
+    let dataResout
+    switch (selectedValue) {
+      case 'np_office': {
+        dataResout = {
+          city: data.city_np_office,
+          address_warehouse: data.separation_np_office
+        }
+        console.log('✌️dataResout --->', dataResout)
+        break
+      }
+      case 'np_parcel_locker': {
+        dataResout = {
+          city: data.city_np_parcel_locker,
+          address_warehouse: data.box_np_parcel_locker
+        }
+        console.log('✌️dataResoutParcelLocer --->', dataResout)
+        break
+      }
+      case 'np_address': {
+        dataResout = {
+          street: data.street_np_address,
+          house_number: data.house_np_address,
+          apartment_number: data.apartment_np_address,
+          floor: 0,
+          city: data.city_np_address,
+          region: '',
+          area: ''
+        }
+        console.log('✌️dataResoutAddress --->', dataResout)
+        break
+      }
+      case 'ukr_post': {
+        dataResout = {
+          street: data.street_urk,
+          house_number: data.house_urk,
+          apartment_number: data.apartment_urk,
+          city: data.city_urk,
+          region: data.region_urk,
+          country: data.country_urk,
+          post_code: data.postalCode_urk
+        }
+        console.log('✌️dataResoutUkrPost --->', dataResout)
+        break
+      }
+      default:
+        break
+    }
   }
 
   return (
@@ -62,11 +139,11 @@ export const AddressForm = () => {
           onChange={(e) => setSelectedValue(e.target.value)}
         >
           <FormControlLabel
-            value="np-office"
+            value="np_office"
             control={<BpRadio />}
             label="Нова пошта (відділення)"
           />
-          {selectedValue === 'np-office' && (
+          {selectedValue === 'np_office' && (
             <React.Fragment>
               <CustomAutocomplete
                 type="city"
@@ -87,11 +164,11 @@ export const AddressForm = () => {
           )}
 
           <FormControlLabel
-            value="np-parcel-locker"
+            value="np_parcel_locker"
             control={<BpRadio />}
             label="Нова пошта (поштомат)"
           />
-          {selectedValue === 'np-parcel-locker' && (
+          {selectedValue === 'np_parcel_locker' && (
             <React.Fragment>
               <CustomAutocomplete
                 type="city"
@@ -114,11 +191,11 @@ export const AddressForm = () => {
           )}
 
           <FormControlLabel
-            value="np-address"
+            value="np_address"
             control={<BpRadio />}
             label="Нова пошта (адресна)"
           />
-          {selectedValue === 'np-address' && (
+          {selectedValue === 'np_address' && (
             <React.Fragment>
               <CustomAutocomplete
                 type="city"
@@ -140,25 +217,31 @@ export const AddressForm = () => {
           )}
 
           <FormControlLabel
-            value="ukr-post"
+            value="ukr_post"
             control={<BpRadio />}
             label="Укрпошта"
           />
-          {selectedValue === 'ukr-post' && (
+          {selectedValue === 'ukr_post' && (
             <React.Fragment>
               <input
-                defaultValue="test"
+                defaultValue="Ukraine"
                 disabled
                 {...register('country_urk')}
               />
-              <input defaultValue="test" {...register('region_urk')} />
-              <input defaultValue="test" {...register('city_urk')} />
-              <input defaultValue="test" {...register('postalCode_urk')} />
-              <input defaultValue="test" {...register('street_urk')} />
+              <input placeholder="region_urk" {...register('region_urk')} />
+              <input placeholder="city_urk" {...register('city_urk')} />
+              <input
+                placeholder="postalCode_urk"
+                {...register('postalCode_urk')}
+              />
+              <input placeholder="street_urk" {...register('street_urk')} />
 
               <Box sx={{ display: 'flex', gap: 3 }}>
-                <input defaultValue="test" {...register('house_urk')} />
-                <input defaultValue="test" {...register('apartment_urk')} />
+                <input placeholder="house_urk" {...register('house_urk')} />
+                <input
+                  placeholder="apartment_urk"
+                  {...register('apartment_urk')}
+                />
               </Box>
             </React.Fragment>
           )}
