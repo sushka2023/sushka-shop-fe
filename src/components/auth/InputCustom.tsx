@@ -6,7 +6,7 @@ import InputField from './FieldCustom'
 
 type InputProps = {
   name: string
-  label: string
+  label?: string
   type?: 'text' | 'password' | 'tel' | 'email'
   htmlFor: string
   value?: string
@@ -14,6 +14,8 @@ type InputProps = {
   yourStBox?: React.CSSProperties
   yourStInput?: React.CSSProperties
   disabled?: boolean
+  placeholder?: string
+  size?: 'medium' | 'small' | undefined
 }
 
 const CustomInput: React.FC<InputProps> = (props) => {
@@ -25,7 +27,9 @@ const CustomInput: React.FC<InputProps> = (props) => {
     htmlFor,
     yourStBox,
     yourStInput,
-    disabled = false
+    disabled = false,
+    placeholder,
+    size = 'medium'
   } = props
   const { errors, touched } = useFormikContext<InputProps>()
   const error =
@@ -47,10 +51,13 @@ const CustomInput: React.FC<InputProps> = (props) => {
       yourStInput={yourStInput}
       error={typeofError ? error : undefined}
       disabled={disabled}
+      placeholder={placeholder}
+      size={size}
     />
   )
 
-  const renderErrorDisplay = () => typeofError && <ErrorDisplay error={error} />
+  const renderErrorDisplay = () =>
+    typeofError && <ErrorDisplay error={error as string} />
 
   return (
     <Typography sx={{ margin: '10px 0' }}>

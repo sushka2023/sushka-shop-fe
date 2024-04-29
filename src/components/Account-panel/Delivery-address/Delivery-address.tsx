@@ -1,26 +1,20 @@
-import { Box, Button, Grid, Paper, Typography, styled } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { stH3, stP } from '../../auth/style'
 import AddIcon from '@mui/icons-material/Add'
 import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
 import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
-// import IconPen from '../../../icons/pen.svg?react'
 import CreateIcon from '@mui/icons-material/Create'
+import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
+import { useState } from 'react'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import { AddressForm } from '../../AddressForm/AddressForm'
+import { Item, stBtnEdit } from '../../AddressForm/style'
+
 export const DeliveryAddress = () => {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary
-  }))
+  const [openModal, setOpenModal] = useState(false)
+
   return (
     <Box>
-      {/* <Box>
-            <CustomSnackbar
-               handleClose={handleCloseSnackbar}
-               snackbarData={snackbarData}
-            />
-         </Box> */}
       <Box>
         <Typography variant="h3" sx={stH3}>
           Ваші адреси доставки
@@ -30,92 +24,6 @@ export const DeliveryAddress = () => {
         </Typography>
       </Box>
       <Grid container spacing={1} sx={{ mt: 3 }}>
-        <Grid sx={{ width: '100%' }} item xs={12} md={6} lg={3}>
-          <Item
-            sx={{
-              width: 300,
-              height: 180,
-              boxShadow: 'none',
-              borderRadius: 5,
-              padding: 0
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                color: '#567343',
-                padding: 2
-              }}
-            >
-              <IconNovaPoshta style={{ margin: '10px 20px 10px 10px' }} />
-              <Box>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: 22,
-                    fontWeight: 600,
-                    fontFamily: 'Open Sans'
-                  }}
-                >
-                  Нова пошта
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontSize: 16,
-                    fontFamily: 'Open Sans',
-                    textAlign: 'start',
-                    fontWeight: 400
-                  }}
-                >
-                  Адресна
-                </Typography>
-              </Box>
-            </Box>
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: 16,
-                fontWeight: 400,
-                fontFamily: 'Open Sans',
-                color: '#567343',
-                textAlign: 'start',
-                margin: '0 15px'
-              }}
-            >
-              Київ, Київська область, Героїв Небесної сотні 25, кв.10
-            </Typography>
-          </Item>
-          <Button
-            variant="outlined"
-            type="button"
-            endIcon={<CreateIcon />}
-            sx={{
-              width: 300,
-              height: 50,
-              borderRadius: 2.5,
-              color: '#FFFFFF',
-              backgroundColor: '#FCC812',
-              border: 'transparent',
-              cursor: 'pointer',
-              marginTop: 2.5,
-              fontSize: 14,
-              fontWeight: 700,
-              fontFamily: 'Open Sans',
-              boxShadow: 'none',
-              [`&:hover`]: {
-                backgroundColor: '#FFFFFF',
-                color: '#FCC812',
-                border: '2px solid rgba(252, 200, 18, 0.8)',
-                boxShadow: 'none'
-              }
-            }}
-          >
-            Редагувати
-          </Button>
-        </Grid>
-
         <Grid item xs={12} md={6} lg={3}>
           <Item
             sx={{
@@ -126,6 +34,21 @@ export const DeliveryAddress = () => {
               padding: 0
             }}
           >
+            <Box sx={{ position: 'relative', cursor: 'pointer' }}>
+              <DeleteOutlineIcon
+                sx={{
+                  position: 'absolute',
+                  top: -14,
+                  right: -14,
+                  width: 25,
+                  height: 25,
+                  backgroundColor: '#FED9DD',
+                  borderRadius: 20,
+                  padding: 1,
+                  color: '#D21C1C'
+                }}
+              />
+            </Box>
             <Box
               sx={{
                 display: 'flex',
@@ -173,36 +96,19 @@ export const DeliveryAddress = () => {
               Київ, Київська область, Героїв Небесної сотні 25, кв.10
             </Typography>
           </Item>
+          <IconNovaPoshta />
           <Button
             variant="outlined"
             type="button"
             endIcon={<CreateIcon />}
-            sx={{
-              width: 300,
-              height: 50,
-              borderRadius: 2.5,
-              color: '#FFFFFF',
-              backgroundColor: '#FCC812',
-              border: 'transparent',
-              cursor: 'pointer',
-              marginTop: 2.5,
-              fontSize: 14,
-              fontWeight: 700,
-              fontFamily: 'Open Sans',
-              boxShadow: 'none',
-              [`&:hover`]: {
-                backgroundColor: '#FFFFFF',
-                color: '#FCC812',
-                border: '2px solid rgba(252, 200, 18, 0.8)',
-                boxShadow: 'none'
-              }
-            }}
+            sx={stBtnEdit}
           >
             Редагувати
           </Button>
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <Item
+          <Button
+            onClick={() => setOpenModal(true)}
             sx={{
               width: 222,
               height: 50,
@@ -210,25 +116,51 @@ export const DeliveryAddress = () => {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#567343',
+              backgroundColor: '#FFFFFF',
               cursor: 'pointer',
-              borderRadius: 7,
-              boxShadow: 'none'
+              borderRadius: 5,
+              boxShadow: 'none',
+              fontFamily: 'Open Sans',
+              fontWeight: 400,
+              fontSize: 18,
+              paddingRight: 1,
+              [`&:hover`]: {
+                backgroundColor: '#FFFFFF',
+                color: '#9AAB8E',
+                boxShadow: 'none'
+              }
             }}
           >
-            <Typography
-              sx={{
-                fontFamily: 'Open Sans',
-                fontWeight: 500,
-                fontSize: 20,
-                paddingBottom: 0.5,
-                paddingRight: 1
-              }}
-            >
-              Додати адресу
-            </Typography>
+            Додати адресу
             <AddIcon sx={{ fontSize: 26 }} />
-          </Item>
+          </Button>
         </Grid>
+        <InfoConfirmationModal
+          yourStBoxModalWindow={{ alignItems: 'start', paddingLeft: 6 }}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        >
+          <Typography
+            variant="h3"
+            sx={{ fontFamily: 'Comfortaa', fontWeight: 500, fontSize: 32 }}
+          >
+            Додати нову адресу
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              fontFamily: 'Open Sans',
+              fontWeight: 400,
+              fontSize: 18,
+              margin: '20px 0 45px 0'
+            }}
+          >
+            Ми збережемо введені дані, щоб оформлення <br /> Вашого наступного
+            замовлення було швидшим.
+          </Typography>
+
+          <AddressForm />
+        </InfoConfirmationModal>
       </Grid>
     </Box>
   )

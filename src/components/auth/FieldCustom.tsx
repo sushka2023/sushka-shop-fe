@@ -2,27 +2,27 @@ import React from 'react'
 import { Field } from 'formik'
 
 import { styleInput, styleInputError } from './style'
-import { InputProps } from './InputCustom'
+import { InputProps } from '@mui/material'
 
-type InputSubset = Pick<InputProps, 'name' | 'label' | 'type'>
-
-type InputFieldProps = InputSubset & {
+type InputFieldProps = InputProps & {
   id: string
   value?: string
   yourStInput?: React.CSSProperties
   error?: string | undefined
   disabled?: boolean
+  placeholder?: string
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   type,
   id,
   name,
-  label,
+  placeholder,
   value,
   yourStInput = {},
   error,
-  disabled = false
+  disabled = false,
+  size
 }) => {
   return (
     <Field
@@ -30,14 +30,18 @@ const InputField: React.FC<InputFieldProps> = ({
       style={{
         ...styleInput,
         ...yourStInput,
-        ...(error ? styleInputError : undefined)
+        ...(error ? styleInputError : undefined),
+        '::placeholder': {
+          color: 'red'
+        }
       }}
       type={type}
       id={id}
       name={name}
-      placeholder={label}
+      placeholder={placeholder}
       value={value}
       disabled={disabled}
+      size={size}
     />
   )
 }

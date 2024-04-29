@@ -183,3 +183,63 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
     </Box>
   )
 }
+
+{
+  /* 
+
+
+
+
+} */
+}
+
+{
+  /* <Autocomplete
+                     disablePortal
+                     size='small'
+
+                     id="combo-box-demo2"
+                     value={watch('cityNPOffice')}
+                     onChange={(_, newValue) => {
+                        setValue('cityNPOffice', newValue);
+                     }}
+                     loading={loadingCity}
+                     getOptionLabel={(option) => option.city}
+                     sx={stAutocompleteBase}
+                     options={options.city}
+                     onOpen={() => setOpen({ ...open, city: true })}
+                     onClose={() => setOpen({ ...open, city: false })}
+                     renderInput={(params) => (
+                        <TextField
+                           {...params}
+                           placeholder='Оберіть місто'
+                           sx={stTextFieldAutocomplete}
+                           InputProps={{
+                              onFocus: () => setIsFocused({ ...isFocused, city: true }),
+                              onBlur: () => setIsFocused({ ...isFocused, city: false }),
+                              ...params.InputProps,
+                              endAdornment: (
+                                 <Box
+                                    sx={stBoxAutocomplete}
+                                 >
+                                    <Box
+                                       sx={{
+                                          transform: isFocused.city ? 'rotate(90deg)' : 'none',
+                                          transition: 'transform 0.3s ease',
+                                       }}
+                                    >
+                                       <span style={{ display: 'inline-block', width: 11, height: 2, backgroundColor: '#567343', transform: 'rotate(45deg)', position: 'relative', left: 2 }} />
+                                       <span style={{ display: 'inline-block', width: 11, height: 2, backgroundColor: '#567343', transform: 'rotate(135deg)', position: 'relative', right: 2 }} />
+                                    </Box>
+                                 </Box>
+                              ),
+                           }}
+                        />
+                     )}
+                     renderOption={(props, option, { selected }) => (
+                        <li {...props} style={{ backgroundColor: selected ? '#F7F7F7' : 'inherit', color: '#567343' }}>
+                           {option.city}
+                        </li>
+                     )}
+                  /> */
+}

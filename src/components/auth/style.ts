@@ -8,15 +8,18 @@ export const styleLabel: React.CSSProperties = {
 }
 
 export const styleInput: React.CSSProperties = {
-  display: 'block',
-  width: 330,
-  height: 44,
-  color: '#567343',
-  border: 'none',
-  outline: 'none',
-  borderRadius: 8,
-  backgroundColor: '#FFFFFF',
-  padding: '5px 15px'
+  'display': 'block',
+  'width': 330,
+  'height': 40,
+  'color': '#567343',
+  'border': 'none',
+  'outline': 'none',
+  'borderRadius': 8,
+  'backgroundColor': '#FFFFFF',
+  'padding': '5px 15px',
+  '& ::placeholder': {
+    color: 'blue'
+  }
 }
 
 export const styleBoxInput: React.CSSProperties = {
