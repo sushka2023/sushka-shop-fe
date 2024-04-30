@@ -14,23 +14,23 @@ import CustomAutocomplete from '../auth/AutocompleteSelect/AutocompleteSelect'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-type FormValue = Partial<{
-  city_np_office: string | null
-  separation_np_office: string | null
-  city_np_parcel_locker: string | null
-  box_np_parcel_locker: string | null
-  city_np_address: string | null
-  street_np_address: string | null
-  house_np_address: string | null
-  apartment_np_address: string | null
-  country_urk: string | null
-  region_urk: string | null
-  city_urk: string | null
-  postalCode_urk: string | null
-  street_urk: string | null
-  house_urk: string | null
-  apartment_urk: string | null
-}>
+type FormValue = {
+  city_np_office?: string
+  separation_np_office?: string
+  city_np_parcel_locker?: string
+  box_np_parcel_locker?: string
+  city_np_address?: string
+  street_np_address?: string
+  house_np_address?: string
+  apartment_np_address?: string
+  country_urk?: string
+  region_urk?: string
+  city_urk?: string
+  postalCode_urk?: string
+  street_urk?: string
+  house_urk?: string
+  apartment_urk?: string
+}
 
 function BpRadio(props: RadioProps) {
   return (
@@ -53,30 +53,49 @@ const allCity = [
   { city: 'Dnipro' }
 ]
 
-const schema = yup.object().shape({
-  city_np_office: yup.string().nullable(),
-  separation_np_office: yup.string().nullable(),
-  city_np_parcel_locker: yup.string().nullable(),
-  box_np_parcel_locker: yup.string().nullable(),
-  city_np_address: yup.string().nullable(),
-  street_np_address: yup.string().nullable(),
-  house_np_address: yup.string().nullable(),
-  apartment_np_address: yup.string().nullable(),
-  country_urk: yup.string().nullable(),
-  region_urk: yup.string().nullable(),
-  city_urk: yup.string().nullable(),
-  postalCode_urk: yup.string().nullable(),
-  street_urk: yup.string().nullable(),
-  house_urk: yup.string().nullable(),
-  apartment_urk: yup.string().nullable()
-})
+const schema = (selectedValue: string) => {
+  return yup.object().shape({
+    city_np_office:
+      selectedValue === 'np_office'
+        ? yup.string().required('оберіть місто')
+        : yup.string(),
+    separation_np_office:
+      selectedValue === 'np_office'
+        ? yup.string().required('оберіть поштомат')
+        : yup.string(),
+    city_np_parcel_locker:
+      selectedValue === 'np_parcel_locker'
+        ? yup.string().required('оберіть місто')
+        : yup.string(),
+    box_np_parcel_locker:
+      selectedValue === 'np_parcel_locker'
+        ? yup.string().required('оберіть поштомат')
+        : yup.string(),
+    city_np_address: yup.string(),
+    street_np_address: yup.string(),
+    house_np_address: yup.string(),
+    apartment_np_address: yup.string(),
+    country_urk: yup.string(),
+    region_urk: yup.string(),
+    city_urk: yup.string(),
+    postalCode_urk: yup.string(),
+    street_urk: yup.string(),
+    house_urk: yup.string(),
+    apartment_urk: yup.string()
+  })
+}
 
 export const AddressForm = () => {
-  const { register, handleSubmit, watch, setValue } = useForm<FormValue>({
-    resolver: yupResolver(schema)
-  })
-
   const [selectedValue, setSelectedValue] = useState('np_office')
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors }
+  } = useForm<FormValue>({
+    resolver: yupResolver(schema(selectedValue))
+  })
 
   const onSubmit = (data: FormValue) => {
     console.log('Selected Radio Value:', selectedValue)
@@ -145,18 +164,25 @@ export const AddressForm = () => {
           />
           {selectedValue === 'np_office' && (
             <React.Fragment>
+              {(errors.city_np_office || errors.separation_np_office) && (
+                <p style={{ color: 'red' }}>
+                  {`${errors.city_np_office?.message ? errors.city_np_office?.message : ''} ${errors.separation_np_office?.message ? errors.separation_np_office?.message : ''}`}
+                </p>
+              )}
               <CustomAutocomplete
                 type="city"
                 value={watch('city_np_office')}
-                onChange={(newValue) => setValue('city_np_office', newValue)}
-                options={allCity} // Передаємо опції для міст
+                onChange={(newValue) =>
+                  setValue('city_np_office', newValue || undefined)
+                }
+                options={allCity}
               />
 
               <CustomAutocomplete
                 type="office"
                 value={watch('separation_np_office')}
                 onChange={(newValue) =>
-                  setValue('separation_np_office', newValue)
+                  setValue('separation_np_office', newValue || undefined)
                 }
                 options={allOffice}
               />
@@ -170,11 +196,17 @@ export const AddressForm = () => {
           />
           {selectedValue === 'np_parcel_locker' && (
             <React.Fragment>
+              {(errors.city_np_parcel_locker ||
+                errors.box_np_parcel_locker) && (
+                <p style={{ color: 'red' }}>
+                  {`${errors.city_np_parcel_locker?.message ? errors.city_np_parcel_locker?.message : ''} ${errors.box_np_parcel_locker?.message ? errors.box_np_parcel_locker?.message : ''}`}
+                </p>
+              )}
               <CustomAutocomplete
                 type="city"
                 value={watch('city_np_parcel_locker')}
                 onChange={(newValue) =>
-                  setValue('city_np_parcel_locker', newValue)
+                  setValue('city_np_parcel_locker', newValue || undefined)
                 }
                 options={allCity}
               />
@@ -183,7 +215,7 @@ export const AddressForm = () => {
                 type="office"
                 value={watch('box_np_parcel_locker')}
                 onChange={(newValue) =>
-                  setValue('box_np_parcel_locker', newValue)
+                  setValue('box_np_parcel_locker', newValue || undefined)
                 }
                 options={allOffice}
               />
@@ -200,7 +232,9 @@ export const AddressForm = () => {
               <CustomAutocomplete
                 type="city"
                 value={watch('city_np_address')}
-                onChange={(newValue) => setValue('city_np_address', newValue)}
+                onChange={(newValue) =>
+                  setValue('city_np_address', newValue || undefined)
+                }
                 options={allCity}
               />
 
