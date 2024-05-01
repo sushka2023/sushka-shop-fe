@@ -71,3 +71,53 @@ export const ChangeDataSchema = Yup.object().shape({
     .matches(/^(\+?380|380|0)\d{9}$/, 'Недійсний український номер телефону')
     .nullable()
 })
+
+export const AddAddressSchema = (selectedValue: string) => {
+  const commonSchema = Yup.object().shape({
+    country_urk: Yup.string(),
+    apartment_np_address: Yup.string(),
+    apartment_urk: Yup.string()
+  })
+
+  let specificSchema
+  switch (selectedValue) {
+    case 'np_office':
+      specificSchema = Yup.object().shape({
+        city_np_office: Yup.string().required('оберіть місто'),
+        separation_np_office: Yup.string().required('оберіть поштомат')
+      })
+      break
+    case 'np_parcel_locker':
+      specificSchema = Yup.object().shape({
+        city_np_parcel_locker: Yup.string().required('оберіть місто'),
+        box_np_parcel_locker: Yup.string().required('оберіть поштомат')
+      })
+      break
+    case 'np_address':
+      specificSchema = Yup.object().shape({
+        city_np_address: Yup.string().required('оберіть місто'),
+        street_np_address: Yup.string().required(
+          'заповніть обов`язкове поле вулиця'
+        ),
+        house_np_address: Yup.string().required(
+          'заповніть обов`язкове поле будинок'
+        )
+      })
+      break
+    case 'ukr_post':
+      specificSchema = Yup.object().shape({
+        region_urk: Yup.string().required('заповніть обов`язкове поле регіон'),
+        city_urk: Yup.string().required('заповніть обов`язкове поле місто'),
+        postalCode_urk: Yup.string().required(
+          'заповніть обов`язкове поле поштовий індекс'
+        ),
+        street_urk: Yup.string().required('заповніть обов`язкове поле вулиця'),
+        house_urk: Yup.string().required('заповніть обов`язкове поле будинок')
+      })
+      break
+    default:
+      specificSchema = Yup.object()
+  }
+
+  return Yup.object().concat(commonSchema).concat(specificSchema)
+}
