@@ -7,7 +7,6 @@ import CreateIcon from '@mui/icons-material/Create'
 import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
 import { useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { AddressForm } from '../../AddressForm/AddressForm'
 import { Item, stBtnEdit } from '../../AddressForm/style'
 
 export const DeliveryAddress = () => {
@@ -158,8 +157,6 @@ export const DeliveryAddress = () => {
             Ми збережемо введені дані, щоб оформлення <br /> Вашого наступного
             замовлення було швидшим.
           </Typography>
-
-          <AddressForm />
         </InfoConfirmationModal>
       </Grid>
     </Box>
