@@ -58,7 +58,7 @@ import {
   OTHER_RED,
   OTHER_BLUE,
   OTHER_LIGHT_PINK
-} from '../../colors'
+} from '../colors'
 
 declare module '@mui/material/styles' {
   interface PaletteOptions {
