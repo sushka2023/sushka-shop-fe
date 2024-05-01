@@ -1,86 +1,98 @@
+import {
+  BOLD_WEIGHT,
+  COMFORTAA,
+  EXTRA_BOLD_WEIGHT,
+  LIGHT_WEIGHT,
+  MEDIUM_WEIGHT,
+  NUNITO,
+  OPEN_SANS,
+  REGULAR_WEIGHT,
+  SEMI_BOLD_WEIGHT
+} from './config'
+
 const OPEN_SANS_LIGHT = {
-  font: 'Open Sans',
-  weight: '300'
+  font: OPEN_SANS,
+  weight: LIGHT_WEIGHT
 }
 
 const OPEN_SANS_REGULAR = {
-  font: 'Open Sans',
-  weight: '400'
+  font: OPEN_SANS,
+  weight: REGULAR_WEIGHT
 }
 
 const OPEN_SANS_SEMI_BOLD = {
-  font: 'Open Sans',
-  weight: '600'
+  font: OPEN_SANS,
+  weight: SEMI_BOLD_WEIGHT
 }
 
 const OPEN_SANS_BOLD = {
-  font: 'Open Sans',
-  weight: '700'
+  font: OPEN_SANS,
+  weight: BOLD_WEIGHT
 }
 
 const OPEN_SANS_EXTRA_BOLD = {
-  font: 'Open Sans',
-  weight: '800'
+  font: OPEN_SANS,
+  weight: EXTRA_BOLD_WEIGHT
 }
 
 const COMFORTAA_LIGHT = {
-  font: 'Comfortaa',
-  weight: '300'
+  font: COMFORTAA,
+  weight: LIGHT_WEIGHT
 }
 
 const COMFORTAA_REGULAR = {
-  font: 'Comfortaa',
-  weight: '400'
+  font: COMFORTAA,
+  weight: REGULAR_WEIGHT
 }
 
 const COMFORTAA_MEDIUM = {
-  font: 'Comfortaa',
-  weight: '500'
+  font: COMFORTAA,
+  weight: MEDIUM_WEIGHT
 }
 
 const COMFORTAA_SEMI_BOLD = {
-  font: 'Comfortaa',
-  weight: '600'
+  font: COMFORTAA,
+  weight: SEMI_BOLD_WEIGHT
 }
 
 const COMFORTAA_BOLD = {
-  font: 'Comfortaa',
-  weight: '700'
+  font: COMFORTAA,
+  weight: BOLD_WEIGHT
 }
 
 const COMFORTAA_EXTRA_BOLD = {
-  font: 'Comfortaa',
-  weight: '800'
+  font: COMFORTAA,
+  weight: EXTRA_BOLD_WEIGHT
 }
 
 const NUNITO_LIGHT = {
-  font: 'Nunito',
-  weight: '300'
+  font: NUNITO,
+  weight: LIGHT_WEIGHT
 }
 
 const NUNITO_REGULAR = {
-  font: 'Nunito',
-  weight: '400'
+  font: NUNITO,
+  weight: REGULAR_WEIGHT
 }
 
 const NUNITO_MEDIUM = {
-  font: 'Nunito',
-  weight: '500'
+  font: NUNITO,
+  weight: MEDIUM_WEIGHT
 }
 
 const NUNITO_SEMI_BOLD = {
-  font: 'Nunito',
-  weight: '600'
+  font: NUNITO,
+  weight: SEMI_BOLD_WEIGHT
 }
 
 const NUNITO_BOLD = {
-  font: 'Nunito',
-  weight: '700'
+  font: NUNITO,
+  weight: BOLD_WEIGHT
 }
 
 const NUNITO_EXTRA_BOLD = {
-  font: 'Nunito',
-  weight: '800'
+  font: NUNITO,
+  weight: EXTRA_BOLD_WEIGHT
 }
 
 export {
