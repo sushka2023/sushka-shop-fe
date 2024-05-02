@@ -1,4 +1,4 @@
-import { PaletteOptions, PaletteColorOptions } from '@mui/material'
+import { PaletteOptions } from '@mui/material'
 import {
   GREEN_DARKER,
   GREEN_DARK,
@@ -28,6 +28,7 @@ import {
   BACKGROUND,
   GRAY_LIGHTER,
   GRAY_LIGHT,
+  GRAY_MEDIUM,
   GRAY_DARKER,
   GRAY_DARK,
   TURQUOISE_DARKER,
@@ -59,23 +60,6 @@ import {
   OTHER_BLUE,
   OTHER_LIGHT_PINK
 } from '../colors'
-
-declare module '@mui/material/styles' {
-  interface PaletteOptions {
-    turquoise?: PaletteColorOptions
-    peach?: PaletteColorOptions
-    pink?: PaletteColorOptions
-    black?: PaletteColorOptions
-    accent?: PaletteColorOptions
-    sapphire?: PaletteColorOptions
-    illustrations?: PaletteColorOptions
-  }
-
-  interface SimplePaletteColorOptions {
-    darker?: string
-    lighter?: string
-  }
-}
 
 const PALETTE_CORE: PaletteOptions = {
   background: {
@@ -119,8 +103,9 @@ const PALETTE_CORE: PaletteOptions = {
   grey: {
     50: GRAY_LIGHTER,
     100: GRAY_LIGHT,
-    200: GRAY_DARK,
-    300: GRAY_DARKER
+    200: GRAY_MEDIUM,
+    300: GRAY_DARK,
+    400: GRAY_DARKER
   },
   turquoise: {
     darker: TURQUOISE_DARKER,

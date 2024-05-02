@@ -67,13 +67,13 @@ const THEME_TYPOGRAPHY = {
   },
   subtitle1: {
     fontFamily: OPEN_SANS_BOLD.font,
-    fontSize: '1rem',
+    fontSize: '0.875rem',
     fontWeigh: OPEN_SANS_BOLD.weight,
     lineHeight: 'normal'
   },
   subtitle2: {
     fontFamily: OPEN_SANS_REGULAR.font,
-    fontSize: '0,875rem',
+    fontSize: '0.875rem',
     fontWeigh: OPEN_SANS_REGULAR.weight,
     lineHeight: 'normal'
   }
