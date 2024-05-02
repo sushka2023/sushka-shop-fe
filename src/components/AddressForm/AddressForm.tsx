@@ -26,7 +26,7 @@ export type FormValue = {
   apartment_urk?: string
 }
 
-const allOffice = [{ office: '#1' }, { office: '#2' }, { office: '#3' }]
+const allOffice = [{ office: '1' }, { office: '2' }, { office: '3' }]
 const allCity = [
   { city: 'Rivne' },
   { city: 'Lviv' },

@@ -5,13 +5,115 @@ import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
 import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
 import CreateIcon from '@mui/icons-material/Create'
 import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Item, stBtnEdit } from '../../AddressForm/style'
 import AddressForm from '../../AddressForm/AddressForm'
+import {
+  stBtn,
+  stContainerAddress,
+  stDeleteIcon,
+  stIconM,
+  stItem,
+  stTypographyBody1,
+  stTypographyBody1Address,
+  stTypographyBody2,
+  stTypographyBody2Address
+} from '../style'
+import axiosInstance from '../../../axios/settings'
+
+type AddressInfo = {
+  icon: JSX.Element | undefined
+  text: string | undefined
+  addressHeadline: string | undefined
+  location?: string
+  titleAddress?: string
+}
+
+type AddressItem = {
+  id: number
+  address_warehouse: string | null
+  serviceType: string
+  type: string
+  addressType: string
+  source: string
+  city: string
+  street: string
+  post_code: string
+  house_number: string
+  region: string
+  apartment_number: string
+}
+
+type AddressArray = AddressItem[]
+
+const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
+  const { type, addressType, source } = event
+  let icon
+  let text
+  let addressHeadline
+  let location
+  let titleAddress
+
+  switch (source) {
+    case 'nova_poshta':
+      icon = <IconNovaPoshta style={stIconM} />
+      text = `${type}`
+      addressHeadline = 'Нова пошта'
+      break
+    case 'ukr_poshta':
+      icon = <IconUkrPoshta style={stIconM} />
+      text = `${type}`
+      addressHeadline = 'Укрпошта'
+      location = `Відділення`
+      titleAddress = `${event.city}, ${event.street}, ${event.region}, ${event.post_code}, буд.${event.house_number}, кв.${event.apartment_number}`
+      break
+    default:
+      break
+  }
+
+  if (addressType === 'адреса') {
+    location = 'Адреса'
+    titleAddress = `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
+  } else if (addressType === 'відділення') {
+    location = 'Відділення'
+    titleAddress = `Відділення ${event.address_warehouse}, ${event.city}`
+  }
+
+  return { icon, text, addressHeadline, location, titleAddress }
+}
 
 export const DeliveryAddress = () => {
   const [openModal, setOpenModal] = useState(false)
+  const [deliveryAddresses, setDeliveryAddresses] = useState({
+    nova_poshta: [],
+    ukr_poshta: []
+  })
+
+  useEffect(() => {
+    axiosInstance
+      .get('/api/posts/my-post-offices')
+      .then((response) => {
+        setDeliveryAddresses(response.data)
+      })
+      .catch((error) => {
+        console.error('Error', error)
+      })
+  }, [])
+
+  const novaPoshtaArray: AddressArray =
+    deliveryAddresses.nova_poshta.map((item: AddressItem) => ({
+      ...item,
+      source: 'nova_poshta',
+      addressType: item.address_warehouse ? 'відділення' : 'адреса'
+    })) || []
+  const ukrPoshtaArray: AddressArray =
+    deliveryAddresses.ukr_poshta.map((item: AddressItem) => ({
+      ...item,
+      source: 'ukr_poshta'
+    })) || []
+  const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
+  console.log('✌️addressData --->', addressData)
 
   return (
     <Box>
@@ -24,113 +126,49 @@ export const DeliveryAddress = () => {
         </Typography>
       </Box>
       <Grid container spacing={1} sx={{ mt: 3 }}>
-        <Grid item xs={12} md={6} lg={3}>
-          <Item
-            sx={{
-              width: 300,
-              height: 180,
-              boxShadow: 'none',
-              borderRadius: 5,
-              padding: 0
-            }}
-          >
-            <Box sx={{ position: 'relative', cursor: 'pointer' }}>
-              <DeleteOutlineIcon
-                sx={{
-                  position: 'absolute',
-                  top: -14,
-                  right: -14,
-                  width: 25,
-                  height: 25,
-                  backgroundColor: '#FED9DD',
-                  borderRadius: 20,
-                  padding: 1,
-                  color: '#D21C1C'
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                color: '#567343',
-                padding: 2
-              }}
-            >
-              <IconUkrPoshta style={{ margin: '10px 20px 10px 10px' }} />
-              <Box>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: 22,
-                    fontWeight: 600,
-                    fontFamily: 'Open Sans'
-                  }}
-                >
-                  Нова пошта
+        {addressData.map((event, index) => {
+          const { icon, addressHeadline, location, titleAddress } =
+            getAddressTextAndIcon(event)
+          const uniqueKey =
+            event.serviceType === 'нова пошта'
+              ? `np_${event.id}_${index}`
+              : `up_${event.id}_${index}`
+
+          return (
+            <Grid key={uniqueKey} item xs={12} md={6} lg={3}>
+              <Item sx={stItem}>
+                <Box sx={{ position: 'relative', cursor: 'pointer' }}>
+                  <DeleteOutlineIcon sx={stDeleteIcon} />
+                </Box>
+                <Box sx={stContainerAddress}>
+                  {icon}
+                  <Box>
+                    <Typography variant="body1" sx={stTypographyBody1Address}>
+                      {addressHeadline}
+                    </Typography>
+                    <Typography variant="body2" sx={stTypographyBody2Address}>
+                      {location}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography variant="body1" sx={stTypographyBody1}>
+                  {titleAddress}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontSize: 16,
-                    fontFamily: 'Open Sans',
-                    textAlign: 'start',
-                    fontWeight: 400
-                  }}
-                >
-                  Адресна
-                </Typography>
-              </Box>
-            </Box>
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: 16,
-                fontWeight: 400,
-                fontFamily: 'Open Sans',
-                color: '#567343',
-                textAlign: 'start',
-                margin: '0 15px'
-              }}
-            >
-              Київ, Київська область, Героїв Небесної сотні 25, кв.10
-            </Typography>
-          </Item>
-          <IconNovaPoshta />
-          <Button
-            variant="outlined"
-            type="button"
-            endIcon={<CreateIcon />}
-            sx={stBtnEdit}
-          >
-            Редагувати
-          </Button>
-        </Grid>
+              </Item>
+              <Button
+                variant="outlined"
+                type="button"
+                endIcon={<CreateIcon sx={{ transform: 'scaleX(-1)' }} />}
+                sx={stBtnEdit}
+              >
+                Редагувати
+              </Button>
+            </Grid>
+          )
+        })}
+
         <Grid item xs={12} md={6} lg={3}>
-          <Button
-            onClick={() => setOpenModal(true)}
-            sx={{
-              width: 222,
-              height: 50,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#567343',
-              backgroundColor: '#FFFFFF',
-              cursor: 'pointer',
-              borderRadius: 5,
-              boxShadow: 'none',
-              fontFamily: 'Open Sans',
-              fontWeight: 400,
-              fontSize: 18,
-              paddingRight: 1,
-              [`&:hover`]: {
-                backgroundColor: '#FFFFFF',
-                color: '#9AAB8E',
-                boxShadow: 'none'
-              }
-            }}
-          >
+          <Button onClick={() => setOpenModal(true)} sx={stBtn}>
             Додати адресу
             <AddIcon sx={{ fontSize: 26 }} />
           </Button>
@@ -146,15 +184,7 @@ export const DeliveryAddress = () => {
           >
             Додати нову адресу
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              fontFamily: 'Open Sans',
-              fontWeight: 400,
-              fontSize: 18,
-              margin: '20px 0 45px 0'
-            }}
-          >
+          <Typography variant="body2" sx={stTypographyBody2}>
             Ми збережемо введені дані, щоб оформлення <br /> Вашого наступного
             замовлення було швидшим.
           </Typography>
