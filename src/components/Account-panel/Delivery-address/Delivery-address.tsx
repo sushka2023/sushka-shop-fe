@@ -90,6 +90,41 @@ export const DeliveryAddress = () => {
     ukr_poshta: []
   })
 
+  const handleDeleteClick = (id: number, source: string) => {
+    console.log('✌️source --->', source)
+    console.log('✌️id --->', id)
+    let url = ''
+    let dataId = {}
+
+    try {
+      if (source === 'nova_poshta') {
+        dataId = { nova_poshta_id: id }
+        url = '/api/posts/remove_nova_poshta_data'
+      } else if (source === 'ukr_poshta') {
+        dataId = { ukr_poshta_id: id }
+        url = '/api/posts/remove_ukr_postal_office'
+      }
+
+      axiosInstance
+        .delete(url, { data: dataId })
+        .then(() => {
+          axiosInstance
+            .get('/api/posts/my-post-offices')
+            .then((response) => {
+              setDeliveryAddresses(response.data)
+            })
+            .catch((error) => {
+              console.error('Error', error)
+            })
+        })
+        .catch((error) => {
+          console.error('Error', error)
+        })
+    } catch (error) {
+      console.error('Error', error)
+    }
+  }
+
   useEffect(() => {
     axiosInstance
       .get('/api/posts/my-post-offices')
@@ -137,7 +172,10 @@ export const DeliveryAddress = () => {
           return (
             <Grid key={uniqueKey} item xs={12} md={6} lg={3}>
               <Item sx={stItem}>
-                <Box sx={{ position: 'relative', cursor: 'pointer' }}>
+                <Box
+                  sx={{ position: 'relative', cursor: 'pointer' }}
+                  onClick={() => handleDeleteClick(event.id, event.source)}
+                >
                   <DeleteOutlineIcon sx={stDeleteIcon} />
                 </Box>
                 <Box sx={stContainerAddress}>
@@ -188,7 +226,6 @@ export const DeliveryAddress = () => {
             Ми збережемо введені дані, щоб оформлення <br /> Вашого наступного
             замовлення було швидшим.
           </Typography>
-
           <AddressForm />
         </InfoConfirmationModal>
       </Grid>
