@@ -6,6 +6,7 @@ import { AddAddressSchema } from '../auth/validation'
 import FormRadioGroup from './FormRadioGroup'
 import { ErrorMessages } from './ErrorMessage'
 import CustomAutocomplete from '../auth/AutocompleteSelect/AutocompleteSelect'
+import axiosInstance from '../../axios/settings'
 
 export type FormValue = {
   city_np_office?: string
@@ -47,6 +48,7 @@ export const AddressForm: React.FC = () => {
 
   const onSubmit = (data: FormValue) => {
     let dataResout
+    let url = ''
     switch (selectedValue) {
       case 'np_office':
         dataResout = {
@@ -54,6 +56,8 @@ export const AddressForm: React.FC = () => {
           address_warehouse: data.separation_np_office
         }
         console.log('✌️dataResout --->', dataResout)
+        url = '/api/posts/create_nova_poshta_warehouse_and_associate_with_post'
+
         break
       case 'np_parcel_locker':
         dataResout = {
@@ -61,6 +65,7 @@ export const AddressForm: React.FC = () => {
           address_warehouse: data.box_np_parcel_locker
         }
         console.log('✌️dataResoutParcelLocer --->', dataResout)
+        url = '/api/posts/create_nova_poshta_warehouse_and_associate_with_post'
         break
       case 'np_address':
         dataResout = {
@@ -73,6 +78,9 @@ export const AddressForm: React.FC = () => {
           area: ''
         }
         console.log('✌️dataResoutAddress --->', dataResout)
+        url =
+          '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
+
         break
       case 'ukr_post':
         dataResout = {
@@ -85,10 +93,20 @@ export const AddressForm: React.FC = () => {
           post_code: data.postalCode_urk
         }
         console.log('✌️dataResoutUkrPost --->', dataResout)
+        url = '/api/posts/create_ukr_poshta_and_associate_with_post'
+
         break
       default:
         break
     }
+    axiosInstance
+      .post(url, dataResout)
+      .then((response) => {
+        console.log('Server response:', response)
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
   }
 
   const renderFormFields = () => {

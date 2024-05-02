@@ -4,7 +4,7 @@ import { FormValue } from './AddressForm'
 
 type Errors = FieldErrors<FormValue> | null
 
-interface ErrorProps {
+type ErrorProps = {
   errors: Errors
   fields: Array<keyof FormValue>
 }
