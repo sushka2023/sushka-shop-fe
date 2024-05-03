@@ -2,6 +2,11 @@ import React from 'react'
 import { Alert, Box, Snackbar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InfoIcon from '@mui/icons-material/Info'
+export type ISnackbarData = {
+  open: boolean
+  error: boolean
+  message?: string | undefined
+}
 
 type CustomSnackbarProps = {
   handleClose: () => void

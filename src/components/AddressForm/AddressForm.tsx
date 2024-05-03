@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Box, Button, FormControl } from '@mui/material'
+import { Button, FormControl } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AddAddressSchema } from '../auth/validation'
 import FormRadioGroup from './FormRadioGroup'
-import { ErrorMessages } from './ErrorMessage'
-import CustomAutocomplete from '../auth/AutocompleteSelect/AutocompleteSelect'
 import axiosInstance from '../../axios/settings'
+import { renderFormFields } from './renderFormFields'
+import fetchDataMyPostOffices from '../Account-panel/Delivery-address/fatchDataPostOffices'
+import { ISnackbarData } from '../SnackebarCustom/SnackbarCustom'
 
 export type FormValue = {
   city_np_office?: string
@@ -25,17 +26,21 @@ export type FormValue = {
   house_urk?: string
   apartment_urk?: string
 }
+type AddressFormProps = {
+  setOpenModal: (value: boolean) => void
+  setDeliveryAddresses: React.Dispatch<
+    React.SetStateAction<{ nova_poshta: never[]; ukr_poshta: never[] }>
+  >
+  setSnackbarData: React.Dispatch<React.SetStateAction<ISnackbarData>>
+}
 
-const allOffice = [{ office: '1' }, { office: '2' }, { office: '3' }]
-const allCity = [{ city: 'Rivne' }, { city: 'Lviv' }, { city: 'Kiev' }]
-const allParcelLocker = [
-  { parcelLocker: '#1' },
-  { parcelLocker: '#2' },
-  { parcelLocker: '#3' }
-]
-
-export const AddressForm: React.FC = () => {
+const AddressForm: React.FC<AddressFormProps> = ({
+  setOpenModal,
+  setDeliveryAddresses,
+  setSnackbarData
+}) => {
   const [selectedValue, setSelectedValue] = useState<string>('np_office')
+
   const {
     register,
     handleSubmit,
@@ -103,133 +108,18 @@ export const AddressForm: React.FC = () => {
       .post(url, dataResout)
       .then((response) => {
         console.log('Server response:', response)
+        setOpenModal(false)
+        fetchDataMyPostOffices(setDeliveryAddresses)
+        setSnackbarData({
+          open: true,
+          error: false,
+          message: 'Вашу адресу успішно додано!'
+        })
       })
       .catch((error) => {
+        setSnackbarData({ open: true, error: true, message: 'Сталась помилка' })
         console.error('Error:', error)
       })
-  }
-
-  const renderFormFields = () => {
-    switch (selectedValue) {
-      case 'np_office':
-        return (
-          <React.Fragment>
-            <ErrorMessages
-              errors={errors}
-              fields={['city_np_office', 'separation_np_office']}
-            />
-            <CustomAutocomplete
-              type="city"
-              value={watch('city_np_office')}
-              onChange={(newValue) =>
-                setValue('city_np_office', newValue || undefined)
-              }
-              options={allCity}
-            />
-            <CustomAutocomplete
-              type="office"
-              value={watch('separation_np_office')}
-              onChange={(newValue) =>
-                setValue('separation_np_office', newValue || undefined)
-              }
-              options={allOffice}
-            />
-          </React.Fragment>
-        )
-      case 'np_parcel_locker':
-        return (
-          <React.Fragment>
-            <ErrorMessages
-              errors={errors}
-              fields={['city_np_parcel_locker', 'box_np_parcel_locker']}
-            />
-
-            <CustomAutocomplete
-              type="city"
-              value={watch('city_np_parcel_locker')}
-              onChange={(newValue) =>
-                setValue('city_np_parcel_locker', newValue || undefined)
-              }
-              options={allCity}
-            />
-            <CustomAutocomplete
-              type="parcelLocker"
-              value={watch('box_np_parcel_locker')}
-              onChange={(newValue) =>
-                setValue('box_np_parcel_locker', newValue || undefined)
-              }
-              options={allParcelLocker}
-            />
-          </React.Fragment>
-        )
-      case 'np_address':
-        return (
-          <React.Fragment>
-            <ErrorMessages
-              errors={errors}
-              fields={[
-                'city_np_address',
-                'street_np_address',
-                'house_np_address'
-              ]}
-            />
-
-            <CustomAutocomplete
-              type="city"
-              value={watch('city_np_address')}
-              onChange={(newValue) =>
-                setValue('city_np_address', newValue || undefined)
-              }
-              options={allCity}
-            />
-            <input defaultValue="test" {...register('street_np_address')} />
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              <input defaultValue="test" {...register('house_np_address')} />
-              <input
-                defaultValue="test"
-                {...register('apartment_np_address')}
-              />
-            </Box>
-          </React.Fragment>
-        )
-      case 'ukr_post':
-        return (
-          <React.Fragment>
-            <ErrorMessages
-              errors={errors}
-              fields={[
-                'region_urk',
-                'city_urk',
-                'postalCode_urk',
-                'street_urk',
-                'house_urk'
-              ]}
-            />
-
-            <input
-              defaultValue="Ukraine"
-              disabled
-              {...register('country_urk')}
-            />
-            <input placeholder="region_urk" {...register('region_urk')} />
-            <input placeholder="city_urk" {...register('city_urk')} />
-            <input
-              placeholder="postalCode_urk"
-              {...register('postalCode_urk')}
-            />
-            <input placeholder="street_urk" {...register('street_urk')} />
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              <input placeholder="house_urk" {...register('house_urk')} />
-              <input
-                placeholder="apartment_urk"
-                {...register('apartment_urk')}
-              />
-            </Box>
-          </React.Fragment>
-        )
-      default:
-        return null
-    }
   }
 
   return (
@@ -238,8 +128,17 @@ export const AddressForm: React.FC = () => {
         <FormRadioGroup
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
-          renderFormFields={renderFormFields}
+          renderFormFields={() =>
+            renderFormFields({
+              errors,
+              selectedValue,
+              watch,
+              register,
+              setValue
+            })
+          }
         />
+
         <Button type="submit" variant="contained">
           ЗБЕРЕГТИ
         </Button>

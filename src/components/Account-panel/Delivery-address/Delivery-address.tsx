@@ -1,26 +1,27 @@
 import { useEffect, useState } from 'react'
 import { Box, Button, Grid, Typography } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import AddressForm from '../../AddressForm/AddressForm'
-import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
 import { Item, stBtnEdit } from '../../AddressForm/style'
 import {
-  stBtn,
   stContainerAddress,
   stDeleteIcon,
   stIconM,
   stItem,
   stTypographyBody1,
   stTypographyBody1Address,
-  stTypographyBody2,
   stTypographyBody2Address
 } from '../style'
 import { stH3, stP } from '../../auth/style'
 import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
 import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
 import axiosInstance from '../../../axios/settings'
+import fetchDataMyPostOffices from './fatchDataPostOffices'
+import {
+  CustomSnackbar,
+  ISnackbarData
+} from '../../SnackebarCustom/SnackbarCustom'
+import { ModalCustomBtnAddAddress } from '../../Modal-custom-btn/ModalCustomBtnAddAddress'
 
 type AddressInfo = {
   icon: JSX.Element | undefined
@@ -31,9 +32,9 @@ type AddressInfo = {
   address_warehouse: string | null | undefined
 }
 
-type AddressItem = {
+export type AddressItem = {
   id: number
-  address_warehouse: string | null
+  address_warehouse: string
   serviceType: string
   type: string
   addressType: string
@@ -106,55 +107,47 @@ const determineLocation = (addressWarehouse?: string): string => {
 }
 
 export const DeliveryAddress = () => {
-  const [openModal, setOpenModal] = useState(false)
   const [deliveryAddresses, setDeliveryAddresses] = useState({
     nova_poshta: [],
     ukr_poshta: []
   })
-
+  const [snackbarData, setSnackbarData] = useState<ISnackbarData>({
+    open: false,
+    error: false
+  })
+  const handleCloseSnackbar = () => {
+    setSnackbarData({ ...snackbarData, open: false })
+  }
   const handleDeleteClick = (id: number, source: string) => {
     let url = ''
     let dataId = {}
-
-    try {
-      if (source === 'nova_poshta') {
-        dataId = { nova_poshta_id: id }
-        url = '/api/posts/remove_nova_poshta_data'
-      } else if (source === 'ukr_poshta') {
-        dataId = { ukr_poshta_id: id }
-        url = '/api/posts/remove_ukr_postal_office'
-      }
-
-      axiosInstance
-        .delete(url, { data: dataId })
-        .then(() => {
-          axiosInstance
-            .get('/api/posts/my-post-offices')
-            .then((response) => {
-              setDeliveryAddresses(response.data)
-            })
-            .catch((error) => {
-              console.error('Error', error)
-            })
-        })
-        .catch((error) => {
-          console.error('Error', error)
-        })
-    } catch (error) {
-      console.error('Error', error)
+    if (source === 'nova_poshta') {
+      dataId = { nova_poshta_id: id }
+      url = '/api/posts/remove_nova_poshta_data'
+    } else if (source === 'ukr_poshta') {
+      dataId = { ukr_poshta_id: id }
+      url = '/api/posts/remove_ukr_postal_office'
     }
-  }
 
-  useEffect(() => {
     axiosInstance
-      .get('/api/posts/my-post-offices')
-      .then((response) => {
-        setDeliveryAddresses(response.data)
+      .delete(url, { data: dataId })
+      .then(() => {
+        fetchDataMyPostOffices(setDeliveryAddresses)
+        setSnackbarData({
+          open: true,
+          error: false,
+          message: 'Ваші зміни видалено!'
+        })
       })
       .catch((error) => {
         console.error('Error', error)
+        setSnackbarData({ open: true, error: true, message: 'Сталась помилка' })
       })
-  }, [])
+  }
+
+  useEffect(() => {
+    fetchDataMyPostOffices(setDeliveryAddresses)
+  }, [setDeliveryAddresses])
 
   const novaPoshtaArray: AddressArray =
     deliveryAddresses.nova_poshta.map((item: AddressItem) => ({
@@ -167,9 +160,7 @@ export const DeliveryAddress = () => {
       ...item,
       source: 'ukr_poshta'
     })) || []
-
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
-  console.log('✌️addressData --->', addressData)
 
   return (
     <Box>
@@ -226,30 +217,17 @@ export const DeliveryAddress = () => {
           )
         })}
 
-        <Grid item xs={12} md={6} lg={3}>
-          <Button onClick={() => setOpenModal(true)} sx={stBtn}>
-            Додати адресу
-            <AddIcon sx={{ fontSize: 26 }} />
-          </Button>
-        </Grid>
-        <InfoConfirmationModal
-          yourStBoxModalWindow={{ alignItems: 'start', paddingLeft: 6 }}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        >
-          <Typography
-            variant="h3"
-            sx={{ fontFamily: 'Comfortaa', fontWeight: 500, fontSize: 32 }}
-          >
-            Додати нову адресу
-          </Typography>
-          <Typography variant="body2" sx={stTypographyBody2}>
-            Ми збережемо введені дані, щоб оформлення <br /> Вашого наступного
-            замовлення було швидшим.
-          </Typography>
-          <AddressForm />
-        </InfoConfirmationModal>
+        <ModalCustomBtnAddAddress
+          setDeliveryAddresses={setDeliveryAddresses}
+          setSnackbarData={setSnackbarData}
+        />
       </Grid>
+      <Box>
+        <CustomSnackbar
+          handleClose={handleCloseSnackbar}
+          snackbarData={snackbarData}
+        />
+      </Box>
     </Box>
   )
 }

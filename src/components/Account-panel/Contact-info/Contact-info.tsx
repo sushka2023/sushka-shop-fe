@@ -12,19 +12,16 @@ import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEma
 import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
 import { ContactInfoBtn } from '../style'
-import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
+import {
+  CustomSnackbar,
+  ISnackbarData
+} from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
 
 export type UserSubset = Pick<
   UserResponse,
   'email' | 'first_name' | 'last_name' | 'phone_number'
 >
-
-type ISnackbarData = {
-  open: boolean
-  error: boolean
-  message?: string | undefined
-}
 
 const accessToken = getToken()
 

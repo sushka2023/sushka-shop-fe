@@ -1,12 +1,26 @@
-// FormRadioGroup.tsx
-import React from 'react'
+import { ReactNode, Dispatch, SetStateAction, FC } from 'react'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { BpCheckedIcon, BpIcon } from './style'
+import {
+  FieldErrors,
+  UseFormSetValue,
+  DeepMap,
+  FieldValues,
+  UseFormRegister
+} from 'react-hook-form'
+
+export type RenderFormFieldsProps = {
+  errors: DeepMap<FieldValues, FieldErrors>
+  selectedValue: string
+  watch: (name: string) => any
+  setValue: UseFormSetValue<FieldValues>
+  register: UseFormRegister<FieldValues>
+}
 
 type FormRadioGroupProps = {
   selectedValue: string
-  setSelectedValue: React.Dispatch<React.SetStateAction<string>>
-  renderFormFields: () => JSX.Element | null
+  setSelectedValue: Dispatch<SetStateAction<string>>
+  renderFormFields: () => ReactNode
 }
 
 function BpRadio(props: any) {
@@ -21,7 +35,7 @@ function BpRadio(props: any) {
   )
 }
 
-const FormRadioGroup: React.FC<FormRadioGroupProps> = ({
+const FormRadioGroup: FC<FormRadioGroupProps> = ({
   selectedValue,
   setSelectedValue,
   renderFormFields
