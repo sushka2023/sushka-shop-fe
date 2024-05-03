@@ -84,7 +84,7 @@ export const AddAddressSchema = (selectedValue: string) => {
     case 'np_office':
       specificSchema = Yup.object().shape({
         city_np_office: Yup.string().required('оберіть місто'),
-        separation_np_office: Yup.string().required('оберіть поштомат')
+        separation_np_office: Yup.string().required('оберіть віділення')
       })
       break
     case 'np_parcel_locker':

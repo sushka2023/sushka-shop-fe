@@ -8,12 +8,13 @@ import {
   stTextFieldAutocomplete
 } from '../../AddressForm/style'
 interface Props {
-  type: 'city' | 'office'
+  type: 'city' | 'office' | 'parcelLocker'
   value: string | null | undefined
   onChange: (newValue: string | null) => void
   options: {
     city?: string
     office?: string
+    parcelLocker?: string
   }[]
 }
 
@@ -26,12 +27,14 @@ const CustomAutocomplete: React.FC<Props> = ({
   const [isFocused, setIsFocused] = useState(false)
   const [open, setOpen] = useState(false)
 
-  const calculateLoading = (type: 'city' | 'office') => {
-    if (type === 'city') {
-      return open && !options[0]?.city?.length
-    } else {
-      return open && !options[0]?.office?.length
+  const calculateLoading = (type: 'city' | 'office' | 'parcelLocker') => {
+    const optionsMap = {
+      city: options[0]?.city,
+      office: options[0]?.office,
+      parcelLocker: options[0]?.parcelLocker
     }
+
+    return open && !optionsMap[type]?.length
   }
 
   useEffect(() => {
@@ -58,7 +61,7 @@ const CustomAutocomplete: React.FC<Props> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder={`Оберіть ${type === 'city' ? 'місто' : 'поштомат'}`}
+          placeholder={`Оберіть ${type === 'city' ? 'місто' : type === 'office' ? 'відділення' : 'поштомат'}`}
           sx={stTextFieldAutocomplete}
           InputProps={{
             onFocus: () => setIsFocused(true),

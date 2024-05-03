@@ -1,14 +1,11 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
-import { stH3, stP } from '../../auth/style'
-import AddIcon from '@mui/icons-material/Add'
-import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
-import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
-import CreateIcon from '@mui/icons-material/Create'
-import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
 import { useEffect, useState } from 'react'
+import { Box, Button, Grid, Typography } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import CreateIcon from '@mui/icons-material/Create'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { Item, stBtnEdit } from '../../AddressForm/style'
 import AddressForm from '../../AddressForm/AddressForm'
+import InfoConfirmationModal from '../../Modal-custom-btn/ModalCustomWindow'
+import { Item, stBtnEdit } from '../../AddressForm/style'
 import {
   stBtn,
   stContainerAddress,
@@ -20,6 +17,9 @@ import {
   stTypographyBody2,
   stTypographyBody2Address
 } from '../style'
+import { stH3, stP } from '../../auth/style'
+import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
+import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
 import axiosInstance from '../../../axios/settings'
 
 type AddressInfo = {
@@ -28,6 +28,7 @@ type AddressInfo = {
   addressHeadline: string | undefined
   location?: string
   titleAddress?: string
+  address_warehouse: string | null | undefined
 }
 
 type AddressItem = {
@@ -48,9 +49,15 @@ type AddressItem = {
 type AddressArray = AddressItem[]
 
 const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
-  const { type, addressType, source } = event
+  const {
+    type,
+    addressType,
+    source,
+    address_warehouse: addressWarehouse = undefined
+  } = event
+
+  const text = type
   let icon
-  let text
   let addressHeadline
   let location
   let titleAddress
@@ -58,14 +65,12 @@ const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
   switch (source) {
     case 'nova_poshta':
       icon = <IconNovaPoshta style={stIconM} />
-      text = `${type}`
       addressHeadline = 'Нова пошта'
       break
     case 'ukr_poshta':
       icon = <IconUkrPoshta style={stIconM} />
-      text = `${type}`
       addressHeadline = 'Укрпошта'
-      location = `Відділення`
+      location = 'Відділення'
       titleAddress = `${event.city}, ${event.street}, ${event.region}, ${event.post_code}, буд.${event.house_number}, кв.${event.apartment_number}`
       break
     default:
@@ -76,11 +81,23 @@ const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
     location = 'Адреса'
     titleAddress = `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   } else if (addressType === 'відділення') {
-    location = 'Відділення'
-    titleAddress = `Відділення ${event.address_warehouse}, ${event.city}`
+    const location: string = determineLocation(addressWarehouse!)
+    titleAddress = `${location} ${event.address_warehouse}, ${event.city}`
   }
 
-  return { icon, text, addressHeadline, location, titleAddress }
+  return {
+    icon,
+    text,
+    addressHeadline,
+    location,
+    titleAddress,
+    address_warehouse: addressWarehouse
+  }
+}
+
+const determineLocation = (addressWarehouse?: string): string => {
+  if (!addressWarehouse) return ''
+  return addressWarehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
 }
 
 export const DeliveryAddress = () => {
@@ -91,8 +108,6 @@ export const DeliveryAddress = () => {
   })
 
   const handleDeleteClick = (id: number, source: string) => {
-    console.log('✌️source --->', source)
-    console.log('✌️id --->', id)
     let url = ''
     let dataId = {}
 
@@ -147,6 +162,7 @@ export const DeliveryAddress = () => {
       ...item,
       source: 'ukr_poshta'
     })) || []
+
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
   console.log('✌️addressData --->', addressData)
 

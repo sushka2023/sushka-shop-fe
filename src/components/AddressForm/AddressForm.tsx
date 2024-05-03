@@ -27,11 +27,11 @@ export type FormValue = {
 }
 
 const allOffice = [{ office: '1' }, { office: '2' }, { office: '3' }]
-const allCity = [
-  { city: 'Rivne' },
-  { city: 'Lviv' },
-  { city: 'Kiev' },
-  { city: 'Dnipro' }
+const allCity = [{ city: 'Rivne' }, { city: 'Lviv' }, { city: 'Kiev' }]
+const allParcelLocker = [
+  { parcelLocker: '#1' },
+  { parcelLocker: '#2' },
+  { parcelLocker: '#3' }
 ]
 
 export const AddressForm: React.FC = () => {
@@ -153,12 +153,12 @@ export const AddressForm: React.FC = () => {
               options={allCity}
             />
             <CustomAutocomplete
-              type="office"
+              type="parcelLocker"
               value={watch('box_np_parcel_locker')}
               onChange={(newValue) =>
                 setValue('box_np_parcel_locker', newValue || undefined)
               }
-              options={allOffice}
+              options={allParcelLocker}
             />
           </React.Fragment>
         )
