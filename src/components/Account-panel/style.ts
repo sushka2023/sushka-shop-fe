@@ -66,24 +66,29 @@ export const stTypographyBody1 = {
   margin: '0 15px'
 }
 export const stBtn = {
-  width: 222,
-  height: 50,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: '#567343',
-  backgroundColor: '#FFFFFF',
-  cursor: 'pointer',
-  borderRadius: 5,
-  boxShadow: 'none',
-  fontFamily: 'Open Sans',
-  fontWeight: 400,
-  fontSize: 18,
-  paddingRight: 1,
+  'width': 222,
+  'height': 50,
+  'display': 'flex',
+  'alignItems': 'center',
+  'justifyContent': 'center',
+  'color': '#567343',
+  'backgroundColor': '#FFFFFF',
+  'cursor': 'pointer',
+  'borderRadius': 5,
+  'boxShadow': 'none',
+  'fontFamily': 'Open Sans',
+  'fontWeight': 400,
+  'fontSize': 18,
+  'paddingRight': 1,
   [`&:hover`]: {
     backgroundColor: '#FFFFFF',
     color: '#9AAB8E',
     boxShadow: 'none'
+  },
+  '&:disabled': {
+    backgroundColor: '#EBEAEA',
+    color: '#FFFFFF',
+    marginBottom: 1
   }
 }
 export const stTypographyBody2 = {
