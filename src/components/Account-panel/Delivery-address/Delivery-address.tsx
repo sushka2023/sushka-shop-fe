@@ -3,7 +3,9 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Item, stBtnEdit } from '../../AddressForm/style'
+import AddIcon from '@mui/icons-material/Add'
 import {
+  stBtn,
   stContainerAddress,
   stDeleteIcon,
   stItem,
@@ -47,19 +49,26 @@ export const DeliveryAddress = () => {
     open: false,
     error: false
   })
+
+  const [openModal, setOpenModal] = useState<boolean>(false)
+
   const handleCloseSnackbar = () => {
     setSnackbarData({ ...snackbarData, open: false })
   }
   const handleDeleteClick = (id: number, source: string) => {
-    let url = ''
-    let dataId = {}
-    if (source === 'nova_poshta') {
-      dataId = { nova_poshta_id: id }
-      url = '/api/posts/remove_nova_poshta_data'
-    } else if (source === 'ukr_poshta') {
-      dataId = { ukr_poshta_id: id }
-      url = '/api/posts/remove_ukr_postal_office'
-    }
+    const url =
+      source === 'nova_poshta'
+        ? '/api/posts/remove_nova_poshta_data'
+        : source === 'ukr_poshta'
+          ? '/api/posts/remove_ukr_postal_office'
+          : ''
+
+    const dataId =
+      source === 'nova_poshta'
+        ? { nova_poshta_id: id }
+        : source === 'ukr_poshta'
+          ? { ukr_poshta_id: id }
+          : {}
 
     axiosInstance
       .delete(url, { data: dataId })
@@ -79,7 +88,7 @@ export const DeliveryAddress = () => {
 
   useEffect(() => {
     fetchDataMyPostOffices(setDeliveryAddresses)
-  }, [setDeliveryAddresses])
+  }, [])
 
   const novaPoshtaArray: AddressArray =
     deliveryAddresses.nova_poshta.map((item: AddressItem) => ({
@@ -93,6 +102,11 @@ export const DeliveryAddress = () => {
       source: 'ukr_poshta'
     })) || []
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
+  console.log('✌️addressData --->', addressData)
+
+  const limitedItems = () => {
+    return addressData.length === 3 ? true : false
+  }
 
   return (
     <Box>
@@ -140,7 +154,8 @@ export const DeliveryAddress = () => {
               <Button
                 variant="outlined"
                 type="button"
-                endIcon={<CreateIcon sx={{ transform: 'scaleX(-1)' }} />}
+                onClick={() => setOpenModal(true)}
+                endIcon={<CreateIcon />}
                 sx={stBtnEdit}
               >
                 Редагувати
@@ -148,11 +163,30 @@ export const DeliveryAddress = () => {
             </Grid>
           )
         })}
-
+        <Grid item xs={12} md={6} lg={3}>
+          <Button
+            onClick={() => setOpenModal(true)}
+            sx={stBtn}
+            disabled={limitedItems()}
+          >
+            Додати адресу
+            <AddIcon sx={{ fontSize: 26 }} />
+          </Button>
+          {limitedItems() && (
+            <Typography variant="body1">
+              *Максимальна кількість адрес.
+              <br />
+              Видаліть непотрібну адресу,
+              <br />
+              щоб додати нову
+            </Typography>
+          )}
+        </Grid>
         <ModalCustomBtnAddAddress
           setDeliveryAddresses={setDeliveryAddresses}
           setSnackbarData={setSnackbarData}
-          addressData={addressData}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
         />
       </Grid>
       <Box>
