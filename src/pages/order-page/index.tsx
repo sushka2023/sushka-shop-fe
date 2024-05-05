@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, InputLabel, OutlinedInput } from '@mui/material'
 // import { useState, Fragment } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
@@ -38,18 +38,22 @@ const OrderPage = () => {
     //   )}
     // </Box>
     <Box mt={20} mb={50} display="flex" gap={2}>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <Button variant="contained">medium</Button>
-        <Button variant="contained" disabled>
-          disabled
-        </Button>
+      <Box display="flex" flexDirection="column" ml={50} width={'400px'}>
+        <InputLabel>title</InputLabel>
+        <OutlinedInput placeholder="Hint" fullWidth />
       </Box>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <Button variant="contained" size="small">
-          text
-        </Button>
-        <Button variant="contained" disabled size="small">
-          disabled
+      <Box>
+        <OutlinedInput error placeholder="text" />
+      </Box>
+      <Box>
+        <Button>BUTTON</Button>
+      </Box>
+      <Box>
+        <Button size="small">BUTTON</Button>
+      </Box>
+      <Box maxWidth={'400px'} width={'100%'}>
+        <Button fullWidth sx={{ backgroundColor: '#FCC812', color: '#fff' }}>
+          BUTTON
         </Button>
       </Box>
     </Box>
