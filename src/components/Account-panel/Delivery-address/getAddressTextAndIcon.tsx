@@ -29,7 +29,7 @@ export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
   const { source, address_warehouse } = event
   const { icon, address_headline } = ADDRESS_INFO[source]
   const location = getLocation(address_warehouse, address_headline)
-  const title_address = getTitle_address(location, event)
+  const title_address = getTitleAddress(location, event)
 
   return {
     icon,
@@ -49,7 +49,7 @@ const getLocation = (
   return address_warehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
 }
 
-const getTitle_address = (location: string, event: AddressItem): string => {
+const getTitleAddress = (location: string, event: AddressItem): string => {
   if (event.post_code) {
     return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   }
