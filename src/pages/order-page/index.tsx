@@ -17,6 +17,7 @@ import Delete from '../../icons/delete.svg?react'
 import { Button } from '../../components/UI/Button'
 import { Autocomplete } from '../../components/UI/Autocomplete'
 import { OutlinedInput } from '../../components/UI/Field'
+import { THEME } from '../../lib/mui/config/theme'
 // import { useState, Fragment } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
@@ -71,7 +72,13 @@ const OrderPage = () => {
       </Box>
       <Box>
         <OutlinedInput error placeholder="text" />
-        {error && <FormHelperText>{error}</FormHelperText>}
+        {error && (
+          <FormHelperText
+            sx={{ color: THEME.palette.error.darker, fontWeight: 500 }}
+          >
+            {error}
+          </FormHelperText>
+        )}
       </Box>
       <Box>
         <Autocomplete
@@ -91,9 +98,13 @@ const OrderPage = () => {
       </Box>
       <Box>
         <IconButton
-          sx={{ width: '40px', height: '40px', backgroundColor: '#ff000026' }}
+          sx={{
+            width: '40px',
+            height: '40px',
+            backgroundColor: THEME.palette.error.lighter
+          }}
         >
-          <Delete width={16} height={20} fill="red" />
+          <Delete width={16} height={20} fill={THEME.palette.error.darker} />
         </IconButton>
       </Box>
       <Box>
@@ -103,7 +114,7 @@ const OrderPage = () => {
         <Button
           fullWidth
           endIcon={<CreateOutlinedIcon />}
-          sx={{ backgroundColor: '#FCC812', color: '#fff' }}
+          sx={{ backgroundColor: THEME.palette.primary.darker, color: '#fff' }}
         >
           BUTTON
         </Button>
