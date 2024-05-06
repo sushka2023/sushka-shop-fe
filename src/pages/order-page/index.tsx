@@ -1,4 +1,21 @@
-import { Box, Button, InputLabel, OutlinedInput } from '@mui/material'
+import {
+  Box,
+  Button,
+  IconButton,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+  Autocomplete,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from '@mui/material'
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
+import RadioIcon from '../../icons/radio.svg?react'
+import RadioChecked from '../../icons/radio-checked.svg?react'
+import Delete from '../../icons/delete.svg?react'
 // import { useState, Fragment } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
@@ -21,7 +38,7 @@ const OrderPage = () => {
   //       break
   //   }
   // }
-
+  const currencies = ['Львів', 'Харків', 'Київ', 'Вінниця', 'Одесса']
   return (
     // <Box sx={containerStyle}>
     //   <OrderStepper activeStep={activeStep} />
@@ -37,8 +54,16 @@ const OrderPage = () => {
     //     </Fragment>
     //   )}
     // </Box>
-    <Box mt={20} mb={50} display="flex" gap={2}>
-      <Box display="flex" flexDirection="column" ml={50} width={'400px'}>
+    <Box
+      mt={20}
+      mb={50}
+      display="flex"
+      justifyContent="center"
+      flexDirection="column"
+      alignItems="center"
+      gap={2}
+    >
+      <Box display="flex" flexDirection="column" width={'400px'}>
         <InputLabel>title</InputLabel>
         <OutlinedInput placeholder="Hint" fullWidth />
       </Box>
@@ -46,18 +71,95 @@ const OrderPage = () => {
         <OutlinedInput error placeholder="text" />
       </Box>
       <Box>
+        <Autocomplete
+          popupIcon={
+            <ArrowBackIosNewOutlinedIcon sx={{ transform: 'rotate(270deg)' }} />
+          }
+          fullWidth
+          options={currencies}
+          sx={{ width: 300 }}
+          renderInput={(params) => (
+            <TextField {...params} placeholder="Місто" />
+          )}
+        />
+      </Box>
+      <Box>
         <Button>BUTTON</Button>
+      </Box>
+      <Box>
+        <IconButton
+          sx={{ width: '40px', height: '40px', backgroundColor: '#ff000026' }}
+        >
+          <Delete width={16} height={20} fill="red" />
+        </IconButton>
       </Box>
       <Box>
         <Button size="small">BUTTON</Button>
       </Box>
       <Box maxWidth={'400px'} width={'100%'}>
-        <Button fullWidth sx={{ backgroundColor: '#FCC812', color: '#fff' }}>
+        <Button
+          fullWidth
+          endIcon={<CreateOutlinedIcon />}
+          sx={{ backgroundColor: '#FCC812', color: '#fff' }}
+        >
           BUTTON
         </Button>
       </Box>
+      <FormControl>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="female"
+          name="radio-buttons-group"
+        >
+          <FormControlLabel
+            value="Нова пошта (відділення)"
+            control={
+              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
+            }
+            label="Нова пошта (відділення)"
+          />
+          <FormControlLabel
+            value="Нова пошта (поштомат)"
+            control={
+              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
+            }
+            label="Нова пошта (поштомат)"
+          />
+          <FormControlLabel
+            value="Нова пошта (адресна)"
+            control={
+              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
+            }
+            label="Нова пошта (адресна)"
+          />
+          <FormControlLabel
+            value="Укрпошта"
+            control={
+              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
+            }
+            label="Укрпошта"
+          />
+        </RadioGroup>
+      </FormControl>
     </Box>
   )
 }
 
 export default OrderPage
+
+const ParentComponent = () => {
+  const error: any = true
+  const fields: string[] = ['bla', 'bla']
+
+  return error && <ErrorMessage field={fields[0]} />
+}
+
+type Props = {
+  field: string
+}
+
+const ErrorMessage: React.FC<Props> = ({ field }) => {
+  return <p>{field}</p>
+}
+
+export { ParentComponent }
