@@ -10,13 +10,17 @@ type ErrorProps = {
 }
 
 export const ErrorMessages: React.FC<ErrorProps> = ({ errors, fields }) => {
-  if (errors) {
-    for (const field of fields) {
-      const errorMessage = get(errors, field)?.message
-      if (errorMessage) {
-        return <p style={{ color: 'red' }}>{errorMessage}</p>
-      }
-    }
+  if (!errors) return null
+
+  const errorField = fields.find((field) => {
+    const errorMessage = get(errors, field)?.message
+    return errorMessage
+  })
+
+  if (errorField) {
+    const errorMessage = get(errors, errorField)?.message
+    return <p style={{ color: 'red' }}>{errorMessage}</p>
   }
+
   return null
 }
