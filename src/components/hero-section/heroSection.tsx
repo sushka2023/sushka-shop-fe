@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.jpg'
 import { RootState } from '../../redux/store'
 import styles from './HeroSection.module.scss'
+import { Button } from '../UI/Button'
+import { THEME } from '../../lib/mui/config/theme'
 
 const HeroSection = () => {
   const allCategories = useSelector(
@@ -23,10 +25,20 @@ const HeroSection = () => {
             натуральної фруктової <br /> пастили та фріпсів
           </p>
           <Link
+            style={{ width: '100%', maxWidth: '300px' }}
             to={`/catalog/${allCategories && allCategories[0].id}`}
-            className={`${styles.sloganButton} ${styles.sloganLink} `}
           >
-            Переглянути каталог
+            <Button
+              fullWidth
+              sx={{
+                borderRadius: '20px',
+                backgroundColor: THEME.palette.primary.darker,
+                color: '#fff',
+                height: '60px'
+              }}
+            >
+              Переглянути каталог
+            </Button>
           </Link>
         </div>
         <img

@@ -1,21 +1,22 @@
 import {
   Box,
-  Button,
   IconButton,
   InputLabel,
-  OutlinedInput,
   TextField,
-  Autocomplete,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio
 } from '@mui/material'
+import { FormHelperText } from '@mui/material'
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
 import RadioIcon from '../../icons/radio.svg?react'
 import RadioChecked from '../../icons/radio-checked.svg?react'
 import Delete from '../../icons/delete.svg?react'
+import { Button } from '../../components/UI/Button'
+import { Autocomplete } from '../../components/UI/Autocomplete'
+import { OutlinedInput } from '../../components/UI/Field'
 // import { useState, Fragment } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
@@ -39,6 +40,7 @@ const OrderPage = () => {
   //   }
   // }
   const currencies = ['Львів', 'Харків', 'Київ', 'Вінниця', 'Одесса']
+  const error = 'error'
   return (
     // <Box sx={containerStyle}>
     //   <OrderStepper activeStep={activeStep} />
@@ -69,6 +71,7 @@ const OrderPage = () => {
       </Box>
       <Box>
         <OutlinedInput error placeholder="text" />
+        {error && <FormHelperText>{error}</FormHelperText>}
       </Box>
       <Box>
         <Autocomplete
@@ -146,20 +149,3 @@ const OrderPage = () => {
 }
 
 export default OrderPage
-
-const ParentComponent = () => {
-  const error: any = true
-  const fields: string[] = ['bla', 'bla']
-
-  return error && <ErrorMessage field={fields[0]} />
-}
-
-type Props = {
-  field: string
-}
-
-const ErrorMessage: React.FC<Props> = ({ field }) => {
-  return <p>{field}</p>
-}
-
-export { ParentComponent }

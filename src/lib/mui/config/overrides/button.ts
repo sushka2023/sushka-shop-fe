@@ -6,7 +6,7 @@ const MuiButton: Components<Theme>['MuiButton'] = {
     root: ({ theme }) => ({
       fontFamily: OPEN_SANS,
       fontWeight: BOLD_WEIGHT,
-      fontSize: '0.875rem',
+      fontSize: '1rem',
       backgroundColor: 'inherit',
       borderRadius: '0.625rem',
       padding: '1rem 1.875rem',
