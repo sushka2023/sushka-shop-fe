@@ -119,7 +119,7 @@ export const DeliveryAddress = () => {
       </Box>
       <Grid container spacing={1} sx={{ mt: 3 }}>
         {addressData.map((event, index) => {
-          const { icon, addressHeadline, location, titleAddress } =
+          const { icon, address_headline, location, title_address } =
             getAddressTextAndIcon(event)
           const uniqueKey =
             event.serviceType === 'нова пошта'
@@ -139,7 +139,7 @@ export const DeliveryAddress = () => {
                   {icon}
                   <Box>
                     <Typography variant="body1" sx={stTypographyBody1Address}>
-                      {addressHeadline}
+                      {address_headline}
                     </Typography>
                     <Typography variant="body2" sx={stTypographyBody2Address}>
                       {location}
@@ -147,7 +147,7 @@ export const DeliveryAddress = () => {
                   </Box>
                 </Box>
                 <Typography variant="body1" sx={stTypographyBody1}>
-                  {titleAddress}
+                  {title_address}
                 </Typography>
               </Item>
               <Button

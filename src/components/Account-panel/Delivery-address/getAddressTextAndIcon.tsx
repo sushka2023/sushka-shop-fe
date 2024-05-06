@@ -4,66 +4,57 @@ import { stIconM } from '../style'
 import { AddressItem } from './Delivery-address'
 
 type AddressInfo = {
-  icon: JSX.Element | undefined
-  text: string | undefined
-  addressHeadline: string | undefined
+  icon: JSX.Element
+  address_headline: string
   location?: string
-  titleAddress?: string
-  address_warehouse: string | null | undefined
+  title_address?: string
+  address_warehouse: string | null
+}
+
+const ADDRESS_INFO: Record<
+  string,
+  { icon: JSX.Element; address_headline: string }
+> = {
+  nova_poshta: {
+    icon: <IconNovaPoshta style={stIconM} />,
+    address_headline: 'Нова пошта'
+  },
+  ukr_poshta: {
+    icon: <IconUkrPoshta style={stIconM} />,
+    address_headline: 'Укрпошта'
+  }
 }
 
 export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
-  const {
-    type,
-    source,
-    address_warehouse: addressWarehouse = undefined
-  } = event
-  let icon
-  let addressHeadline
-  let location
-  let titleAddress
-
-  switch (source) {
-    case 'nova_poshta':
-      icon = <IconNovaPoshta style={stIconM} />
-      addressHeadline = 'Нова пошта'
-      location = getLocation(addressWarehouse)
-      titleAddress = getTitleAddress(location, event)
-      break
-    case 'ukr_poshta':
-      icon = <IconUkrPoshta style={stIconM} />
-      addressHeadline = 'Укрпошта'
-      location = 'Відділення'
-      titleAddress = `${event.city}, ${event.region}, ${event.street}, ${event.post_code}, буд.${event.house_number}, кв.${event.apartment_number}`
-      break
-    default:
-      break
-  }
+  const { source, address_warehouse } = event
+  const { icon, address_headline } = ADDRESS_INFO[source]
+  const location = getLocation(address_warehouse, address_headline)
+  const title_address = getTitle_address(location, event)
 
   return {
     icon,
-    text: type,
-    addressHeadline,
+    address_headline,
     location,
-    titleAddress,
-    address_warehouse: addressWarehouse
+    title_address,
+    address_warehouse
   }
 }
 
-const getLocation = (addressWarehouse: string | null | undefined): string => {
-  if (addressWarehouse === null) {
-    return 'Адресна'
-  } else if (addressWarehouse && addressWarehouse.startsWith('#')) {
-    return 'Поштомат'
-  } else {
-    return 'Відділення'
-  }
+const getLocation = (
+  address_warehouse: string,
+  address_headline: string
+): string => {
+  if (address_headline === 'Укрпошта') return 'Відділення'
+  if (!address_warehouse) return 'Адресна'
+  return address_warehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
 }
 
-const getTitleAddress = (location: string, event: AddressItem): string => {
-  if (location === 'Поштомат' || location === 'Відділення') {
-    return `Відділення ${event.address_warehouse}, ${event.city}`
-  } else {
+const getTitle_address = (location: string, event: AddressItem): string => {
+  if (event.post_code) {
     return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   }
+  if (location === 'Поштомат' || location === 'Відділення') {
+    return `${location} ${event.address_warehouse}, ${event.city}`
+  }
+  return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
 }
