@@ -15,7 +15,6 @@ type AddressInfo = {
 export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
   const {
     type,
-    addressType,
     source,
     address_warehouse: addressWarehouse = undefined
   } = event
@@ -24,40 +23,22 @@ export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
   let location
   let titleAddress
 
-  const setIconAndHeadline = (source: string) => {
-    switch (source) {
-      case 'nova_poshta':
-        icon = <IconNovaPoshta style={stIconM} />
-        addressHeadline = 'Нова пошта'
-        break
-      case 'ukr_poshta':
-        icon = <IconUkrPoshta style={stIconM} />
-        addressHeadline = 'Укрпошта'
-        location = 'Відділення'
-        titleAddress = `${event.city}, ${event.street}, ${event.region}, ${event.post_code}, буд.${event.house_number}, кв.${event.apartment_number}`
-        break
-      default:
-        break
-    }
+  switch (source) {
+    case 'nova_poshta':
+      icon = <IconNovaPoshta style={stIconM} />
+      addressHeadline = 'Нова пошта'
+      location = getLocation(addressWarehouse)
+      titleAddress = getTitleAddress(location, event)
+      break
+    case 'ukr_poshta':
+      icon = <IconUkrPoshta style={stIconM} />
+      addressHeadline = 'Укрпошта'
+      location = 'Відділення'
+      titleAddress = `${event.city}, ${event.region}, ${event.street}, ${event.post_code}, буд.${event.house_number}, кв.${event.apartment_number}`
+      break
+    default:
+      break
   }
-
-  const determineLocation = (addressWarehouse?: string): string => {
-    if (!addressWarehouse) return ''
-    return addressWarehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
-  }
-
-  const setLocationAndAddress = () => {
-    if (addressType === 'адреса') {
-      location = 'Адреса'
-      titleAddress = `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
-    } else if (addressType === 'відділення') {
-      location = determineLocation(addressWarehouse ?? undefined)
-      titleAddress = `${location} ${event.address_warehouse}, ${event.city}`
-    }
-  }
-
-  setIconAndHeadline(source)
-  setLocationAndAddress()
 
   return {
     icon,
@@ -66,5 +47,23 @@ export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
     location,
     titleAddress,
     address_warehouse: addressWarehouse
+  }
+}
+
+const getLocation = (addressWarehouse: string | null | undefined): string => {
+  if (addressWarehouse === null) {
+    return 'Адресна'
+  } else if (addressWarehouse && addressWarehouse.startsWith('#')) {
+    return 'Поштомат'
+  } else {
+    return 'Відділення'
+  }
+}
+
+const getTitleAddress = (location: string, event: AddressItem): string => {
+  if (location === 'Поштомат' || location === 'Відділення') {
+    return `Відділення ${event.address_warehouse}, ${event.city}`
+  } else {
+    return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   }
 }

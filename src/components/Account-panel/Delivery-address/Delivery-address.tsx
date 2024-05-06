@@ -102,7 +102,6 @@ export const DeliveryAddress = () => {
       source: 'ukr_poshta'
     })) || []
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
-  console.log('✌️addressData --->', addressData)
 
   const limitedItems = () => {
     return addressData.length === 3 ? true : false

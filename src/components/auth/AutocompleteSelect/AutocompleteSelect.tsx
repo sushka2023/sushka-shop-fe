@@ -48,7 +48,7 @@ const CustomAutocomplete: React.FC<Props> = ({
       disablePortal
       size="small"
       id={`combo-box-demo-${type}`}
-      value={value ? { [type]: value } : null} // Передаємо збережене значення
+      value={value ? { [type]: value } : null}
       onChange={(_, newValue) => {
         onChange(newValue ? newValue[type] || null : null)
       }}

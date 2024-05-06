@@ -15,6 +15,10 @@ export const stAutocompleteBase = {
 
   '& ::placeholder': { color: '#9AAB8E' }
 }
+export const stTextFieldAutocomplete = {
+  '& ::placeholder': { color: '#9AAB8E' },
+  'color': '#567343'
+}
 export const stAutocompleteBaseInput = {
   'padding': 0,
   '& .MuiInputBase-root': {
@@ -28,10 +32,6 @@ export const stAutocompleteBaseInput = {
   '& ::placeholder': { color: '#9AAB8E' }
 }
 
-export const stTextFieldAutocomplete = {
-  '& ::placeholder': { color: '#9AAB8E' },
-  'color': '#567343'
-}
 export const stBoxAutocomplete = {
   position: 'absolute',
   top: 7,
