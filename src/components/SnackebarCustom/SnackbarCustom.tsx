@@ -1,8 +1,8 @@
-import React from 'react'
-import { Alert, Box, Snackbar } from '@mui/material'
+import React, { FC } from 'react'
+import { Alert, Snackbar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InfoIcon from '@mui/icons-material/Info'
-export type ISnackbarData = {
+export type SnackbarData = {
   open: boolean
   error: boolean
   message?: string | undefined
@@ -30,37 +30,35 @@ const stSnackebar = {
   marginRight: -2
 }
 
-export const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
+export const CustomSnackbar: FC<CustomSnackbarProps> = ({
   handleClose,
   snackbarData
 }) => {
   return (
-    <Box>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        open={snackbarData.open}
-        autoHideDuration={2000}
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right'
+      }}
+      open={snackbarData.open}
+      autoHideDuration={2000}
+      onClose={handleClose}
+    >
+      <Alert
         onClose={handleClose}
+        severity={snackbarData.error ? 'error' : 'success'}
+        variant="filled"
+        sx={stSnackebar}
+        icon={
+          snackbarData.error ? (
+            <InfoIcon sx={{ color: '#E11D48' }} />
+          ) : (
+            <CheckCircleIcon sx={{ color: '#FCC812' }} />
+          )
+        }
       >
-        <Alert
-          onClose={handleClose}
-          severity={snackbarData.error ? 'error' : 'success'}
-          variant="filled"
-          sx={stSnackebar}
-          icon={
-            snackbarData.error ? (
-              <InfoIcon sx={{ color: '#E11D48' }} />
-            ) : (
-              <CheckCircleIcon sx={{ color: '#FCC812' }} />
-            )
-          }
-        >
-          {snackbarData.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+        {snackbarData.message}
+      </Alert>
+    </Snackbar>
   )
 }

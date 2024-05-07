@@ -1,5 +1,5 @@
 import { ReactNode, Dispatch, SetStateAction, FC } from 'react'
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, Radio, RadioGroup, RadioProps } from '@mui/material'
 import { BpCheckedIcon, BpIcon } from './style'
 import {
   FieldErrors,
@@ -12,7 +12,7 @@ import {
 export type RenderFormFieldsProps = {
   errors: DeepMap<FieldValues, FieldErrors>
   selectedValue: string
-  watch: (name: string) => any
+  watch: (name: string) => string
   setValue: UseFormSetValue<FieldValues>
   register: UseFormRegister<FieldValues>
 }
@@ -23,7 +23,7 @@ type FormRadioGroupProps = {
   renderFormFields: () => ReactNode
 }
 
-function BpRadio(props: any) {
+function BpRadio(props: RadioProps): JSX.Element {
   return (
     <Radio
       disableRipple

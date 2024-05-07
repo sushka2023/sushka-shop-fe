@@ -1,12 +1,17 @@
+import { Dispatch, SetStateAction } from 'react'
 import axiosInstance from '../../../axios/settings'
+import { NpPoshtaAddress, UkrPoshtaAddress } from './Delivery-address'
+
+export type PostOfficesData = {
+  nova_poshta: NpPoshtaAddress[]
+  ukr_poshta: UkrPoshtaAddress[]
+}
 
 const fetchDataMyPostOffices = (
-  setDeliveryAddresses: React.Dispatch<
-    React.SetStateAction<{ nova_poshta: never[]; ukr_poshta: never[] }>
-  >
+  setDeliveryAddresses: Dispatch<SetStateAction<PostOfficesData>>
 ) => {
   axiosInstance
-    .get('/api/posts/my-post-offices')
+    .get<PostOfficesData>('/api/posts/my-post-offices')
     .then((response) => {
       setDeliveryAddresses(response.data)
     })

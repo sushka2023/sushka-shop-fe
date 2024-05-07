@@ -18,34 +18,46 @@ import axiosInstance from '../../../axios/settings'
 import fetchDataMyPostOffices from './fatchDataPostOffices'
 import {
   CustomSnackbar,
-  ISnackbarData
+  SnackbarData
 } from '../../SnackebarCustom/SnackbarCustom'
 import { ModalCustomBtnAddAddress } from '../../Modal-custom-btn/ModalCustomBtnAddAddress'
 import { getAddressTextAndIcon } from './getAddressTextAndIcon'
 
-export type AddressItem = {
-  id: number
-  address_warehouse: string
-  serviceType: string
-  type: string
+export type NpPoshtaAddress = {
   addressType: string
-  source: string
+  address_warehouse: string | null
+  apartment_number: string | null
+  area: string | null
   city: string
-  street: string
-  post_code: string
-  house_number: string
-  region: string
-  apartment_number: string
+  floor: number | null
+  house_number: string | null
+  id: number
+  region: string | null
+  source: string
+  street: string | null
+  serviceType: string
 }
 
-type AddressArray = AddressItem[]
+export type UkrPoshtaAddress = {
+  apartment_number: string | null
+  city: string
+  country: string
+  house_number: string
+  id: number
+  post_code: string
+  region: string
+  source: string
+  street: string
+  serviceType: string
+}
 
 export const DeliveryAddress = () => {
-  const [deliveryAddresses, setDeliveryAddresses] = useState({
-    nova_poshta: [],
-    ukr_poshta: []
-  })
-  const [snackbarData, setSnackbarData] = useState<ISnackbarData>({
+  const [deliveryAddresses, setDeliveryAddresses] = useState<{
+    nova_poshta: NpPoshtaAddress[]
+    ukr_poshta: UkrPoshtaAddress[]
+  }>({ nova_poshta: [], ukr_poshta: [] })
+
+  const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
     error: false
   })
@@ -90,18 +102,21 @@ export const DeliveryAddress = () => {
     fetchDataMyPostOffices(setDeliveryAddresses)
   }, [])
 
-  const novaPoshtaArray: AddressArray =
-    deliveryAddresses.nova_poshta.map((item: AddressItem) => ({
+  const novaPoshtaArray: NpPoshtaAddress[] =
+    deliveryAddresses.nova_poshta?.map((item) => ({
       ...item,
       source: 'nova_poshta',
       addressType: item.address_warehouse ? 'відділення' : 'адреса'
-    })) || []
-  const ukrPoshtaArray: AddressArray =
-    deliveryAddresses.ukr_poshta.map((item: AddressItem) => ({
+    })) ?? []
+
+  const ukrPoshtaArray: UkrPoshtaAddress[] =
+    deliveryAddresses.ukr_poshta?.map((item) => ({
       ...item,
       source: 'ukr_poshta'
-    })) || []
+    })) ?? []
+
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
+  console.log('✌️addressData --->', addressData)
 
   const limitedItems = () => {
     return addressData.length === 3 ? true : false

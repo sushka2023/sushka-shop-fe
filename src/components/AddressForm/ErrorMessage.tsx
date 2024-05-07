@@ -21,6 +21,4 @@ export const ErrorMessages: React.FC<ErrorProps> = ({ errors, fields }) => {
     const errorMessage = get(errors, errorField)?.message
     return <p style={{ color: 'red' }}>{errorMessage}</p>
   }
-
-  return null
 }

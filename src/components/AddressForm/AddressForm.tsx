@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { Dispatch, SetStateAction, useState, FC } from 'react'
 import { Button, FormControl } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -6,10 +6,12 @@ import { AddAddressSchema } from '../auth/validation'
 import FormRadioGroup from './FormRadioGroup'
 import axiosInstance from '../../axios/settings'
 import { renderFormFields } from './renderFormFields'
-import fetchDataMyPostOffices from '../Account-panel/Delivery-address/fatchDataPostOffices'
-import { ISnackbarData } from '../SnackebarCustom/SnackbarCustom'
+import fetchDataMyPostOffices, {
+  PostOfficesData
+} from '../Account-panel/Delivery-address/fatchDataPostOffices'
+import { SnackbarData } from '../SnackebarCustom/SnackbarCustom'
 
-export type FormValue = {
+type FormValue = {
   city_np_office?: string
   separation_np_office?: string
   city_np_parcel_locker?: string
@@ -28,13 +30,11 @@ export type FormValue = {
 }
 type AddressFormProps = {
   setOpenModal: (value: boolean) => void
-  setDeliveryAddresses: React.Dispatch<
-    React.SetStateAction<{ nova_poshta: never[]; ukr_poshta: never[] }>
-  >
-  setSnackbarData: React.Dispatch<React.SetStateAction<ISnackbarData>>
+  setDeliveryAddresses: Dispatch<SetStateAction<PostOfficesData>>
+  setSnackbarData: Dispatch<SetStateAction<SnackbarData>>
 }
 
-const AddressForm: React.FC<AddressFormProps> = ({
+const AddressForm: FC<AddressFormProps> = ({
   setOpenModal,
   setDeliveryAddresses,
   setSnackbarData
@@ -52,28 +52,33 @@ const AddressForm: React.FC<AddressFormProps> = ({
   })
 
   const onSubmit = (data: FormValue) => {
-    let dataResout
-    let url = ''
+    const dataResout: any = {}
+
+    const url = (() => {
+      switch (selectedValue) {
+        case 'np_office':
+        case 'np_parcel_locker':
+          return '/api/posts/create_nova_poshta_warehouse_and_associate_with_post'
+        case 'np_address':
+          return '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
+        case 'ukr_post':
+          return '/api/posts/create_ukr_poshta_and_associate_with_post'
+        default:
+          return ''
+      }
+    })()
+
     switch (selectedValue) {
       case 'np_office':
-        dataResout = {
-          city: data.city_np_office,
-          address_warehouse: data.separation_np_office
-        }
-        console.log('✌️dataResout --->', dataResout)
-        url = '/api/posts/create_nova_poshta_warehouse_and_associate_with_post'
-
+        dataResout.city = data.city_np_office
+        dataResout.address_warehouse = data.separation_np_office
         break
       case 'np_parcel_locker':
-        dataResout = {
-          city: data.city_np_parcel_locker,
-          address_warehouse: data.box_np_parcel_locker
-        }
-        console.log('✌️dataResoutParcelLocer --->', dataResout)
-        url = '/api/posts/create_nova_poshta_warehouse_and_associate_with_post'
+        dataResout.city = data.city_np_parcel_locker
+        dataResout.address_warehouse = data.box_np_parcel_locker
         break
       case 'np_address':
-        dataResout = {
+        Object.assign(dataResout, {
           street: data.street_np_address,
           house_number: data.house_np_address,
           apartment_number: data.apartment_np_address,
@@ -81,14 +86,10 @@ const AddressForm: React.FC<AddressFormProps> = ({
           city: data.city_np_address,
           region: '',
           area: ''
-        }
-        console.log('✌️dataResoutAddress --->', dataResout)
-        url =
-          '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
-
+        })
         break
       case 'ukr_post':
-        dataResout = {
+        Object.assign(dataResout, {
           street: data.street_urk,
           house_number: data.house_urk,
           apartment_number: data.apartment_urk,
@@ -96,14 +97,12 @@ const AddressForm: React.FC<AddressFormProps> = ({
           region: data.region_urk,
           country: data.country_urk,
           post_code: data.postalCode_urk
-        }
-        console.log('✌️dataResoutUkrPost --->', dataResout)
-        url = '/api/posts/create_ukr_poshta_and_associate_with_post'
-
+        })
         break
       default:
         break
     }
+
     axiosInstance
       .post(url, dataResout)
       .then((response) => {
@@ -123,27 +122,25 @@ const AddressForm: React.FC<AddressFormProps> = ({
   }
 
   return (
-    <React.Fragment>
-      <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
-        <FormRadioGroup
-          selectedValue={selectedValue}
-          setSelectedValue={setSelectedValue}
-          renderFormFields={() =>
-            renderFormFields({
-              errors,
-              selectedValue,
-              watch,
-              register,
-              setValue
-            })
-          }
-        />
+    <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
+      <FormRadioGroup
+        selectedValue={selectedValue}
+        setSelectedValue={setSelectedValue}
+        renderFormFields={() =>
+          renderFormFields({
+            errors,
+            selectedValue,
+            watch,
+            register,
+            setValue
+          })
+        }
+      />
 
-        <Button type="submit" variant="contained">
-          ЗБЕРЕГТИ
-        </Button>
-      </FormControl>
-    </React.Fragment>
+      <Button type="submit" variant="contained">
+        ЗБЕРЕГТИ
+      </Button>
+    </FormControl>
   )
 }
 
