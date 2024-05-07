@@ -8,6 +8,7 @@ import { productSlice } from '../crm-add-new-product/slice/product'
 import { categoriesSlice } from '../crm-add-new-product/slice/categories'
 import { reviewsReducer } from '../feedbacks/slice'
 import { basketItemCountSlice } from '../basket-item-count/slice'
+import { valuePostSlice } from '../account-panel/slice'
 
 const AUTH_PERSIST_CONFIG = {
   key: 'auth',
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     categoriesSlice.reducer
   ),
   reviews: reviewsReducer,
-  basketCount: basketItemCountSlice.reducer
+  basketCount: basketItemCountSlice.reducer,
+  selectedValue: valuePostSlice.reducer
 })
 
 const persistedReducer = persistReducer(

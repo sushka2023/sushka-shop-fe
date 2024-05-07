@@ -22,6 +22,11 @@ import {
 } from '../../SnackebarCustom/SnackbarCustom'
 import { ModalCustomBtnAddAddress } from '../../Modal-custom-btn/ModalCustomBtnAddAddress'
 import { getAddressTextAndIcon } from './getAddressTextAndIcon'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  addPostValue,
+  selectPostValue
+} from '../../../redux/account-panel/slice'
 
 export type NpPoshtaAddress = {
   addressType: string
@@ -115,14 +120,30 @@ export const DeliveryAddress = () => {
     deliveryAddresses.ukr_poshta?.map((item) => ({
       ...item,
       source: 'ukr_poshta',
-      addressType: 'укрпошта'
+      addressType: 'ukr_post'
     })) ?? []
 
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
   console.log('✌️addressData --->', addressData)
 
   const limitedItems = () => {
-    return addressData.length === 3 ? true : false
+    return addressData.length === 5 ? true : false
+  }
+
+  const dispatch = useDispatch()
+
+  const namePost = useSelector(selectPostValue)
+
+  const handleEdit = (event: any) => {
+    console.log('✌️event --->', event)
+
+    const { addressType } = event
+    console.log('✌️addressType --->', addressType)
+    console.log('✌️namePost --->', namePost)
+
+    if (addressType === namePost) {
+      dispatch(addPostValue(namePost))
+    }
   }
 
   return (
@@ -171,7 +192,10 @@ export const DeliveryAddress = () => {
               <Button
                 variant="outlined"
                 type="button"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true)
+                  handleEdit(event)
+                }}
                 endIcon={<CreateIcon />}
                 sx={stBtnEdit}
               >

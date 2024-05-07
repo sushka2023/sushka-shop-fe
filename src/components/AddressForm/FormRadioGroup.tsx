@@ -1,4 +1,4 @@
-import { ReactNode, Dispatch, SetStateAction, FC } from 'react'
+import { ReactNode, FC } from 'react'
 import { FormControlLabel, Radio, RadioGroup, RadioProps } from '@mui/material'
 import { BpCheckedIcon, BpIcon } from './style'
 import {
@@ -8,6 +8,8 @@ import {
   FieldValues,
   UseFormRegister
 } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { addPostValue } from '../../redux/account-panel/slice'
 
 export type RenderFormFieldsProps = {
   errors: DeepMap<FieldValues, FieldErrors>
@@ -19,7 +21,7 @@ export type RenderFormFieldsProps = {
 
 type FormRadioGroupProps = {
   selectedValue: string
-  setSelectedValue: Dispatch<SetStateAction<string>>
+  // setSelectedValue: Dispatch<SetStateAction<string>>
   renderFormFields: () => ReactNode
 }
 
@@ -37,14 +39,15 @@ function BpRadio(props: RadioProps): JSX.Element {
 
 const FormRadioGroup: FC<FormRadioGroupProps> = ({
   selectedValue,
-  setSelectedValue,
   renderFormFields
 }) => {
+  const dispatch = useDispatch()
+
   return (
     <RadioGroup
       name="value"
       value={selectedValue}
-      onChange={(e) => setSelectedValue(e.target.value)}
+      onChange={(e) => dispatch(addPostValue(e.target.value))}
     >
       <FormControlLabel
         value="np_office"

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState, FC } from 'react'
+import { Dispatch, SetStateAction, FC } from 'react'
 import { Button, FormControl } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -10,8 +10,10 @@ import fetchDataMyPostOffices, {
   PostOfficesData
 } from '../Account-panel/Delivery-address/fatchDataPostOffices'
 import { SnackbarData } from '../SnackebarCustom/SnackbarCustom'
+import { useSelector } from 'react-redux'
+import { selectPostValue } from '../../redux/account-panel/slice'
 
-type FormValue = {
+export type FormValue = {
   city_np_office?: string
   separation_np_office?: string
   city_np_parcel_locker?: string
@@ -39,7 +41,9 @@ const AddressForm: FC<AddressFormProps> = ({
   setDeliveryAddresses,
   setSnackbarData
 }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('np_office')
+  // const [selectedValue, setSelectedValue] = useState<string>('ukr_post')
+
+  const selectedValue = useSelector(selectPostValue)
 
   const {
     register,
@@ -125,7 +129,6 @@ const AddressForm: FC<AddressFormProps> = ({
     <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
       <FormRadioGroup
         selectedValue={selectedValue}
-        setSelectedValue={setSelectedValue}
         renderFormFields={() =>
           renderFormFields({
             errors,
