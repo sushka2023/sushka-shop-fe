@@ -1,7 +1,7 @@
 import IconNovaPoshta from '../../../icons/novaPoshta.svg?react'
 import IconUkrPoshta from '../../../icons/ukrPoshta.svg?react'
 import { stIconM } from '../style'
-import { AddressItem } from './Delivery-address'
+import { NpPoshtaAddress, UkrPoshtaAddress } from './Delivery-address'
 
 type AddressInfo = {
   icon: JSX.Element
@@ -25,10 +25,12 @@ const ADDRESS_INFO: Record<
   }
 }
 
-export const getAddressTextAndIcon = (event: AddressItem): AddressInfo => {
+export const getAddressTextAndIcon = (
+  event: NpPoshtaAddress | UkrPoshtaAddress
+): AddressInfo => {
   const { source, address_warehouse } = event
   const { icon, address_headline } = ADDRESS_INFO[source]
-  const location = getLocation(address_warehouse, address_headline)
+  const location = getLocation(address_warehouse ?? '', address_headline ?? '')
   const title_address = getTitleAddress(location, event)
 
   return {
@@ -49,8 +51,11 @@ const getLocation = (
   return address_warehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
 }
 
-const getTitleAddress = (location: string, event: AddressItem): string => {
-  if (event.post_code) {
+const getTitleAddress = (
+  location: string,
+  event: NpPoshtaAddress | UkrPoshtaAddress
+): string => {
+  if (event.addressType === 'укрпошта') {
     return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   }
   if (location === 'Поштомат' || location === 'Відділення') {

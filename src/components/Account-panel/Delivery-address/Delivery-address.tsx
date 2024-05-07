@@ -39,6 +39,7 @@ export type NpPoshtaAddress = {
 }
 
 export type UkrPoshtaAddress = {
+  address_warehouse: string | null
   apartment_number: string | null
   city: string
   country: string
@@ -49,6 +50,7 @@ export type UkrPoshtaAddress = {
   source: string
   street: string
   serviceType: string
+  addressType: string
 }
 
 export const DeliveryAddress = () => {
@@ -112,7 +114,8 @@ export const DeliveryAddress = () => {
   const ukrPoshtaArray: UkrPoshtaAddress[] =
     deliveryAddresses.ukr_poshta?.map((item) => ({
       ...item,
-      source: 'ukr_poshta'
+      source: 'ukr_poshta',
+      addressType: 'укрпошта'
     })) ?? []
 
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
