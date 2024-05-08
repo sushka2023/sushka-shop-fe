@@ -15,8 +15,9 @@ import Delete from '../../icons/delete.svg?react'
 import { Button } from '../../components/UI/Button'
 import { OutlinedInput } from '../../components/UI/Field'
 import { Radio } from '../../components/UI/Radio'
+import { Checkbox } from '../../components/UI/Checkbox'
 import { useTheme } from '@mui/material/styles'
-// import { useState, Fragment } from 'react'
+import { useState } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
 // import { containerStyle } from './style'
@@ -40,7 +41,17 @@ const OrderPage = () => {
   //   }
   // }
   const currencies = ['Львів', 'Харків', 'Київ', 'Вінниця', 'Одесса']
+  const [checked, setChecked] = useState([true, false])
   const error = 'error'
+
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked([event.target.checked, checked[1]])
+  }
+
+  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked([checked[0], event.target.checked])
+  }
+
   return (
     // <Box sx={containerStyle}>
     //   <OrderStepper activeStep={activeStep} />
@@ -144,6 +155,16 @@ const OrderPage = () => {
           />
         </RadioGroup>
       </FormControl>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <FormControlLabel
+          label="Child 1"
+          control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+        />
+        <FormControlLabel
+          label="Child 2"
+          control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+        />
+      </Box>
     </Box>
   )
 }

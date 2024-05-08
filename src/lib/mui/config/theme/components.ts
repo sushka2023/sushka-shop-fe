@@ -4,6 +4,7 @@ import { MuiOutlinedInput } from '../overrides/input'
 import { MuiInputLabel } from '../overrides/label'
 import { MuiAutocomplete } from '../overrides/autocomplete'
 import { MuiRadio } from '../overrides/radio'
+import { MuiCheckbox } from '../overrides/checkbox'
 
 const COMPONENTS: Pick<ThemeOptions, 'components'> = {
   components: {
@@ -11,7 +12,8 @@ const COMPONENTS: Pick<ThemeOptions, 'components'> = {
     MuiOutlinedInput,
     MuiInputLabel,
     MuiAutocomplete,
-    MuiRadio
+    MuiRadio,
+    MuiCheckbox
   }
 }
 
