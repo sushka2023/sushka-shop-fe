@@ -4,12 +4,13 @@ import HeroPic from '../../images/hero-pic.jpg'
 import { RootState } from '../../redux/store'
 import styles from './HeroSection.module.scss'
 import { Button } from '../UI/Button'
-import { THEME } from '../../lib/mui/config/theme'
+import { useTheme } from '@mui/material/styles'
 
 const HeroSection = () => {
   const allCategories = useSelector(
     (state: RootState) => state.allCategories.mainCategories
   )
+  const theme = useTheme()
 
   return (
     <section className={styles.mainContainer}>
@@ -32,7 +33,7 @@ const HeroSection = () => {
               fullWidth
               sx={{
                 borderRadius: '20px',
-                backgroundColor: THEME.palette.primary.darker,
+                backgroundColor: theme.palette.primary.darker,
                 color: '#fff',
                 height: '60px'
               }}

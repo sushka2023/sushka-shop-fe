@@ -6,18 +6,16 @@ import {
   FormControl,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Autocomplete
 } from '@mui/material'
 import { FormHelperText } from '@mui/material'
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined'
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined'
-import RadioIcon from '../../icons/radio.svg?react'
-import RadioChecked from '../../icons/radio-checked.svg?react'
 import Delete from '../../icons/delete.svg?react'
 import { Button } from '../../components/UI/Button'
-import { Autocomplete } from '../../components/UI/Autocomplete'
 import { OutlinedInput } from '../../components/UI/Field'
-import { THEME } from '../../lib/mui/config/theme'
+import { Radio } from '../../components/UI/Radio'
+import { useTheme } from '@mui/material/styles'
 // import { useState, Fragment } from 'react'
 // import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
@@ -26,6 +24,7 @@ import { THEME } from '../../lib/mui/config/theme'
 // import StapperButtons from '../../components/Stapper-buttons'
 
 const OrderPage = () => {
+  const theme = useTheme()
   // const [activeStep, setActiveStep] = useState(0)
 
   // const getStepContent = (activeStep: number) => {
@@ -73,9 +72,7 @@ const OrderPage = () => {
       <Box>
         <OutlinedInput error placeholder="text" />
         {error && (
-          <FormHelperText
-            sx={{ color: THEME.palette.error.darker, fontWeight: 500 }}
-          >
+          <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
             {error}
           </FormHelperText>
         )}
@@ -101,10 +98,10 @@ const OrderPage = () => {
           sx={{
             width: '40px',
             height: '40px',
-            backgroundColor: THEME.palette.error.lighter
+            backgroundColor: 'error.lighter'
           }}
         >
-          <Delete width={16} height={20} fill={THEME.palette.error.darker} />
+          <Delete width={16} height={20} fill={theme.palette.error.darker} />
         </IconButton>
       </Box>
       <Box>
@@ -114,7 +111,7 @@ const OrderPage = () => {
         <Button
           fullWidth
           endIcon={<CreateOutlinedIcon />}
-          sx={{ backgroundColor: THEME.palette.primary.darker, color: '#fff' }}
+          sx={{ backgroundColor: 'primary.darker', color: '#fff' }}
         >
           BUTTON
         </Button>
@@ -127,30 +124,22 @@ const OrderPage = () => {
         >
           <FormControlLabel
             value="Нова пошта (відділення)"
-            control={
-              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
-            }
+            control={<Radio />}
             label="Нова пошта (відділення)"
           />
           <FormControlLabel
             value="Нова пошта (поштомат)"
-            control={
-              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
-            }
+            control={<Radio />}
             label="Нова пошта (поштомат)"
           />
           <FormControlLabel
             value="Нова пошта (адресна)"
-            control={
-              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
-            }
+            control={<Radio />}
             label="Нова пошта (адресна)"
           />
           <FormControlLabel
             value="Укрпошта"
-            control={
-              <Radio icon={<RadioIcon />} checkedIcon={<RadioChecked />} />
-            }
+            control={<Radio />}
             label="Укрпошта"
           />
         </RadioGroup>
