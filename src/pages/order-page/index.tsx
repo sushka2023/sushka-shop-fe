@@ -18,7 +18,6 @@ import { Radio } from '../../components/UI/Radio'
 import { Checkbox } from '../../components/UI/Checkbox'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
-// import Box from '@mui/material/Box'
 // import { STEPS } from './constants'
 // import { containerStyle } from './style'
 // import OrderStepper from '../../components/Order-stepper'
@@ -53,117 +52,121 @@ const OrderPage = () => {
   }
 
   return (
-    // <Box sx={containerStyle}>
-    //   <OrderStepper activeStep={activeStep} />
-    //   {activeStep === STEPS.length ? (
-    //     <Fragment>{/* notification  */}</Fragment>
-    //   ) : (
-    //     <Fragment>
-    //       <Box>{getStepContent(activeStep)}</Box>
-    //       <StapperButtons
-    //         activeStep={activeStep}
-    //         setActiveStep={setActiveStep}
-    //       />
-    //     </Fragment>
-    //   )}
-    // </Box>
-    <Box
-      mt={20}
-      mb={50}
-      display="flex"
-      justifyContent="center"
-      flexDirection="column"
-      alignItems="center"
-      gap={2}
-    >
-      <Box display="flex" flexDirection="column" width={'400px'}>
-        <InputLabel>title</InputLabel>
-        <OutlinedInput placeholder="Hint" fullWidth />
-      </Box>
-      <Box>
-        <OutlinedInput error placeholder="text" />
-        {error && (
-          <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
-            {error}
-          </FormHelperText>
-        )}
-      </Box>
-      <Box>
-        <Autocomplete
-          popupIcon={
-            <ArrowBackIosNewOutlinedIcon sx={{ transform: 'rotate(270deg)' }} />
-          }
-          fullWidth
-          options={currencies}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} placeholder="Місто" />
+    <Box>
+      {/* <Box sx={containerStyle}>
+      <OrderStepper activeStep={activeStep} />
+      {activeStep === STEPS.length ? (
+        <Box>{/* notification </Box>}
+      // ) : (
+      //   <Box>
+      //     <Box>{getStepContent(activeStep)}</Box>
+      //     <StapperButtons
+      //       activeStep={activeStep}
+      //       setActiveStep={setActiveStep}
+      //     />
+      //   </Box>
+      // )}
+    // </Box> */}
+      <Box
+        mt={20}
+        mb={50}
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        alignItems="center"
+        gap={2}
+      >
+        <Box display="flex" flexDirection="column" width={'400px'}>
+          <InputLabel>title</InputLabel>
+          <OutlinedInput placeholder="Hint" fullWidth />
+        </Box>
+        <Box>
+          <OutlinedInput error placeholder="text" />
+          {error && (
+            <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
+              {error}
+            </FormHelperText>
           )}
-        />
-      </Box>
-      <Box>
-        <Button>BUTTON</Button>
-      </Box>
-      <Box>
-        <IconButton
-          sx={{
-            width: '40px',
-            height: '40px',
-            backgroundColor: 'error.lighter'
-          }}
-        >
-          <Delete width={16} height={20} fill={theme.palette.error.darker} />
-        </IconButton>
-      </Box>
-      <Box>
-        <Button size="small">BUTTON</Button>
-      </Box>
-      <Box maxWidth={'400px'} width={'100%'}>
-        <Button
-          fullWidth
-          endIcon={<CreateOutlinedIcon />}
-          sx={{ backgroundColor: 'primary.darker', color: '#fff' }}
-        >
-          BUTTON
-        </Button>
-      </Box>
-      <FormControl>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
-          name="radio-buttons-group"
-        >
+        </Box>
+        <Box>
+          <Autocomplete
+            popupIcon={
+              <ArrowBackIosNewOutlinedIcon
+                sx={{ transform: 'rotate(270deg)' }}
+              />
+            }
+            fullWidth
+            options={currencies}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Місто" />
+            )}
+          />
+        </Box>
+        <Box>
+          <Button>BUTTON</Button>
+        </Box>
+        <Box>
+          <IconButton
+            sx={{
+              width: '40px',
+              height: '40px',
+              backgroundColor: 'error.lighter'
+            }}
+          >
+            <Delete width={16} height={20} fill={theme.palette.error.darker} />
+          </IconButton>
+        </Box>
+        <Box>
+          <Button size="small">BUTTON</Button>
+        </Box>
+        <Box maxWidth={'400px'} width={'100%'}>
+          <Button
+            fullWidth
+            endIcon={<CreateOutlinedIcon />}
+            sx={{ backgroundColor: 'primary.darker', color: '#fff' }}
+          >
+            BUTTON
+          </Button>
+        </Box>
+        <FormControl>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="female"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel
+              value="Нова пошта (відділення)"
+              control={<Radio />}
+              label="Нова пошта (відділення)"
+            />
+            <FormControlLabel
+              value="Нова пошта (поштомат)"
+              control={<Radio />}
+              label="Нова пошта (поштомат)"
+            />
+            <FormControlLabel
+              value="Нова пошта (адресна)"
+              control={<Radio />}
+              label="Нова пошта (адресна)"
+            />
+            <FormControlLabel
+              value="Укрпошта"
+              control={<Radio />}
+              label="Укрпошта"
+            />
+          </RadioGroup>
+        </FormControl>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <FormControlLabel
-            value="Нова пошта (відділення)"
-            control={<Radio />}
-            label="Нова пошта (відділення)"
+            label="Child 1"
+            control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
           />
           <FormControlLabel
-            value="Нова пошта (поштомат)"
-            control={<Radio />}
-            label="Нова пошта (поштомат)"
+            label="Child 2"
+            control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
           />
-          <FormControlLabel
-            value="Нова пошта (адресна)"
-            control={<Radio />}
-            label="Нова пошта (адресна)"
-          />
-          <FormControlLabel
-            value="Укрпошта"
-            control={<Radio />}
-            label="Укрпошта"
-          />
-        </RadioGroup>
-      </FormControl>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <FormControlLabel
-          label="Child 1"
-          control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-        />
-        <FormControlLabel
-          label="Child 2"
-          control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-        />
+        </Box>
       </Box>
     </Box>
   )

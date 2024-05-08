@@ -6,7 +6,7 @@ const MuiRadio: Components<Theme>['MuiRadio'] = {
       ['& .MuiSvgIcon-root']: {
         fill: theme.palette.secondary.darker
       },
-      ['& .MuiSvgIcon-root:nth-child(2)']: {
+      ['& .MuiSvgIcon-root:nth-of-type(2)']: {
         fill: 'white'
       },
       ['&::before']: {
@@ -21,7 +21,7 @@ const MuiRadio: Components<Theme>['MuiRadio'] = {
         ['&::before']: {
           background: theme.palette.secondary.darker
         },
-        ['& .MuiSvgIcon-root:nth-child(2)']: {
+        ['& .MuiSvgIcon-root:nth-of-type(2)']: {
           fill: 'white'
         }
       }
