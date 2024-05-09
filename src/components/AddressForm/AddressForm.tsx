@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { AddAddressSchema } from '../auth/validation'
 import FormRadioGroup from './FormRadioGroup'
 import axiosInstance from '../../axios/settings'
-import { renderFormFields } from './renderFormFields'
+import { RenderFormFields } from './renderFormFields'
 import fetchDataMyPostOffices, {
   PostOfficesData
 } from '../Account-panel/Delivery-address/fatchDataPostOffices'
@@ -41,8 +41,6 @@ const AddressForm: FC<AddressFormProps> = ({
   setDeliveryAddresses,
   setSnackbarData
 }) => {
-  // const [selectedValue, setSelectedValue] = useState<string>('ukr_post')
-
   const selectedValue = useSelector(selectPostValue)
 
   const {
@@ -130,7 +128,7 @@ const AddressForm: FC<AddressFormProps> = ({
       <FormRadioGroup
         selectedValue={selectedValue}
         renderFormFields={() =>
-          renderFormFields({
+          RenderFormFields({
             errors,
             selectedValue,
             watch,

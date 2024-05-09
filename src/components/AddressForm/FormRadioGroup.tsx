@@ -9,7 +9,7 @@ import {
   UseFormRegister
 } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { addPostValue } from '../../redux/account-panel/slice'
+import { postValue } from '../../redux/account-panel/slice'
 
 export type RenderFormFieldsProps = {
   errors: DeepMap<FieldValues, FieldErrors>
@@ -21,7 +21,6 @@ export type RenderFormFieldsProps = {
 
 type FormRadioGroupProps = {
   selectedValue: string
-  // setSelectedValue: Dispatch<SetStateAction<string>>
   renderFormFields: () => ReactNode
 }
 
@@ -43,11 +42,12 @@ const FormRadioGroup: FC<FormRadioGroupProps> = ({
 }) => {
   const dispatch = useDispatch()
 
+  console.log('✌️selectedValue --->', selectedValue)
   return (
     <RadioGroup
       name="value"
       value={selectedValue}
-      onChange={(e) => dispatch(addPostValue(e.target.value))}
+      onChange={(e) => dispatch(postValue(e.target.value))}
     >
       <FormControlLabel
         value="np_office"

@@ -14,7 +14,7 @@ import { ChangeDataSchema } from '../../auth/validation'
 import { ContactInfoBtn } from '../style'
 import {
   CustomSnackbar,
-  ISnackbarData
+  SnackbarData
 } from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
 
@@ -27,7 +27,7 @@ const accessToken = getToken()
 
 export const ContactInfo = ({ user }: { user: UserResponse }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false)
-  const [snackbarData, setSnackbarData] = useState<ISnackbarData>({
+  const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
     error: false
   })

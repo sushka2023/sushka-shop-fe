@@ -9,6 +9,7 @@ type AddressInfo = {
   location?: string
   title_address?: string
   address_warehouse: string | null
+  // addressType: string | null
 }
 
 const ADDRESS_INFO: Record<
@@ -19,7 +20,7 @@ const ADDRESS_INFO: Record<
     icon: <IconNovaPoshta style={stIconM} />,
     address_headline: 'Нова пошта'
   },
-  ukr_poshta: {
+  ukr_post: {
     icon: <IconUkrPoshta style={stIconM} />,
     address_headline: 'Укрпошта'
   }
@@ -46,7 +47,7 @@ const getLocation = (
   address_warehouse: string,
   address_headline: string
 ): string => {
-  if (address_headline === 'Укрпошта') return 'Відділення'
+  if (address_headline === 'ukr_post') return 'Відділення'
   if (!address_warehouse) return 'Адресна'
   return address_warehouse.startsWith('#') ? 'Поштомат' : 'Відділення'
 }
@@ -55,7 +56,7 @@ const getTitleAddress = (
   location: string,
   event: NpPoshtaAddress | UkrPoshtaAddress
 ): string => {
-  if (event.addressType === 'укрпошта') {
+  if (event.source === 'ukr_post') {
     return `${event.city}, ${event.street}, буд.${event.house_number}, кв.${event.apartment_number}`
   }
   if (location === 'Поштомат' || location === 'Відділення') {

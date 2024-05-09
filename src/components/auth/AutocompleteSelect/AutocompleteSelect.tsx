@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, FC } from 'react'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
@@ -7,6 +7,7 @@ import {
   stBoxAutocomplete,
   stTextFieldAutocomplete
 } from '../../AddressForm/style'
+
 interface Props {
   type: 'city' | 'office' | 'parcelLocker'
   value: string | null | undefined
@@ -16,47 +17,29 @@ interface Props {
     office?: string
     parcelLocker?: string
   }[]
+  initialState: any
 }
 
-const CustomAutocomplete: React.FC<Props> = ({
+const CustomAutocomplete: FC<Props> = ({
   type,
   value,
   onChange,
-  options
+  options,
+  initialState
 }) => {
   const [isFocused, setIsFocused] = useState(false)
-  const [open, setOpen] = useState(false)
-
-  const calculateLoading = (type: 'city' | 'office' | 'parcelLocker') => {
-    const optionsMap = {
-      city: options[0]?.city,
-      office: options[0]?.office,
-      parcelLocker: options[0]?.parcelLocker
-    }
-
-    return open && !optionsMap[type]?.length
-  }
-
-  useEffect(() => {
-    setOpen(false)
-  }, [type])
-
-  const calculatedLoading = calculateLoading(type)
 
   return (
     <Autocomplete
       disablePortal
       size="small"
       id={`combo-box-demo-${type}`}
-      value={value ? { [type]: value } : null}
+      value={value ? { [type]: value } : { [type]: initialState }}
       onChange={(_, newValue) => {
         onChange(newValue ? newValue[type] || null : null)
       }}
-      loading={calculatedLoading}
       getOptionLabel={(option) => option?.[type] || ''}
       options={options}
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
       sx={stAutocompleteBase}
       renderInput={(params) => (
         <TextField

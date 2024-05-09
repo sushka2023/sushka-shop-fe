@@ -3,6 +3,11 @@ import { Box } from '@mui/material'
 import CustomAutocomplete from '../auth/AutocompleteSelect/AutocompleteSelect'
 import { ErrorMessages } from './ErrorMessage'
 import { RenderFormFieldsProps } from './FormRadioGroup'
+import { useSelector } from 'react-redux'
+import {
+  selectEditPost,
+  selectFlagAddPost
+} from '../../redux/account-panel/slice'
 
 const allOffice = [{ office: '1' }, { office: '2' }, { office: '3' }]
 const allCity = [{ city: 'Rivne' }, { city: 'Lviv' }, { city: 'Kiev' }]
@@ -12,13 +17,24 @@ const allParcelLocker = [
   { parcelLocker: '#3' }
 ]
 
-export const renderFormFields: React.FC<RenderFormFieldsProps> = ({
+export const RenderFormFields: React.FC<RenderFormFieldsProps> = ({
   errors,
   selectedValue,
   watch,
   setValue,
   register
 }) => {
+  const eventEditPostData = useSelector(selectEditPost)
+  const flagAddPost = useSelector(selectFlagAddPost)
+  const { addressType } = eventEditPostData
+
+  const getInitialState = (fieldName: string) => {
+    return !flagAddPost && addressType === selectedValue
+      ? eventEditPostData[fieldName]
+      : null
+  }
+
+  console.log('✌️selectedValue --->', selectedValue)
   switch (selectedValue) {
     case 'np_office':
       return (
@@ -30,14 +46,17 @@ export const renderFormFields: React.FC<RenderFormFieldsProps> = ({
           <CustomAutocomplete
             type="city"
             value={watch('city_np_office')}
+            initialState={getInitialState('city')}
             onChange={(newValue) =>
               setValue('city_np_office', newValue || undefined)
             }
             options={allCity}
           />
+
           <CustomAutocomplete
             type="office"
             value={watch('separation_np_office')}
+            initialState={getInitialState('address_warehouse')}
             onChange={(newValue) =>
               setValue('separation_np_office', newValue || undefined)
             }
@@ -56,6 +75,7 @@ export const renderFormFields: React.FC<RenderFormFieldsProps> = ({
           <CustomAutocomplete
             type="city"
             value={watch('city_np_parcel_locker')}
+            initialState={getInitialState('city')}
             onChange={(newValue) =>
               setValue('city_np_parcel_locker', newValue || undefined)
             }
@@ -64,6 +84,7 @@ export const renderFormFields: React.FC<RenderFormFieldsProps> = ({
           <CustomAutocomplete
             type="parcelLocker"
             value={watch('box_np_parcel_locker')}
+            initialState={getInitialState('address_warehouse')}
             onChange={(newValue) =>
               setValue('box_np_parcel_locker', newValue || undefined)
             }
@@ -86,6 +107,7 @@ export const renderFormFields: React.FC<RenderFormFieldsProps> = ({
           <CustomAutocomplete
             type="city"
             value={watch('city_np_address')}
+            initialState={getInitialState('city')}
             onChange={(newValue) =>
               setValue('city_np_address', newValue || undefined)
             }

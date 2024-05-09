@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -22,10 +22,11 @@ import {
 } from '../../SnackebarCustom/SnackbarCustom'
 import { ModalCustomBtnAddAddress } from '../../Modal-custom-btn/ModalCustomBtnAddAddress'
 import { getAddressTextAndIcon } from './getAddressTextAndIcon'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
-  addPostValue,
-  selectPostValue
+  eventEditPost,
+  flagAddPost,
+  postValue
 } from '../../../redux/account-panel/slice'
 
 export type NpPoshtaAddress = {
@@ -57,7 +58,9 @@ export type UkrPoshtaAddress = {
   serviceType: string
   addressType: string
 }
-
+type Event = {
+  addressType: string
+}
 export const DeliveryAddress = () => {
   const [deliveryAddresses, setDeliveryAddresses] = useState<{
     nova_poshta: NpPoshtaAddress[]
@@ -113,18 +116,21 @@ export const DeliveryAddress = () => {
     deliveryAddresses.nova_poshta?.map((item) => ({
       ...item,
       source: 'nova_poshta',
-      addressType: item.address_warehouse ? 'відділення' : 'адреса'
+      addressType: item.address_warehouse
+        ? item.address_warehouse.startsWith('#')
+          ? 'np_parcel_locker'
+          : 'np_office'
+        : 'np_address'
     })) ?? []
 
   const ukrPoshtaArray: UkrPoshtaAddress[] =
     deliveryAddresses.ukr_poshta?.map((item) => ({
       ...item,
-      source: 'ukr_poshta',
+      source: 'ukr_post',
       addressType: 'ukr_post'
     })) ?? []
 
   const addressData = [...novaPoshtaArray, ...ukrPoshtaArray]
-  console.log('✌️addressData --->', addressData)
 
   const limitedItems = () => {
     return addressData.length === 5 ? true : false
@@ -132,19 +138,24 @@ export const DeliveryAddress = () => {
 
   const dispatch = useDispatch()
 
-  const namePost = useSelector(selectPostValue)
+  const handleEditPost = useCallback(
+    (event: Event) => {
+      console.log('✌️event --->', event)
+      const { addressType } = event
+      dispatch(postValue(addressType))
+      dispatch(eventEditPost(event))
+      dispatch(flagAddPost(false))
+    },
+    [dispatch]
+  )
 
-  const handleEdit = (event: any) => {
-    console.log('✌️event --->', event)
-
-    const { addressType } = event
-    console.log('✌️addressType --->', addressType)
-    console.log('✌️namePost --->', namePost)
-
-    if (addressType === namePost) {
-      dispatch(addPostValue(namePost))
-    }
-  }
+  const handleAddPost = useCallback(
+    (event: string) => {
+      dispatch(postValue(event))
+      dispatch(flagAddPost(true))
+    },
+    [dispatch]
+  )
 
   return (
     <Box>
@@ -194,7 +205,7 @@ export const DeliveryAddress = () => {
                 type="button"
                 onClick={() => {
                   setOpenModal(true)
-                  handleEdit(event)
+                  handleEditPost(event)
                 }}
                 endIcon={<CreateIcon />}
                 sx={stBtnEdit}
@@ -206,7 +217,10 @@ export const DeliveryAddress = () => {
         })}
         <Grid item xs={12} md={6} lg={3}>
           <Button
-            onClick={() => setOpenModal(true)}
+            onClick={() => {
+              setOpenModal(true)
+              handleAddPost('np_office')
+            }}
             sx={stBtn}
             disabled={limitedItems()}
           >
