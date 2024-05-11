@@ -2,19 +2,14 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
-import {
-  Box,
-  Button,
-  FormHelperText,
-  InputLabel,
-  OutlinedInput,
-  Typography
-} from '@mui/material'
+import { Box, FormHelperText, InputLabel, Typography } from '@mui/material'
 import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
 import { ChangePasswordSchema } from '../../auth/validation'
 import { SnackbarData } from '../Contact-info/Contact-info'
+import { OutlinedInput } from '../../UI/Field'
+import { Button } from '../../UI/Button'
 
-interface FormData {
+type FormData = {
   old_password: string
   new_password: string
   new_password_confirm: string
@@ -35,6 +30,7 @@ const stBtn = {
     backgroundColor: '#E8E8E8'
   }
 }
+
 export const ChangePassword = () => {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false)
   const {
@@ -49,7 +45,7 @@ export const ChangePassword = () => {
     open: false,
     error: false
   })
-  const onSubmit = async (data: object) => {
+  const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
     try {
       const response = await axiosInstance.post(
@@ -84,7 +80,7 @@ export const ChangePassword = () => {
           <OutlinedInput
             {...register('old_password')}
             placeholder="Старий пароль"
-            type="text"
+            type="password"
             fullWidth
             error={!!errors.old_password}
             sx={stInput}
@@ -98,7 +94,7 @@ export const ChangePassword = () => {
           <OutlinedInput
             {...register('new_password')}
             placeholder="Новий пароль"
-            type="text"
+            type="password"
             fullWidth
             error={!!errors.new_password}
             sx={stInput}
@@ -113,7 +109,7 @@ export const ChangePassword = () => {
           <OutlinedInput
             {...register('new_password_confirm')}
             placeholder="Повторіть новий пароль"
-            type="text"
+            type="password"
             fullWidth
             error={!!errors.new_password_confirm}
             sx={stInput}

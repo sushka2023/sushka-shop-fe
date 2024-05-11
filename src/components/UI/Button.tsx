@@ -1,8 +1,19 @@
-import { Button as ButtonMui, ButtonOwnProps } from '@mui/material'
 import { FC } from 'react'
+import {
+  Button as ButtonMui,
+  ButtonProps as ButtonMuiProps
+} from '@mui/material'
 
-const Button: FC<ButtonOwnProps> = ({ children, ...props }) => {
-  return <ButtonMui {...props}>{children}</ButtonMui>
+type ButtonProps = Omit<ButtonMuiProps, 'type'> & {
+  type?: 'submit' | 'button' | 'reset' | undefined
+}
+
+const Button: FC<ButtonProps> = ({ children, type, ...muiProps }) => {
+  return (
+    <ButtonMui {...muiProps} type={type}>
+      {children}
+    </ButtonMui>
+  )
 }
 
 export { Button }
