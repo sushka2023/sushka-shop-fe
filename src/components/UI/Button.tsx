@@ -1,7 +1,7 @@
-import { Button as ButtonMui, ButtonOwnProps } from '@mui/material'
+import { Button as ButtonMui, ButtonProps } from '@mui/material'
 import { FC } from 'react'
 
-const Button: FC<ButtonOwnProps> = ({ children, ...props }) => {
+const Button: FC<ButtonProps> = ({ children, ...props }) => {
   return <ButtonMui {...props}>{children}</ButtonMui>
 }
 
