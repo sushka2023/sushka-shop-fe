@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
-import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import { useAuth } from '../../hooks/use-auth'
 import { Fragment, SyntheticEvent, useState } from 'react'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
@@ -15,6 +14,7 @@ import {
 } from './style'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
+import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 
 type TabPanelProps = {
   children?: React.ReactNode
