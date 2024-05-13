@@ -5,30 +5,38 @@ const btnContainerStyle = {
 }
 
 const btnNextStyle = {
-  'width': '250px',
-  'height': '50px',
+  'fontWeight': '500',
   'padding': '15px 30px',
   'borderRadius': '10px',
   'backgroundColor': 'rgba(86, 115, 67, 1)',
+  'borderColor': 'inherit',
   'color': 'rgba(255, 255, 255, 1)',
-  'fontFamily': 'Open Sans',
-  'fontWeight': '600',
   'fontSize': '14px',
-  'lineHeight': '18.2px',
-  'letterSpacing': 'normal',
+  'lineHeight': '17px',
   '&:hover': {
+    borderColor: 'inherit',
     backgroundColor: 'rgba(86, 115, 67, 0.85)'
   }
 }
 
 const btnBackStyle = {
-  fontFamily: 'Open Sans',
-  fontWeight: '500',
-  fontSize: '14px',
-  lineHeight: '18.2px',
-  letterSpacing: 'normal',
-  textTransform: 'none',
-  color: 'rgba(86, 115, 67, 1)'
+  'border': 'none',
+  'fontSize': '14px',
+  'lineHeight': '18.2px',
+  'letterSpacing': 'normal',
+  'textTransform': 'none',
+  'color': 'rgba(86, 115, 67, 1)',
+  'fontWeight': '500',
+  '&:hover': {
+    border: 'none',
+    backgroundColor: 'inherit',
+    color: 'rgba(86, 115, 67, 1)'
+  },
+  '&.Mui-disabled': {
+    border: 'none',
+    backgroundColor: 'inherit',
+    color: '#D9D9D9'
+  }
 }
 
 export { btnContainerStyle, btnBackStyle, btnNextStyle }
