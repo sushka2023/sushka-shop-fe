@@ -1,16 +1,15 @@
 import { Card, CardContent, Divider, Grid } from '@mui/material'
 import OrderPrice from './OrderPrice'
+import { useContext } from 'react'
 import { Typography } from '../Typography'
 import OrderList from './OrderList'
-import { BasketItemsResponse } from '../../types'
 import { SUM, TARIFF, DELIVERY } from '../../pages/order-page/constants'
 import { cardStyle, cardContentStyle, dividerStyle } from './style'
+import { OrderContext } from '../../pages/order-page'
 
-type Props = {
-  orderList: BasketItemsResponse[]
-}
+const OrderCard = () => {
+  const { orderList } = useContext(OrderContext)!
 
-const OrderCard: React.FC<Props> = ({ orderList }) => {
   const totalPrice = orderList.reduce(
     (total, order) => total + order.quantity * order.product.prices[0].price,
     0
@@ -37,7 +36,7 @@ const OrderCard: React.FC<Props> = ({ orderList }) => {
           Ваше замовлення
         </Typography>
         <CardContent sx={cardContentStyle}>
-          <OrderList orderList={orderList} />
+          <OrderList />
           <Divider sx={dividerStyle} />
           <OrderPrice label={DELIVERY} content={TARIFF} />
           <Divider sx={dividerStyle} />

@@ -1,14 +1,13 @@
+import { useContext } from 'react'
 import { Box } from '@mui/material'
 import { Button } from '../UI/Button'
 import { STEPS } from '../../pages/order-page/constants'
 import { btnContainerStyle, btnBackStyle, btnNextStyle } from './style'
+import { OrderContext } from '../../pages/order-page'
 
-type Props = {
-  activeStep: number
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>
-}
+const StapperButtons = () => {
+  const { activeStep, setActiveStep } = useContext(OrderContext)
 
-const StapperButtons: React.FC<Props> = ({ activeStep, setActiveStep }) => {
   return (
     <Box sx={btnContainerStyle}>
       <Box>
@@ -24,6 +23,7 @@ const StapperButtons: React.FC<Props> = ({ activeStep, setActiveStep }) => {
       <Box sx={{ width: '28%' }} />
       <Box width="100%" maxWidth="250px">
         <Button
+          type="submit"
           fullWidth
           onClick={() => setActiveStep((prevActiveStep) => prevActiveStep + 1)}
           sx={btnNextStyle}

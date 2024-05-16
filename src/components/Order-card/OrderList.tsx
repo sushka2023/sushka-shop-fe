@@ -1,14 +1,13 @@
+import { useContext } from 'react'
+import { OrderContext } from '../../pages/order-page'
 import { CardMedia, List, ListItem, Stack, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { BasketItemsResponse } from '../../types'
 import { Typography } from '../Typography'
 import { listStyle, listItemStyle, closeIconStyle } from './style'
 
-type Props = {
-  orderList: BasketItemsResponse[] | null
-}
+const OrderList = () => {
+  const { orderList } = useContext(OrderContext)
 
-const OrderList: React.FC<Props> = ({ orderList }) => {
   return (
     <List sx={listStyle}>
       {orderList?.map((order, index) => (
