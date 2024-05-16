@@ -115,7 +115,7 @@ export const stLinkEmail = {
   display: 'inline-block',
   alignItems: 'center',
   color: '#D21C1C',
-  marginTop: 40
+  margin: '30px 0'
 }
 export const stEmailP2 = {
   fontSize: 18,

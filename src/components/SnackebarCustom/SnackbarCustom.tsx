@@ -7,6 +7,13 @@ type CustomSnackbarProps = {
   handleClose: () => void
   snackbarData: { open: boolean; error: boolean; message?: string }
 }
+
+export type SnackbarData = {
+  open: boolean
+  error: boolean
+  message?: string | undefined
+}
+
 const stSnackebar = {
   width: '100%',
   border: '1px solid #FEEEE1',

@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 import { Box, FormHelperText, InputLabel, Typography } from '@mui/material'
-import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
+import {
+  CustomSnackbar,
+  SnackbarData
+} from '../../SnackebarCustom/SnackbarCustom'
 import { ChangePasswordSchema } from '../../auth/validation'
-import { SnackbarData } from '../Contact-info/Contact-info'
 import { OutlinedInput } from '../../UI/Field'
 import { Button } from '../../UI/Button'
 
@@ -15,19 +17,29 @@ type FormData = {
   new_password_confirm: string
 }
 
-const stInput = {
+export const stInput = {
   '& input': {
+    color: 'secondary.darker',
     backgroundColor: '#ffffff'
+  },
+  '&.Mui-disabled': {
+    color: 'secondary.darker'
+
+    // opacity: 0.8
   }
 }
 
-const stBtn = {
+export const stBtn = {
   'backgroundColor': '#FCC812',
   'color': '#FFFFFF',
   'marginTop': 4,
   '&:disabled': {
     opacity: 0.6,
     backgroundColor: '#E8E8E8'
+  },
+  '&:hover': {
+    color: '#FCC812',
+    backgroundColor: '#FFFFFF'
   }
 }
 
@@ -45,6 +57,7 @@ export const ChangePassword = () => {
     open: false,
     error: false
   })
+
   const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
     try {

@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
-import { Form, Formik } from 'formik'
-import { Box, Grid, Typography } from '@mui/material'
-import axiosInstance from '../../../axios/settings'
+import { useState } from 'react'
+import {
+  Box,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  Typography
+} from '@mui/material'
 import { stH3, stP } from '../../auth/style'
-import CustomInput from '../../auth/InputCustom'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../../redux/authentication/operation'
 import { getToken } from '../../../utils/cookie/token'
@@ -11,20 +14,72 @@ import { AppDispatch } from '../../../redux/store'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
 import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
-import { BootstrapButton } from './style'
 import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
+import { OutlinedInput } from '../../UI/Field'
+import { stBtn, stInput } from '../Change-password/Change-password'
+import { Button } from '../../UI/Button'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import axiosInstance from '../../../axios/settings'
 
-export type UserSubset = Pick<
-  UserResponse,
-  'email' | 'first_name' | 'last_name' | 'phone_number'
->
+type FormData = {
+  first_name: string
+  last_name: string
+  phone_number?: string | null
+  email?: string | undefined
+}
 
 export type SnackbarData = {
   open: boolean
   error: boolean
   message?: string | undefined
 }
+
+const renderInput = (
+  id: string,
+  label: string,
+  defaultValue: string,
+  register: any,
+  error: any
+) => (
+  <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
+    <InputLabel sx={{ mt: 3 }}>{label}</InputLabel>
+    <OutlinedInput
+      id={id}
+      defaultValue={defaultValue}
+      {...register(id)}
+      type="text"
+      fullWidth
+      error={!!error}
+      sx={stInput}
+    />
+    {error && (
+      <FormHelperText
+        sx={{
+          color: 'error.darker',
+          fontWeight: 500,
+          position: 'absolute'
+        }}
+      >
+        {error.message}
+      </FormHelperText>
+    )}
+  </Grid>
+)
+
+const renderDisabledInput = (label: string, value: string) => (
+  <Grid item xs={12} md={6}>
+    <InputLabel sx={{ mt: 3 }}>{label}</InputLabel>
+    <OutlinedInput
+      defaultValue={value}
+      type="text"
+      fullWidth
+      disabled
+      sx={stInput}
+    />
+  </Grid>
+)
 
 const accessToken = getToken()
 
@@ -41,47 +96,51 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
   }
 
   const dispatch = useDispatch<AppDispatch>()
-  const { is_active, email } = user
+  const { is_active, first_name, last_name, email, phone_number } = user
 
-  const [originalValues, setOriginalValues] = useState<UserSubset>({
-    email: user.email,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    phone_number: user.phone_number || ''
-  })
-
-  useEffect(() => {
-    setOriginalValues(initialValues)
-  }, [user])
-
-  const onSubmit = async (values: UserSubset) => {
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
     setIsLoadingBtn(true)
 
     try {
-      const response = await axiosInstance.put('/api/users/me/', values)
-
-      setSnackbarData({
-        open: true,
-        error: false,
-        message: 'Ваші зміни успішно збережені!'
-      })
-
-      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
-      return response
+      await updateUser(values)
+      showSuccessSnackbar()
     } catch (error) {
-      setSnackbarData({ open: true, error: true, message: 'Сталась помилка' })
+      showErrorSnackbar()
       console.error('Error updating user data:', error)
     } finally {
       setIsLoadingBtn(false)
     }
   }
 
-  const initialValues = {
-    email: user.email,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    phone_number: user.phone_number || ''
+  const updateUser = async (values: FormData) => {
+    const response = await axiosInstance.put('/api/users/me/', values)
+    dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
+    return response
   }
+
+  const showSuccessSnackbar = () => {
+    setSnackbarData({
+      open: true,
+      error: false,
+      message: 'Ваші зміни успішно збережені!'
+    })
+  }
+
+  const showErrorSnackbar = () => {
+    setSnackbarData({
+      open: true,
+      error: true,
+      message: 'Сталась помилка'
+    })
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(ChangeDataSchema)
+  })
 
   return (
     <Box>
@@ -99,87 +158,51 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
           Тут ви можете змінити ваші дані
         </Typography>
       </Box>
-      <EmailConfirmationModal is_active={is_active ?? false} email={email} />
+      <EmailConfirmationModal
+        is_active={is_active ?? false}
+        email={email}
+        setSnackbarData={setSnackbarData}
+      />
       {isLoading ? (
         'loading...'
       ) : (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={ChangeDataSchema}
-          onSubmit={onSubmit}
-        >
-          {(props) => (
-            <Form>
-              <Grid
-                container
-                columnGap={15}
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: '300px 300px',
-                  marginTop: 5
-                }}
-              >
-                <Grid>
-                  <CustomInput
-                    name="first_name"
-                    label="Ім'я"
-                    htmlFor="first_name"
-                    value={props.values.first_name}
-                    onChange={props.handleChange}
-                  />
-                </Grid>
-                <Grid>
-                  <CustomInput
-                    name="last_name"
-                    label="Прізвище"
-                    htmlFor="last_name"
-                    value={props.values.last_name}
-                    onChange={props.handleChange}
-                  />
-                </Grid>
-                <Grid>
-                  <CustomInput
-                    name="email"
-                    label="Електрона пошта"
-                    type="email"
-                    htmlFor="email"
-                    value={props.values.email}
-                    onChange={props.handleChange}
-                    disabled={true}
-                    yourStInput={{
-                      opacity: 0.7,
-                      cursor: 'auto'
-                    }}
-                  />
-                </Grid>
-                <Grid>
-                  <CustomInput
-                    name="phone_number"
-                    label="Номер телефону"
-                    type="tel"
-                    htmlFor="phone_number"
-                    value={props.values.phone_number}
-                    onChange={props.handleChange}
-                  />
-                </Grid>
+        <Box sx={{ width: '60%' }}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid
+              container
+              rowSpacing={3}
+              columnSpacing={{ xs: 1, sm: 2, md: 6 }}
+            >
+              {renderInput(
+                'first_name',
+                'Ім’я',
+                first_name,
+                register,
+                errors.first_name
+              )}
+              {renderInput(
+                'last_name',
+                'Прізвище',
+                last_name,
+                register,
+                errors.last_name
+              )}
+              {renderDisabledInput('Електронна пошта', email)}
+              {renderInput(
+                'phone_number',
+                'Номер телефону',
+                phone_number || '',
+                register,
+                errors.phone_number
+              )}
+              <Grid item xs={12} md={6}>
+                <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
+                  {isLoadingBtn ? 'Loading...' : 'Зберегти'}
+                </Button>
               </Grid>
-              <BootstrapButton
-                variant="contained"
-                disableRipple
-                disabled={
-                  isLoadingBtn ||
-                  !props.dirty ||
-                  props.isSubmitting ||
-                  JSON.stringify(originalValues) ===
-                    JSON.stringify(props.values)
-                }
-                type="submit"
-              >
-                {isLoadingBtn ? 'Завантаження...' : 'ЗБЕРЕГТИ'}
-              </BootstrapButton>
-            </Form>
-          )}
-        </Formik>
+            </Grid>
+          </form>
+        </Box>
       )}
     </Box>
   )
