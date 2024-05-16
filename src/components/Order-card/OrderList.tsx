@@ -6,7 +6,7 @@ import { Typography } from '../Typography'
 import { listStyle, listItemStyle, closeIconStyle } from './style'
 
 const OrderList = () => {
-  const { orderList } = useContext(OrderContext)
+  const { orderList } = useContext(OrderContext)!
 
   return (
     <List sx={listStyle}>
