@@ -20,7 +20,7 @@ export type UserSubset = Pick<
   'email' | 'first_name' | 'last_name' | 'phone_number'
 >
 
-type ISnackbarData = {
+export type SnackbarData = {
   open: boolean
   error: boolean
   message?: string | undefined
@@ -30,7 +30,7 @@ const accessToken = getToken()
 
 export const ContactInfo = ({ user }: { user: UserResponse }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState(false)
-  const [snackbarData, setSnackbarData] = useState<ISnackbarData>({
+  const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
     error: false
   })
@@ -65,6 +65,7 @@ export const ContactInfo = ({ user }: { user: UserResponse }) => {
         error: false,
         message: 'Ваші зміни успішно збережені!'
       })
+
       dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
       return response
     } catch (error) {
