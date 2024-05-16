@@ -19,7 +19,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { OutlinedInput } from '../../UI/Field'
 import { stBtn, stInput } from '../Change-password/Change-password'
 import { Button } from '../../UI/Button'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, UseFormRegister, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 
@@ -30,17 +30,23 @@ type FormData = {
   email?: string | undefined
 }
 
-export type SnackbarData = {
+type SnackbarData = {
   open: boolean
   error: boolean
-  message?: string | undefined
+  message?: string
 }
 
+type ContactInfoProps = {
+  user: UserResponse
+}
+
+type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
+
 const renderInput = (
-  id: string,
+  id: InputId,
   label: string,
   defaultValue: string,
-  register: any,
+  register: UseFormRegister<FormData>,
   error: any
 ) => (
   <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
@@ -83,8 +89,8 @@ const renderDisabledInput = (label: string, value: string) => (
 
 const accessToken = getToken()
 
-export const ContactInfo = ({ user }: { user: UserResponse }) => {
-  const [isLoadingBtn, setIsLoadingBtn] = useState(false)
+export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
   const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
     error: false
