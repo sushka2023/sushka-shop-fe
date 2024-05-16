@@ -71,3 +71,25 @@ export const ChangeDataSchema = Yup.object().shape({
     .matches(/^(\+?380|380|0)\d{9}$/, 'Недійсний український номер телефону')
     .nullable()
 })
+
+export const ChangePasswordSchema = Yup.object().shape({
+  old_password: Yup.string()
+    .required('Введіть свій старий пароль')
+    .min(6, 'Новий пароль повинен містити мінімум 6 символів')
+    .max(255, 'Максимальна кількість символів 255'),
+  new_password: Yup.string()
+    .required('Придумайте новий пароль')
+    .min(6, 'Новий пароль повинен містити мінімум 6 символів')
+    .max(255, 'Максимальна кількість символів 255')
+    .notOneOf(
+      [Yup.ref('old_password')],
+      'Новий пароль не повинен бути такий самий, як старий'
+    )
+    .matches(PASS_REGEXP, {
+      message:
+        'Пароль повинен містити хоча б одну велику літеру, цифру та спеціальний символ'
+    }),
+  new_password_confirm: Yup.string()
+    .required('Повторіть новий пароль')
+    .oneOf([Yup.ref('new_password')], 'Паролі повинні співпадати')
+})
