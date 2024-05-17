@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react'
+import { FC, ReactNode, createContext, useState } from 'react'
 import CustomSnackbar from '../components/CustomSnackbar/CustomSnackbar'
 
 type SnackbarData = {
@@ -7,19 +7,17 @@ type SnackbarData = {
   message?: string
 }
 
-type SnackbarContextType = {
+type SnackbarContext = {
   snackbarData: SnackbarData
   showSnackbar: (data: Omit<SnackbarData, 'open'>) => void
   hideSnackbar: () => void
 }
 
-export const SnackbarContext = createContext<SnackbarContextType | undefined>(
+export const SnackbarContext = createContext<SnackbarContext | undefined>(
   undefined
 )
 
-export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({
-  children
-}) => {
+export const SnackbarProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [snackbarData, setSnackbarData] = useState<SnackbarData>({
     open: false,
     error: false
