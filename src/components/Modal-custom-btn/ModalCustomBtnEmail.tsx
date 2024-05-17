@@ -5,7 +5,6 @@ import axiosInstance from '../../axios/settings'
 import IconinfoMessage from '../../icons/infoMessage.svg?react'
 import InfoConfirmationModal from './ModalCustomWindow'
 import { Button } from '../UI/Button'
-import { stBtn } from '../Account-panel/Change-password/Change-password'
 import {
   stEmailP2,
   stEmailSpan,
@@ -15,22 +14,21 @@ import {
   stLinkEmailList,
   stLinkEmailP
 } from './style'
-import { Dispatch, SetStateAction } from 'react'
-import { SnackbarData } from '../SnackebarCustom/SnackbarCustom'
+import { stBtn } from '../Account-panel/style'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
 type EmailConfirmationModalProps = {
   is_active: boolean
   email: string
   error?: unknown
-  setSnackbarData: Dispatch<SetStateAction<SnackbarData>>
 }
 
 export const EmailConfirmationModal = ({
   is_active,
-  email,
-  setSnackbarData
+  email
 }: EmailConfirmationModalProps) => {
   const [openModal, setOpenModal] = useState(false)
+  const { showSnackbar } = useSnackbar()
 
   const closeModalTimeout = () => {
     setTimeout(() => {
@@ -55,19 +53,25 @@ export const EmailConfirmationModal = ({
     try {
       await requestEmail(email)
       setOpenModal(false)
-      setSnackbarData({
-        open: true,
-        error: false,
-        message: 'Ми відправили ще раз, перевірте пошту'
-      })
+      showSuccessSnackbar()
     } catch (error) {
       console.error('Помилка під час відправлення листа:', error)
-      setSnackbarData({
-        open: true,
-        error: true,
-        message: 'Сталась помилка при відправленні листа'
-      })
+      showErrorSnackbar()
     }
+  }
+
+  const showSuccessSnackbar = () => {
+    showSnackbar({
+      error: false,
+      message: 'Ми відправили ще раз, перевірте пошту'
+    })
+  }
+
+  const showErrorSnackbar = () => {
+    showSnackbar({
+      error: true,
+      message: 'Сталась помилка при відправленні листа'
+    })
   }
 
   return (

@@ -9,15 +9,18 @@ import { THEME } from './lib/mui/config/theme/index.js'
 import App from './App.js'
 
 import './styles/index.scss'
+import { SnackbarProvider } from './context/SnackbarContext.js'
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persister}>
-      <BrowserRouter basename="/">
-        <ThemeProvider theme={THEME}>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </PersistGate>
+    <SnackbarProvider>
+      <PersistGate loading={null} persistor={persister}>
+        <BrowserRouter basename="/">
+          <ThemeProvider theme={THEME}>
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </PersistGate>
+    </SnackbarProvider>
   </Provider>
 )

@@ -7,27 +7,20 @@ import { AppDispatch } from '../../../redux/store'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
 import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
-import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
-import InputField from '../../auth/InputField' // Adjust the path as necessary
-import { stBtn, stInput } from '../Change-password/Change-password'
+import InputField from '../../auth/InputField'
 import { Button } from '../../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 import { stH3, stP } from '../../auth/style'
+import { stBtn, stInput } from '../style'
+import { useSnackbar } from '../../../hooks/useSnackbar'
 
 type FormData = {
   first_name: string
   last_name: string
   phone_number?: string | null
-  email?: string
-}
-
-type SnackbarData = {
-  open: boolean
-  error: boolean
-  message?: string
 }
 
 type ContactInfoProps = {
@@ -36,21 +29,11 @@ type ContactInfoProps = {
 
 const accessToken = getToken()
 
-const sxLabel = {
-  mt: 2
-}
-
 export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
-  const [snackbarData, setSnackbarData] = useState<SnackbarData>({
-    open: false,
-    error: false
-  })
-  const { isLoading } = useAuth()
 
-  const handleCloseSnackbar = () => {
-    setSnackbarData({ ...snackbarData, open: false })
-  }
+  const { isLoading } = useAuth()
+  const { showSnackbar } = useSnackbar()
 
   const dispatch = useDispatch<AppDispatch>()
   const { is_active, first_name, last_name, email, phone_number } = user
@@ -76,19 +59,11 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
   }
 
   const showSuccessSnackbar = () => {
-    setSnackbarData({
-      open: true,
-      error: false,
-      message: 'Ваші зміни успішно збережені!'
-    })
+    showSnackbar({ error: false, message: 'Ваші зміни успішно збережені!' })
   }
 
   const showErrorSnackbar = () => {
-    setSnackbarData({
-      open: true,
-      error: true,
-      message: 'Сталась помилка'
-    })
+    showSnackbar({ error: true, message: 'Сталась помилка' })
   }
 
   const {
@@ -101,12 +76,6 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
 
   return (
     <Box>
-      <Box>
-        <CustomSnackbar
-          handleClose={handleCloseSnackbar}
-          snackbarData={snackbarData}
-        />
-      </Box>
       <Box sx={{ mb: 2 }}>
         <Typography variant="h3" sx={stH3}>
           Ваша контактна інформація
@@ -115,11 +84,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
           Тут ви можете змінити ваші дані
         </Typography>
       </Box>
-      <EmailConfirmationModal
-        is_active={is_active}
-        email={email}
-        setSnackbarData={setSnackbarData}
-      />
+      <EmailConfirmationModal is_active={is_active} email={email} />
       {isLoading ? (
         'loading...'
       ) : (
@@ -138,7 +103,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
                 register={register('first_name')}
                 error={errors.first_name}
                 sxInput={stInput}
-                sxLabel={sxLabel}
+                sxLabel={{ mt: 2 }}
               />
               <InputField
                 type="text"
@@ -148,7 +113,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
                 register={register('last_name')}
                 error={errors.last_name}
                 sxInput={stInput}
-                sxLabel={sxLabel}
+                sxLabel={{ mt: 2 }}
               />
               <InputField
                 type="text"
@@ -156,7 +121,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
                 defaultValue={email}
                 disabled
                 sxInput={stInput}
-                sxLabel={sxLabel}
+                sxLabel={{ mt: 2 }}
               />
               <InputField
                 type="text"
@@ -166,7 +131,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
                 register={register('phone_number')}
                 error={errors.phone_number}
                 sxInput={stInput}
-                sxLabel={sxLabel}
+                sxLabel={{ mt: 2 }}
               />
               <Grid item xs={12} md={6}>
                 <Button disabled={isLoadingBtn} sx={stBtn} type="submit">

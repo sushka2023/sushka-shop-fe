@@ -3,45 +3,16 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 import { Box, Typography } from '@mui/material'
-import {
-  CustomSnackbar,
-  SnackbarData
-} from '../../SnackebarCustom/SnackbarCustom'
 import { ChangePasswordSchema } from '../../auth/validation'
 import { Button } from '../../UI/Button'
 import InputField from '../../auth/InputField'
+import { stBtn, stInput } from '../style'
+import { useSnackbar } from '../../../hooks/useSnackbar'
 
 type FormData = {
   old_password: string
   new_password: string
   new_password_confirm: string
-}
-
-export const stInput = {
-  '& input': {
-    color: 'secondary.darker',
-    backgroundColor: '#ffffff'
-  },
-  '&.Mui-disabled': {
-    color: 'secondary.darker'
-  }
-}
-const sxLabel = {
-  mt: 4
-}
-
-export const stBtn = {
-  'backgroundColor': '#FCC812',
-  'color': '#FFFFFF',
-  'marginTop': 4,
-  '&:disabled': {
-    opacity: 0.6,
-    backgroundColor: '#E8E8E8'
-  },
-  '&:hover': {
-    color: '#FCC812',
-    backgroundColor: '#FFFFFF'
-  }
 }
 
 export const ChangePassword = () => {
@@ -54,10 +25,7 @@ export const ChangePassword = () => {
   } = useForm<FormData>({
     resolver: yupResolver(ChangePasswordSchema)
   })
-  const [snackbarData, setSnackbarData] = useState<SnackbarData>({
-    open: false,
-    error: false
-  })
+  const { showSnackbar } = useSnackbar()
 
   const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
@@ -66,23 +34,26 @@ export const ChangePassword = () => {
         '/api/users/me/change_password',
         data
       )
-      setSnackbarData({ open: true, error: false, message: 'Пароль змінено!' })
+      showSuccessSnackbar()
       return response
     } catch (error) {
-      setSnackbarData({
-        open: true,
-        error: true,
-        message: 'Сталась помилка, спробуйте ще раз...'
-      })
       console.error('Error updating user data:', error)
+      showErrorSnackbar()
     } finally {
       setIsLoadingBtn(false)
       reset()
     }
   }
 
-  const handleCloseSnackbar = () => {
-    setSnackbarData({ ...snackbarData, open: false })
+  const showSuccessSnackbar = () => {
+    showSnackbar({ error: false, message: 'Пароль змінено!' })
+  }
+
+  const showErrorSnackbar = () => {
+    showSnackbar({
+      error: true,
+      message: 'Сталась помилка, спробуйте ще раз...'
+    })
   }
 
   return (
@@ -105,7 +76,7 @@ export const ChangePassword = () => {
             register={register('new_password')}
             error={errors.new_password}
             sxInput={stInput}
-            sxLabel={sxLabel}
+            sxLabel={{ mt: 4 }}
           />
           <InputField
             type="password"
@@ -114,19 +85,13 @@ export const ChangePassword = () => {
             register={register('new_password_confirm')}
             error={errors.new_password_confirm}
             sxInput={stInput}
-            sxLabel={sxLabel}
+            sxLabel={{ mt: 4 }}
           />
           <br />
           <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
             {isLoadingBtn ? 'Loading...' : 'Зберегти'}
           </Button>
         </form>
-      </Box>
-      <Box>
-        <CustomSnackbar
-          handleClose={handleCloseSnackbar}
-          snackbarData={snackbarData}
-        />
       </Box>
     </React.Fragment>
   )
