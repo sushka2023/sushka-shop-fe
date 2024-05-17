@@ -1,12 +1,5 @@
-import { useState } from 'react'
-import {
-  Box,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  Typography
-} from '@mui/material'
-import { stH3, stP } from '../../auth/style'
+import React, { useState } from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../../redux/authentication/operation'
 import { getToken } from '../../../utils/cookie/token'
@@ -16,18 +9,19 @@ import { UserResponse } from '../../../types'
 import { ChangeDataSchema } from '../../auth/validation'
 import { CustomSnackbar } from '../../SnackebarCustom/SnackbarCustom'
 import { useAuth } from '../../../hooks/use-auth'
-import { OutlinedInput } from '../../UI/Field'
+import InputField from '../../auth/InputField' // Adjust the path as necessary
 import { stBtn, stInput } from '../Change-password/Change-password'
 import { Button } from '../../UI/Button'
-import { SubmitHandler, UseFormRegister, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
+import { stH3, stP } from '../../auth/style'
 
 type FormData = {
   first_name: string
   last_name: string
   phone_number?: string | null
-  email?: string | undefined
+  email?: string
 }
 
 type SnackbarData = {
@@ -40,54 +34,11 @@ type ContactInfoProps = {
   user: UserResponse
 }
 
-type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
-
-const renderInput = (
-  id: InputId,
-  label: string,
-  defaultValue: string,
-  register: UseFormRegister<FormData>,
-  error: any
-) => (
-  <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
-    <InputLabel sx={{ mt: 3 }}>{label}</InputLabel>
-    <OutlinedInput
-      id={id}
-      defaultValue={defaultValue}
-      {...register(id)}
-      type="text"
-      fullWidth
-      error={!!error}
-      sx={stInput}
-    />
-    {error && (
-      <FormHelperText
-        sx={{
-          color: 'error.darker',
-          fontWeight: 500,
-          position: 'absolute'
-        }}
-      >
-        {error.message}
-      </FormHelperText>
-    )}
-  </Grid>
-)
-
-const renderDisabledInput = (label: string, value: string) => (
-  <Grid item xs={12} md={6}>
-    <InputLabel sx={{ mt: 3 }}>{label}</InputLabel>
-    <OutlinedInput
-      defaultValue={value}
-      type="text"
-      fullWidth
-      disabled
-      sx={stInput}
-    />
-  </Grid>
-)
-
 const accessToken = getToken()
+
+const sxLabel = {
+  mt: 2
+}
 
 export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
@@ -156,7 +107,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
           snackbarData={snackbarData}
         />
       </Box>
-      <Box>
+      <Box sx={{ mb: 2 }}>
         <Typography variant="h3" sx={stH3}>
           Ваша контактна інформація
         </Typography>
@@ -165,42 +116,58 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
         </Typography>
       </Box>
       <EmailConfirmationModal
-        is_active={is_active ?? false}
+        is_active={is_active}
         email={email}
         setSnackbarData={setSnackbarData}
       />
       {isLoading ? (
         'loading...'
       ) : (
-        <Box sx={{ width: '60%' }}>
+        <Box sx={{ width: '60%', mt: 2 }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid
               container
               rowSpacing={3}
               columnSpacing={{ xs: 1, sm: 2, md: 6 }}
             >
-              {renderInput(
-                'first_name',
-                'Ім’я',
-                first_name,
-                register,
-                errors.first_name
-              )}
-              {renderInput(
-                'last_name',
-                'Прізвище',
-                last_name,
-                register,
-                errors.last_name
-              )}
-              {renderDisabledInput('Електронна пошта', email)}
-              {renderInput(
-                'phone_number',
-                'Номер телефону',
-                phone_number || '',
-                register,
-                errors.phone_number
-              )}
+              <InputField
+                type="text"
+                id="first_name"
+                label="Ім’я"
+                defaultValue={first_name}
+                register={register('first_name')}
+                error={errors.first_name}
+                sxInput={stInput}
+                sxLabel={sxLabel}
+              />
+              <InputField
+                type="text"
+                id="last_name"
+                label="Прізвище"
+                defaultValue={last_name}
+                register={register('last_name')}
+                error={errors.last_name}
+                sxInput={stInput}
+                sxLabel={sxLabel}
+              />
+              <InputField
+                type="text"
+                label="Електронна пошта"
+                defaultValue={email}
+                disabled
+                sxInput={stInput}
+                sxLabel={sxLabel}
+              />
+              <InputField
+                type="text"
+                id="phone_number"
+                label="Номер телефону"
+                defaultValue={phone_number || ''}
+                register={register('phone_number')}
+                error={errors.phone_number}
+                sxInput={stInput}
+                sxLabel={sxLabel}
+              />
               <Grid item xs={12} md={6}>
                 <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
                   {isLoadingBtn ? 'Loading...' : 'Зберегти'}

@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
-import { Box, FormHelperText, InputLabel, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import {
   CustomSnackbar,
   SnackbarData
 } from '../../SnackebarCustom/SnackbarCustom'
 import { ChangePasswordSchema } from '../../auth/validation'
-import { OutlinedInput } from '../../UI/Field'
 import { Button } from '../../UI/Button'
+import InputField from '../../auth/InputField'
 
 type FormData = {
   old_password: string
@@ -24,9 +24,10 @@ export const stInput = {
   },
   '&.Mui-disabled': {
     color: 'secondary.darker'
-
-    // opacity: 0.8
   }
+}
+const sxLabel = {
+  mt: 4
 }
 
 export const stBtn = {
@@ -87,52 +88,34 @@ export const ChangePassword = () => {
   return (
     <React.Fragment>
       <Typography variant="h3">Зміна старого паролю</Typography>
-      <Box display="flex" flexDirection="column" width={'400px'} mt={3}>
+      <Box display="flex" flexDirection="column" width={'400px'} mt={6}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <InputLabel sx={{ mt: 3 }}>Введіть свій старий пароль</InputLabel>
-          <OutlinedInput
-            {...register('old_password')}
+          <InputField
+            type="password"
+            label="Введіть свій старий пароль"
             placeholder="Старий пароль"
-            type="password"
-            fullWidth
-            error={!!errors.old_password}
-            sx={stInput}
+            register={register('old_password')}
+            error={errors.old_password}
+            sxInput={stInput}
           />
-          {errors.old_password && (
-            <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
-              {errors.old_password.message}
-            </FormHelperText>
-          )}
-          <InputLabel sx={{ mt: 3 }}>Придумайте новий пароль</InputLabel>
-          <OutlinedInput
-            {...register('new_password')}
-            placeholder="Новий пароль"
+          <InputField
             type="password"
-            fullWidth
-            error={!!errors.new_password}
-            sx={stInput}
+            label="Придумайте новий пароль"
+            placeholder="Старий пароль"
+            register={register('new_password')}
+            error={errors.new_password}
+            sxInput={stInput}
+            sxLabel={sxLabel}
           />
-          {errors.new_password && (
-            <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
-              {errors.new_password.message}
-            </FormHelperText>
-          )}
-
-          <InputLabel sx={{ mt: 3 }}>Повторіть новий пароль</InputLabel>
-          <OutlinedInput
-            {...register('new_password_confirm')}
+          <InputField
+            type="password"
+            label="Повторіть новий пароль"
             placeholder="Повторіть новий пароль"
-            type="password"
-            fullWidth
-            error={!!errors.new_password_confirm}
-            sx={stInput}
+            register={register('new_password_confirm')}
+            error={errors.new_password_confirm}
+            sxInput={stInput}
+            sxLabel={sxLabel}
           />
-          {errors.new_password_confirm && (
-            <FormHelperText sx={{ color: 'error.darker', fontWeight: 500 }}>
-              {errors.new_password_confirm.message}
-            </FormHelperText>
-          )}
-
           <br />
           <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
             {isLoadingBtn ? 'Loading...' : 'Зберегти'}

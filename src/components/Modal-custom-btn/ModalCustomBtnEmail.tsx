@@ -32,20 +32,25 @@ export const EmailConfirmationModal = ({
 }: EmailConfirmationModalProps) => {
   const [openModal, setOpenModal] = useState(false)
 
+  const closeModalTimeout = () => {
+    setTimeout(() => {
+      setOpenModal(false)
+    }, 2000)
+  }
+
   const requestEmail = async (email: string) => {
     try {
       await axiosInstance.post('/api/auth/request_email', {
         email
       })
       setOpenModal(true)
+
+      closeModalTimeout()
     } catch (error) {
       console.error('Non-Axios error:', error)
-    } finally {
-      setTimeout(() => {
-        setOpenModal(false)
-      }, 5000)
     }
   }
+
   const handleResendEmail = async () => {
     try {
       await requestEmail(email)

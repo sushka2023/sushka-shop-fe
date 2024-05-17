@@ -114,8 +114,8 @@ export const stLinkEmail = {
   height: 30,
   display: 'inline-block',
   alignItems: 'center',
-  color: '#D21C1C',
-  margin: '30px 0'
+  color: '#D21C1C'
+  // margin: '30px 0'
 }
 export const stEmailP2 = {
   fontSize: 18,
