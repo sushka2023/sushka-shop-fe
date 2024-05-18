@@ -25,8 +25,11 @@ export const ChangePassword = () => {
   } = useForm<FormData>({
     resolver: yupResolver(ChangePasswordSchema)
   })
-  const { showSnackbar } = useSnackbar()
 
+  const { showSnackbar } = useSnackbar()
+  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
+    showSnackbar({ error: errorBoolean, message: message })
+  }
   const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
     try {
@@ -34,32 +37,22 @@ export const ChangePassword = () => {
         '/api/users/me/change_password',
         data
       )
-      showSuccessSnackbar()
+
+      showSuccessSnackbar(false, 'Пароль змінено!')
       return response
     } catch (error) {
       console.error('Error updating user data:', error)
-      showErrorSnackbar()
+      showSuccessSnackbar(true, 'Сталась помилка, спробуйте ще раз...')
     } finally {
       setIsLoadingBtn(false)
       reset()
     }
   }
 
-  const showSuccessSnackbar = () => {
-    showSnackbar({ error: false, message: 'Пароль змінено!' })
-  }
-
-  const showErrorSnackbar = () => {
-    showSnackbar({
-      error: true,
-      message: 'Сталась помилка, спробуйте ще раз...'
-    })
-  }
-
   return (
     <React.Fragment>
       <Typography variant="h3">Зміна старого паролю</Typography>
-      <Box display="flex" flexDirection="column" width={'400px'} mt={6}>
+      <Box display="flex" flexDirection="column" width="400px" mt={6}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputField
             type="password"

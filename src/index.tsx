@@ -13,14 +13,14 @@ import { SnackbarProvider } from './context/SnackbarContext.js'
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <SnackbarProvider>
-      <PersistGate loading={null} persistor={persister}>
-        <BrowserRouter basename="/">
-          <ThemeProvider theme={THEME}>
+    <PersistGate loading={null} persistor={persister}>
+      <BrowserRouter basename="/">
+        <ThemeProvider theme={THEME}>
+          <SnackbarProvider>
             <App />
-          </ThemeProvider>
-        </BrowserRouter>
-      </PersistGate>
-    </SnackbarProvider>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 )

@@ -29,21 +29,19 @@ export const EmailConfirmationModal = ({
 }: EmailConfirmationModalProps) => {
   const [openModal, setOpenModal] = useState(false)
   const { showSnackbar } = useSnackbar()
-
-  const closeModalTimeout = () => {
-    setTimeout(() => {
-      setOpenModal(false)
-    }, 2000)
+  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
+    showSnackbar({ error: errorBoolean, message: message })
   }
-
   const requestEmail = async (email: string) => {
+    const modalTimeout = 2000
     try {
       await axiosInstance.post('/api/auth/request_email', {
         email
       })
       setOpenModal(true)
-
-      closeModalTimeout()
+      setTimeout(() => {
+        setOpenModal(false)
+      }, modalTimeout)
     } catch (error) {
       console.error('Non-Axios error:', error)
     }
@@ -53,30 +51,16 @@ export const EmailConfirmationModal = ({
     try {
       await requestEmail(email)
       setOpenModal(false)
-      showSuccessSnackbar()
+      showSuccessSnackbar(false, 'Ми відправили ще раз, перевірте пошту')
     } catch (error) {
       console.error('Помилка під час відправлення листа:', error)
-      showErrorSnackbar()
+      showSuccessSnackbar(true, 'Сталась помилка при відправленні листа')
     }
-  }
-
-  const showSuccessSnackbar = () => {
-    showSnackbar({
-      error: false,
-      message: 'Ми відправили ще раз, перевірте пошту'
-    })
-  }
-
-  const showErrorSnackbar = () => {
-    showSnackbar({
-      error: true,
-      message: 'Сталась помилка при відправленні листа'
-    })
   }
 
   return (
     <React.Fragment>
-      {is_active ? null : (
+      {!is_active ? null : (
         <Link
           to="/account"
           style={stLinkEmail}

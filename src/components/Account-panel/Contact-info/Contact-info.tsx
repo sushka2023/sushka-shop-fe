@@ -34,7 +34,9 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
 
   const { isLoading } = useAuth()
   const { showSnackbar } = useSnackbar()
-
+  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
+    showSnackbar({ error: errorBoolean, message: message })
+  }
   const dispatch = useDispatch<AppDispatch>()
   const { is_active, first_name, last_name, email, phone_number } = user
 
@@ -43,9 +45,9 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
 
     try {
       await updateUser(values)
-      showSuccessSnackbar()
+      showSuccessSnackbar(false, 'Ваші зміни успішно збережені!')
     } catch (error) {
-      showErrorSnackbar()
+      showSuccessSnackbar(true, 'Сталась помилка')
       console.error('Error updating user data:', error)
     } finally {
       setIsLoadingBtn(false)
@@ -56,14 +58,6 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
     const response = await axiosInstance.put('/api/users/me/', values)
     dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
     return response
-  }
-
-  const showSuccessSnackbar = () => {
-    showSnackbar({ error: false, message: 'Ваші зміни успішно збережені!' })
-  }
-
-  const showErrorSnackbar = () => {
-    showSnackbar({ error: true, message: 'Сталась помилка' })
   }
 
   const {

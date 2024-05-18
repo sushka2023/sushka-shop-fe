@@ -115,8 +115,8 @@ export const stLinkEmail = {
   display: 'inline-block',
   alignItems: 'center',
   color: '#D21C1C'
-  // margin: '30px 0'
 }
+
 export const stEmailP2 = {
   fontSize: 18,
   fontWeight: 400,
@@ -140,6 +140,7 @@ export const stLinkEmailList = {
   marginLeft: 10,
   fontSize: 14,
   fontWeight: 600,
-  borderBottom: '0.5px solid #567343'
+  borderBottom: '0.5px solid #567343',
+  cursor: 'pointer'
 }
-export const stLinkEmailP = { fontSize: 14, fontWeight: 400, marginTop: 40 }
+export const stLinkEmailP = { fontSize: 14, fontWeight: 400, margin: '40px 0' }

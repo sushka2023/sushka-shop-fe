@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InfoIcon from '@mui/icons-material/Info'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
-const stSnackebar = {
+export const stSnackebar = {
   width: '100%',
   border: '1px solid #FEEEE1',
   backgroundColor: '#FFFFFF',
@@ -55,5 +55,4 @@ const CustomSnackbar: React.FC = () => {
     </Box>
   )
 }
-
 export default CustomSnackbar

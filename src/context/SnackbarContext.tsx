@@ -13,8 +13,8 @@ type SnackbarContext = {
   hideSnackbar: () => void
 }
 
-export const SnackbarContext = createContext<SnackbarContext | undefined>(
-  undefined
+export const SnackbarContext = createContext<SnackbarContext>(
+  {} as SnackbarContext
 )
 
 export const SnackbarProvider: FC<{ children: ReactNode }> = ({ children }) => {
