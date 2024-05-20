@@ -1,10 +1,5 @@
 import { Components, Theme } from '@mui/material'
-import {
-  BOLD_WEIGHT,
-  OPEN_SANS,
-  REGULAR_WEIGHT,
-  MEDIUM_WEIGHT
-} from '../fonts/config'
+import { BOLD_WEIGHT, OPEN_SANS, MEDIUM_WEIGHT } from '../fonts/config'
 
 const MuiButtonOutlined: Components<Theme>['MuiButton'] = {
   styleOverrides: {
@@ -67,9 +62,9 @@ const MuiButtonContained: Components<Theme>['MuiButton'] = {
       borderRadius: '0.625rem',
       boxShadow: 'none',
       fontFamily: OPEN_SANS,
-      fontWeight: REGULAR_WEIGHT,
+      fontWeight: BOLD_WEIGHT,
+      fontSize: '1rem',
       border: `2px solid ${theme.palette.primary.darker}`,
-      fontSize: '0.875rem',
       letterSpacing: 'normal',
       color: '#fff',
       backgroundColor: theme.palette.primary.darker,
