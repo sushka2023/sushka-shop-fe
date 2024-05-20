@@ -2,12 +2,9 @@ import React from 'react'
 import { Alert, Box, Snackbar } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InfoIcon from '@mui/icons-material/Info'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
-type CustomSnackbarProps = {
-  handleClose: () => void
-  snackbarData: { open: boolean; error: boolean; message?: string }
-}
-const stSnackebar = {
+export const stSnackebar = {
   width: '100%',
   border: '1px solid #FEEEE1',
   backgroundColor: '#FFFFFF',
@@ -25,10 +22,9 @@ const stSnackebar = {
   marginRight: -2
 }
 
-export const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
-  handleClose,
-  snackbarData
-}) => {
+const CustomSnackbar: React.FC = () => {
+  const { snackbarData, hideSnackbar } = useSnackbar()
+
   return (
     <Box>
       <Snackbar
@@ -38,10 +34,10 @@ export const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
         }}
         open={snackbarData.open}
         autoHideDuration={2000}
-        onClose={handleClose}
+        onClose={hideSnackbar}
       >
         <Alert
-          onClose={handleClose}
+          onClose={hideSnackbar}
           severity={snackbarData.error ? 'error' : 'success'}
           variant="filled"
           sx={stSnackebar}
@@ -59,3 +55,4 @@ export const CustomSnackbar: React.FC<CustomSnackbarProps> = ({
     </Box>
   )
 }
+export default CustomSnackbar

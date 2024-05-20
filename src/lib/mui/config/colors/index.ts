@@ -74,7 +74,7 @@ const OTHER_BLUE = '#94B7BD'
 const OTHER_RED = '#FD6769'
 const OTHER_LIGHT_PINK = '#FED9DB'
 
-const BACKGROUND = '#F4F4F4'
+const BACKGROUND = '#FFFFFF'
 
 export {
   YELLOW_DARKER,
