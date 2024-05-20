@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material'
 import { ChangePasswordSchema } from '../../auth/validation'
 import { Button } from '../../UI/Button'
 import InputField from '../../auth/InputField'
-import { stBtn, stInput } from '../style'
+import { stInput } from '../style'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 
 type FormData = {
@@ -27,9 +27,6 @@ export const ChangePassword = () => {
   })
 
   const { showSnackbar } = useSnackbar()
-  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
-    showSnackbar({ error: errorBoolean, message: message })
-  }
   const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
     try {
@@ -38,11 +35,15 @@ export const ChangePassword = () => {
         data
       )
 
-      showSuccessSnackbar(false, 'Пароль змінено!')
+      showSnackbar({ error: false, message: 'Пароль змінено!' })
+
       return response
     } catch (error) {
       console.error('Error updating user data:', error)
-      showSuccessSnackbar(true, 'Сталась помилка, спробуйте ще раз...')
+      showSnackbar({
+        error: true,
+        message: 'Сталась помилка, спробуйте ще раз...'
+      })
     } finally {
       setIsLoadingBtn(false)
       reset()
@@ -81,7 +82,12 @@ export const ChangePassword = () => {
             sxLabel={{ mt: 4 }}
           />
           <br />
-          <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
+          <Button
+            sx={{ margin: '20px 0' }}
+            disabled={isLoadingBtn}
+            variant="contained"
+            type="submit"
+          >
             {isLoadingBtn ? 'Loading...' : 'Зберегти'}
           </Button>
         </form>

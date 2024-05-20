@@ -14,7 +14,6 @@ import {
   stLinkEmailList,
   stLinkEmailP
 } from './style'
-import { stBtn } from '../Account-panel/style'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
 type EmailConfirmationModalProps = {
@@ -29,9 +28,6 @@ export const EmailConfirmationModal = ({
 }: EmailConfirmationModalProps) => {
   const [openModal, setOpenModal] = useState(false)
   const { showSnackbar } = useSnackbar()
-  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
-    showSnackbar({ error: errorBoolean, message: message })
-  }
   const requestEmail = async (email: string) => {
     const modalTimeout = 2000
     try {
@@ -51,10 +47,16 @@ export const EmailConfirmationModal = ({
     try {
       await requestEmail(email)
       setOpenModal(false)
-      showSuccessSnackbar(false, 'Ми відправили ще раз, перевірте пошту')
+      showSnackbar({
+        error: false,
+        message: 'Ми відправили ще раз, перевірте пошту'
+      })
     } catch (error) {
       console.error('Помилка під час відправлення листа:', error)
-      showSuccessSnackbar(true, 'Сталась помилка при відправленні листа')
+      showSnackbar({
+        error: true,
+        message: 'Сталась помилка при відправленні листа'
+      })
     }
   }
 
@@ -90,7 +92,7 @@ export const EmailConfirmationModal = ({
             електронну пошту, <br /> щоб її підтвердити
           </Typography>
           <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
-            <Button sx={stBtn} onClick={() => setOpenModal(false)}>
+            <Button variant="contained" onClick={() => setOpenModal(false)}>
               Зрозуміло
             </Button>
           </Stack>

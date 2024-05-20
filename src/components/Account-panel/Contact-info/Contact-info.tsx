@@ -14,7 +14,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 import { stH3, stP } from '../../auth/style'
-import { stBtn, stInput } from '../style'
+import { stInput } from '../style'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 
 type FormData = {
@@ -34,9 +34,6 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
 
   const { isLoading } = useAuth()
   const { showSnackbar } = useSnackbar()
-  const showSuccessSnackbar = (errorBoolean: boolean, message: string) => {
-    showSnackbar({ error: errorBoolean, message: message })
-  }
   const dispatch = useDispatch<AppDispatch>()
   const { is_active, first_name, last_name, email, phone_number } = user
 
@@ -45,9 +42,9 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
 
     try {
       await updateUser(values)
-      showSuccessSnackbar(false, 'Ваші зміни успішно збережені!')
+      showSnackbar({ error: false, message: 'Ваші зміни успішно збережені!' })
     } catch (error) {
-      showSuccessSnackbar(true, 'Сталась помилка')
+      showSnackbar({ error: false, message: 'Сталась помилка' })
       console.error('Error updating user data:', error)
     } finally {
       setIsLoadingBtn(false)
@@ -127,8 +124,12 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
                 sxInput={stInput}
                 sxLabel={{ mt: 2 }}
               />
-              <Grid item xs={12} md={6}>
-                <Button disabled={isLoadingBtn} sx={stBtn} type="submit">
+              <Grid item xs={12} md={6} mt={3}>
+                <Button
+                  disabled={isLoadingBtn}
+                  variant="contained"
+                  type="submit"
+                >
                   {isLoadingBtn ? 'Loading...' : 'Зберегти'}
                 </Button>
               </Grid>
