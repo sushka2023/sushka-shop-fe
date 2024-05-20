@@ -62,7 +62,7 @@ export const EmailConfirmationModal = ({
 
   return (
     <React.Fragment>
-      {!is_active ? null : (
+      {is_active ? null : (
         <Link
           to="/account"
           style={stLinkEmail}
