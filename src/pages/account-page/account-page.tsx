@@ -49,6 +49,7 @@ export default function AccountPage() {
   const { user } = useAuth()
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
+    console.log('✌️newValue --->', newValue)
     setValue(newValue)
   }
 
