@@ -52,7 +52,6 @@ export const stTabsNav = {
 }
 
 export const stContainerTabPanel = {
-  height: 500,
   backgroundColor: '#FEECEE',
   padding: '25px'
 }
