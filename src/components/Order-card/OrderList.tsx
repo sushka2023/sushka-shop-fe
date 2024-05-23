@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { OrderContext } from '../../pages/order-page'
 import { CardMedia, List, ListItem, Stack, Box } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import { Typography } from '../Typography'
+import { Typography } from '../../components/UI/Typography'
 import { listStyle, listItemStyle, closeIconStyle } from './style'
 
 const OrderList = () => {

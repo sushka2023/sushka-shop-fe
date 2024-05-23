@@ -1,7 +1,7 @@
 import { Card, CardContent, Divider, Grid } from '@mui/material'
 import OrderPrice from './OrderPrice'
 import { useContext } from 'react'
-import { Typography } from '../Typography'
+import { Typography } from '../../components/UI/Typography'
 import OrderList from './OrderList'
 import { SUM, TARIFF, DELIVERY } from '../../pages/order-page/constants'
 import { cardStyle, cardContentStyle, dividerStyle } from './style'

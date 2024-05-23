@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import { SUM } from '../../pages/order-page/constants'
-import { Typography } from '../Typography'
+import { Typography } from '../../components/UI/Typography'
 
 type Props = {
   label: string
