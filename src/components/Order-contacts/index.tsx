@@ -1,6 +1,6 @@
 import { Box, Checkbox, FormControlLabel, InputLabel } from '@mui/material'
 import { useState, useContext } from 'react'
-import { Typography } from '../Typography'
+import { Typography } from '../../components/UI/Typography'
 import { OutlinedInput } from '../UI/Field'
 import ModalPortal from '../../components/modal-portal/ModalPortal'
 import Auth from '../../components/auth/Auth'

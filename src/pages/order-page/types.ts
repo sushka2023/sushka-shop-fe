@@ -1,5 +1,5 @@
 import { BasketItemsResponse } from '../../types'
-import { UseFormSetValue, UseFormRegister, Control } from 'react-hook-form'
+import { UseFormRegister, Control, UseFormSetValue } from 'react-hook-form'
 
 export type Inputs = {
   firstName: string

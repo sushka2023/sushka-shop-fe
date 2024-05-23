@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   OutlinedInput as OutlinedInputMui,
   OutlinedInputProps

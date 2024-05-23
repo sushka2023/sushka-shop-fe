@@ -12,6 +12,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { OrderDelivery } from '../../components/Order-delivery'
 import { useAuth } from '../../hooks/use-auth'
 import { Inputs, OrderDetailsType, OrderContextType } from './types'
+import { OrderPayment } from '../../components/Order-payment/OrderPayment'
 
 const OrderContext = createContext<OrderContextType>(null)
 
@@ -46,6 +47,12 @@ const OrderPage = () => {
     setOtherRecipient
   }
 
+  const STEP_CONTENT = [
+    <OrderContacts key={0} />,
+    <OrderDelivery key={1} />,
+    <OrderPayment key={2} />
+  ]
+
   useEffect(() => {
     if (user) {
       overwriteFormValues(user)
@@ -67,19 +74,6 @@ const OrderPage = () => {
     }
   }, [orderList])
 
-  const getStepContent = (activeStep: number) => {
-    switch (activeStep) {
-      case 0:
-        return <OrderContacts />
-      case 1:
-        return <OrderDelivery />
-      case 2:
-        return <div style={{ marginBottom: '500px' }}>Оплата</div>
-      default:
-        break
-    }
-  }
-
   const onSubmit: SubmitHandler<Inputs> = (data) => setOrderDetails(data)
 
   return (
@@ -97,7 +91,7 @@ const OrderPage = () => {
             <Grid container width="88%" spacing={0} alignItems="flex-start">
               <Grid item xs={9}>
                 <OrderStepper />
-                {getStepContent(activeStep)}
+                {STEP_CONTENT[activeStep]}
                 <StapperButtons />
               </Grid>
               <OrderCard />

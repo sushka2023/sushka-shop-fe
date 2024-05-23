@@ -6,7 +6,7 @@ import { btnContainerStyle, btnBackStyle, btnNextStyle } from './style'
 import { OrderContext } from '../../pages/order-page'
 
 const StapperButtons = () => {
-  const { activeStep, setActiveStep } = useContext(OrderContext)
+  const { activeStep, setActiveStep } = useContext(OrderContext)!
 
   return (
     <Box sx={btnContainerStyle}>
