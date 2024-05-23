@@ -53,6 +53,15 @@ const OrderPage = () => {
     <OrderPayment key={2} />
   ]
 
+  const fetchBasketItems = async () => {
+    try {
+      const products = await getBasketItems()
+      setOrderList(products)
+    } catch (error) {
+      console.error('Помилка під час завандаження замовлення:', error)
+    }
+  }
+
   useEffect(() => {
     if (user) {
       overwriteFormValues(user)
@@ -60,19 +69,8 @@ const OrderPage = () => {
   }, [user, setValue])
 
   useEffect(() => {
-    const fetchBasketItems = async () => {
-      try {
-        const products = await getBasketItems()
-        setOrderList(products)
-      } catch (error) {
-        console.error('Помилка під час завандаження замовлення:', error)
-      }
-    }
-
-    if (!orderList.length) {
-      fetchBasketItems()
-    }
-  }, [orderList])
+    fetchBasketItems()
+  }, [])
 
   const onSubmit: SubmitHandler<Inputs> = (data) => setOrderDetails(data)
 
