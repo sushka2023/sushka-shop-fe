@@ -24,7 +24,8 @@
 }
 
 .sectionContainer {
-  @include page-container;
+  // @include page-container;
+  border: 2px solid #000;
 }
 
 .sectionBg {

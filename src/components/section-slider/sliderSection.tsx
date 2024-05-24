@@ -6,6 +6,12 @@ import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
 import styles from './sliderSection.module.scss'
 import ArrowBtn from '../../icons/arrow.svg?react'
+import { Box, Container, Typography } from '@mui/material'
+import { sectionBg } from './style'
+
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -20,14 +26,14 @@ const SlideSection = () => {
     nextArrow: <ArrowNext />,
     appendDots: (dots) => {
       return (
-        <div style={{ bottom: '0px', left: '0px' }}>
+        <Box style={{ bottom: '0px', left: '0px' }}>
           <ul style={{ margin: '0px' }}> {dots} </ul>
-        </div>
+        </Box>
       )
     },
     customPaging: (i) => {
       return (
-        <div
+        <Box
           style={{
             width: '17px',
             height: '17px',
@@ -35,7 +41,7 @@ const SlideSection = () => {
               activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)',
             borderRadius: '17px'
           }}
-        ></div>
+        ></Box>
       )
     },
     beforeChange: (_, next) => {
@@ -46,7 +52,7 @@ const SlideSection = () => {
   const renderSlide = (index: number) => {
     if (index === 4) {
       return (
-        <div className={styles.lastSlider}>
+        <Box className={styles.lastSlider}>
           <Link
             to="catalog/11"
             className={`${styles.customButton} ${styles.customLink}`}
@@ -54,7 +60,7 @@ const SlideSection = () => {
             переглянути каталог
             <ArrowBtn className={styles.arrowBtn} width={10} height={17} />
           </Link>
-        </div>
+        </Box>
       )
     } else {
       return <CustomSlider index={index + 1} width={400} />
@@ -62,18 +68,29 @@ const SlideSection = () => {
   }
 
   return (
-    <section className={styles.sectionBg}>
-      <div className={styles.border}></div>
-      <div className={styles.sectionContainer}>
-        <h2 className={styles.sectionHeader}>Популярні товари</h2>
+    <Box component="section" sx={sectionBg}>
+      <Box className={styles.border}></Box>
+      {/* className={styles.sectionContainer} */}
+      <Container maxWidth="lg">
+        <Typography component="h2" className={styles.sectionHeader}>
+          Популярні товари
+        </Typography>
+
+        <List>
+          <ListItem>Тест</ListItem>
+          <ListItem>
+            <ListItemText primary="Пункт 2" />
+          </ListItem>
+        </List>
+
         <Slider {...settings} className={styles.sliderContainer}>
           {Array.from({ length: 5 }, (_, index) => {
-            return <div key={index}>{renderSlide(index)}</div>
+            return <Box key={index}>{renderSlide(index)}</Box>
           })}
         </Slider>
-      </div>
-      <div className={styles.borderSecond}></div>
-    </section>
+      </Container>
+      <Box className={styles.borderSecond}></Box>
+    </Box>
   )
 }
 

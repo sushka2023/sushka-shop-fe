@@ -5,6 +5,9 @@ import { RootState } from '../../redux/store'
 import styles from './HeroSection.module.scss'
 import { Button } from '../UI/Button'
 import { useTheme } from '@mui/material/styles'
+import { Box, Typography } from '@mui/material'
+
+// import { Image } from '@mui/icons-material'
 
 const HeroSection = () => {
   const allCategories = useSelector(
@@ -13,18 +16,18 @@ const HeroSection = () => {
   const theme = useTheme()
 
   return (
-    <section className={styles.mainContainer}>
-      <div className={styles.mainBlock}>
-        <div className={styles.slogan}>
+    <Box component="section" className={styles.mainContainer}>
+      <Box className={styles.mainBlock}>
+        <Box className={styles.slogan}>
           <h1 className={styles.sloganHeader}>
             Найсолодші ласощі <br />
             <span className={styles.sloganHeaderItalic}> від природи, </span>
             <br /> зроблені з любов`ю
           </h1>
-          <p className={styles.sloganParagraph}>
+          <Typography className={styles.sloganParagraph} component="p">
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
-          </p>
+          </Typography>
           <Link
             style={{ width: '100%', maxWidth: '300px' }}
             to={`/catalog/${allCategories && allCategories[0].id}`}
@@ -41,15 +44,17 @@ const HeroSection = () => {
               Переглянути каталог
             </Button>
           </Link>
-        </div>
-        <img
+        </Box>
+
+        <Box
+          component="img"
           src={HeroPic}
           alt="dried fruits in plastic bags"
           width={760}
           height={730}
         />
-      </div>
-    </section>
+      </Box>
+    </Box>
   )
 }
 
