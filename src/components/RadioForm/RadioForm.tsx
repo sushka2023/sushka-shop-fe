@@ -1,21 +1,110 @@
-import React, { useState } from 'react'
+/* eslint-disable */
+
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import Typography from '@mui/material/Typography'
 import {
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  Button,
-  Typography,
-  Autocomplete,
-  TextField
-} from '@mui/material'
+  ListboxComponent,
+  StyledPopper
+} from '../Autocomplete/VariableSizeList'
 
 export const RadioForm = () => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
   const [novaPoshtaOffices, setNovaPoshtaOffices] = useState<any[]>([])
+  const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
+  const [submittedData, setSubmittedData] = useState<any>(null)
   const { handleSubmit, register, setValue } = useForm<any>()
-  setNovaPoshtaOffices()
-  const onSubmit: SubmitHandler<any> = (data) => console.log(data)
+
+  const getNovaPoshtaCity = async () => {
+    const apiKey = 'f07607422838cfac21a0d1b8603086ca'
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        apiKey,
+        modelName: 'AddressGeneral',
+        calledMethod: 'searchSettlements',
+        methodProperties: {
+          CityName: 'к',
+          Limit: 50,
+          Page: 2
+        }
+      })
+    }
+
+    try {
+      const response = await fetch(
+        'https://api.novaposhta.ua/v2.0/json/',
+        requestOptions
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
+      }
+      const data = await response.json()
+      console.log('✌️data --->', data)
+      if (data && data.data && data.data.length > 0) {
+        setNovaPoshtaCity(data.data)
+      } else {
+        console.error('No data available')
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+
+  const getNovaPoshtaOffices = async () => {
+    const apiKey = 'f07607422838cfac21a0d1b8603086ca'
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        apiKey,
+        modelName: 'AddressGeneral',
+        calledMethod: 'getWarehouses',
+        methodProperties: {
+          CityName: 'київ'
+        }
+      })
+    }
+
+    try {
+      const response = await fetch(
+        'https://api.novaposhta.ua/v2.0/json/',
+        requestOptions
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
+      }
+      const data = await response.json()
+      console.log('✌️data --->', data)
+      if (data && data.data && data.data.length > 0) {
+        setNovaPoshtaOffices(data.data)
+      } else {
+        console.error('No data available')
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
+
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data)
+    setSubmittedData(data)
+  }
+  useEffect(() => {
+    if (submittedData) {
+      setValue('first', submittedData.first)
+      setValue('second', submittedData.second)
+    }
+  }, [submittedData, setValue])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -29,18 +118,52 @@ export const RadioForm = () => {
         {selectedValue === 'female' && (
           <React.Fragment>
             <Autocomplete
-              {...register('firstName')}
-              onChange={(_, newValue: string | null) => {
-                setValue('firstName', newValue)
+              {...register('second')}
+              id="virtualize-demo1"
+              sx={{ width: 300 }}
+              disableListWrap
+              PopperComponent={StyledPopper}
+              ListboxComponent={ListboxComponent}
+              options={
+                novaPoshtaCity && novaPoshtaCity.length > 0
+                  ? novaPoshtaCity[0].Addresses.map(
+                      (address: any) => address.Present
+                    )
+                  : []
+              }
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Оберіть місто" />
+              )}
+              renderOption={(props, option, state) =>
+                [props, option, state.index] as React.ReactNode
+              }
+              renderGroup={(params) => params as any}
+              onOpen={getNovaPoshtaCity}
+              onChange={(_, value) => {
+                setValue('second', value)
               }}
-              id="controllable-states-demo-1"
+            />
+            <Autocomplete
+              {...register('first')}
+              id="virtualize-demo"
+              sx={{ width: 300 }}
+              disableListWrap
+              PopperComponent={StyledPopper}
+              ListboxComponent={ListboxComponent}
               options={novaPoshtaOffices.map(
                 (office: any) => office.Description
               )}
-              sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label="Controllable" />
+                <TextField {...params} placeholder="Оберіть віділення" />
               )}
+              renderOption={(props, option, state) =>
+                [props, option, state.index] as React.ReactNode
+              }
+              renderGroup={(params) => params as any}
+              onOpen={getNovaPoshtaOffices}
+              onChange={(_, value) => {
+                setValue('first', value)
+              }}
             />
           </React.Fragment>
         )}
@@ -62,3 +185,5 @@ export const RadioForm = () => {
     </form>
   )
 }
+
+/* eslint-enable */
