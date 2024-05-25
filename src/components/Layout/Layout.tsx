@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable prettier/prettier */
 import { Fragment, Suspense } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from './header/index'
@@ -13,6 +15,459 @@ const Layout = () => {
       <Header />
       {!homePath && <Breadcrumbs />}
       <Suspense>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
+        <main>
+          <Outlet />
+        </main>
         <main>
           <Outlet />
         </main>
