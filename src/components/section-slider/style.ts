@@ -4,3 +4,7 @@ export const sectionBg = {
   backgroundColor: 'pink.darker',
   position: 'relative'
 }
+
+export const sectionHeader = {
+  color: '#fff'
+}

@@ -6,7 +6,7 @@ import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
 import styles from './sliderSection.module.scss'
 import ArrowBtn from '../../icons/arrow.svg?react'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Container, Typography, useTheme } from '@mui/material'
 import { sectionBg } from './style'
 
 import List from '@mui/material/List'
@@ -15,6 +15,8 @@ import ListItemText from '@mui/material/ListItemText'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
+
+  const testTheme = useTheme()
 
   const settings: Settings = {
     dots: true,
@@ -70,9 +72,13 @@ const SlideSection = () => {
   return (
     <Box component="section" sx={sectionBg}>
       <Box className={styles.border}></Box>
-      {/* className={styles.sectionContainer} */}
       <Container maxWidth="lg">
-        <Typography component="h2" className={styles.sectionHeader}>
+        <Typography
+          color={testTheme.palette.error.darker}
+          variant="h2"
+          component="h2"
+          // sx={sectionHeader}
+        >
           Популярні товари
         </Typography>
 
