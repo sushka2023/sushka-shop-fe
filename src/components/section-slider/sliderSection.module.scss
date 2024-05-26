@@ -2,38 +2,38 @@
 @import 'slick-carousel/slick/slick-theme.css';
 @import '../../styles/base/base.scss';
 
-.border {
-  background-image: url(/src/icons/borderslider.svg);
-  position: absolute;
-  top: -110px;
-  height: 154px;
-  z-index: -1;
-  background-repeat: repeat;
-  width: 100%;
-  background-size: cover;
-}
+// .border {
+//   background-image: url(/src/icons/borderslider.svg);
+//   position: absolute;
+//   top: -110px;
+//   height: 154px;
+//   z-index: -1;
+//   background-repeat: repeat;
+//   width: 100%;
+//   background-size: cover;
+// }
 
-.borderSecond {
-  background-image: url(/src/icons/bordersecondslider.svg);
-  position: absolute;
-  height: 105px;
-  z-index: -1;
-  width: 100%;
-  background-size: cover;
-  background-repeat-y: no-repeat;
-}
+// .borderSecond {
+//   background-image: url(/src/icons/bordersecondslider.svg);
+//   position: absolute;
+//   height: 105px;
+//   z-index: -1;
+//   width: 100%;
+//   background-size: cover;
+//   background-repeat-y: no-repeat;
+// }
 
-.sectionContainer {
-  // @include page-container;
-  border: 2px solid #000;
-}
+// .sectionContainer {
+//   // @include page-container;
+//   border: 2px solid #000;
+// }
 
-.sectionBg {
-  margin-top: 254px;
-  margin-bottom: 200px;
-  background-color: $pink-200;
-  position: relative;
-}
+// .sectionBg {
+//   margin-top: 254px;
+//   margin-bottom: 200px;
+//   background-color: $pink-200;
+//   position: relative;
+// }
 
 .sliderContainer {
   max-width: 1360px;
@@ -44,9 +44,9 @@
   gap: 20px;
 }
 
-.slideWrapper {
-  margin-right: 20px;
-}
+// .slideWrapper {
+//   margin-right: 20px;
+// }
 
 .sectionHeader {
   color: $white-200;
@@ -92,28 +92,28 @@
   box-sizing: border-box;
 }
 
-.slideImage {
-  position: relative;
-  padding: 40px 20px 32px;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
+// .slideImage {
+//   position: relative;
+//   padding: 40px 20px 32px;
+//   max-width: 100%;
+//   height: auto;
+//   display: block;
+//   margin: 0 auto;
 
-  & img {
-    max-width: 100%;
-    height: auto;
-  }
-}
+//   & img {
+//     max-width: 100%;
+//     height: auto;
+//   }
+// }
 
 .cardTitle {
   padding: 0px 40px 30px;
 }
 
-.cardContent {
-  border-radius: 10px;
-  background-color: $white-200;
-}
+// .cardContent {
+//   border-radius: 10px;
+//   background-color: $white-200;
+// }
 
 .cardFavorite {
   position: absolute;

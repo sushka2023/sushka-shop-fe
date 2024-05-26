@@ -7,16 +7,14 @@ import CustomSlider from './customSlider'
 import styles from './sliderSection.module.scss'
 import ArrowBtn from '../../icons/arrow.svg?react'
 import { Box, Container, Typography, useTheme } from '@mui/material'
-import { sectionBg } from './style'
-
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
+
+import { border, borderSecond, sectionBg } from './style'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
 
-  const testTheme = useTheme()
+  const theme = useTheme()
 
   const settings: Settings = {
     dots: true,
@@ -29,7 +27,7 @@ const SlideSection = () => {
     appendDots: (dots) => {
       return (
         <Box style={{ bottom: '0px', left: '0px' }}>
-          <ul style={{ margin: '0px' }}> {dots} </ul>
+          <List style={{ margin: '0px' }}> {dots} </List>
         </Box>
       )
     },
@@ -71,23 +69,15 @@ const SlideSection = () => {
 
   return (
     <Box component="section" sx={sectionBg}>
-      <Box className={styles.border}></Box>
+      <Box sx={border}></Box>
       <Container maxWidth="lg">
         <Typography
-          color={testTheme.palette.error.darker}
+          color={theme.palette.background.default}
           variant="h2"
           component="h2"
-          // sx={sectionHeader}
         >
           Популярні товари
         </Typography>
-
-        <List>
-          <ListItem>Тест</ListItem>
-          <ListItem>
-            <ListItemText primary="Пункт 2" />
-          </ListItem>
-        </List>
 
         <Slider {...settings} className={styles.sliderContainer}>
           {Array.from({ length: 5 }, (_, index) => {
@@ -95,7 +85,7 @@ const SlideSection = () => {
           })}
         </Slider>
       </Container>
-      <Box className={styles.borderSecond}></Box>
+      <Box sx={borderSecond}></Box>
     </Box>
   )
 }
