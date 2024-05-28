@@ -2,6 +2,8 @@ import React from 'react'
 import InfoConfirmationModal from './ModalCustomWindow'
 import { Typography } from '@mui/material'
 import { RadioForm } from '../RadioForm/RadioForm'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button } from '../UI/Button'
 
 interface ModalCustomFormRadiusProps {
   openModal?: boolean
@@ -12,6 +14,12 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
   openModal = false,
   setOpenModal = () => {}
 }) => {
+  const { handleSubmit, register, setValue } = useForm<any>()
+
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data)
+  }
+
   return (
     <InfoConfirmationModal
       openModal={openModal}
@@ -28,7 +36,12 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
           Ми збережемо введені дані, щоб оформлення <br />
           Вашого наступного замовлення було швидшим.
         </Typography>
-        <RadioForm />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <RadioForm register={register} setValue={setValue} />
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </form>
       </React.Fragment>
     </InfoConfirmationModal>
   )

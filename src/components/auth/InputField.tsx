@@ -1,14 +1,12 @@
 import { Grid, InputLabel, OutlinedInput, FormHelperText } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
-type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
-
 interface InputFieldProps {
-  label: string
   type: string
+  label?: string
   register?: UseFormRegisterReturn
   error?: any
-  id?: InputId
+  id?: string
   disabled?: boolean
   placeholder?: string
   defaultValue?: string

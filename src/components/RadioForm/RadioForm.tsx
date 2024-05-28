@@ -1,9 +1,9 @@
 /* eslint-disable */
-
-import { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'
 import * as React from 'react'
+
+import { useState } from 'react'
+import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form'
+import { Radio, RadioGroup, FormControlLabel, Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Typography from '@mui/material/Typography'
@@ -11,13 +11,20 @@ import {
   ListboxComponent,
   StyledPopper
 } from '../Autocomplete/VariableSizeList'
+import InputField from '../auth/InputField'
 
-export const RadioForm = () => {
-  const [selectedValue, setSelectedValue] = useState<string>('female')
+type RadioFormProps = {
+  register: UseFormRegister<FieldValues>
+  setValue: UseFormSetValue<FieldValues>
+  // novaPoshtaCity: Array<{ Addresses: Array<{ Present: string }> }>;
+  // novaPoshtaOffices: Array<{ Description: string }>;
+  // getNovaPoshtaCity: () => void;
+  // getNovaPoshtaOffices: () => void;
+}
+export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
+  const [selectedValue, setSelectedValue] = useState<string>('np_office')
   const [novaPoshtaOffices, setNovaPoshtaOffices] = useState<any[]>([])
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
-  const [submittedData, setSubmittedData] = useState<any>(null)
-  const { handleSubmit, register, setValue } = useForm<any>()
 
   const getNovaPoshtaCity = async () => {
     const apiKey = 'f07607422838cfac21a0d1b8603086ca'
@@ -70,7 +77,9 @@ export const RadioForm = () => {
         modelName: 'AddressGeneral',
         calledMethod: 'getWarehouses',
         methodProperties: {
-          CityName: 'київ'
+          CityName: 'київ',
+          Limit: 50,
+          Page: 2
         }
       })
     }
@@ -86,6 +95,8 @@ export const RadioForm = () => {
       const data = await response.json()
       console.log('✌️data --->', data)
       if (data && data.data && data.data.length > 0) {
+        const totalCount = data.info.totalCount
+        console.log('✌️totalCount --->', totalCount)
         setNovaPoshtaOffices(data.data)
       } else {
         console.error('No data available')
@@ -95,33 +106,27 @@ export const RadioForm = () => {
     }
   }
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    console.log(data)
-    setSubmittedData(data)
-  }
-  useEffect(() => {
-    if (submittedData) {
-      setValue('first', submittedData.first)
-      setValue('second', submittedData.second)
-    }
-  }, [submittedData, setValue])
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
       <RadioGroup
+        sx={{ width: '400px', margin: '20px 0' }}
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
         value={selectedValue}
         onChange={(e) => setSelectedValue(e.target.value)}
       >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        {selectedValue === 'female' && (
-          <React.Fragment>
+        <FormControlLabel
+          value="np_office"
+          control={<Radio />}
+          label="Нова пошта (самовивіз)"
+        />
+        {selectedValue === 'np_office' && (
+          <Box>
             <Autocomplete
-              {...register('second')}
+              {...register('first')}
               id="virtualize-demo1"
-              sx={{ width: 300 }}
               disableListWrap
+              fullWidth
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
               options={
@@ -140,14 +145,15 @@ export const RadioForm = () => {
               renderGroup={(params) => params as any}
               onOpen={getNovaPoshtaCity}
               onChange={(_, value) => {
-                setValue('second', value)
+                setValue('first', value)
               }}
             />
             <Autocomplete
-              {...register('first')}
+              {...register('second')}
               id="virtualize-demo"
-              sx={{ width: 300 }}
               disableListWrap
+              fullWidth
+              sx={{ mt: 2 }}
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
               options={novaPoshtaOffices.map(
@@ -162,27 +168,105 @@ export const RadioForm = () => {
               renderGroup={(params) => params as any}
               onOpen={getNovaPoshtaOffices}
               onChange={(_, value) => {
-                setValue('first', value)
+                setValue('second', value)
               }}
             />
-          </React.Fragment>
+          </Box>
         )}
 
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        {selectedValue === 'male' && (
-          <Typography>Additional text for Male option</Typography>
+        <FormControlLabel
+          value="np_address"
+          control={<Radio />}
+          label="Нова пошта (адресна)"
+        />
+        {selectedValue === 'np_address' && (
+          <Box>
+            <Autocomplete
+              {...register('third')}
+              id="virtualize-demo1"
+              disableListWrap
+              fullWidth
+              PopperComponent={StyledPopper}
+              ListboxComponent={ListboxComponent}
+              options={
+                novaPoshtaCity && novaPoshtaCity.length > 0
+                  ? novaPoshtaCity[0].Addresses.map(
+                      (address: any) => address.Present
+                    )
+                  : []
+              }
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Оберіть місто" />
+              )}
+              renderOption={(props, option, state) =>
+                [props, option, state.index] as React.ReactNode
+              }
+              renderGroup={(params) => params as any}
+              onOpen={getNovaPoshtaCity}
+              onChange={(_, value) => {
+                setValue('third', value)
+              }}
+            />
+            <Autocomplete
+              {...register('four')}
+              id="virtualize-demo1"
+              disableListWrap
+              fullWidth
+              sx={{ mt: 2 }}
+              PopperComponent={StyledPopper}
+              ListboxComponent={ListboxComponent}
+              options={
+                novaPoshtaCity && novaPoshtaCity.length > 0
+                  ? novaPoshtaCity[0].Addresses.map(
+                      (address: any) => address.Present
+                    )
+                  : []
+              }
+              renderInput={(params) => (
+                <TextField {...params} placeholder="Вулиця" />
+              )}
+              renderOption={(props, option, state) =>
+                [props, option, state.index] as React.ReactNode
+              }
+              renderGroup={(params) => params as any}
+              onOpen={getNovaPoshtaCity}
+              onChange={(_, value) => {
+                setValue('four', value)
+              }}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                mt: 1
+              }}
+            >
+              <InputField
+                type="text"
+                id="apartament"
+                placeholder="Будинок"
+                register={register('first_name')}
+              />
+              <InputField
+                type="text"
+                id="house"
+                placeholder="Квартира"
+                register={register('two_name')}
+              />
+            </Box>
+          </Box>
         )}
 
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
-        {selectedValue === 'other' && (
+        <FormControlLabel
+          value="ukr_post"
+          control={<Radio />}
+          label="Укрпошта"
+        />
+        {selectedValue === 'ukr_post' && (
           <Typography>Additional text for Other option</Typography>
         )}
       </RadioGroup>
-
-      <Button type="submit" variant="contained">
-        Submit
-      </Button>
-    </form>
+    </>
   )
 }
 
