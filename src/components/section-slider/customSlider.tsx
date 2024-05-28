@@ -3,8 +3,8 @@ import styles from './sliderSection.module.scss'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
-import { Box, useTheme } from '@mui/material'
-import { slideElement, slideImage } from './style'
+import { Box, Typography, useTheme } from '@mui/material'
+import { cardHeader, slideElement, slideImage } from './style'
 import { Button } from '../UI/Button'
 
 type Props = HTMLProps<HTMLDivElement> & { index: number }
@@ -32,15 +32,20 @@ const CustomSlider: FC<Props> = (props) => {
             />
             <FavoriteBorderIcon className={styles.cardFavorite} />
           </Box>
-          <div className={styles.cardTitle}>
-            <h3 className={styles.cardHeader}>Мандаринова пастила</h3>
-            <p className={styles.cardPararaph}>
+          <Box sx={{ padding: '0px 40px 30px' }}>
+            <Typography component="h3" sx={cardHeader}>
+              Мандаринова пастила
+            </Typography>
+            <Typography
+              component="p"
+              variant="caption"
+              sx={{ color: theme.palette.secondary.darker }}
+            >
               Мандаринова пастила Мандаринова пастила Мандаринова пастила
-            </p>
+            </Typography>
             <span className={styles.cardPrice}>200 грн / 100 гр.</span>
-          </div>
+          </Box>
         </Box>
-        {/* <button className={styles.cardButtom}>Додати в кошик</button> */}
         <Button variant="contained" fullWidth>
           Додати в кошик
         </Button>

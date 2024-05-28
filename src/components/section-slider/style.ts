@@ -62,3 +62,12 @@ export const cardFavorite = {
     cursor: 'pointer'
   }
 }
+
+export const cardHeader = {
+  marginBottom: '18px',
+  color: 'secondary.darker',
+  fontFamily: 'fontFamily',
+  fontSize: '22px',
+  fontWeight: 'fontWeight',
+  lineHeight: '120%'
+}

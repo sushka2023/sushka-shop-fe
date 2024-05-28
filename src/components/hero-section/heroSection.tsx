@@ -19,12 +19,18 @@ const HeroSection = () => {
     <Box component="section" className={styles.mainContainer}>
       <Box className={styles.mainBlock}>
         <Box className={styles.slogan}>
-          <h1 className={styles.sloganHeader}>
+          <Typography
+            sx={{ color: theme.palette.secondary.darker }}
+            component="h1"
+            variant="h1"
+          >
             Найсолодші ласощі <br />
-            <span className={styles.sloganHeaderItalic}> від природи, </span>
+            <Typography component="span" variant="h1">
+              <i>від природи,</i>
+            </Typography>
             <br /> зроблені з любов`ю
-          </h1>
-          <Typography className={styles.sloganParagraph} component="p">
+          </Typography>
+          <Typography component="p" variant="body1" sx={{}}>
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
           </Typography>
