@@ -26,11 +26,6 @@ export const borderSecond = {
   backgroundRepeat: 'repeat-x'
 }
 
-// export const sliderContainer = {
-//   display: 'flex',
-//   alignItems: 'center'
-// }
-
 export const sliderContainer = {
   '& > div': {
     display: 'flex',
@@ -69,5 +64,6 @@ export const cardHeader = {
   fontFamily: 'fontFamily',
   fontSize: '22px',
   fontWeight: 'fontWeight',
-  lineHeight: '120%'
+  lineHeight: '120%',
+  border: '1px solid red'
 }

@@ -76,12 +76,6 @@ const THEME_TYPOGRAPHY = {
     fontSize: '0.875rem',
     fontWeigh: OPEN_SANS_REGULAR.weight,
     lineHeight: 'normal'
-  },
-  subheading: {
-    fontFamily: COMFORTAA_MEDIUM.font,
-    fontSize: '1.5rem',
-    fontWeight: COMFORTAA_MEDIUM.weight,
-    lineHeight: 'normal'
   }
 } as const
 

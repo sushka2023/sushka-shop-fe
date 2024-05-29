@@ -30,7 +30,11 @@ const HeroSection = () => {
             </Typography>
             <br /> зроблені з любов`ю
           </Typography>
-          <Typography component="p" variant="body1" sx={{}}>
+          <Typography
+            component="p"
+            variant="body1"
+            sx={{ color: theme.palette.secondary.darker, fontSize: '18px' }}
+          >
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
           </Typography>
