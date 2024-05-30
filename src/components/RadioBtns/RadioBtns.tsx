@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as React from 'react'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { Radio, RadioGroup, FormControlLabel, Box } from '@mui/material'
 import TextField from '@mui/material/TextField'
@@ -12,6 +12,7 @@ import {
   StyledPopper
 } from '../Autocomplete/VariableSizeList'
 import InputField from '../auth/InputField'
+import { CityDefault } from './CityDefault'
 
 type RadioFormProps = {
   register: UseFormRegister<FieldValues>
@@ -21,12 +22,15 @@ type RadioFormProps = {
   // getNovaPoshtaCity: () => void;
   // getNovaPoshtaOffices: () => void;
 }
-export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
+
+export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
   const [selectedValue, setSelectedValue] = useState<string>('np_office')
   const [novaPoshtaOffices, setNovaPoshtaOffices] = useState<any[]>([])
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
+  const [defaultCityValue, setDefaultCityValue] = useState('')
+  console.log('✌️defaultCityValue --->', defaultCityValue)
 
-  const getNovaPoshtaCity = async () => {
+  const getNovaPoshtaCity = async (cityName: string) => {
     const apiKey = 'f07607422838cfac21a0d1b8603086ca'
     const requestOptions = {
       method: 'POST',
@@ -38,9 +42,7 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
         modelName: 'AddressGeneral',
         calledMethod: 'searchSettlements',
         methodProperties: {
-          CityName: 'к',
-          Limit: 50,
-          Page: 2
+          CityName: cityName
         }
       })
     }
@@ -77,9 +79,7 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
         modelName: 'AddressGeneral',
         calledMethod: 'getWarehouses',
         methodProperties: {
-          CityName: 'київ',
-          Limit: 50,
-          Page: 2
+          CityName: 'київ'
         }
       })
     }
@@ -105,11 +105,22 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
       console.error('Error fetching data:', error)
     }
   }
-
+  const autocompleteRef = useRef(null)
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log(defaultCityValue)
+    }, 1000)
+    getNovaPoshtaCity
+    return () => clearTimeout(timer)
+  }, [defaultCityValue])
+  const renderMap =
+    novaPoshtaCity && novaPoshtaCity.length > 0
+      ? novaPoshtaCity[0].Addresses.map((address: any) => address.Present)
+      : []
   return (
     <>
       <RadioGroup
-        sx={{ width: '400px', margin: '20px 0' }}
+        sx={{ margin: '20px 0' }}
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
         value={selectedValue}
@@ -122,20 +133,29 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
         />
         {selectedValue === 'np_office' && (
           <Box>
+            <CityDefault
+              setDefaultCityValue={setDefaultCityValue}
+              autocompleteRef={autocompleteRef}
+            />
+
             <Autocomplete
               {...register('first')}
               id="virtualize-demo1"
               disableListWrap
+              sx={{ mt: 2, maxWidth: 350 }}
               fullWidth
+              ref={autocompleteRef}
+              value={defaultCityValue}
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
-              options={
-                novaPoshtaCity && novaPoshtaCity.length > 0
-                  ? novaPoshtaCity[0].Addresses.map(
-                      (address: any) => address.Present
-                    )
-                  : []
-              }
+              inputValue={defaultCityValue}
+              onInputChange={(_, value) => {
+                setDefaultCityValue(value)
+                if (value.length >= 1) {
+                  getNovaPoshtaCity(value)
+                }
+              }}
+              options={renderMap}
               renderInput={(params) => (
                 <TextField {...params} placeholder="Оберіть місто" />
               )}
@@ -143,17 +163,18 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
                 [props, option, state.index] as React.ReactNode
               }
               renderGroup={(params) => params as any}
-              onOpen={getNovaPoshtaCity}
+              onOpen={() => getNovaPoshtaCity(defaultCityValue)}
               onChange={(_, value) => {
                 setValue('first', value)
               }}
             />
+
             <Autocomplete
               {...register('second')}
               id="virtualize-demo"
               disableListWrap
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, maxWidth: 350 }}
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
               options={novaPoshtaOffices.map(
@@ -181,10 +202,15 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
         />
         {selectedValue === 'np_address' && (
           <Box>
+            <CityDefault
+              setDefaultCityValue={setDefaultCityValue}
+              autocompleteRef={autocompleteRef}
+            />
             <Autocomplete
               {...register('third')}
               id="virtualize-demo1"
               disableListWrap
+              sx={{ mt: 2, maxWidth: 350 }}
               fullWidth
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
@@ -202,7 +228,7 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
                 [props, option, state.index] as React.ReactNode
               }
               renderGroup={(params) => params as any}
-              onOpen={getNovaPoshtaCity}
+              // onOpen={getNovaPoshtaCity}
               onChange={(_, value) => {
                 setValue('third', value)
               }}
@@ -212,7 +238,7 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
               id="virtualize-demo1"
               disableListWrap
               fullWidth
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, maxWidth: 350 }}
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
               options={
@@ -229,7 +255,7 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
                 [props, option, state.index] as React.ReactNode
               }
               renderGroup={(params) => params as any}
-              onOpen={getNovaPoshtaCity}
+              // onOpen={getNovaPoshtaCity}
               onChange={(_, value) => {
                 setValue('four', value)
               }}
@@ -238,7 +264,8 @@ export const RadioForm: React.FC<RadioFormProps> = ({ register, setValue }) => {
               sx={{
                 display: 'flex',
                 gap: 2,
-                mt: 1
+                mt: 1,
+                maxWidth: 350
               }}
             >
               <InputField

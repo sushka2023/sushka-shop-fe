@@ -1,9 +1,9 @@
 import React from 'react'
 import InfoConfirmationModal from './ModalCustomWindow'
 import { Typography } from '@mui/material'
-import { RadioForm } from '../RadioForm/RadioForm'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button } from '../UI/Button'
+import { RadioBtns } from '../RadioBtns/RadioBtns'
 
 interface ModalCustomFormRadiusProps {
   openModal?: boolean
@@ -37,7 +37,8 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
           Вашого наступного замовлення було швидшим.
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <RadioForm register={register} setValue={setValue} />
+          <RadioBtns register={register} setValue={setValue} />
+
           <Button type="submit" variant="contained">
             Submit
           </Button>

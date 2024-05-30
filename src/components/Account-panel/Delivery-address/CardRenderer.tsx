@@ -2,10 +2,11 @@ import { Box, Grid, Typography } from '@mui/material'
 import { Button } from '../../UI/Button'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import NpLogo from '../../../icons/npLogo.svg?react'
-import { stCard, stDeleteBtn } from './style'
+import { stBtnAddNewAddress, stCard, stDeleteBtn } from './style'
 import { ModalCustomFormRadius } from '../../Modal-custom-btn/ModalCustomFormRadius'
 import React, { useState } from 'react'
-
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
 export const CardRenderer = () => {
   const [openModal, setOpenModal] = useState(false)
 
@@ -36,18 +37,24 @@ export const CardRenderer = () => {
                 </Typography>
               </Box>
             </Box>
-            <Button sx={{ padding: '10px 30px' }} fullWidth variant="contained">
+            <Button
+              sx={{ padding: '10px 30px' }}
+              endIcon={<EditIcon style={{ fontSize: 22 }} />}
+              fullWidth
+              variant="contained"
+            >
               редагувати
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Button
               onClick={() => setOpenModal(true)}
-              sx={{ padding: '10px 30px', backgroundColor: '#FFFFFF', mt: 2 }}
+              sx={stBtnAddNewAddress}
+              endIcon={<AddIcon style={{ fontSize: 28 }} />}
               fullWidth
               variant="text"
             >
-              редагувати
+              Додати адресу
             </Button>
           </Grid>
         </Grid>

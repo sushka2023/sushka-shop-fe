@@ -3,7 +3,7 @@ export const stCard = {
   backgroundColor: 'background.default',
   margin: '10px 0',
   padding: '25px 15px',
-  borderRadius: 7
+  borderRadius: 5
 }
 export const stDeleteBtn = {
   'position': 'absolute',
@@ -22,5 +22,17 @@ export const stDeleteBtn = {
     backgroundColor: '#F6D2D2',
     color: '#D21C1C',
     opacity: 0.8
+  }
+}
+export const stBtnAddNewAddress = {
+  'padding': '10px, 30px, 10px, 30px',
+  'backgroundColor': '#FFFFFF',
+  'mt': 2,
+  'borderRadius': 20,
+  'fontWeight': 600,
+  'fontSize': 16,
+  '&:hover': {
+    backgroundColor: '#FFFFFF',
+    color: '#9AAB8E'
   }
 }
