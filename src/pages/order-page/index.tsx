@@ -6,13 +6,22 @@ import OrderStepper from '../../components/Order-stepper'
 import StapperButtons from '../../components/Stapper-buttons'
 import OrderContacts from '../../components/Order-contacts'
 import OrderCard from '../../components/Order-card'
-import { getBasketItems } from './operation'
-import { BasketItemsResponse, UserResponse } from '../../types'
+import { getBasketItems, getProductForId } from './operation'
+import { ProductResponse, UserResponse } from '../../types'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { OrderDelivery } from '../../components/Order-delivery'
 import { useAuth } from '../../hooks/use-auth'
+import { BasketItemsResponse } from '../../types'
 import { Inputs, OrderDetailsType, OrderContextType } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
+import { getLocalStorageData } from '../../utils/local-storage'
+
+type OrderType = {
+  id: number
+  quantity: number
+  price_id_by_the_user: number
+  productId: string
+}
 
 const OrderContext = createContext<OrderContextType>(null)
 
@@ -62,15 +71,50 @@ const OrderPage = () => {
     }
   }
 
+  const pricing = (priceArray: BasketItemsResponse[]) => {
+    return priceArray.map((item) => {
+      const price_id = item.price_id_by_the_user
+      const prices = item.product.prices
+
+      const index = prices.findIndex((price) => price.id === price_id)
+
+      if (index !== -1) {
+        const [matchedPrice] = prices.splice(index, 1)
+        prices.unshift(matchedPrice)
+      }
+      return item
+    })
+  }
+
+  const fetchLocalStorageOrder = async () => {
+    try {
+      const localStorageData = getLocalStorageData('product-orders')
+      const promises = (localStorageData as OrderType[]).map(async (order) => {
+        const product = await getProductForId(order.productId)
+        return {
+          id: order.id,
+          price_id_by_the_user: order.price_id_by_the_user,
+          quantity: order.quantity,
+          product: product as unknown as ProductResponse
+        }
+      })
+      const updatedProductOrders: BasketItemsResponse[] =
+        await Promise.all(promises)
+
+      setOrderList(pricing(updatedProductOrders))
+    } catch (error) {
+      console.error('Помилка під час завандаження замовлення:', error)
+    }
+  }
+
   useEffect(() => {
     if (user) {
       overwriteFormValues(user)
+      fetchBasketItems()
+      return
     }
-  }, [user, setValue])
-
-  useEffect(() => {
-    fetchBasketItems()
-  }, [])
+    fetchLocalStorageOrder()
+  }, [user])
 
   const onSubmit: SubmitHandler<Inputs> = (data) => setOrderDetails(data)
 

@@ -5,18 +5,24 @@ import CloseIcon from '@mui/icons-material/Close'
 import { Typography } from '../../components/UI/Typography'
 import { listStyle, listItemStyle, closeIconStyle } from './style'
 import axiosInstance from '../../axios/settings'
+import { useAuth } from '../../hooks/use-auth'
 
 const OrderList = () => {
   const { orderList, setOrderList } = useContext(OrderContext)!
+  const { user } = useAuth()
 
   const removeProduct = async (id: number) => {
-    await axiosInstance.delete(`api/basket_items/remove`, {
-      data: {
-        id
-      }
-    })
-    return setOrderList(orderList.filter((orderItem) => orderItem.id !== id))
+    if (user) {
+      await axiosInstance.delete(`api/basket_items/remove`, {
+        data: {
+          id
+        }
+      })
+    }
+    setOrderList(orderList.filter((orderItem) => orderItem.id !== id))
   }
+
+  const countTotalPrice = (quantity: number, price: number) => price * quantity
 
   return (
     <List sx={listStyle}>
@@ -43,7 +49,13 @@ const OrderList = () => {
                 <Typography fontWeight="400" fontSize="16px">
                   {order.quantity} шт
                 </Typography>
-                <Typography>{order.product.prices[0].price}₴</Typography>
+                <Typography>
+                  {countTotalPrice(
+                    order.quantity,
+                    order.product.prices[0]?.price
+                  )}
+                  ₴
+                </Typography>
               </Box>
             </Stack>
           </Box>

@@ -10,8 +10,8 @@ import { OrderContext } from '../../pages/order-page'
 const OrderCard = () => {
   const { orderList } = useContext(OrderContext)!
 
-  const totalPrice = orderList.reduce(
-    (total, order) => total + order.quantity * order.product.prices[0].price,
+  const totalPrice = orderList?.reduce(
+    (total, order) => total + order.quantity * order.product.prices[0]?.price,
     0
   )
   const formatter = new Intl.NumberFormat('uk-UA', {

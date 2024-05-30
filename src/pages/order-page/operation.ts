@@ -7,6 +7,13 @@ const getBasketItems = async () => {
   return data
 }
 
+const getProductForId = async (productId: string) => {
+  const { data } = await axiosInstance.get<BasketItemsResponse>(
+    `api/product/${productId}`
+  )
+  return data
+}
+
 const removeProduct = async (id: number) => {
   const data = await axiosInstance.delete(`api/basket_items/remove`, {
     data: {
@@ -17,4 +24,4 @@ const removeProduct = async (id: number) => {
   return data
 }
 
-export { getBasketItems, removeProduct }
+export { getBasketItems, removeProduct, getProductForId }
