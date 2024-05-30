@@ -16,13 +16,6 @@ import { Inputs, OrderDetailsType, OrderContextType } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
 import { getLocalStorageData } from '../../utils/local-storage'
 
-type OrderType = {
-  id: number
-  quantity: number
-  price_id_by_the_user: number
-  productId: string
-}
-
 const OrderContext = createContext<OrderContextType>(null)
 
 const OrderPage = () => {
@@ -88,20 +81,25 @@ const OrderPage = () => {
 
   const fetchLocalStorageOrder = async () => {
     try {
-      const localStorageData = getLocalStorageData('product-orders')
-      const promises = (localStorageData as OrderType[]).map(async (order) => {
+      const localStorageData = getLocalStorageData('product-orders') || []
+
+      if (!localStorageData?.length) return
+
+      const products: BasketItemsResponse[] = []
+
+      for (const order of localStorageData) {
         const product = await getProductForId(order.productId)
-        return {
+
+        products.push({
           id: order.id,
           price_id_by_the_user: order.price_id_by_the_user,
           quantity: order.quantity,
-          product: product as unknown as ProductResponse
-        }
-      })
-      const updatedProductOrders: BasketItemsResponse[] =
-        await Promise.all(promises)
+          product: product as unknown as ProductResponse,
+          basket_id: order.basket_id
+        })
+      }
 
-      setOrderList(pricing(updatedProductOrders))
+      setOrderList(pricing(products))
     } catch (error) {
       console.error('Помилка під час завандаження замовлення:', error)
     }

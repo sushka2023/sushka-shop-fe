@@ -95,6 +95,7 @@ export type { UserResponse } from './models/UserResponse';
 export type { UserResponseAfterUpdate } from './models/UserResponseAfterUpdate';
 export type { UserResponseForCRM } from './models/UserResponseForCRM';
 export type { UserResponseForOrder } from './models/UserResponseForOrder';
+export type { UserReviewResponse } from './models/UserReviewResponse';
 export type { UserUpdateData } from './models/UserUpdateData';
 export type { ValidationError } from './models/ValidationError';
 
