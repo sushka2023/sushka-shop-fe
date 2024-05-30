@@ -35,7 +35,7 @@ const OrderContacts = () => {
           fontFamily="Comfortaa"
           fontWeight={500}
           fontSize="32px"
-          mb={'10px'}
+          mb="10px"
         >
           Ваші контактні дані
         </Typography>
@@ -59,6 +59,7 @@ const OrderContacts = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  required
                   fullWidth
                   {...register('firstName')}
                 />
@@ -71,7 +72,12 @@ const OrderContacts = () => {
               name="lastName"
               control={control}
               render={({ field }) => (
-                <OutlinedInput {...field} fullWidth {...register('lastName')} />
+                <OutlinedInput
+                  {...field}
+                  required
+                  fullWidth
+                  {...register('lastName')}
+                />
               )}
             />
           </Box>
@@ -81,7 +87,12 @@ const OrderContacts = () => {
               name="email"
               control={control}
               render={({ field }) => (
-                <OutlinedInput {...field} fullWidth {...register('email')} />
+                <OutlinedInput
+                  {...field}
+                  required
+                  fullWidth
+                  {...register('email')}
+                />
               )}
             />
           </Box>
@@ -91,7 +102,12 @@ const OrderContacts = () => {
               name="phone"
               control={control}
               render={({ field }) => (
-                <OutlinedInput {...field} fullWidth {...register('phone')} />
+                <OutlinedInput
+                  {...field}
+                  required
+                  fullWidth
+                  {...register('phone')}
+                />
               )}
             />
           </Box>

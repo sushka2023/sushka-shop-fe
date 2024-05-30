@@ -10,7 +10,7 @@ const OrderDelivery = () => {
           fontFamily="Comfortaa"
           fontWeight={500}
           fontSize="32px"
-          mb={'10px'}
+          mb="10px"
         >
           Адреса доставки
         </Typography>

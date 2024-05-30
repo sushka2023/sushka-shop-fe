@@ -6,6 +6,7 @@ import { Typography } from '../../components/UI/Typography'
 import { listStyle, listItemStyle, closeIconStyle } from './style'
 import axiosInstance from '../../axios/settings'
 import { useAuth } from '../../hooks/use-auth'
+import { formatter } from '../../helpers/formatterTotalPrice'
 
 const OrderList = () => {
   const { orderList, setOrderList } = useContext(OrderContext)!
@@ -24,10 +25,12 @@ const OrderList = () => {
 
   const countTotalPrice = (quantity: number, price: number) => price * quantity
 
+  const formattedTotalPrice = (sum: number) => formatter.format(sum)
+
   return (
     <List sx={listStyle}>
-      {orderList?.map((order, index) => (
-        <ListItem key={index} sx={listItemStyle}>
+      {orderList?.map((order) => (
+        <ListItem key={order.id} sx={listItemStyle}>
           <Box display="flex" gap="20px">
             <Box>
               <CardMedia
@@ -50,11 +53,12 @@ const OrderList = () => {
                   {order.quantity} шт
                 </Typography>
                 <Typography>
-                  {countTotalPrice(
-                    order.quantity,
-                    order.product.prices[0]?.price
+                  {formattedTotalPrice(
+                    countTotalPrice(
+                      order.quantity,
+                      order.product.prices[0]?.price
+                    )
                   )}
-                  ₴
                 </Typography>
               </Box>
             </Stack>
