@@ -64,6 +64,5 @@ export const cardHeader = {
   fontFamily: 'fontFamily',
   fontSize: '22px',
   fontWeight: 'fontWeight',
-  lineHeight: '120%',
-  border: '1px solid red'
+  lineHeight: '120%'
 }

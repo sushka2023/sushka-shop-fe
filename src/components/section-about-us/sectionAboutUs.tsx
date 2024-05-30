@@ -1,38 +1,51 @@
+import { Box, Container, Typography } from '@mui/material'
 import FruitMix from '../../images/fruit-mix-1.jpg'
-import styles from './sectionAboutUs.module.scss'
-import { Element } from 'react-scroll'
+import {
+  aboutUsParagraph,
+  aboutUsParagraphItalic,
+  sectionAboutUs
+} from './style'
 
 const SectionAboutUs = () => {
   return (
-    <Element className={styles.sectionAboutUs} name="aboutUs">
-      <div className={styles.aboutUsWrapper}>
-        <h2 className={styles.aboutUsHeader}>Про нас</h2>
-        <p className={styles.aboutUsParagraph}>
+    <Container sx={sectionAboutUs} id="aboutUs">
+      <Box>
+        <Typography
+          component="h2"
+          variant="h2"
+          sx={{ color: 'secondary.darker' }}
+        >
+          Про нас
+        </Typography>
+        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Відверто кажучи, ми маленьке крафтове виробництво корисних смаколиків.
           Любимо усе, що дає нам матінка природа, а ще сильніше
-          <span className={styles.aboutUsParagraphItalic}> яблука! </span>
-        </p>
+          <Typography component="span" sx={aboutUsParagraphItalic}>
+            {' '}
+            яблука!{' '}
+          </Typography>
+        </Typography>
         <br />
-        <p className={styles.aboutUsParagraph}>
+        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо{' '}
-          <span className={styles.aboutUsParagraphItalic}>
+          <Typography component="span" sx={aboutUsParagraphItalic}>
             і обожнюємо Україну
-          </span>
+          </Typography>
           . Наша продукція зростає і покращується, оскільки все більше людей
           обирають наші натуральні смаколики замість цукерок зі складними
           компонентами.
-        </p>
+        </Typography>
         <br />
-        <p className={styles.aboutUsParagraph}>
+        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну пастилу
           та фріпси.
-        </p>
+        </Typography>
         <br />
-      </div>
-      <div>
-        <img src={FruitMix} alt="fruit mix" width={670} />
-      </div>
-    </Element>
+      </Box>
+      <Box>
+        <Box component="img" src={FruitMix} alt="fruit mix" width={670} />
+      </Box>
+    </Container>
   )
 }
 

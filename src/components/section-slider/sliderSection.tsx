@@ -26,15 +26,15 @@ const SlideSection = () => {
     nextArrow: <ArrowNext />,
     appendDots: (dots) => {
       return (
-        <Box style={{ bottom: '0px', left: '0px' }}>
-          <List style={{ margin: '0px' }}> {dots} </List>
+        <Box sx={{ bottom: '0px', left: '0px' }}>
+          <List sx={{ margin: '0px' }}> {dots} </List>
         </Box>
       )
     },
     customPaging: (i) => {
       return (
         <Box
-          style={{
+          sx={{
             width: '17px',
             height: '17px',
             background:

@@ -7,8 +7,6 @@ import { Button } from '../UI/Button'
 import { useTheme } from '@mui/material/styles'
 import { Box, Typography } from '@mui/material'
 
-// import { Image } from '@mui/icons-material'
-
 const HeroSection = () => {
   const allCategories = useSelector(
     (state: RootState) => state.allCategories.mainCategories

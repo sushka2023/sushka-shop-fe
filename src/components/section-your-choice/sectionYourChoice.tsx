@@ -4,12 +4,13 @@ import IconBowl from '../../icons/bowl.svg?react'
 import IconBox from '../../icons/box.svg?react'
 import ApllePic from '../../images/aplle-pic.jpg'
 import FruitMixSecond from '../../images/fruit-mix-2.jpg'
-import styles from './sectionYourChoice.module.scss'
 import { Box, Container, List, ListItem, Typography } from '@mui/material'
 import {
+  paragraphItalic,
   paragraphWrapper,
   yourChoiceList,
   yourChoiceListItem,
+  yourChoiceParagraph,
   yourChoiceWrapper
 } from './style'
 
@@ -39,40 +40,24 @@ const SectionYourChoice = () => {
             Твій свідомий вибір
           </Typography>
           <Box sx={paragraphWrapper}>
-            <Typography
-              component="p"
-              variant="body1"
-              sx={{ fontSize: '18px', color: 'secondary.darker' }}
-            >
+            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Наша продукція містить домішки турботи, які підіймають рівень
               <br />
-              <span>
-                <em>
-                  <strong>дофамінів </strong>
-                </em>
-              </span>
+              <Typography component="span" sx={paragraphItalic}>
+                дофамінів{' '}
+              </Typography>
               в організмі!
             </Typography>
-            <Typography
-              component="p"
-              variant="body1"
-              sx={{ fontSize: '18px', color: 'secondary.darker' }}
-            >
+            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Все, що приносить користь, поєднано у рулетах пастили <br /> та
               ломтиках фріпсів.
             </Typography>
-            <Typography
-              component="p"
-              variant="body1"
-              sx={{ fontSize: '18px', color: 'secondary.darker' }}
-            >
+            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Як юзати ці смаколики знає навіть дитина: жуй, кусай, ламай,
-              хрусти, відривай, облизуй та отримуй
-              <span>
-                <em>
-                  <strong> природну користь </strong>
-                </em>
-              </span>
+              хрусти, відривай, облизуй та отримуй{' '}
+              <Typography component="span" sx={paragraphItalic}>
+                природну користь{' '}
+              </Typography>
               в результаті.
             </Typography>
           </Box>
@@ -86,34 +71,34 @@ const SectionYourChoice = () => {
           </ListItem>
         ))}
       </List>
-      <div className={styles.yourChoiceLastBlock}>
-        <div className={styles.yourChoiceLastBlockWrapper}>
-          <p className={styles.yourChoiceLastBlockPararaph}>
+      <Box sx={yourChoiceWrapper}>
+        <Box width={680}>
+          <Typography component="p" sx={yourChoiceParagraph}>
             Тут знайдеш близько{' '}
-            <span className={styles.yourChoiceLastBlockPararaphItalic}>
+            <Typography component="span" sx={paragraphItalic}>
               30 смаків
-            </span>{' '}
+            </Typography>{' '}
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
-          </p>
+          </Typography>
           <br />
-          <p className={styles.yourChoiceLastBlockPararaph}>
+          <Typography component="p" sx={yourChoiceParagraph}>
             Познайомишся з 20-ма фруктами у вигляді чипсів. Усе перераховане
             висушене при бережних температурах у дегідраторах за всіма ТУ,
             зібране у зручні пакунки та готове радувати кращих людей.
-          </p>
+          </Typography>
           <br />
-          <p className={styles.yourChoiceLastBlockPararaph}>
+          <Typography component="p" sx={yourChoiceParagraph}>
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
             фантазіям і обов’язково скажеш:{' '}
-            <span className={styles.yourChoiceLastBlockPararaphItalic}>
+            <Typography component="span" sx={paragraphItalic}>
               «Це смачно!»
-            </span>
-          </p>
-        </div>
-        <img src={FruitMixSecond} alt="fruit mix" width={555} />
-      </div>
+            </Typography>
+          </Typography>
+        </Box>
+        <Box component="img" src={FruitMixSecond} alt="fruit mix" width={555} />
+      </Box>
     </Container>
   )
 }

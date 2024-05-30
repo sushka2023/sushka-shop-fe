@@ -1,10 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import styles from './sectionFaq.module.scss'
 import { styled } from '@mui/material/styles'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import MuiAccordion from '@mui/material/Accordion'
 import Arrow from '../../icons/arrow.svg?react'
+import { Box, Container, Typography } from '@mui/material'
+import { accordionSection, border } from './style'
+import { accordionData } from './accordionData'
 
 const Accordion = styled(MuiAccordion)(() => {
   return {
@@ -56,15 +58,50 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => {
 
 const SectionFaq = () => {
   return (
-    <section className={styles.accordionSection} id="faq">
-      <div className={styles.border}></div>
-      <div className={styles.accordionWrapper}>
-        <h2 className={styles.accordionHeader}>Найчастіші запитання</h2>
-        <Accordion disableGutters elevation={0} square>
+    <Box component="section" sx={accordionSection} id="faq">
+      <Box sx={border}></Box>
+      <Container>
+        <Typography
+          component="h2"
+          variant="h2"
+          sx={{ mb: '40px', color: 'background.default' }}
+        >
+          Найчастіші запитання
+        </Typography>
+        {accordionData.map((item, index) => (
+          <Accordion key={index} disableGutters elevation={0} square>
+            <AccordionSummary
+              aria-controls={`panel${index}-content`}
+              id={`panel${index}-header`}
+            >
+              <Typography
+                component="h3"
+                variant="h3"
+                sx={{ color: 'background.default' }}
+              >
+                {item.question}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography
+                component="p"
+                variant="body1"
+                sx={{ color: 'background.default' }}
+              >
+                {item.answer}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+        {/* <Accordion disableGutters elevation={0} square>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <h3 className={styles.summaryHeader}>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{ color: 'background.default' }}
+            >
               Що я можу придбати у вашому магазині?
-            </h3>
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <p className={styles.detailParagraph}>
@@ -151,9 +188,9 @@ const SectionFaq = () => {
               мотивації.
             </p>
           </AccordionDetails>
-        </Accordion>
-      </div>
-    </section>
+        </Accordion> */}
+      </Container>
+    </Box>
   )
 }
 

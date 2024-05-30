@@ -2,12 +2,28 @@ import Slider, { Settings } from 'react-slick'
 import ArrowPrev from '../section-slider/arrowPrev'
 import ArrowNext from '../section-slider/arrowNext'
 import { useState } from 'react'
-import styles from './sectionReviews.module.scss'
 import IconCherry from '../../icons/cherry.svg?react'
 import IconBanana from '../../icons/banana.svg?react'
 import FirstReview from '../../images/review1.png'
 import SecondReview from '../../images/review2.png'
 import ThirdReview from '../../images/review3.png'
+import { Box, Container, List, Typography } from '@mui/material'
+import {
+  border,
+  borderSecond,
+  iconBwrapper,
+  iconWrapper,
+  sectionBg,
+  sliderContainer
+} from './style'
+
+const reviewsClients = [
+  FirstReview,
+  SecondReview,
+  ThirdReview,
+  FirstReview,
+  SecondReview
+]
 
 const SectionReviews = () => {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -22,22 +38,22 @@ const SectionReviews = () => {
     nextArrow: <ArrowNext />,
     appendDots: (dots) => {
       return (
-        <div style={{ bottom: '0px', left: '0px' }}>
-          <ul style={{ margin: '0px' }}> {dots} </ul>
-        </div>
+        <Box sx={{ bottom: '0px', left: '0px' }}>
+          <List style={{ margin: '0px' }}> {dots} </List>
+        </Box>
       )
     },
     customPaging: (i) => {
       return (
-        <div
-          style={{
+        <Box
+          sx={{
             width: '17px',
             height: '17px',
-            background:
+            backgroundColor:
               activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)',
             borderRadius: '17px'
           }}
-        ></div>
+        />
       )
     },
     beforeChange: (_, next) => {
@@ -46,48 +62,36 @@ const SectionReviews = () => {
   }
 
   return (
-    <section className={styles.sectionBg} id="review">
-      <div className={styles.border}>
-        <div className={styles.iconWrapper}>
+    <Box component="section" sx={sectionBg} id="review">
+      <Box sx={border}>
+        <Box sx={iconWrapper}>
           <IconCherry />
-        </div>
-      </div>
-      <div className={styles.sectionContainer}>
-        <h2 className={styles.sectionHeader}>Відгуки</h2>
-        <Slider {...settings} className={styles.sliderContainer}>
-          <div className={styles.slideWrapper}>
-            <div className={styles.slideElement}>
-              <img src={FirstReview} alt="good product review" />
-            </div>
-          </div>
-          <div className={styles.slideWrapper}>
-            <div className={styles.slideElement}>
-              <img src={SecondReview} alt="good product review" />
-            </div>
-          </div>
-          <div className={styles.slideWrapper}>
-            <div className={styles.slideElement}>
-              <img src={ThirdReview} alt="good product review" />
-            </div>
-          </div>
-          <div className={styles.slideWrapper}>
-            <div className={styles.slideElement}>
-              <img src={FirstReview} alt="good product review" />
-            </div>
-          </div>
-          <div className={styles.slideWrapper}>
-            <div className={styles.slideElement}>
-              <img src={SecondReview} alt="good product review" />
-            </div>
-          </div>
+        </Box>
+      </Box>
+      <Container sx={{ ...sliderContainer, position: 'relative' }}>
+        <Typography
+          component="h2"
+          variant="h2"
+          sx={{ color: 'background.default' }}
+        >
+          Відгуки
+        </Typography>
+        <Slider {...settings}>
+          {reviewsClients.map((review, index) => (
+            <Box key={index} sx={{ mr: '20px' }}>
+              <Box sx={{ maxWidth: '400px', boxSizing: 'border-box' }}>
+                <Box component="img" src={review} alt="good product review" />
+              </Box>
+            </Box>
+          ))}
         </Slider>
-      </div>
-      <div className={styles.borderSecond}>
-        <div className={styles.iconBwrapper}>
+      </Container>
+      <Box sx={borderSecond}>
+        <Box sx={iconBwrapper}>
           <IconBanana />
-        </div>
-      </div>
-    </section>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

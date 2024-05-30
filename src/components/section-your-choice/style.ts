@@ -4,6 +4,11 @@ export const yourChoiceWrapper = {
   justifyContent: 'space-between'
 }
 
+export const yourChoiceParagraph = {
+  fontSize: '18px',
+  color: 'secondary.darker'
+}
+
 export const paragraphWrapper = {
   display: 'flex',
   flexDirection: 'column',
@@ -30,4 +35,10 @@ export const yourChoiceListItem = {
   fontSize: '22px',
   fontWeight: '600',
   lineHeight: '120%'
+}
+
+export const paragraphItalic = {
+  fontSize: '18px',
+  fontStyle: 'italic',
+  fontWeight: '700'
 }
