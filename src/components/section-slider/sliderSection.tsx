@@ -6,15 +6,19 @@ import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
 import styles from './sliderSection.module.scss'
 import ArrowBtn from '../../icons/arrow.svg?react'
-import { Box, Container, Typography, useTheme } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import List from '@mui/material/List'
 
-import { border, borderSecond, sectionBg } from './style'
+import {
+  border,
+  borderSecond,
+  lastSlider,
+  sectionBg,
+  sliderContainer
+} from './style'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
-
-  const theme = useTheme()
 
   const settings: Settings = {
     dots: true,
@@ -52,7 +56,7 @@ const SlideSection = () => {
   const renderSlide = (index: number) => {
     if (index === 4) {
       return (
-        <Box className={styles.lastSlider}>
+        <Box sx={lastSlider}>
           <Link
             to="catalog/11"
             className={`${styles.customButton} ${styles.customLink}`}
@@ -70,16 +74,12 @@ const SlideSection = () => {
   return (
     <Box component="section" sx={sectionBg}>
       <Box sx={border}></Box>
-      <Container maxWidth="lg">
-        <Typography
-          color={theme.palette.background.default}
-          variant="h2"
-          component="h2"
-        >
+      <Container maxWidth="lg" sx={sliderContainer}>
+        <Typography color={'background.default'} variant="h2" component="h2">
           Популярні товари
         </Typography>
 
-        <Slider {...settings} className={styles.sliderContainer}>
+        <Slider {...settings}>
           {Array.from({ length: 5 }, (_, index) => {
             return <Box key={index}>{renderSlide(index)}</Box>
           })}

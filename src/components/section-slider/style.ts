@@ -28,8 +28,12 @@ export const borderSecond = {
 
 export const sliderContainer = {
   '& > div': {
+    maxWidth: '1360px',
+    margin: '0 auto',
+    padding: '72px 40px',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: '20px'
   }
 }
 
@@ -45,6 +49,14 @@ export const slideImage = {
   height: 'auto',
   display: 'block',
   margin: '0 auto'
+}
+
+export const lastSlider = {
+  maxWidth: '400px',
+  height: '595px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 
 export const cardFavorite = {

@@ -2,37 +2,35 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.jpg'
 import { RootState } from '../../redux/store'
-import styles from './HeroSection.module.scss'
 import { Button } from '../UI/Button'
-import { useTheme } from '@mui/material/styles'
-import { Box, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
+import { mainBlock, slogan, sloganButton, sloganParagraph } from './style'
 
 const HeroSection = () => {
   const allCategories = useSelector(
     (state: RootState) => state.allCategories.mainCategories
   )
-  const theme = useTheme()
 
   return (
-    <Box component="section" className={styles.mainContainer}>
-      <Box className={styles.mainBlock}>
-        <Box className={styles.slogan}>
+    <Box component="section">
+      <Container sx={mainBlock}>
+        <Box sx={slogan}>
           <Typography
-            sx={{ color: theme.palette.secondary.darker }}
+            sx={{ color: 'secondary.darker' }}
             component="h1"
             variant="h1"
           >
             Найсолодші ласощі <br />
-            <Typography component="span" variant="h1">
-              <i>від природи,</i>
+            <Typography
+              component="span"
+              variant="h1"
+              sx={{ fontStyle: 'italic' }}
+            >
+              від природи,
             </Typography>
             <br /> зроблені з любов`ю
           </Typography>
-          <Typography
-            component="p"
-            variant="body1"
-            sx={{ color: theme.palette.secondary.darker, fontSize: '18px' }}
-          >
+          <Typography component="p" variant="body1" sx={sloganParagraph}>
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
           </Typography>
@@ -40,15 +38,7 @@ const HeroSection = () => {
             style={{ width: '100%', maxWidth: '300px' }}
             to={`/catalog/${allCategories && allCategories[0].id}`}
           >
-            <Button
-              fullWidth
-              sx={{
-                borderRadius: '20px',
-                backgroundColor: theme.palette.primary.darker,
-                color: '#fff',
-                height: '60px'
-              }}
-            >
+            <Button fullWidth sx={sloganButton}>
               Переглянути каталог
             </Button>
           </Link>
@@ -61,7 +51,7 @@ const HeroSection = () => {
           width={760}
           height={730}
         />
-      </Box>
+      </Container>
     </Box>
   )
 }
