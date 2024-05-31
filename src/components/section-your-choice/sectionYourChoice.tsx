@@ -43,7 +43,11 @@ const SectionYourChoice = () => {
             <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Наша продукція містить домішки турботи, які підіймають рівень
               <br />
-              <Typography component="span" sx={paragraphItalic}>
+              <Typography
+                component="span"
+                variant="caption"
+                sx={paragraphItalic}
+              >
                 дофамінів{' '}
               </Typography>
               в організмі!
@@ -55,7 +59,11 @@ const SectionYourChoice = () => {
             <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Як юзати ці смаколики знає навіть дитина: жуй, кусай, ламай,
               хрусти, відривай, облизуй та отримуй{' '}
-              <Typography component="span" sx={paragraphItalic}>
+              <Typography
+                component="span"
+                variant="caption"
+                sx={paragraphItalic}
+              >
                 природну користь{' '}
               </Typography>
               в результаті.
@@ -73,26 +81,26 @@ const SectionYourChoice = () => {
       </List>
       <Box sx={yourChoiceWrapper}>
         <Box width={680}>
-          <Typography component="p" sx={yourChoiceParagraph}>
+          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             Тут знайдеш близько{' '}
-            <Typography component="span" sx={paragraphItalic}>
+            <Typography component="span" variant="caption" sx={paragraphItalic}>
               30 смаків
             </Typography>{' '}
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </Typography>
           <br />
-          <Typography component="p" sx={yourChoiceParagraph}>
+          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             Познайомишся з 20-ма фруктами у вигляді чипсів. Усе перераховане
             висушене при бережних температурах у дегідраторах за всіма ТУ,
             зібране у зручні пакунки та готове радувати кращих людей.
           </Typography>
           <br />
-          <Typography component="p" sx={yourChoiceParagraph}>
+          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
             фантазіям і обов’язково скажеш:{' '}
-            <Typography component="span" sx={paragraphItalic}>
+            <Typography component="span" variant="caption" sx={paragraphItalic}>
               «Це смачно!»
             </Typography>
           </Typography>

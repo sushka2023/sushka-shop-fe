@@ -52,7 +52,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => {
   return {
     padding: theme.spacing(0),
     paddingBottom: '30px',
-    borderBottom: '1px solid #fff'
+    borderBottom: '1px solid background.default'
   }
 })
 

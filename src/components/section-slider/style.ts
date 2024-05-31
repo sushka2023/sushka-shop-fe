@@ -39,7 +39,11 @@ export const sliderContainer = {
 
 export const slideElement = {
   maxWidth: '400px',
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
+  borderRadius: '10px',
+  backgroundColor: 'background.default',
+  mb: '20px',
+  border: '1px solid red'
 }
 
 export const slideImage = {
@@ -72,9 +76,18 @@ export const cardFavorite = {
 
 export const cardHeader = {
   marginBottom: '18px',
+  color: 'secondary.darker'
+}
+
+export const cardPararaph = {
+  maxWidth: '320px',
   color: 'secondary.darker',
-  fontFamily: 'fontFamily',
+  fontSize: ' 18px',
+  margin: '7px 0 70px 0'
+}
+
+export const cardBold = {
+  color: 'secondary.darker',
   fontSize: '22px',
-  fontWeight: 'fontWeight',
-  lineHeight: '120%'
+  fontWeight: '600'
 }

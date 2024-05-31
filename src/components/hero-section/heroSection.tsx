@@ -11,6 +11,8 @@ const HeroSection = () => {
     (state: RootState) => state.allCategories.mainCategories
   )
 
+  const firstCategoryId = `/catalog/${allCategories && allCategories[0].id}`
+
   return (
     <Box component="section">
       <Container sx={mainBlock}>
@@ -36,7 +38,7 @@ const HeroSection = () => {
           </Typography>
           <Link
             style={{ width: '100%', maxWidth: '300px' }}
-            to={`/catalog/${allCategories && allCategories[0].id}`}
+            to={firstCategoryId}
           >
             <Button fullWidth sx={sloganButton}>
               Переглянути каталог

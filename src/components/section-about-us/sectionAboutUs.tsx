@@ -20,7 +20,11 @@ const SectionAboutUs = () => {
         <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Відверто кажучи, ми маленьке крафтове виробництво корисних смаколиків.
           Любимо усе, що дає нам матінка природа, а ще сильніше
-          <Typography component="span" sx={aboutUsParagraphItalic}>
+          <Typography
+            component="span"
+            variant="caption"
+            sx={aboutUsParagraphItalic}
+          >
             {' '}
             яблука!{' '}
           </Typography>
@@ -28,7 +32,11 @@ const SectionAboutUs = () => {
         <br />
         <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо{' '}
-          <Typography component="span" sx={aboutUsParagraphItalic}>
+          <Typography
+            component="span"
+            variant="caption"
+            sx={aboutUsParagraphItalic}
+          >
             і обожнюємо Україну
           </Typography>
           . Наша продукція зростає і покращується, оскільки все більше людей
