@@ -54,3 +54,23 @@ const InputField: React.FC<InputFieldProps> = ({
 )
 
 export default InputField
+
+// const handleIndexCity = async (item: string) => {
+//   if (item !== defaultCityValue) {
+//     setLoading(true); // Встановлюємо прапорець загрузки
+//     try {
+//       // Очікуємо завершення запиту та отримуємо дані
+//       await getNovaPoshtaCity(item);
+//       // Після успішного отримання даних встановлюємо значення defaultCityValue
+//       setDefaultCityValue(item);
+//       // Завершивши запит та встановивши значення, можемо зняти прапорець загрузки
+//     } catch (error) {
+//       console.error('Error fetching data:', error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+//   if (autocompleteRef && autocompleteRef.current) {
+//     autocompleteRef.current.focus();
+//   }
+// };

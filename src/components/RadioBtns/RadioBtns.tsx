@@ -3,7 +3,14 @@ import * as React from 'react'
 
 import { useState, useRef } from 'react'
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form'
-import { Radio, RadioGroup, FormControlLabel, Box } from '@mui/material'
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Box,
+  FormHelperText,
+  CircularProgress
+} from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Typography from '@mui/material/Typography'
@@ -17,20 +24,28 @@ import { CityDefault } from './CityDefault'
 type RadioFormProps = {
   register: UseFormRegister<FieldValues>
   setValue: UseFormSetValue<FieldValues>
+  errors: any
   // novaPoshtaCity: Array<{ Addresses: Array<{ Present: string }> }>;
   // novaPoshtaOffices: Array<{ Description: string }>;
   // getNovaPoshtaCity: () => void;
   // getNovaPoshtaOffices: () => void;
 }
 
-export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
+export const RadioBtns: React.FC<RadioFormProps> = ({
+  register,
+  setValue,
+  errors
+}) => {
   const [selectedValue, setSelectedValue] = useState<string>('np_office')
   const [novaPoshtaOffices, setNovaPoshtaOffices] = useState<any[]>([])
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
   const [defaultCityValue, setDefaultCityValue] = useState('')
   console.log('✌️defaultCityValue --->', defaultCityValue)
+  const [loading, setLoading] = useState(false)
 
   const getNovaPoshtaCity = async (cityName: string) => {
+    setLoading(true)
+
     const apiKey = 'f07607422838cfac21a0d1b8603086ca'
     const requestOptions = {
       method: 'POST',
@@ -64,6 +79,8 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
       }
     } catch (error) {
       console.error('Error fetching data:', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -106,17 +123,22 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
     }
   }
   const autocompleteRef = useRef(null)
+
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log(defaultCityValue)
-    }, 1000)
+    const timer = setTimeout(() => {}, 1000)
     getNovaPoshtaCity
     return () => clearTimeout(timer)
   }, [defaultCityValue])
+
   const renderMap =
     novaPoshtaCity && novaPoshtaCity.length > 0
       ? novaPoshtaCity[0].Addresses.map((address: any) => address.Present)
       : []
+
+  React.useEffect(() => {
+    setValue('first', defaultCityValue)
+  }, [setValue, defaultCityValue])
+
   return (
     <>
       <RadioGroup
@@ -136,10 +158,23 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
             <CityDefault
               setDefaultCityValue={setDefaultCityValue}
               autocompleteRef={autocompleteRef}
+              defaultCityValue={defaultCityValue}
+              getNovaPoshtaCity={getNovaPoshtaCity}
+              setLoading={setLoading}
             />
-
+            {(errors.first || errors.second) && (
+              <FormHelperText
+                sx={{
+                  color: 'error.darker',
+                  fontWeight: 500,
+                  mt: 2
+                }}
+              >
+                {errors.first?.message || errors.second?.message}
+              </FormHelperText>
+            )}
             <Autocomplete
-              {...register('first')}
+              {...register('first', { required: 'This field is required' })}
               id="virtualize-demo1"
               disableListWrap
               sx={{ mt: 2, maxWidth: 350 }}
@@ -151,21 +186,48 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
               inputValue={defaultCityValue}
               onInputChange={(_, value) => {
                 setDefaultCityValue(value)
-                if (value.length >= 1) {
+                if (value.length > 3) {
                   getNovaPoshtaCity(value)
                 }
               }}
               options={renderMap}
+              loading={loading}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Оберіть місто" />
+                <TextField
+                  {...params}
+                  placeholder="Оберіть місто"
+                  error={!!errors.first}
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <React.Fragment>
+                        {loading ? (
+                          <CircularProgress color="inherit" size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </React.Fragment>
+                    )
+                  }}
+                />
               )}
               renderOption={(props, option, state) =>
                 [props, option, state.index] as React.ReactNode
               }
               renderGroup={(params) => params as any}
-              onOpen={() => getNovaPoshtaCity(defaultCityValue)}
               onChange={(_, value) => {
                 setValue('first', value)
+                if (value !== defaultCityValue) {
+                  setDefaultCityValue('')
+                }
+              }}
+              isOptionEqualToValue={(option, value) => {
+                // Перевіряємо, чи option має таке ж значення як value, або value є порожнім рядком
+                if (option === value || value === '') {
+                  // Якщо умова виконується, повертаємо true
+                  return true
+                }
+                // Якщо умова не виконується, повертаємо false
+                return false
               }}
             />
 
@@ -181,7 +243,11 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
                 (office: any) => office.Description
               )}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Оберіть віділення" />
+                <TextField
+                  {...params}
+                  placeholder="Оберіть віділення"
+                  error={!!errors.second}
+                />
               )}
               renderOption={(props, option, state) =>
                 [props, option, state.index] as React.ReactNode
@@ -202,10 +268,10 @@ export const RadioBtns: React.FC<RadioFormProps> = ({ register, setValue }) => {
         />
         {selectedValue === 'np_address' && (
           <Box>
-            <CityDefault
+            {/* <CityDefault
               setDefaultCityValue={setDefaultCityValue}
               autocompleteRef={autocompleteRef}
-            />
+            /> */}
             <Autocomplete
               {...register('third')}
               id="virtualize-demo1"
