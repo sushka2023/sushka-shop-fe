@@ -9,18 +9,37 @@ import {
   FormHelperText
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import Autocomplete from '@mui/material/Autocomplete'
+import Autocomplete, {
+  AutocompleteRenderGroupParams
+} from '@mui/material/Autocomplete'
 import Typography from '@mui/material/Typography'
 import {
   ListboxComponent,
   StyledPopper
 } from '../Autocomplete/VariableSizeList'
+import { DefaultCity, cityStaticArray } from './DefaultCity'
+import { UseFormRegister, UseFormSetValue, FieldErrors } from 'react-hook-form'
+type RenderGroupFunction = (
+  params: AutocompleteRenderGroupParams
+) => React.ReactNode
+
+interface FormValues {
+  pickupNP: string
+}
+
+interface Address {
+  Present: string
+}
+
+interface NovaPoshtaCityData {
+  Addresses: Address[]
+}
 
 type PropsType = {
   children: ReactNode
-  register: any
-  setValue: any
-  errors: any
+  register: UseFormRegister<FormValues>
+  setValue: UseFormSetValue<FormValues>
+  errors: FieldErrors<FormValues>
 }
 
 export const RadioForm: FC<PropsType> = ({
@@ -30,9 +49,10 @@ export const RadioForm: FC<PropsType> = ({
   errors
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
-  const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
-  const [valueInput, setValueInput] = useState<any>(null)
-  const [loading, setLoading] = useState<any>(false)
+  const [novaPoshtaCity, setNovaPoshtaCity] = useState<NovaPoshtaCityData[]>([])
+  const [valueInput, setValueInput] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [defaultCity, setDefaultCity] = useState<string | null>(null)
 
   const stateRef = useRef(null)
 
@@ -65,7 +85,6 @@ export const RadioForm: FC<PropsType> = ({
         throw new Error('Failed to fetch data')
       }
       const data = await response.json()
-      console.log('✌️data --->', data)
       if (data && data.data && data.data.length > 0) {
         setNovaPoshtaCity(data.data)
       } else {
@@ -79,19 +98,54 @@ export const RadioForm: FC<PropsType> = ({
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (valueInput && valueInput.length > 3) {
+    if (
+      defaultCity === null &&
+      valueInput &&
+      valueInput.length > 3 &&
+      !isStaticArray
+    ) {
+      const timer = setTimeout(() => {
         getNovaPoshtaCity(valueInput)
-        console.log('✌️valueInput --->', valueInput)
-      }
-    }, 1000)
-    return () => clearTimeout(timer)
-  }, [valueInput])
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [valueInput, defaultCity])
+
+  const isStaticArray =
+    valueInput &&
+    typeof valueInput === 'string' &&
+    cityStaticArray.some((city) =>
+      valueInput.toLowerCase().includes(city.toLowerCase())
+    )
 
   const cityRenderArray =
-    novaPoshtaCity && novaPoshtaCity.length > 0
-      ? novaPoshtaCity[0].Addresses.map((address: any) => address.Present)
-      : []
+    valueInput === null
+      ? cityStaticArray
+      : valueInput !== '' &&
+          novaPoshtaCity &&
+          novaPoshtaCity.length > 0 &&
+          !isStaticArray
+        ? novaPoshtaCity[0].Addresses.map((address: Address) => address.Present)
+        : isStaticArray
+          ? cityStaticArray
+          : []
+
+  const [defaultCitySet, setDefaultCitySet] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (valueInput === '') {
+      setDefaultCity(null)
+      setDefaultCitySet(false)
+    }
+  }, [valueInput])
+
+  useEffect(() => {
+    if (defaultCity && !defaultCitySet) {
+      setValue('pickupNP', defaultCity)
+      setDefaultCitySet(true)
+      setNovaPoshtaCity([])
+    }
+  }, [defaultCity, setValue, defaultCitySet])
 
   return (
     <>
@@ -100,10 +154,19 @@ export const RadioForm: FC<PropsType> = ({
         name="radio-buttons-group"
         value={selectedValue}
         onChange={(e) => setSelectedValue(e.target.value)}
+        sx={{
+          '& .MuiFormControlLabel-label': {
+            cursor: 'pointer'
+          },
+          '& .MuiFormControlLabel-root:hover': {
+            cursor: 'default'
+          }
+        }}
       >
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         {selectedValue === 'female' && (
-          <React.Fragment>
+          <>
+            <DefaultCity setDefaultCity={setDefaultCity} />
             {errors.pickupNP && (
               <FormHelperText
                 sx={{
@@ -123,15 +186,24 @@ export const RadioForm: FC<PropsType> = ({
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
               options={cityRenderArray}
+              value={defaultCity !== '' ? defaultCity : null}
               loading={loading}
               noOptionsText="Немає варіантів"
               onInputChange={(_, val) => {
                 setValueInput(val)
-                console.log('✌️val --->', val)
               }}
-              onChange={(_, value) => {
-                setValue('pickupNP', value)
+              // onChange function
+              onChange={(_, value: string | null) => {
+                setValue('pickupNP', value || '')
+                if (
+                  value &&
+                  typeof value === 'string' &&
+                  cityStaticArray.includes(value)
+                ) {
+                  setLoading(false)
+                }
               }}
+              renderGroup={(params: any) => params}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -139,7 +211,7 @@ export const RadioForm: FC<PropsType> = ({
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
-                      <React.Fragment>
+                      <>
                         {loading ? (
                           <CircularProgress
                             color="inherit"
@@ -152,7 +224,7 @@ export const RadioForm: FC<PropsType> = ({
                           />
                         ) : null}
                         {params.InputProps.endAdornment}
-                      </React.Fragment>
+                      </>
                     )
                   }}
                 />
@@ -160,9 +232,8 @@ export const RadioForm: FC<PropsType> = ({
               renderOption={(props, option, state) =>
                 [props, option, state.index] as React.ReactNode
               }
-              renderGroup={(params) => params as any}
             />
-          </React.Fragment>
+          </>
         )}
 
         <FormControlLabel value="male" control={<Radio />} label="Male" />
