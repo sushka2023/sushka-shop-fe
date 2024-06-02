@@ -9,9 +9,7 @@ import {
   FormHelperText
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import Autocomplete, {
-  AutocompleteRenderGroupParams
-} from '@mui/material/Autocomplete'
+import Autocomplete from '@mui/material/Autocomplete'
 import Typography from '@mui/material/Typography'
 import {
   ListboxComponent,
@@ -19,9 +17,6 @@ import {
 } from '../Autocomplete/VariableSizeList'
 import { DefaultCity, cityStaticArray } from './DefaultCity'
 import { UseFormRegister, UseFormSetValue, FieldErrors } from 'react-hook-form'
-type RenderGroupFunction = (
-  params: AutocompleteRenderGroupParams
-) => React.ReactNode
 
 interface FormValues {
   pickupNP: string
