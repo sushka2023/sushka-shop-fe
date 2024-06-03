@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useEffect, useState, useRef, FC, ReactNode } from 'react'
 import {
   Radio,
@@ -17,17 +15,27 @@ import {
 } from '../Autocomplete/VariableSizeList'
 import { DefaultCity } from './DefaultCity'
 import { UseFormRegister, UseFormSetValue, FieldErrors } from 'react-hook-form'
+import { fetchNovaPoshtaCity } from './operation'
 
 interface FormValues {
   pickupNP: string
 }
 
 interface Address {
+  AddressDeliveryAllowed: boolean
+  Area: string
+  DeliveryCity: string
+  MainDescription: string
+  ParentRegionCode: string
+  ParentRegionTypes: string
   Present: string
-}
-
-interface NovaPoshtaCityData {
-  Addresses: Address[]
+  Ref: string
+  Region: string
+  RegionTypes: string
+  RegionTypesCode: string
+  SettlementTypeCode: string
+  StreetsAvailability: boolean
+  Warehouses: number
 }
 
 type PropsType = {
@@ -36,6 +44,7 @@ type PropsType = {
   setValue: UseFormSetValue<FormValues>
   errors: FieldErrors<FormValues>
 }
+
 const popularCitiesUkraine = [
   'Київ',
   'Харків',
@@ -57,6 +66,8 @@ const popularCitiesUkraine = [
   "Кам'янське"
 ]
 
+/* eslint-disable */
+
 export const RadioForm: FC<PropsType> = ({
   children,
   register,
@@ -64,47 +75,19 @@ export const RadioForm: FC<PropsType> = ({
   errors
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
-  const [novaPoshtaCity, setNovaPoshtaCity] = useState<NovaPoshtaCityData[]>([])
-  const [valueInput, setValueInput] = useState<string | null>(null)
+  const [novaPoshtaCity, setNovaPoshtaCity] = useState<Address[]>([])
+  const [valueInput, setValueInput] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [defaultCity, setDefaultCity] = useState<string | null>(null)
+  const [defaultCitySet, setDefaultCitySet] = useState<boolean>(false)
 
   const stateRef = useRef(null)
 
   const getNovaPoshtaCity = async (cityName: string) => {
-    const apiKey = 'f07607422838cfac21a0d1b8603086ca'
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        apiKey,
-        modelName: 'AddressGeneral',
-        calledMethod: 'searchSettlements',
-        methodProperties: {
-          CityName: cityName,
-          Limit: 20,
-          Page: 1
-        }
-      })
-    }
-
+    setLoading(true)
     try {
-      setLoading(true)
-      const response = await fetch(
-        'https://api.novaposhta.ua/v2.0/json/',
-        requestOptions
-      )
-      if (!response.ok) {
-        throw new Error('Failed to fetch data')
-      }
-      const data = await response.json()
-      if (data && data.data && data.data.length > 0) {
-        setNovaPoshtaCity(data.data)
-      } else {
-        console.error('No data available')
-      }
+      const city = await fetchNovaPoshtaCity(cityName)
+      setNovaPoshtaCity(city)
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -134,18 +117,13 @@ export const RadioForm: FC<PropsType> = ({
     )
 
   const cityRenderArray =
-    valueInput === '' || valueInput === null
+    valueInput === ''
       ? popularCitiesUkraine
-      : valueInput !== '' &&
-          novaPoshtaCity &&
-          novaPoshtaCity.length > 0 &&
-          !isStaticArray
-        ? novaPoshtaCity[0].Addresses.map((address: Address) => address.Present)
+      : valueInput !== '' && novaPoshtaCity && !isStaticArray
+        ? novaPoshtaCity.map((address: Address) => address.Present)
         : isStaticArray
           ? popularCitiesUkraine
           : []
-
-  const [defaultCitySet, setDefaultCitySet] = useState<boolean>(false)
 
   useEffect(() => {
     if (valueInput === '') {
@@ -163,7 +141,7 @@ export const RadioForm: FC<PropsType> = ({
   }, [defaultCity, setValue, defaultCitySet])
 
   return (
-    <>
+    <React.Fragment>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
@@ -180,7 +158,7 @@ export const RadioForm: FC<PropsType> = ({
       >
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         {selectedValue === 'female' && (
-          <>
+          <React.Fragment>
             <DefaultCity setDefaultCity={setDefaultCity} />
             {errors.pickupNP && (
               <FormHelperText
@@ -225,7 +203,7 @@ export const RadioForm: FC<PropsType> = ({
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
-                      <>
+                      <React.Fragment>
                         {loading ? (
                           <CircularProgress
                             color="inherit"
@@ -238,7 +216,7 @@ export const RadioForm: FC<PropsType> = ({
                           />
                         ) : null}
                         {params.InputProps.endAdornment}
-                      </>
+                      </React.Fragment>
                     )
                   }}
                 />
@@ -247,13 +225,11 @@ export const RadioForm: FC<PropsType> = ({
                 [props, option, state.index] as React.ReactNode
               }
             />
-          </>
+          </React.Fragment>
         )}
 
         <FormControlLabel value="male" control={<Radio />} label="Male" />
-        {selectedValue === 'male' && (
-          <Typography>Additional text for Male option</Typography>
-        )}
+        {selectedValue === 'male' && <React.Fragment></React.Fragment>}
 
         <FormControlLabel value="other" control={<Radio />} label="Other" />
         {selectedValue === 'other' && (
@@ -261,8 +237,7 @@ export const RadioForm: FC<PropsType> = ({
         )}
       </RadioGroup>
       {children}
-    </>
+    </React.Fragment>
   )
 }
-
 /* eslint-enable */
