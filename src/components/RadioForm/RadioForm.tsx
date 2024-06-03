@@ -15,7 +15,7 @@ import {
   ListboxComponent,
   StyledPopper
 } from '../Autocomplete/VariableSizeList'
-import { DefaultCity, cityStaticArray } from './DefaultCity'
+import { DefaultCity } from './DefaultCity'
 import { UseFormRegister, UseFormSetValue, FieldErrors } from 'react-hook-form'
 
 interface FormValues {
@@ -36,6 +36,26 @@ type PropsType = {
   setValue: UseFormSetValue<FormValues>
   errors: FieldErrors<FormValues>
 }
+const popularCitiesUkraine = [
+  'Київ',
+  'Харків',
+  'Одеса',
+  'Дніпро',
+  'Запоріжжя',
+  'Львів',
+  'Кривий Ріг',
+  'Миколаїв',
+  'Вінниця',
+  'Херсон',
+  'Полтава',
+  'Чернігів',
+  'Черкаси',
+  'Житомир',
+  'Суми',
+  'Рівне',
+  'Франківськ',
+  "Кам'янське"
+]
 
 export const RadioForm: FC<PropsType> = ({
   children,
@@ -109,20 +129,20 @@ export const RadioForm: FC<PropsType> = ({
   const isStaticArray =
     valueInput &&
     typeof valueInput === 'string' &&
-    cityStaticArray.some((city) =>
-      valueInput.toLowerCase().includes(city.toLowerCase())
+    popularCitiesUkraine.some((city) =>
+      city.toLowerCase().includes(valueInput.toLowerCase())
     )
 
   const cityRenderArray =
-    valueInput === null
-      ? cityStaticArray
+    valueInput === '' || valueInput === null
+      ? popularCitiesUkraine
       : valueInput !== '' &&
           novaPoshtaCity &&
           novaPoshtaCity.length > 0 &&
           !isStaticArray
         ? novaPoshtaCity[0].Addresses.map((address: Address) => address.Present)
         : isStaticArray
-          ? cityStaticArray
+          ? popularCitiesUkraine
           : []
 
   const [defaultCitySet, setDefaultCitySet] = useState<boolean>(false)
@@ -141,6 +161,10 @@ export const RadioForm: FC<PropsType> = ({
       setNovaPoshtaCity([])
     }
   }, [defaultCity, setValue, defaultCitySet])
+
+  const handleInputChange = () => {
+    console.log(valueInput)
+  }
 
   return (
     <>
@@ -186,14 +210,14 @@ export const RadioForm: FC<PropsType> = ({
               noOptionsText="Немає варіантів"
               onInputChange={(_, val) => {
                 setValueInput(val)
+                handleInputChange()
               }}
-              // onChange function
               onChange={(_, value: string | null) => {
                 setValue('pickupNP', value || '')
                 if (
                   value &&
                   typeof value === 'string' &&
-                  cityStaticArray.includes(value)
+                  popularCitiesUkraine.includes(value)
                 ) {
                   setLoading(false)
                 }
