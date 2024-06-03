@@ -162,10 +162,6 @@ export const RadioForm: FC<PropsType> = ({
     }
   }, [defaultCity, setValue, defaultCitySet])
 
-  const handleInputChange = () => {
-    console.log(valueInput)
-  }
-
   return (
     <>
       <RadioGroup
@@ -210,7 +206,6 @@ export const RadioForm: FC<PropsType> = ({
               noOptionsText="Немає варіантів"
               onInputChange={(_, val) => {
                 setValueInput(val)
-                handleInputChange()
               }}
               onChange={(_, value: string | null) => {
                 setValue('pickupNP', value || '')
