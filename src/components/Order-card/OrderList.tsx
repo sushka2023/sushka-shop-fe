@@ -23,7 +23,7 @@ const OrderList = () => {
       }
       setOrderList(orderList.filter((orderItem) => orderItem.id !== id))
     } catch (e) {
-      console.log(e)
+      console.error('Помилка під час видалення продуктів:', e)
     }
   }
 
