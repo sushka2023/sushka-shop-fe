@@ -1,6 +1,12 @@
 import { BasketItemsResponse } from '../../types'
 import { UseFormRegister, Control, UseFormSetValue } from 'react-hook-form'
 
+export enum PaymentMethodTypes {
+  wayforpay = 'wayforpay',
+  postpaid = 'postpaid',
+  byDetails = 'by_details'
+}
+
 export type Inputs = {
   firstName: string
   lastName: string
@@ -9,6 +15,9 @@ export type Inputs = {
   otherRecipient: boolean
   fullNameOtherRecipient: string
   phoneOtherRecipient: string
+  paymentType: PaymentMethodTypes
+  comment: string
+  call: boolean
 }
 
 export type OrderDetailsType = Inputs | null

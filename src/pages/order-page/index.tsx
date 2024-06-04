@@ -114,7 +114,10 @@ const OrderPage = () => {
     fetchLocalStorageOrder()
   }, [user])
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => setOrderDetails(data)
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setOrderDetails(data)
+    console.log(data)
+  }
 
   return (
     <OrderContext.Provider value={CONTEXT_DATA}>

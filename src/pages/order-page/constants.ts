@@ -1,3 +1,5 @@
+import { PaymentMethodTypes } from './types'
+
 const STEPS = ['Ваші контактні дані', 'Адреса доставки', 'Оплата']
 
 const SUM = 'Загальна сума'
@@ -11,7 +13,23 @@ const ORDER_FORM_DEFAULT_VALUES = {
   phone: '',
   otherRecipient: false,
   fullNameOtherRecipient: '',
-  phoneOtherRecipient: ''
+  phoneOtherRecipient: '',
+  paymentType: PaymentMethodTypes.postpaid,
+  comment: '',
+  call: false
 }
 
-export { STEPS, SUM, TARIFF, DELIVERY, ORDER_FORM_DEFAULT_VALUES }
+const PAYMENT_METHODS = [
+  { method: PaymentMethodTypes.wayforpay, label: 'Wayforpay (оплата карткою)' },
+  { method: PaymentMethodTypes.postpaid, label: 'Післяплата (при отриманні)' },
+  { method: PaymentMethodTypes.byDetails, label: 'Оплата за реквізитами' }
+]
+
+export {
+  STEPS,
+  SUM,
+  TARIFF,
+  DELIVERY,
+  ORDER_FORM_DEFAULT_VALUES,
+  PAYMENT_METHODS
+}
