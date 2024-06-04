@@ -4,12 +4,25 @@ import HeroPic from '../../images/hero-pic.jpg'
 import { RootState } from '../../redux/store'
 import { Button } from '../UI/Button'
 import { Box, Container, Typography } from '@mui/material'
-import { mainBlock, slogan, sloganButton, sloganParagraph } from './style'
+import {
+  mainBlock,
+  slogan,
+  sloganButton,
+  sloganImgLogo,
+  sloganParagraph
+} from './style'
+
+// const test = {
+//   width: '460px',
+//   height: '441px'
+// }
 
 const HeroSection = () => {
   const allCategories = useSelector(
     (state: RootState) => state.allCategories.mainCategories
   )
+
+  // const theme = useTheme()
 
   const firstCategoryId = `/catalog/${allCategories && allCategories[0].id}`
 
@@ -50,8 +63,7 @@ const HeroSection = () => {
           component="img"
           src={HeroPic}
           alt="dried fruits in plastic bags"
-          width={760}
-          height={730}
+          sx={{ ...sloganImgLogo }}
         />
       </Container>
     </Box>

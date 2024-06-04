@@ -1,6 +1,7 @@
 export const mainBlock = {
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
+  gap: '45px',
   paddingTop: '0',
   marginTop: '50px'
 }
@@ -23,4 +24,9 @@ export const sloganButton = {
 export const sloganParagraph = {
   color: 'secondary.darker',
   fontSize: '18px'
+}
+
+export const sloganImgLogo = {
+  width: 'clamp(23.438rem, 16.563rem + 34.38vw, 47.5rem)'
+  // height: '730px'
 }
