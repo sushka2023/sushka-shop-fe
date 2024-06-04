@@ -13,14 +13,18 @@ const OrderList = () => {
   const { user } = useAuth()
 
   const removeProduct = async (id: number) => {
-    if (user) {
-      await axiosInstance.delete(`api/basket_items/remove`, {
-        data: {
-          id
-        }
-      })
+    try {
+      if (user) {
+        await axiosInstance.delete(`api/basket_items/remove`, {
+          data: {
+            id
+          }
+        })
+      }
+      setOrderList(orderList.filter((orderItem) => orderItem.id !== id))
+    } catch (e) {
+      console.log(e)
     }
-    setOrderList(orderList.filter((orderItem) => orderItem.id !== id))
   }
 
   const countTotalPrice = (quantity: number, price: number) => price * quantity

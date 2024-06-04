@@ -16,7 +16,7 @@ import { Inputs, OrderDetailsType, OrderContextType } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
 import { getLocalStorageData } from '../../utils/local-storage'
 
-const OrderContext = createContext<OrderContextType>(null)
+const OrderContext = createContext<OrderContextType>({} as OrderContextType)
 
 const OrderPage = () => {
   const [activeStep, setActiveStep] = useState(0)
