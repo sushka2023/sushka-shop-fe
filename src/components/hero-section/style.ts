@@ -1,13 +1,13 @@
 export const mainBlock = {
   display: 'flex',
   justifyContent: 'center',
-  gap: '45px',
+  gap: '65px',
   paddingTop: '0',
   marginTop: '50px'
 }
 
 export const slogan = {
-  width: '555px',
+  // width: '555px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -27,6 +27,8 @@ export const sloganParagraph = {
 }
 
 export const sloganImgLogo = {
-  width: 'clamp(23.438rem, 16.563rem + 34.38vw, 47.5rem)'
   // height: '730px'
+  width: '100%',
+  maxWidth: '760px',
+  height: 'auto'
 }

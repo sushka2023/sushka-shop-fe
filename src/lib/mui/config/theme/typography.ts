@@ -31,7 +31,7 @@ const THEME_TYPOGRAPHY = {
   fontWeight: OPEN_SANS_REGULAR.weight,
   h1: {
     fontFamily: NUNITO_EXTRA_BOLD.font,
-    fontSize: 'clamp(1.5rem, 1rem + 2.5vw, 3.25rem)',
+    fontSize: '3.25rem',
     fontWeight: NUNITO_EXTRA_BOLD.weight,
     lineHeight: 'normal'
   },
