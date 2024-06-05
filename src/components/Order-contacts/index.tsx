@@ -42,6 +42,8 @@ const OrderContacts = () => {
         <Typography fontWeight={400} fontSize="18px">
           Я вже маю акаунт.
           <Typography
+            fontWeight={600}
+            fontSize="18px"
             component="span"
             sx={{ cursor: 'pointer' }}
             onClick={() => setIsModalOpen(!isModalOpen)}

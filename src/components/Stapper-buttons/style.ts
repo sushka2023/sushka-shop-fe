@@ -5,7 +5,8 @@ const btnContainerStyle = {
 }
 
 const btnNextStyle = {
-  'fontWeight': '500',
+  'textTransform': 'upperCase',
+  'fontWeight': '600',
   'padding': '15px 30px',
   'borderRadius': '10px',
   'backgroundColor': 'rgba(86, 115, 67, 1)',
@@ -14,6 +15,7 @@ const btnNextStyle = {
   'fontSize': '14px',
   'lineHeight': '17px',
   '&:hover': {
+    color: 'rgba(255, 255, 255, 1)',
     borderColor: 'inherit',
     backgroundColor: 'rgba(86, 115, 67, 0.85)'
   }
