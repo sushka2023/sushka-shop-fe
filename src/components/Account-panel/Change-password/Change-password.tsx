@@ -27,6 +27,7 @@ export const ChangePassword = () => {
   })
 
   const { showSnackbar } = useSnackbar()
+
   const onSubmit = async (data: FormData) => {
     setIsLoadingBtn(true)
     try {

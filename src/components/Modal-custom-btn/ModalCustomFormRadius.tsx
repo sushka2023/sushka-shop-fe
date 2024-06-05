@@ -1,6 +1,6 @@
 import React from 'react'
 import InfoConfirmationModal from './ModalCustomWindow'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { RadioForm } from '../RadioForm/RadioForm'
 import { Button } from '../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -41,11 +41,15 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
         alignItems: 'start'
       }}
     >
-      <React.Fragment>
+      <Box sx={{ p: 2 }}>
         <Typography id="modal-modal-title" variant="h3">
           Ваша збережена адреса №3
         </Typography>
-        <Typography id="modal-modal-description" component="p">
+        <Typography
+          sx={{ m: '10px 0 40px 0' }}
+          id="modal-modal-description"
+          component="p"
+        >
           Ми збережемо введені дані, щоб оформлення <br />
           Вашого наступного замовлення було швидшим.
         </Typography>
@@ -57,7 +61,7 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
             </Button>
           </RadioForm>
         </form>
-      </React.Fragment>
+      </Box>
     </InfoConfirmationModal>
   )
 }
