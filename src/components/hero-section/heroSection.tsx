@@ -4,7 +4,13 @@ import HeroPic from '../../images/hero-pic.jpg'
 import { RootState } from '../../redux/store'
 import { Button } from '../UI/Button'
 import { Box, Container, Typography, useTheme } from '@mui/material'
-import { mainBlock, slogan, sloganImgLogo, sloganParagraph } from './style'
+import {
+  mainBlock,
+  slogan,
+  sloganImgLogo,
+  sloganParagraph,
+  sloganButton
+} from './style'
 
 const test = {
   width: 'clamp(18.438rem, 8.267rem + 27.12vw, 25.625rem)',
@@ -12,6 +18,7 @@ const test = {
 }
 
 const mainBlockTheme = {
+  justifyContent: 'center',
   gap: 'clamp(0.625rem, -2.028rem + 7.08vw, 2.5rem)',
   border: '1px solid red'
 }
@@ -21,10 +28,6 @@ const H1 = {
     fontSize: 'clamp(1.625rem, 0.741rem + 2.36vw, 2.25rem)'
   },
   sm: { fontSize: '26px' }
-}
-
-const testP1 = {
-  fontSize: '16px'
 }
 
 const HeroSection = () => {
@@ -61,9 +64,9 @@ const HeroSection = () => {
             component="p"
             variant="body1"
             sx={{
-              ...sloganParagraph,
-              [theme.breakpoints.between('md', 'lg')]: testP1
+              ...sloganParagraph
             }}
+            // [theme.breakpoints.between('sm', 'md')]: sloganButton
           >
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
@@ -72,7 +75,11 @@ const HeroSection = () => {
             style={{ width: '100%', maxWidth: '300px' }}
             to={firstCategoryId}
           >
-            <Button fullWidth variant="contained">
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ [theme.breakpoints.between('sm', 'md')]: sloganButton }}
+            >
               Переглянути каталог
             </Button>
           </Link>
