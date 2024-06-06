@@ -67,7 +67,7 @@ export const ChangePassword = () => {
           <InputField
             type="password"
             label="Придумайте новий пароль"
-            placeholder="Старий пароль"
+            placeholder="Новий пароль"
             register={register('new_password')}
             error={errors.new_password}
             sxInput={stInput}

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Box, FormHelperText } from '@mui/material'
 import { AutocompleteForCityNP } from '../../Autocomplete/AutocompleteForCityNP'
 
