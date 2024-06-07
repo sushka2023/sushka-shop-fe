@@ -73,7 +73,7 @@ export const ListboxComponent = React.forwardRef<
     noSsr: true
   })
   const itemCount = itemData.length
-  const itemSize = smUp ? 76 : 48
+  const itemSize = smUp ? 65 : 48
 
   const getChildSize = (child: React.ReactElement) => {
     if (child.hasOwnProperty('group')) {

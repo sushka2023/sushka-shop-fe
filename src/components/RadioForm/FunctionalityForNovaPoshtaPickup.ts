@@ -20,6 +20,8 @@ interface Address {
 
 export const useAutocompleteCityLogic = (setValue: any) => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
+  const [valueOption, setValueOption] = useState<string>('')
+  console.log('✌️valueOption --->', valueOption)
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<Address[]>([])
   const [valueInput, setValueInput] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -90,12 +92,13 @@ export const useAutocompleteCityLogic = (setValue: any) => {
   }, [valueInput, novaPoshtaCity, isStaticArray, popularCitiesUkraine])
 
   useEffect(resetDefaultCity, [selectedValue])
-  useEffect(handleCityInputChange, [valueInput, valueInput])
+  useEffect(handleCityInputChange, [valueInput])
   useEffect(resetDefaultCitySet, [valueInput])
   useEffect(updateDefaultCity, [valueInput, setValue])
 
   const handleChange = (value: string) => {
     setValue('pickupNP', value || '')
+    setValueOption(value)
     if (
       value &&
       typeof value === 'string' &&
