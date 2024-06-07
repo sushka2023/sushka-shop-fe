@@ -91,3 +91,26 @@ export const cardBold = {
   fontSize: '22px',
   fontWeight: '600'
 }
+
+export const ArrowStyle = {
+  'width': '40px',
+  'height': '40px',
+  'background': 'none',
+  'display': 'flex',
+  'justifyContent': 'flex-end',
+  'alignItems': 'center',
+  'mb': '40px',
+  '&:hover': {
+    cursor: 'pointer'
+  }
+}
+
+export const customButton = {
+  'color': 'secondary.darker',
+  'backgroundColor': 'background.default',
+  'border': 'none',
+  '&:hover': {
+    color: 'secondary.darker', // Замість цього використайте бажаний колір для hover
+    border: '2px solid #567343' // Замість цього використайте бажаний колір та стиль для hover
+  }
+}

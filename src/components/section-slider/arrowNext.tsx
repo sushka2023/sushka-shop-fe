@@ -1,6 +1,7 @@
 import { FC } from 'react'
-import ArrowIcon from '../../icons/arrow.svg?react'
-import styles from './sliderSection.module.scss'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { Box } from '@mui/material'
+import { ArrowStyle } from './style'
 
 type Props = {
   onClick?: () => void
@@ -8,9 +9,9 @@ type Props = {
 
 const ArrowNext: FC<Props> = ({ onClick }) => {
   return (
-    <div className={styles.ArrowNextStyle} onClick={onClick}>
-      <ArrowIcon className={styles.arrow} />
-    </div>
+    <Box sx={ArrowStyle} onClick={onClick}>
+      <ArrowForwardIosIcon sx={{ color: 'background.default' }} />
+    </Box>
   )
 }
 

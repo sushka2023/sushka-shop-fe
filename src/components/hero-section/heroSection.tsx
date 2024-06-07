@@ -1,34 +1,24 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.jpg'
+import HeroMobilePic from '../../images/HeroMobile-pic.png'
 import { RootState } from '../../redux/store'
 import { Button } from '../UI/Button'
-import { Box, Container, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
 import {
   mainBlock,
   slogan,
   sloganImgLogo,
   sloganParagraph,
-  sloganButton
+  sloganButton,
+  sloganTitle
 } from './style'
-
-const test = {
-  width: 'clamp(18.438rem, 8.267rem + 27.12vw, 25.625rem)',
-  height: 'auto'
-}
-
-const mainBlockTheme = {
-  justifyContent: 'center',
-  gap: 'clamp(0.625rem, -2.028rem + 7.08vw, 2.5rem)',
-  border: '1px solid red'
-}
-
-const H1 = {
-  md: {
-    fontSize: 'clamp(1.625rem, 0.741rem + 2.36vw, 2.25rem)'
-  },
-  sm: { fontSize: '26px' }
-}
 
 const HeroSection = () => {
   const allCategories = useSelector(
@@ -36,6 +26,7 @@ const HeroSection = () => {
   )
 
   const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const firstCategoryId = `/catalog/${allCategories && allCategories[0].id}`
 
@@ -44,14 +35,17 @@ const HeroSection = () => {
       <Container
         sx={{
           ...mainBlock,
-          [theme.breakpoints.between('sm', 'lg')]: mainBlockTheme
+          [theme.breakpoints.between('sm', 'lg')]: mainBlock.lg,
+          [theme.breakpoints.down('sm')]: mainBlock.sm
         }}
       >
         <Box sx={slogan}>
           <Typography
             sx={{
               color: 'secondary.darker',
-              [theme.breakpoints.between('sm', 'lg')]: H1.md
+              ...sloganTitle.xl,
+              [theme.breakpoints.between('sm', 'lg')]: sloganTitle.md,
+              [theme.breakpoints.down('sm')]: sloganTitle.sm
             }}
             component="h1"
             variant="h1"
@@ -66,7 +60,6 @@ const HeroSection = () => {
             sx={{
               ...sloganParagraph
             }}
-            // [theme.breakpoints.between('sm', 'md')]: sloganButton
           >
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
@@ -78,22 +71,36 @@ const HeroSection = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ [theme.breakpoints.between('sm', 'md')]: sloganButton }}
+              sx={{ [theme.breakpoints.down('md')]: sloganButton }}
             >
               Переглянути каталог
             </Button>
           </Link>
         </Box>
 
-        <Box
-          component="img"
-          src={HeroPic}
-          alt="dried fruits in plastic bags"
-          sx={{
-            ...sloganImgLogo,
-            [theme.breakpoints.between('sm', 'md')]: test
-          }}
-        />
+        <Box>
+          {isSmallScreen ? (
+            <Box
+              component="img"
+              src={HeroMobilePic}
+              alt="dried fruits in plastic bags"
+              sx={{
+                ...sloganImgLogo.sm
+              }}
+            />
+          ) : (
+            <Box
+              height={205}
+              component="img"
+              src={HeroPic}
+              alt="dried fruits in plastic bags"
+              sx={{
+                ...sloganImgLogo.lg,
+                [theme.breakpoints.between('sm', 'md')]: sloganImgLogo.md
+              }}
+            />
+          )}
+        </Box>
       </Container>
     </Box>
   )

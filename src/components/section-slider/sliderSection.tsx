@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
-import styles from './sliderSection.module.scss'
-import ArrowBtn from '../../icons/arrow.svg?react'
 import { Box, Container, Typography } from '@mui/material'
 import List from '@mui/material/List'
 
 import {
   border,
   borderSecond,
+  customButton,
   lastSlider,
   sectionBg,
   sliderContainer
 } from './style'
+import { Button } from '../UI/Button'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -41,9 +41,9 @@ const SlideSection = () => {
           sx={{
             width: '17px',
             height: '17px',
+            borderRadius: '17px',
             background:
-              activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)',
-            borderRadius: '17px'
+              activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)'
           }}
         ></Box>
       )
@@ -58,11 +58,14 @@ const SlideSection = () => {
       return (
         <Box sx={lastSlider}>
           <Link
+            style={{ width: '100%', maxWidth: '300px' }}
             to="catalog/11"
-            className={`${styles.customButton} ${styles.customLink}`}
+            // className={`${styles.customButton} ${styles.customLink}`}
           >
-            переглянути каталог
-            <ArrowBtn className={styles.arrowBtn} width={10} height={17} />
+            <Button fullWidth variant="contained" sx={customButton}>
+              Переглянути каталог
+            </Button>
+            {/* <ArrowBtn className={styles.arrowBtn} width={10} height={17} /> */}
           </Link>
         </Box>
       )
