@@ -20,9 +20,6 @@ export const slogan = {
 }
 
 export const sloganTitle = {
-  xl: {
-    fontSize: '52px'
-  },
   md: {
     fontSize: 'clamp(1.625rem, 0.464rem + 3.1vw, 3.25rem)'
   },

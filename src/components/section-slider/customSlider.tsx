@@ -1,10 +1,16 @@
-import styles from './sliderSection.module.scss'
+// import styles from './sliderSection.module.scss'
 // import IconFavorite from '../../icons/favorite.svg?react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
 import { Box, Typography } from '@mui/material'
-import { cardPararaph, cardBold, slideElement, slideImage } from './style'
+import {
+  cardPararaph,
+  cardBold,
+  slideElement,
+  slideImage,
+  cardFavorite
+} from './style'
 import { Button } from '../UI/Button'
 
 type Props = HTMLProps<HTMLDivElement> & { index: number }
@@ -23,7 +29,7 @@ const CustomSlider: FC<Props> = (props) => {
               src={ShopItem}
               alt="mandarin pastille"
             />
-            <FavoriteBorderIcon className={styles.cardFavorite} />
+            <FavoriteBorderIcon sx={cardFavorite} />
           </Box>
           <Box sx={{ padding: '0px 40px 30px' }}>
             <Typography component="h3" variant="h3" sx={cardBold}>

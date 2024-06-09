@@ -43,7 +43,6 @@ const HeroSection = () => {
           <Typography
             sx={{
               color: 'secondary.darker',
-              ...sloganTitle.xl,
               [theme.breakpoints.between('sm', 'lg')]: sloganTitle.md,
               [theme.breakpoints.down('sm')]: sloganTitle.sm
             }}

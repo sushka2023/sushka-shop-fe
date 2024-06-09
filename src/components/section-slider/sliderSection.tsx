@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
-import { Box, Container, Typography } from '@mui/material'
+import { Box, Container, Typography, useTheme } from '@mui/material'
 import List from '@mui/material/List'
 
 import {
@@ -13,18 +13,20 @@ import {
   customButton,
   lastSlider,
   sectionBg,
-  sliderContainer
+  sliderContainer,
+  sliderTitle
 } from './style'
 import { Button } from '../UI/Button'
 
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
+  const theme = useTheme()
 
   const settings: Settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     prevArrow: <ArrowPrev />,
     nextArrow: <ArrowNext />,
@@ -78,7 +80,15 @@ const SlideSection = () => {
     <Box component="section" sx={sectionBg}>
       <Box sx={border}></Box>
       <Container maxWidth="lg" sx={sliderContainer}>
-        <Typography color={'background.default'} variant="h2" component="h2">
+        <Typography
+          sx={{
+            ...sliderTitle,
+            [theme.breakpoints.between('sm', 'lg')]: sliderTitle.md,
+            [theme.breakpoints.down('sm')]: sliderTitle.sm
+          }}
+          variant="h2"
+          component="h2"
+        >
           Популярні товари
         </Typography>
 

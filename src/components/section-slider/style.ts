@@ -37,8 +37,19 @@ export const sliderContainer = {
   }
 }
 
+export const sliderTitle = {
+  color: 'background.default',
+  xl: {
+    fontSize: '48px'
+  },
+  md: {
+    fontSize: 'clamp(1.063rem, -0.321rem + 3.69vw, 3rem)'
+  },
+  sm: { fontSize: '17px' }
+}
+
 export const slideElement = {
-  maxWidth: '400px',
+  maxWidth: '100%',
   boxSizing: 'border-box',
   borderRadius: '10px',
   backgroundColor: 'background.default',
@@ -67,9 +78,9 @@ export const cardFavorite = {
   'position': 'absolute',
   'top': '40px',
   'right': '34px',
-  'fill': 'turquoise.darker',
+  'color': 'secondary.darker',
   '&:hover': {
-    background: 'pink.darker',
+    color: 'primary.darker',
     cursor: 'pointer'
   }
 }
