@@ -1,12 +1,9 @@
-/* eslint-disable */
-
-import React, { useEffect, useState, useRef, FC, ReactNode } from 'react'
+import React, { useEffect, useState, FC, ReactNode, useMemo } from 'react'
 import {
   Radio,
   RadioGroup,
   FormControlLabel,
-  CircularProgress,
-  FormHelperText
+  CircularProgress
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
@@ -15,61 +12,77 @@ import {
   ListboxComponent,
   StyledPopper
 } from '../Autocomplete/VariableSizeList'
+import { ErrorMessage } from '../Error/Error'
 
 type PropsType = {
   children: ReactNode
   register: any
   setValue: any
   errors: any
+  setError: any
+  clearErrors: any
 }
 
-export const RadioForm: FC<PropsType> = ({
+const cityDefault = ['Київ', 'Львів', 'Одеса', 'Дніпро', 'Харків', 'Рівне']
+
+const fetchNovaPoshtaCity = async (cityName: string) => {
+  const apiKey = 'f07607422838cfac21a0d1b8603086ca'
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      apiKey,
+      modelName: 'AddressGeneral',
+      calledMethod: 'searchSettlements',
+      methodProperties: {
+        CityName: cityName,
+        Limit: 20,
+        Page: 1
+      }
+    })
+  }
+
+  const response = await fetch(
+    'https://api.novaposhta.ua/v2.0/json/',
+    requestOptions
+  )
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch data')
+  }
+
+  const data = await response.json()
+  return data.data
+}
+
+const RadioForm: FC<PropsType> = ({
   children,
   register,
   setValue,
-  errors
+  errors,
+  setError,
+  clearErrors
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
-  const [valueInput, setValueInput] = useState<any>(null)
-  const [loading, setLoading] = useState<any>(false)
+  const [valueInput, setValueInput] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const stateRef = useRef(null)
-
-  const getNovaPoshtaCity = async (cityName: string) => {
-    const apiKey = 'f07607422838cfac21a0d1b8603086ca'
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        apiKey,
-        modelName: 'AddressGeneral',
-        calledMethod: 'searchSettlements',
-        methodProperties: {
-          CityName: cityName,
-          Limit: 20,
-          Page: 1
-        }
-      })
-    }
-
+  const handleCityFetch = async (cityName: string) => {
     try {
       setLoading(true)
-      const response = await fetch(
-        'https://api.novaposhta.ua/v2.0/json/',
-        requestOptions
-      )
-      if (!response.ok) {
-        throw new Error('Failed to fetch data')
-      }
-      const data = await response.json()
-      console.log('✌️data --->', data)
-      if (data && data.data && data.data.length > 0) {
-        setNovaPoshtaCity(data.data)
+      const data = await fetchNovaPoshtaCity(cityName)
+      const addresses = data[0]?.Addresses || []
+      if (
+        addresses.length > 0 &&
+        addresses.some((address: any) => address.Warehouses > 0)
+      ) {
+        setNovaPoshtaCity(data)
+        clearErrors('pickupNP')
       } else {
-        console.error('No data available')
+        setError('pickupNP', { type: 'manual', message: 'Немає відділень' })
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -80,21 +93,39 @@ export const RadioForm: FC<PropsType> = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (valueInput && valueInput.length > 3) {
-        getNovaPoshtaCity(valueInput)
-        console.log('✌️valueInput --->', valueInput)
+      if (
+        valueInput &&
+        valueInput.length > 3 &&
+        !cityDefault.includes(valueInput)
+      ) {
+        setNovaPoshtaCity([])
+        handleCityFetch(valueInput)
+      } else if (cityDefault.includes(valueInput)) {
+        clearErrors('pickupNP')
       }
     }, 1000)
     return () => clearTimeout(timer)
   }, [valueInput])
 
-  const cityRenderArray =
-    novaPoshtaCity && novaPoshtaCity.length > 0
-      ? novaPoshtaCity[0].Addresses.map((address: any) => address.Present)
-      : []
+  const cityRenderNP = useMemo(
+    () =>
+      novaPoshtaCity.length > 0
+        ? novaPoshtaCity[0].Addresses.map((address: any) => address.Present)
+        : [],
+    [novaPoshtaCity]
+  )
+
+  const options = useMemo(() => {
+    const filteredCities = !valueInput
+      ? cityDefault
+      : cityDefault.filter((city) =>
+          city.toLowerCase().includes(valueInput.toLowerCase())
+        )
+    return filteredCities.length > 0 ? filteredCities : cityRenderNP
+  }, [valueInput, cityRenderNP])
 
   return (
-    <>
+    <React.Fragment>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
@@ -104,43 +135,37 @@ export const RadioForm: FC<PropsType> = ({
         <FormControlLabel value="female" control={<Radio />} label="Female" />
         {selectedValue === 'female' && (
           <React.Fragment>
-            {errors.pickupNP && (
-              <FormHelperText
-                sx={{
-                  color: 'error.darker',
-                  fontWeight: 500
-                }}
-              >
-                {errors.pickupNP?.message}
-              </FormHelperText>
-            )}
+            <ErrorMessage
+              error={errors.pickupNP}
+              styles={{ position: 'relative' }}
+            />
             <Autocomplete
               {...register('pickupNP')}
-              ref={stateRef}
               id="virtualize-demo1"
               sx={{ width: 300, mt: 2 }}
               disableListWrap
               PopperComponent={StyledPopper}
               ListboxComponent={ListboxComponent}
-              options={cityRenderArray}
+              options={options}
               loading={loading}
               noOptionsText="Немає варіантів"
-              onInputChange={(_, val) => {
-                setValueInput(val)
-                console.log('✌️val --->', val)
-              }}
-              onChange={(_, value) => {
+              onInputChange={(_, val) => setValueInput(val)}
+              onChange={(_, value: string) => {
+                console.log('✌️value --->', value)
                 setValue('pickupNP', value)
+                if (cityDefault.includes(value)) {
+                  clearErrors('pickupNP')
+                }
               }}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Оберіть місто"
+                  placeholder="Оберіть населений пункт"
                   InputProps={{
                     ...params.InputProps,
                     endAdornment: (
                       <React.Fragment>
-                        {loading ? (
+                        {loading && (
                           <CircularProgress
                             color="inherit"
                             size={23}
@@ -150,7 +175,7 @@ export const RadioForm: FC<PropsType> = ({
                               color: 'sapphire.dark'
                             }}
                           />
-                        ) : null}
+                        )}
                         {params.InputProps.endAdornment}
                       </React.Fragment>
                     )
@@ -176,8 +201,8 @@ export const RadioForm: FC<PropsType> = ({
         )}
       </RadioGroup>
       {children}
-    </>
+    </React.Fragment>
   )
 }
 
-/* eslint-enable */
+export default RadioForm

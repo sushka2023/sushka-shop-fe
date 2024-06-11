@@ -1,11 +1,11 @@
 import React from 'react'
 import InfoConfirmationModal from './ModalCustomWindow'
 import { Typography } from '@mui/material'
-import { RadioForm } from '../RadioForm/RadioForm'
 import { Button } from '../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import RadioForm from '../RadioForm/RadioForm'
 
 interface ModalCustomFormRadiusProps {
   openModal?: boolean
@@ -24,6 +24,8 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
     handleSubmit,
     register,
     setValue,
+    setError,
+    clearErrors,
     formState: { errors }
   } = useForm<any>({
     resolver: yupResolver(AddressRetention)
@@ -51,7 +53,13 @@ export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
         </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <RadioForm register={register} setValue={setValue} errors={errors}>
+          <RadioForm
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            setError={setError}
+            clearErrors={clearErrors}
+          >
             <Button type="submit" variant="contained">
               Submit
             </Button>

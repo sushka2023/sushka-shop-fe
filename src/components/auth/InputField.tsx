@@ -1,5 +1,6 @@
-import { Grid, InputLabel, OutlinedInput, FormHelperText } from '@mui/material'
+import { Grid, InputLabel, OutlinedInput } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
+import { ErrorMessage } from '../Error/Error'
 
 type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
 
@@ -41,17 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({
       disabled={disabled}
       sx={sxInput}
     />
-    {error && (
-      <FormHelperText
-        sx={{
-          color: 'error.darker',
-          fontWeight: 500,
-          position: 'absolute'
-        }}
-      >
-        {error.message}
-      </FormHelperText>
-    )}
+    <ErrorMessage error={error} />
   </Grid>
 )
 
