@@ -3,7 +3,7 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import {
   cardPararaph,
   cardBold,
@@ -17,11 +17,17 @@ type Props = HTMLProps<HTMLDivElement> & { index: number }
 
 const CustomSlider: FC<Props> = (props) => {
   const { index } = props
+  const theme = useTheme()
 
   return (
     <Box>
       <Box sx={{ m: '10px' }} data-index={index}>
-        <Box sx={slideElement}>
+        <Box
+          sx={{
+            ...slideElement,
+            [theme.breakpoints.down('sm')]: slideElement.sm
+          }}
+        >
           <Box sx={slideImage}>
             <Box
               sx={{ maxWidth: '100%', height: 'auto' }}

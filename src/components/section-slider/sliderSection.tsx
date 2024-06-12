@@ -86,7 +86,13 @@ const SlideSection = () => {
   return (
     <Box component="section" sx={sectionBg}>
       <Box sx={border}></Box>
-      <Container maxWidth="lg" sx={sliderContainer}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          ...sliderContainer.lg,
+          [theme.breakpoints.down('sm')]: sliderContainer.sm
+        }}
+      >
         <Typography
           sx={{
             ...sliderTitle,

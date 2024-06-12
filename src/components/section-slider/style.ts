@@ -27,15 +27,24 @@ export const borderSecond = {
 }
 
 export const sliderContainer = {
-  '& > div': {
-    'maxWidth': '1360px',
-    'margin': '0 auto',
-    'padding': '72px 40px',
-    'display': 'flex',
-    'alignItems': 'center',
-    'gap': '20px',
-    '&::before': {
-      display: 'none' // Або будь-який інший стиль, який вам потрібен
+  lg: {
+    '& > div': {
+      'border': '1px solid red',
+      'position': 'relative',
+      'maxWidth': '1360px',
+      'margin': '0 auto',
+      'padding': '72px 40px',
+      'display': 'flex',
+      'alignItems': 'center',
+      'gap': '20px',
+      '&::before': {
+        display: 'none' // Або будь-який інший стиль, який вам потрібен
+      }
+    }
+  },
+  sm: {
+    '& > div': {
+      padding: '0px'
     }
   }
 }
@@ -57,7 +66,11 @@ export const slideElement = {
   borderRadius: '10px',
   backgroundColor: 'background.default',
   mb: '20px',
-  border: '1px solid red'
+  border: '1px solid red',
+
+  sm: {
+    border: '1px solid green'
+  }
 }
 
 export const slideImage = {
@@ -107,6 +120,7 @@ export const cardBold = {
 }
 
 export const ArrowStyle = {
+  'position': 'absolute',
   'width': '40px',
   'height': '40px',
   'background': 'none',
@@ -117,6 +131,16 @@ export const ArrowStyle = {
   '&:hover': {
     cursor: 'pointer'
   }
+}
+
+export const ArrowStylePrev = {
+  top: '10px',
+  left: '10px'
+}
+
+export const ArrowStyleNext = {
+  bottom: '10px',
+  right: '10px'
 }
 
 export const customButton = {

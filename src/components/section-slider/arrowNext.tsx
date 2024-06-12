@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { Box } from '@mui/material'
-import { ArrowStyle } from './style'
+import { ArrowStyle, ArrowStyleNext } from './style'
 
 type Props = {
   onClick?: () => void
@@ -9,7 +9,7 @@ type Props = {
 
 const ArrowNext: FC<Props> = ({ onClick }) => {
   return (
-    <Box sx={ArrowStyle} onClick={onClick}>
+    <Box sx={{ ...ArrowStyle, ...ArrowStyleNext }} onClick={onClick}>
       <ArrowForwardIosIcon sx={{ color: 'background.default' }} />
     </Box>
   )
