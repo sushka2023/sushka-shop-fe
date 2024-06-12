@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
-import { Box, Container, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Container,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
 import List from '@mui/material/List'
 
 import {
@@ -21,12 +27,13 @@ import { Button } from '../UI/Button'
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const settings: Settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: isSmallScreen ? 2 : 3,
     slidesToScroll: 1,
     prevArrow: <ArrowPrev />,
     nextArrow: <ArrowNext />,

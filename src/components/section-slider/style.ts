@@ -28,12 +28,15 @@ export const borderSecond = {
 
 export const sliderContainer = {
   '& > div': {
-    maxWidth: '1360px',
-    margin: '0 auto',
-    padding: '72px 40px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px'
+    'maxWidth': '1360px',
+    'margin': '0 auto',
+    'padding': '72px 40px',
+    'display': 'flex',
+    'alignItems': 'center',
+    'gap': '20px',
+    '&::before': {
+      display: 'none' // Або будь-який інший стиль, який вам потрібен
+    }
   }
 }
 
@@ -67,7 +70,7 @@ export const slideImage = {
 }
 
 export const lastSlider = {
-  maxWidth: '400px',
+  maxWidth: '168px',
   height: '595px',
   display: 'flex',
   justifyContent: 'center',
