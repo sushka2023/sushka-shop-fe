@@ -67,6 +67,9 @@ export const slideElement = {
   backgroundColor: 'background.default',
   mb: '20px',
   border: '1px solid red',
+  display: 'flex',
+  flexDirection: 'column',
+  // height: '100vh', // Задайте висоту контейнера, якщо необхідно
 
   sm: {
     border: '1px solid green'
@@ -75,9 +78,10 @@ export const slideElement = {
 
 export const slideImage = {
   position: 'relative',
-  padding: '40px 20px 32px',
+  // padding: '40px 20px 32px',
   maxWidth: '100%',
-  height: 'auto',
+  // height: 'auto',
+  height: '112px',
   display: 'block',
   margin: '0 auto'
 }
@@ -116,7 +120,13 @@ export const cardPararaph = {
 export const cardBold = {
   color: 'secondary.darker',
   fontSize: '22px',
-  fontWeight: '600'
+  fontWeight: '600',
+
+  sm: {
+    fontSize: '13px',
+    fontWeight: '400',
+    m: '5px 0px 15px 0px'
+  }
 }
 
 export const ArrowStyle = {
@@ -151,4 +161,11 @@ export const customButton = {
     color: 'secondary.darker', // Замість цього використайте бажаний колір для hover
     border: '2px solid #567343' // Замість цього використайте бажаний колір та стиль для hover
   }
+}
+
+export const sliderButton = {
+  width: '100%',
+  fontSize: 'clamp(0.875rem, 0.777rem + 0.35vw, 1rem)',
+  padding:
+    'clamp(0.25rem, -0.24rem + 1.74vw, 0.875rem) clamp(0.5rem, -0.48rem + 3.48vw, 1.75rem)'
 }

@@ -5,11 +5,12 @@ import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
 import {
-  cardPararaph,
+  // cardPararaph,
   cardBold,
   slideElement,
   slideImage,
-  cardFavorite
+  cardFavorite,
+  sliderButton
 } from './style'
 import { Button } from '../UI/Button'
 
@@ -21,7 +22,7 @@ const CustomSlider: FC<Props> = (props) => {
 
   return (
     <Box>
-      <Box sx={{ m: '10px' }} data-index={index}>
+      <Box sx={{ m: '5px' }} data-index={index}>
         <Box
           sx={{
             ...slideElement,
@@ -30,26 +31,35 @@ const CustomSlider: FC<Props> = (props) => {
         >
           <Box sx={slideImage}>
             <Box
-              sx={{ maxWidth: '100%', height: 'auto' }}
+              sx={{ maxWidth: '100%', height: '100%', borderRadius: '10px' }}
               component="img"
               src={ShopItem}
               alt="mandarin pastille"
             />
             <FavoriteBorderIcon sx={cardFavorite} />
           </Box>
-          <Box sx={{ padding: '0px 40px 30px' }}>
-            <Typography component="h3" variant="h3" sx={cardBold}>
+          {/* { padding: '0px 40px 30px' } */}
+          <Box sx={{ padding: '5px' }}>
+            <Typography
+              component="h3"
+              variant="h3"
+              sx={{ ...cardBold, [theme.breakpoints.down('sm')]: cardBold.sm }}
+            >
               Мандаринова пастила
             </Typography>
-            <Typography component="p" variant="body2" sx={cardPararaph}>
+            {/* <Typography component="p" variant="body2" sx={cardPararaph}>
               Мандаринова пастила Мандаринова пастила Мандаринова пастила
-            </Typography>
+            </Typography> */}
             <Typography component="span" variant="caption" sx={cardBold}>
               200 грн / 100 гр.
             </Typography>
           </Box>
         </Box>
-        <Button variant="contained" fullWidth>
+        <Button
+          sx={{ [theme.breakpoints.down('sm')]: sliderButton }}
+          variant="contained"
+          fullWidth
+        >
           Додати в кошик
         </Button>
       </Box>
