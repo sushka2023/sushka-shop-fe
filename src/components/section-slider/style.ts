@@ -51,6 +51,8 @@ export const sliderContainer = {
 
 export const sliderTitle = {
   color: 'background.default',
+  mb: '16px',
+
   xl: {
     fontSize: '48px'
   },
@@ -66,24 +68,41 @@ export const slideElement = {
   borderRadius: '10px',
   backgroundColor: 'background.default',
   mb: '20px',
-  border: '1px solid red',
+  // mr: '10px',
+  // border: '1px solid red',
   display: 'flex',
   flexDirection: 'column',
   // height: '100vh', // Задайте висоту контейнера, якщо необхідно
 
   sm: {
-    border: '1px solid green'
+    border: '1px solid green',
+    minHeight: 'clamp(13.5rem, 7.5rem + 30vw, 18.75rem)'
   }
 }
 
 export const slideImage = {
   position: 'relative',
-  // padding: '40px 20px 32px',
-  maxWidth: '100%',
-  // height: 'auto',
-  height: '112px',
+  // maxWidth: '100%',
+  height: 'auto',
+  // height: '112px',
   display: 'block',
-  margin: '0 auto'
+  // padding: '40px 20px 0px 20px',
+  margin: '0 auto',
+  flexGrow: 1
+  // border: '1px solid red'
+}
+
+export const slideInfo = {
+  // border: '2px solid blue',
+  color: 'secondary.darker',
+  flexGrow: 1,
+  textAlign: 'center',
+  fontSize: '22px',
+  fontWeight: 600,
+  padding: '5px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 }
 
 export const lastSlider = {
@@ -96,8 +115,8 @@ export const lastSlider = {
 
 export const cardFavorite = {
   'position': 'absolute',
-  'top': '40px',
-  'right': '34px',
+  'top': '15px',
+  'right': '15px',
   'color': 'secondary.darker',
   '&:hover': {
     color: 'primary.darker',
@@ -123,33 +142,36 @@ export const cardBold = {
   fontWeight: '600',
 
   sm: {
-    fontSize: '13px',
-    fontWeight: '400',
-    m: '5px 0px 15px 0px'
+    fontSize: '13px'
   }
 }
 
 export const ArrowStyle = {
-  'position': 'absolute',
-  'width': '40px',
-  'height': '40px',
-  'background': 'none',
-  'display': 'flex',
-  'justifyContent': 'flex-end',
-  'alignItems': 'center',
-  'mb': '40px',
-  '&:hover': {
-    cursor: 'pointer'
+  lg: {
+    'position': 'absolute',
+    'width': '40px',
+    'height': '40px',
+    'background': 'none',
+    'display': 'flex',
+    'justifyContent': 'flex-end',
+    'alignItems': 'center',
+    'mb': '40px',
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  sm: {
+    display: 'none'
   }
 }
 
 export const ArrowStylePrev = {
-  top: '10px',
+  top: '50%',
   left: '10px'
 }
 
 export const ArrowStyleNext = {
-  bottom: '10px',
+  top: '50%',
   right: '10px'
 }
 

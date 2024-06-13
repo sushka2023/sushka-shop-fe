@@ -9,7 +9,13 @@ type Props = {
 
 const ArrowNext: FC<Props> = ({ onClick }) => {
   return (
-    <Box sx={{ ...ArrowStyle, ...ArrowStyleNext }} onClick={onClick}>
+    <Box
+      sx={{
+        ...ArrowStyle.lg,
+        ...ArrowStyleNext
+      }}
+      onClick={onClick}
+    >
       <ArrowForwardIosIcon sx={{ color: 'background.default' }} />
     </Box>
   )

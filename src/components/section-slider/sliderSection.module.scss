@@ -2,14 +2,20 @@
 @import 'slick-carousel/slick/slick-theme.css';
 @import '../../styles/base/base.scss';
 
-// .sliderContainer {
-//   max-width: 1360px;
-//   margin: 0 auto;
-//   padding: 72px 40px;
-//   display: flex;
-//   align-items: center;
-//   gap: 20px;
-// }
+.sliderContainer {
+  border: 1px solid red;
+  position: relative;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 72px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &::before {
+    display: none; // Або будь-який інший стиль, який вам потрібен
+  }
+}
 
 // .sectionHeader {
 //   color: $white-200;
@@ -128,55 +134,72 @@
 //   margin-bottom: 70px;
 // }
 
-// .cardPrice {
-//   color: $green-dark-200;
-//   font-family: $open-sans;
-//   font-size: 18px;
-//   font-weight: $font-weight-600;
-//   line-height: 130%;
-// }
+.slideImage {
+  position: 'relative';
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  flex-grow: 1;
+
+  img {
+    // border: 1px solid red;
+    padding-top: 40px;
+  }
+}
+
+.cardPrice {
+  border: 1px solid red;
+  display: flex;
+
+  .oldPrice {
+  }
+  .currentPrice {
+  }
+  .weight {
+  }
+}
 
 // customButton
 // customLink
 // arrowBtn
 
-.customButton {
-  width: 300px;
-  height: 50px;
-  border-radius: 20px;
-  background: $white-200;
-  border: none;
-  cursor: pointer;
-  font-family: $open-sans;
-  font-size: 16px;
-  font-weight: $font-weight-700;
-  line-height: 130%;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+// .customButton {
+//   width: 300px;
+//   height: 50px;
+//   border-radius: 20px;
+//   background: $white-200;
+//   border: none;
+//   cursor: pointer;
+//   font-family: $open-sans;
+//   font-size: 16px;
+//   font-weight: $font-weight-700;
+//   line-height: 130%;
+//   text-transform: uppercase;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 12px;
 
-  &.customLink {
-    color: $green-dark-200;
-  }
+//   &.customLink {
+//     color: $green-dark-200;
+//   }
 
-  &:hover {
-    border: 2px solid $green-dark-200;
-  }
+//   &:hover {
+//     border: 2px solid $green-dark-200;
+//   }
 
-  &:active {
-    background: $green-dark-200;
+//   &:active {
+//     background: $green-dark-200;
 
-    &.customLink {
-      color: $white-200;
-    }
+//     &.customLink {
+//       color: $white-200;
+//     }
 
-    .arrowBtn {
-      fill: $white-200;
-    }
-  }
-}
+//     .arrowBtn {
+//       fill: $white-200;
+//     }
+//   }
+// }
 
 // .ArrowNextStyle {
 //   width: 40px;
@@ -191,10 +214,19 @@
 //   }
 // }
 
-.arrow {
-  fill: $white-200;
-}
+// .arrow {
+//   fill: $white-200;
+// }
 
-.arrowBtn {
-  fill: $green-dark-200;
-}
+// .arrowBtn {
+//   fill: $green-dark-200;
+// }
+
+// .cardBold {
+// color: 'secondary.darker';
+// font-size: '22px';
+// font-weight: 600;
+// }
+// sm: {
+//   fontSize: '13px'
+// }

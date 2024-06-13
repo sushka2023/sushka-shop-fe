@@ -1,3 +1,4 @@
+import styles from './sliderSection.module.scss'
 import { useState } from 'react'
 import Slider, { Settings } from 'react-slick'
 import { Link } from 'react-router-dom'
@@ -19,7 +20,7 @@ import {
   customButton,
   lastSlider,
   sectionBg,
-  sliderContainer,
+  // sliderContainer,
   sliderTitle
 } from './style'
 import { Button } from '../UI/Button'
@@ -88,10 +89,10 @@ const SlideSection = () => {
       <Box sx={border}></Box>
       <Container
         maxWidth="lg"
-        sx={{
-          ...sliderContainer.lg,
-          [theme.breakpoints.down('sm')]: sliderContainer.sm
-        }}
+        // sx={{
+        //   ...sliderContainer.lg,
+        //   [theme.breakpoints.down('sm')]: sliderContainer.sm
+        // }}
       >
         <Typography
           sx={{
@@ -105,7 +106,7 @@ const SlideSection = () => {
           Популярні товари
         </Typography>
 
-        <Slider {...settings}>
+        <Slider {...settings} className={styles.sliderContainer}>
           {Array.from({ length: 5 }, (_, index) => {
             return <Box key={index}>{renderSlide(index)}</Box>
           })}
