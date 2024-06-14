@@ -10,9 +10,6 @@ export const BootstrapButton = styled(Button)({
 })
 
 export const editBtnAccount = {
-  '&.MuiButton-root:hover': {
-    backgroundColor: '#EDA4A4'
-  },
   'borderRadius': '20px',
   'border': 0,
   'cursor': 'pointer',
@@ -20,9 +17,13 @@ export const editBtnAccount = {
   'fontWeight': 600,
   'fontStyle': '16px',
   'textAlign': 'center',
-  'color': '#FFFFFF',
+  'color': 'background.default',
   'padding': '21px 40px',
-  'backgroundColor': '#FCA1A9'
+  'backgroundColor': 'pink.darker',
+  '&.MuiButton-root:hover': {
+    backgroundColor: 'error.light',
+    color: 'background.default'
+  }
 }
 export const styleBoxModalWindow = {
   position: 'absolute' as const,
@@ -55,7 +56,7 @@ export const styleBtnModalWindow = {
     backgroundColor: '#FCC812',
     boxShadow: 'none',
     border: '2px solid #FCC812',
-    color: '#FFFFFF'
+    color: 'background.default'
   }
 }
 export const styleBtnEditModalWindow = {
@@ -63,7 +64,7 @@ export const styleBtnEditModalWindow = {
   'height': 50,
   'bgcolor': '#D21C1C',
   'borderRadius': '10px',
-  'color': '#FFFFFF',
+  'color': 'background.default',
   'border': '0',
   'lineHeight': '18.2px',
   'fontStyle': '14px',
@@ -103,7 +104,7 @@ export const stBtnEmail = {
   'border': '2px solid transparent',
   'boxShadow': 'none !important',
   '&:hover': {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'background.default',
     color: '#FCC812',
     border: '2px solid #FCC812',
     cursor: 'pointer'

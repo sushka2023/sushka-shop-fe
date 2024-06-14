@@ -34,7 +34,7 @@ export const BasicModal = () => {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <Button onClick={handleOpen} sx={editBtnAccount}>
         Вийти
       </Button>
@@ -47,7 +47,7 @@ export const BasicModal = () => {
         <Box sx={styleBoxModalWindow}>
           <Typography
             id="modal-modal-title"
-            component="p"
+            variant="body1"
             style={{ fontSize: 22, fontWeight: 600 }}
           >
             Вийти з аккаунта
@@ -79,6 +79,6 @@ export const BasicModal = () => {
           </Stack>
         </Box>
       </Modal>
-    </div>
+    </React.Fragment>
   )
 }
