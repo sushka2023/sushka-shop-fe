@@ -10,18 +10,10 @@ export const stWavePink = {
 }
 
 export const stTabsNav = {
-  'display': 'flex',
-  'justifyContent': 'space-between',
-  'padding': '10px',
-  'border': '1px solid',
-  'borderColor': 'peach.darker',
-  'borderRadius': '30px',
-  'margin': '40px',
-
-  '.MuiTabs-flexContainer': {
-    display: 'flex',
-    justifyContent: 'space-between'
-  }
+  padding: '10px',
+  border: '1px solid',
+  borderColor: 'peach.darker',
+  borderRadius: '30px'
 }
 
 export const stContainerTabPanel = {

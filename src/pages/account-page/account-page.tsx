@@ -24,7 +24,7 @@ function CustomTabPanel({ children, value, index, ...other }: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 5 }}>{children}</Box>}
+      {value === index && <Box>{children}</Box>}
     </Box>
   )
 }
@@ -42,41 +42,49 @@ export const AccountPage = () => {
 
   return (
     <React.Fragment>
-      <Container maxWidth="lg">
-        <Tabs
-          value={value}
-          onChange={(_, newValue) => setValue(newValue)}
-          aria-label="basic tabs example"
-          sx={stTabsNav}
-        >
-          <Tab disableRipple label={`Контактна інформація`} {...a11yProps(0)} />
-          <Tab disableRipple label={`Ваші адреси доставки`} {...a11yProps(1)} />
-          <Tab disableRipple label={`Історія замовлень`} {...a11yProps(2)} />
-          <Tab disableRipple label={`Змінити пароль`} {...a11yProps(3)} />
-          <BasicModal />
-        </Tabs>
+      <Container>
+        <Box sx={{ p: '40px 0' }}>
+          <Tabs
+            value={value}
+            onChange={(_, newValue) => setValue(newValue)}
+            aria-label="basic tabs example"
+            sx={stTabsNav}
+          >
+            <Tab
+              disableRipple
+              label={`Контактна інформація`}
+              {...a11yProps(0)}
+            />
+            <Tab
+              disableRipple
+              label={`Ваші адреси доставки`}
+              {...a11yProps(1)}
+            />
+            <Tab disableRipple label={`Історія замовлень`} {...a11yProps(2)} />
+            <Tab disableRipple label={`Змінити пароль`} {...a11yProps(3)} />
+            <BasicModal />
+          </Tabs>
+        </Box>
       </Container>
       <Box sx={stContainerTabPanel}>
-        <Container maxWidth="lg">
-          {user ? (
-            <React.Fragment>
-              <CustomTabPanel value={value} index={0}>
-                <ContactInfo user={user} />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={1}>
-                <DeliveryAddress />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <OrderHistory />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={3}>
-                <ChangePassword />
-              </CustomTabPanel>
-            </React.Fragment>
-          ) : (
-            'loading...'
-          )}
-        </Container>
+        {user ? (
+          <Container sx={{ p: '40px 0' }}>
+            <CustomTabPanel value={value} index={0}>
+              <ContactInfo user={user} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <DeliveryAddress />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              <OrderHistory />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+              <ChangePassword />
+            </CustomTabPanel>
+          </Container>
+        ) : (
+          'loading...'
+        )}
       </Box>
       <Box sx={stWavePink} />
     </React.Fragment>

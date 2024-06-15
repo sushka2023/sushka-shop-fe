@@ -1,11 +1,10 @@
 export const btnEditAccount = {
+  'marginLeft': 'auto',
   'borderRadius': '20px',
-  'border': 0,
   'cursor': 'pointer',
   'fontFamily': 'Open Sans',
   'fontWeight': 600,
   'fontStyle': '16px',
-  'textAlign': 'center',
   'color': 'background.default',
   'padding': '21px 40px',
   'bgcolor': 'pink.darker',
