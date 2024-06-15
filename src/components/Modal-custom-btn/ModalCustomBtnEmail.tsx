@@ -3,18 +3,11 @@ import { Link } from 'react-router-dom'
 import { Typography, Stack } from '@mui/material'
 import axiosInstance from '../../axios/settings'
 import IconinfoMessage from '../../icons/infoMessage.svg?react'
-import InfoConfirmationModal from './ModalCustomWindow'
 import { Button } from '../UI/Button'
-import {
-  stEmailP2,
-  stEmailSpan,
-  stIconEmail,
-  stIconLinkEmail,
-  stLinkEmail,
-  stLinkEmailList,
-  stLinkEmailP
-} from './style'
+
 import { useSnackbar } from '../../hooks/useSnackbar'
+import { btn, emailP2, iconLinkEmail, linkEmailList } from './style'
+import Modalka from './ModalCustomWindow'
 
 type EmailConfirmationModalProps = {
   is_active: boolean
@@ -28,6 +21,7 @@ export const EmailConfirmationModal = ({
 }: EmailConfirmationModalProps) => {
   const [openModal, setOpenModal] = useState(false)
   const { showSnackbar } = useSnackbar()
+
   const requestEmail = async (email: string) => {
     const modalTimeout = 2000
     try {
@@ -65,45 +59,59 @@ export const EmailConfirmationModal = ({
       {is_active ? null : (
         <Link
           to="/account"
-          style={stLinkEmail}
           onClick={() => {
             setOpenModal(true)
             requestEmail(email)
           }}
         >
-          <IconinfoMessage style={stIconEmail} />
+          <IconinfoMessage />
           <Typography
             id="modal-modal-title"
-            component="span"
-            sx={stIconLinkEmail}
+            variant="caption"
+            sx={iconLinkEmail}
           >
             Ваша електронна пошта не підтверджена
           </Typography>
         </Link>
       )}
 
-      <InfoConfirmationModal openModal={openModal} setOpenModal={setOpenModal}>
-        <React.Fragment>
-          <Typography id="modal-modal-title" component="span" sx={stEmailSpan}>
-            Підтвердіть вашу електронну пошту
+      <Modalka openModal={openModal} setOpenModal={setOpenModal}>
+        <Typography
+          id="modal-modal-title"
+          variant="caption"
+          sx={{ fontSize: '22px', fontWeight: 600 }}
+        >
+          Підтвердіть вашу електронну пошту
+        </Typography>
+        <Typography
+          id="modal-modal-description"
+          variant="caption"
+          sx={{ ...emailP2, mb: 2, maxWidth: 400 }}
+        >
+          Перейдіть за посиланням в листі, який ми відправили на вашу електронну
+          пошту, <br /> щоб її підтвердити
+        </Typography>
+        <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
+          <Button
+            variant="contained"
+            sx={btn}
+            onClick={() => setOpenModal(false)}
+          >
+            Зрозуміло
+          </Button>
+        </Stack>
+        <Typography variant="caption" sx={{ ...emailP2, mt: 7 }}>
+          Не отримали листа?
+          <Typography
+            id="modal-modal-description"
+            variant="caption"
+            onClick={handleResendEmail}
+            sx={linkEmailList}
+          >
+            Відправити ще раз
           </Typography>
-          <Typography id="modal-modal-description" component="p" sx={stEmailP2}>
-            Перейдіть за посиланням в листі, який ми відправили на вашу
-            електронну пошту, <br /> щоб її підтвердити
-          </Typography>
-          <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
-            <Button variant="contained" onClick={() => setOpenModal(false)}>
-              Зрозуміло
-            </Button>
-          </Stack>
-          <Typography component="p" style={stLinkEmailP}>
-            Не отримали листа?
-            <span onClick={handleResendEmail} style={stLinkEmailList}>
-              Відправити ще раз
-            </span>
-          </Typography>
-        </React.Fragment>
-      </InfoConfirmationModal>
+        </Typography>
+      </Modalka>
     </React.Fragment>
   )
 }

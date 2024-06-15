@@ -4,7 +4,7 @@ export const stWavePink = {
   height: '150px',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100%',
-  marginBottom: '180px',
+  marginBottom: '200px',
   position: 'relative',
   bottom: 2
 }

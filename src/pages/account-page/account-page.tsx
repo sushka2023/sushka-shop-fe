@@ -1,13 +1,13 @@
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
+import { Container, Tab, Tabs } from '@mui/material'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
 import { useAuth } from '../../hooks/use-auth'
-import React, { useState } from 'react'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
-import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
-import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
-import { Container, Tab, Tabs } from '@mui/material'
+import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
+import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
 
 type TabPanelProps = {
   children?: React.ReactNode
@@ -36,9 +36,9 @@ function a11yProps(index: number) {
   }
 }
 
-export default function AccountPage() {
-  const [value, setValue] = useState(0)
+export const AccountPage = () => {
   const { user } = useAuth()
+  const [value, setValue] = useState(0)
 
   return (
     <React.Fragment>
@@ -57,19 +57,25 @@ export default function AccountPage() {
         </Tabs>
       </Container>
       <Box sx={stContainerTabPanel}>
-        <Container>
-          <CustomTabPanel value={value} index={0}>
-            {user && <ContactInfo user={user} />}
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <DeliveryAddress />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            <OrderHistory />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={3}>
-            <ChangePassword />
-          </CustomTabPanel>
+        <Container maxWidth="lg">
+          {user ? (
+            <React.Fragment>
+              <CustomTabPanel value={value} index={0}>
+                <ContactInfo user={user} />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={1}>
+                <DeliveryAddress />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <OrderHistory />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={3}>
+                <ChangePassword />
+              </CustomTabPanel>
+            </React.Fragment>
+          ) : (
+            'loading...'
+          )}
         </Container>
       </Box>
       <Box sx={stWavePink} />

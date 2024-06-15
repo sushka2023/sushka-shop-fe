@@ -21,8 +21,8 @@ import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
-import AccountPage from './pages/account-page/account-page'
 import OrderPage from './pages/order-page'
+import { AccountPage } from './pages/account-page/account-page'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
