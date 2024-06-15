@@ -1,7 +1,7 @@
+import styles from './sliderSection.module.scss'
 import { FC } from 'react'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { Box } from '@mui/material'
-import { ArrowStyle, ArrowStylePrev } from './style'
 
 type Props = {
   onClick?: () => void
@@ -9,7 +9,7 @@ type Props = {
 
 const ArrowPrev: FC<Props> = ({ onClick }) => {
   return (
-    <Box sx={{ ...ArrowStyle.lg, ...ArrowStylePrev }} onClick={onClick}>
+    <Box className={`${styles.arrow} ${styles.prev}`} onClick={onClick}>
       <ArrowBackIosNewIcon sx={{ color: 'background.default' }} />
     </Box>
   )

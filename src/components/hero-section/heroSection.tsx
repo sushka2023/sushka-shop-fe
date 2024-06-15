@@ -77,7 +77,7 @@ const HeroSection = () => {
           </Link>
         </Box>
 
-        <Box>
+        <Box sx={{ height: 'clamp(10.938rem, 1.295rem + 48.21vw, 19.375rem)' }}>
           {isSmallScreen ? (
             <Box
               component="img"

@@ -52,6 +52,6 @@ export const sloganImgLogo = {
     position: 'absolute',
     left: '0px',
     overflow: 'hidden',
-    mt: '40px'
+    mt: '20px'
   }
 }

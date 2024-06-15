@@ -81,32 +81,34 @@ export const slideElement = {
 }
 
 export const slideImage = {
+  // border: '1px solid green',
   position: 'relative',
-  // maxWidth: '100%',
   height: 'auto',
-  // height: '112px',
   display: 'block',
-  // padding: '40px 20px 0px 20px',
   margin: '0 auto',
-  flexGrow: 1
-  // border: '1px solid red'
+  flexGrow: 1,
+
+  img: {
+    // border: '1px solid red',
+    paddingTop: '40px'
+  }
 }
 
 export const slideInfo = {
   // border: '2px solid blue',
   color: 'secondary.darker',
   flexGrow: 1,
-  textAlign: 'center',
+  // textAlign: 'center',
   fontSize: '22px',
   fontWeight: 600,
-  padding: '5px',
+  padding: '10px 30px 20px 30px',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between'
 }
 
 export const lastSlider = {
-  maxWidth: '168px',
+  // maxWidth: '168px',
   height: '595px',
   display: 'flex',
   justifyContent: 'center',
@@ -114,13 +116,20 @@ export const lastSlider = {
 }
 
 export const cardFavorite = {
-  'position': 'absolute',
-  'top': '15px',
-  'right': '15px',
-  'color': 'secondary.darker',
-  '&:hover': {
-    color: 'primary.darker',
-    cursor: 'pointer'
+  lg: {
+    'position': 'absolute',
+    'top': '32px',
+    'right': '32px',
+    'color': 'error.dark',
+    '&:hover': {
+      color: 'primary.darker',
+      cursor: 'pointer'
+    }
+  },
+  sm: {
+    top: '15px',
+    right: '15px',
+    fontSize: '1rem'
   }
 }
 
@@ -133,7 +142,11 @@ export const cardPararaph = {
   maxWidth: '320px',
   color: 'secondary.darker',
   fontSize: ' 18px',
-  margin: '7px 0 70px 0'
+  margin: '7px 0 40px 0',
+
+  sm: {
+    display: 'none'
+  }
 }
 
 export const cardBold = {
@@ -146,34 +159,33 @@ export const cardBold = {
   }
 }
 
-export const ArrowStyle = {
-  lg: {
-    'position': 'absolute',
-    'width': '40px',
-    'height': '40px',
-    'background': 'none',
-    'display': 'flex',
-    'justifyContent': 'flex-end',
-    'alignItems': 'center',
-    'mb': '40px',
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  sm: {
-    display: 'none'
-  }
-}
+// export const ArrowStyle = {
+//   lg: {
+//     'position': 'absolute',
+//     'top': '50%',
+//     'width': '40px',
+//     'height': '40px',
+//     'background': 'none',
+//     'display': 'flex',
+//     'justifyContent': 'flex-end',
+//     'alignItems': 'center',
+//     'mb': '40px',
+//     '&:hover': {
+//       cursor: 'pointer'
+//     }
+//   },
+//   sm: {
+//     display: 'none'
+//   }
+// }
 
-export const ArrowStylePrev = {
-  top: '50%',
-  left: '10px'
-}
+// export const ArrowStylePrev = {
+//   left: '5px'
+// }
 
-export const ArrowStyleNext = {
-  top: '50%',
-  right: '10px'
-}
+// export const ArrowStyleNext = {
+//   right: '10px'
+// }
 
 export const customButton = {
   'color': 'secondary.darker',
@@ -181,7 +193,8 @@ export const customButton = {
   'border': 'none',
   '&:hover': {
     color: 'secondary.darker', // Замість цього використайте бажаний колір для hover
-    border: '2px solid #567343' // Замість цього використайте бажаний колір та стиль для hover
+    border: '2px solid', // Замість цього використайте бажаний колір та стиль для hover
+    borderColor: 'secondary.darker'
   }
 }
 

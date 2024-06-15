@@ -1,4 +1,4 @@
-import styles from './sliderSection.module.scss'
+// import styles from './sliderSection.module.scss'
 // import IconFavorite from '../../icons/favorite.svg?react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
@@ -8,7 +8,7 @@ import {
   cardPararaph,
   cardBold,
   slideElement,
-  // slideImage,
+  slideImage,
   cardFavorite,
   sliderButton,
   slideInfo
@@ -31,7 +31,7 @@ const CustomSlider: FC<Props> = (props) => {
             [theme.breakpoints.down('sm')]: slideElement.sm
           }}
         >
-          <Box className={styles.slideImage}>
+          <Box sx={slideImage}>
             <Box
               sx={{
                 maxWidth: '100%',
@@ -42,7 +42,12 @@ const CustomSlider: FC<Props> = (props) => {
               src={ShopItem}
               alt="mandarin pastille"
             />
-            <FavoriteBorderIcon sx={cardFavorite} />
+            <FavoriteBorderIcon
+              sx={{
+                ...cardFavorite.lg,
+                [theme.breakpoints.down('sm')]: cardFavorite.sm
+              }}
+            />
           </Box>
           <Box sx={slideInfo}>
             <Typography
@@ -56,19 +61,23 @@ const CustomSlider: FC<Props> = (props) => {
             >
               Мандаринова пастила
             </Typography>
-            <Typography component="p" variant="body2" sx={cardPararaph}>
+            <Typography
+              component="p"
+              variant="body2"
+              sx={{
+                ...cardPararaph,
+                [theme.breakpoints.down('sm')]: cardPararaph.sm
+              }}
+            >
               Мандаринова пастила Мандаринова пастила Мандаринова пастила
             </Typography>
-            <Box className={styles.cardPrice}>
-              <span className={styles.oldPrice}>300 грн</span>
-              <span className={styles.currentPrice}>200 грн / </span>
-              <span className={styles.weight}>100 гр.</span>
-            </Box>
-            {/* <Typography
+            <Typography
               component="span"
               variant="caption"
               sx={{ ...cardBold, [theme.breakpoints.down('sm')]: cardBold.sm }}
-            ></Typography> */}
+            >
+              200грн / 100гр.
+            </Typography>
           </Box>
         </Box>
         <Button
