@@ -28,7 +28,6 @@ const Breadcrumbs = () => {
     (state: RootState) => state.items.allCategories
   )
   const allProducts = useSelector((state: RootState) => state.items.items)
-  console.log('✌️allProducts --->', allProducts)
 
   const getCategoryName = (id: string) => {
     if (allCategories) {

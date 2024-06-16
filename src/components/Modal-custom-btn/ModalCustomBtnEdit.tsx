@@ -5,8 +5,8 @@ import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
 import { AppDispatch } from '../../redux/store'
 import { Button } from '../UI/Button'
-import Modalka from './ModalCustomWindow'
-import { btn, btnEditAccount, btnEditModWin } from './style'
+import { btnEditAccount, btnEditModWin } from './style'
+import { ModalCustom } from './ModalCustomWindow'
 
 type RootState = {
   auth: {
@@ -38,7 +38,7 @@ export const BasicModal = () => {
       <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
         Вийти
       </Button>
-      <Modalka openModal={openModal} setOpenModal={setOpenModal}>
+      <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
         <Typography
           id="modal-modal-title"
           variant="body1"
@@ -58,20 +58,31 @@ export const BasicModal = () => {
           <Button
             variant="outlined"
             onClick={() => setOpenModal(false)}
-            sx={btn}
+            sx={{
+              width: 250,
+              height: 50,
+              textTransform: 'capitalize'
+            }}
           >
             Скасувати
           </Button>
           <Button
             variant="outlined"
             onClick={handleClickLogout}
-            sx={{ ...btnEditModWin, ...btn }}
+            sx={{
+              ...btnEditModWin,
+              ...{
+                width: 250,
+                height: 50,
+                textTransform: 'capitalize'
+              }
+            }}
             disabled={isLoadingBtn}
           >
             {isLoadingBtn ? 'Loading...' : 'Вийти'}
           </Button>
         </Stack>
-      </Modalka>
+      </ModalCustom>
     </React.Fragment>
   )
 }

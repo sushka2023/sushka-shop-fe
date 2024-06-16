@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSnackbar } from '../../../hooks/useSnackbar'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../../redux/authentication/operation'
@@ -12,8 +13,7 @@ import { Button } from '../../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
-import { stH3, stInput, stP } from '../style'
-import { useSnackbar } from '../../../hooks/useSnackbar'
+import { stInput } from '../style'
 
 type FormData = {
   first_name: string
@@ -62,10 +62,8 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
   return (
     <React.Fragment>
       <Box sx={{ mb: 2 }}>
-        <Typography variant="h3" sx={stH3}>
-          Ваша контактна інформація
-        </Typography>
-        <Typography variant="body1" sx={stP}>
+        <Typography variant="h3">Ваша контактна інформація</Typography>
+        <Typography variant="body2" sx={{ fontSize: 18 }}>
           Тут ви можете змінити ваші дані
         </Typography>
       </Box>
@@ -116,7 +114,12 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
               sxLabel={{ mt: 2 }}
             />
             <Grid item xs={12} md={6} mt={3}>
-              <Button disabled={isLoadingBtn} variant="contained" type="submit">
+              <Button
+                sx={{ width: 200, height: 50 }}
+                disabled={isLoadingBtn}
+                variant="contained"
+                type="submit"
+              >
                 {isLoadingBtn ? 'Loading...' : 'Зберегти'}
               </Button>
             </Grid>

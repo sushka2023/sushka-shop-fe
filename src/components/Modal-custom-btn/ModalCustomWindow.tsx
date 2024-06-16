@@ -10,12 +10,12 @@ type TModalWindow = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function Modalka({
+export const ModalCustom = ({
   yourStBoxModalWindow,
   children,
   openModal,
   setOpenModal
-}: TModalWindow) {
+}: TModalWindow) => {
   const handleCloseModal = () => {
     setOpenModal(false)
   }

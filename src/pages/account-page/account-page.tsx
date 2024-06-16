@@ -50,18 +50,10 @@ export const AccountPage = () => {
             aria-label="basic tabs example"
             sx={stTabsNav}
           >
-            <Tab
-              disableRipple
-              label={`Контактна інформація`}
-              {...a11yProps(0)}
-            />
-            <Tab
-              disableRipple
-              label={`Ваші адреси доставки`}
-              {...a11yProps(1)}
-            />
-            <Tab disableRipple label={`Історія замовлень`} {...a11yProps(2)} />
-            <Tab disableRipple label={`Змінити пароль`} {...a11yProps(3)} />
+            <Tab disableRipple label="Контактна інформація" {...a11yProps(0)} />
+            <Tab disableRipple label="Ваші адреси доставки" {...a11yProps(1)} />
+            <Tab disableRipple label="Історія замовлень" {...a11yProps(2)} />
+            <Tab disableRipple label="Змінити пароль" {...a11yProps(3)} />
             <BasicModal />
           </Tabs>
         </Box>

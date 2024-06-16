@@ -4,10 +4,9 @@ import { Typography, Stack } from '@mui/material'
 import axiosInstance from '../../axios/settings'
 import IconinfoMessage from '../../icons/infoMessage.svg?react'
 import { Button } from '../UI/Button'
-
 import { useSnackbar } from '../../hooks/useSnackbar'
-import { btn, emailP2, iconLinkEmail, linkEmailList } from './style'
-import Modalka from './ModalCustomWindow'
+import { emailIconLink, emailLinkList } from './style'
+import { ModalCustom } from './ModalCustomWindow'
 
 type EmailConfirmationModalProps = {
   is_active: boolean
@@ -56,7 +55,7 @@ export const EmailConfirmationModal = ({
 
   return (
     <React.Fragment>
-      {is_active ? null : (
+      {!is_active ? null : (
         <Link
           to="/account"
           onClick={() => {
@@ -68,14 +67,14 @@ export const EmailConfirmationModal = ({
           <Typography
             id="modal-modal-title"
             variant="caption"
-            sx={iconLinkEmail}
+            sx={emailIconLink}
           >
             Ваша електронна пошта не підтверджена
           </Typography>
         </Link>
       )}
 
-      <Modalka openModal={openModal} setOpenModal={setOpenModal}>
+      <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
         <Typography
           id="modal-modal-title"
           variant="caption"
@@ -85,8 +84,8 @@ export const EmailConfirmationModal = ({
         </Typography>
         <Typography
           id="modal-modal-description"
-          variant="caption"
-          sx={{ ...emailP2, mb: 2, maxWidth: 400 }}
+          variant="body1"
+          sx={{ m: 1, maxWidth: 400, textAlign: 'center' }}
         >
           Перейдіть за посиланням в листі, який ми відправили на вашу електронну
           пошту, <br /> щоб її підтвердити
@@ -94,24 +93,28 @@ export const EmailConfirmationModal = ({
         <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
           <Button
             variant="contained"
-            sx={btn}
+            sx={{
+              width: 250,
+              height: 50,
+              textTransform: 'capitalize'
+            }}
             onClick={() => setOpenModal(false)}
           >
             Зрозуміло
           </Button>
         </Stack>
-        <Typography variant="caption" sx={{ ...emailP2, mt: 7 }}>
+        <Typography variant="body1" sx={{ mt: 7 }}>
           Не отримали листа?
           <Typography
             id="modal-modal-description"
             variant="caption"
             onClick={handleResendEmail}
-            sx={linkEmailList}
+            sx={emailLinkList}
           >
             Відправити ще раз
           </Typography>
         </Typography>
-      </Modalka>
+      </ModalCustom>
     </React.Fragment>
   )
 }

@@ -83,7 +83,7 @@ export const ChangePassword = () => {
           />
           <br />
           <Button
-            sx={{ margin: '20px 0' }}
+            sx={{ margin: '20px 0', width: 200, height: 50 }}
             disabled={isLoadingBtn}
             variant="contained"
             type="submit"

@@ -14,12 +14,6 @@ export const btnEditAccount = {
   }
 }
 
-export const btn = {
-  width: 250,
-  height: 50,
-  textTransform: 'capitalize'
-}
-
 export const btnEditModWin = {
   '&.MuiButton-root': {
     bgcolor: 'error.darker',
@@ -55,32 +49,7 @@ export const boxModWin = {
   fontFamily: 'Open Sans'
 }
 
-export const btnEmail = {
-  'borderRadius': 3,
-  'padding': '15px 80px',
-  'bgcolor': 'primary.darker',
-  'fontFamily': 'Open Sans',
-  'fontWeight': 700,
-  'fontSize': 14,
-  'border': '2px solid transparent',
-  'boxShadow': 'none !important',
-  '&:hover': {
-    bgcolor: 'background.default',
-    color: 'primary.darker',
-    border: '2px solid ',
-    BorderColor: 'primary.darker',
-    cursor: 'pointer'
-  }
-}
-
-export const emailP2 = {
-  fontSize: 18,
-  fontWeight: 400,
-  textAlign: 'center',
-  mt: 1
-}
-
-export const iconLinkEmail = {
+export const emailIconLink = {
   color: 'error.darker',
   borderBottom: '0.5px solid ',
   borderColor: 'error.darker',
@@ -91,7 +60,7 @@ export const iconLinkEmail = {
   ml: 1
 }
 
-export const linkEmailList = {
+export const emailLinkList = {
   ml: 1,
   fontSize: 16,
   fontWeight: 600,
