@@ -1,11 +1,12 @@
 export const mainBlock = {
   display: 'flex',
   justifyContent: 'space-between',
-  gap: 'clamp(1.25rem, -0.759rem + 5.36vw, 4.063rem)',
+  gap: 'clamp(0.625rem, -1.384rem + 5.36vw, 3.438rem)',
   paddingTop: '0',
   marginTop: '50px',
   lg: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: '0 clamp(0.75rem, 0.214rem + 1.43vw, 1.5rem)'
   },
   sm: {
     flexDirection: 'column'
@@ -16,7 +17,7 @@ export const slogan = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  gap: 'clamp(1.25rem, 0.357rem + 2.38vw, 2.5rem)'
+  gap: 'clamp(0.938rem, -0.179rem + 2.98vw, 2.5rem)'
 }
 
 export const sloganTitle = {
@@ -45,13 +46,14 @@ export const sloganImgLogo = {
     height: 'auto'
   },
   md: {
-    width: 'clamp(17.5rem, -3.929rem + 57.14vw, 47.5rem)'
+    width: 'clamp(18.75rem, 4.599rem + 37.74vw, 28.75rem)',
+    minHeight: '315px'
   },
   sm: {
     width: '100%',
     position: 'absolute',
     left: '0px',
     overflow: 'hidden',
-    mt: '20px'
+    mt: '40px'
   }
 }

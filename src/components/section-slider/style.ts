@@ -1,30 +1,48 @@
 export const sectionBg = {
-  marginTop: '254px',
+  marginTop: 'clamp(25rem, 21.786rem + 16.07vw, 47.5rem)',
   marginBottom: '200px',
   backgroundColor: 'pink.darker',
   position: 'relative'
+  // border: '1px solid black'
+
+  // lg: {
+  //   marginTop: 'clamp(25rem, 4.911rem + 22.32vw, 40.625rem)'
+  // }
 }
+
+// export const border = {
+//   backgroundImage: 'url(/src/icons/borderslider.svg)',
+//   position: 'absolute',
+//   top: '-110px',
+//   height: 'auto',
+//   zIndex: '-1',
+//   backgroundRepeat: 'repeat',
+//   width: 'clamp(20rem, 100vw, 90rem)',
+//   backgroundSize: 'cover'
+// }
 
 export const border = {
-  backgroundImage: 'url(/src/icons/borderslider.svg)',
-  position: 'absolute',
-  top: '-110px',
-  height: '154px',
-  zIndex: '-1',
-  backgroundRepeat: 'repeat',
   width: '100%',
-  backgroundSize: 'cover'
+  position: 'absolute',
+  top: 'clamp(-9.375rem, -10vw, -1.75rem)',
+  left: '0px',
+
+  lg: {
+    top: 'clamp(-16.875rem, -10vw, -9.375rem)'
+  }
 }
 
-export const borderSecond = {
-  backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
-  position: 'absolute',
-  height: '135px',
-  zIndex: '-1',
-  width: '100%',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'repeat-x'
-}
+export const borderSecond = {}
+
+// export const borderSecond = {
+//   backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
+//   position: 'absolute',
+//   height: '135px',
+//   zIndex: '-1',
+//   width: '100%',
+//   backgroundSize: 'cover',
+//   backgroundRepeat: 'repeat-x'
+// }
 
 export const sliderContainer = {
   lg: {

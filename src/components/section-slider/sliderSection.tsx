@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
+import borderTop from '/src/icons/borderslider.svg'
+// import borderBottom from '/src/icons/bordersecondslider.svg'
 import {
   Box,
   Container,
@@ -16,7 +18,7 @@ import List from '@mui/material/List'
 
 import {
   border,
-  borderSecond,
+  // borderSecond,
   customButton,
   lastSlider,
   sectionBg,
@@ -86,7 +88,12 @@ const SlideSection = () => {
 
   return (
     <Box component="section" sx={sectionBg}>
-      <Box sx={border}></Box>
+      {/* <Box sx={border}></Box> */}
+      <Box
+        component="img"
+        src={borderTop}
+        sx={{ ...border, [theme.breakpoints.up('lg')]: border.lg }}
+      ></Box>
       <Container
         maxWidth="lg"
         // sx={{
@@ -112,7 +119,8 @@ const SlideSection = () => {
           })}
         </Slider>
       </Container>
-      <Box sx={borderSecond}></Box>
+      {/* <Box sx={borderSecond}></Box> */}
+      {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
     </Box>
   )
 }

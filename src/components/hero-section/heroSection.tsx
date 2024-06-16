@@ -1,3 +1,5 @@
+// import styles from './HeroSection.module.scss'
+
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.jpg'
@@ -77,7 +79,7 @@ const HeroSection = () => {
           </Link>
         </Box>
 
-        <Box sx={{ height: 'clamp(10.938rem, 1.295rem + 48.21vw, 19.375rem)' }}>
+        <Box>
           {isSmallScreen ? (
             <Box
               component="img"
