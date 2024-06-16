@@ -2,8 +2,8 @@ import { BasketItemsResponse } from '../../types'
 import { UseFormRegister, Control, UseFormSetValue } from 'react-hook-form'
 
 export enum PaymentMethodTypes {
-  wayforpay = 'wayforpay',
-  postpaid = 'postpaid',
+  wayforpay = 'liqpay',
+  postpaid = 'cash_on_delivery_np',
   byDetails = 'by_details'
 }
 
@@ -20,7 +20,7 @@ export type Inputs = {
   call: boolean
 }
 
-export type OrderDetailsType = Inputs | null
+export type OrderDetailsType = Inputs
 
 export type OrderContextType = {
   activeStep: number
@@ -33,4 +33,6 @@ export type OrderContextType = {
   setValue: UseFormSetValue<Inputs>
   otherRecipient: boolean
   setOtherRecipient: React.Dispatch<React.SetStateAction<boolean>>
-} | null
+  isLoadingBasketItems: boolean
+  isLoadingOrder: boolean
+}

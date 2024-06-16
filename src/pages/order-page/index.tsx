@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { Box, Grid } from '@mui/material'
 import { ORDER_FORM_DEFAULT_VALUES, STEPS } from './constants'
 import { containerStyle } from './style'
@@ -6,23 +6,26 @@ import OrderStepper from '../../components/Order-stepper'
 import StapperButtons from '../../components/Stapper-buttons'
 import OrderContacts from '../../components/Order-contacts'
 import OrderCard from '../../components/Order-card'
-import { getBasketItems, getProductForId } from './operation'
-import { ProductResponse, UserResponse } from '../../types'
+import { loadBasketItems, loadLocalStorageItems, sendOrder } from './utils'
+import { UserResponse } from '../../types'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { OrderDelivery } from '../../components/Order-delivery'
 import { useAuth } from '../../hooks/use-auth'
 import { BasketItemsResponse } from '../../types'
 import { Inputs, OrderDetailsType, OrderContextType } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
-import { getLocalStorageData } from '../../utils/local-storage'
 
 const OrderContext = createContext<OrderContextType>({} as OrderContextType)
 
 const OrderPage = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [orderList, setOrderList] = useState<BasketItemsResponse[]>([])
-  const [orderDetails, setOrderDetails] = useState<OrderDetailsType>(null)
+  const [orderDetails, setOrderDetails] = useState({} as OrderDetailsType)
   const [otherRecipient, setOtherRecipient] = useState(false)
+  const [isLoadingBasketItems, setIsLoadingBasketItems] = useState(false)
+  const [isLoadingOrder, setIsLoadingOrder] = useState(false)
+  const [error, setError] = useState('')
+  const [orderNumber, setOrderNumber] = useState<number | null>(null)
   const { user } = useAuth()
 
   const { handleSubmit, register, control, setValue } = useForm<Inputs>({
@@ -46,7 +49,9 @@ const OrderPage = () => {
     orderDetails,
     setValue,
     otherRecipient,
-    setOtherRecipient
+    setOtherRecipient,
+    isLoadingBasketItems,
+    isLoadingOrder
   }
 
   const STEP_CONTENT = [
@@ -55,92 +60,44 @@ const OrderPage = () => {
     <OrderPayment key={2} />
   ]
 
-  const fetchBasketItems = async () => {
-    try {
-      const products = await getBasketItems()
-      setOrderList(products)
-    } catch (error) {
-      console.error('Помилка під час завандаження замовлення:', error)
-    }
-  }
-
-  const pricing = (priceArray: BasketItemsResponse[]) => {
-    return priceArray.map((item) => {
-      const price_id = item.price_id_by_the_user
-      const prices = item.product.prices
-
-      const index = prices.findIndex((price) => price.id === price_id)
-
-      if (index !== -1) {
-        const [matchedPrice] = prices.splice(index, 1)
-        prices.unshift(matchedPrice)
-      }
-      return item
-    })
-  }
-
-  const fetchLocalStorageOrder = async () => {
-    try {
-      const localStorageData = getLocalStorageData('product-orders') || []
-
-      if (!localStorageData?.length) return
-
-      const products: BasketItemsResponse[] = []
-
-      for (const order of localStorageData) {
-        const product = await getProductForId(order.productId)
-
-        products.push({
-          id: order.id,
-          price_id_by_the_user: order.price_id_by_the_user,
-          quantity: order.quantity,
-          product: product as unknown as ProductResponse,
-          basket_id: order.basket_id
-        })
-      }
-
-      setOrderList(pricing(products))
-    } catch (error) {
-      console.error('Помилка під час завандаження замовлення:', error)
-    }
-  }
-
   useEffect(() => {
     if (user) {
       overwriteFormValues(user)
-      fetchBasketItems()
+      loadBasketItems(setOrderList, setError, setIsLoadingBasketItems)
       return
     }
-    fetchLocalStorageOrder()
+    loadLocalStorageItems(setOrderList, setError, setIsLoadingBasketItems)
   }, [user])
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setOrderDetails(data)
-    console.log(data)
+
+    if (activeStep === STEPS.length - 1) {
+      sendOrder(data, setOrderNumber, setError, setIsLoadingOrder)
+    } else {
+      setActiveStep((prevStep) => prevStep + 1)
+    }
   }
 
   return (
     <OrderContext.Provider value={CONTEXT_DATA}>
+      {orderNumber || (error && <div>{orderNumber || error}</div>)}
       <Box sx={containerStyle} mt={5}>
-        {activeStep === STEPS.length ? (
-          <Fragment>{/* notification */}</Fragment>
-        ) : (
-          <Box
-            pt="50px"
-            sx={{ flexGrow: 1 }}
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Grid container width="88%" spacing={0} alignItems="flex-start">
-              <Grid item xs={9}>
-                <OrderStepper />
-                {STEP_CONTENT[activeStep]}
-                <StapperButtons />
-              </Grid>
-              <OrderCard />
+        <Box
+          pt="50px"
+          sx={{ flexGrow: 1 }}
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Grid container width="88%" spacing={0} alignItems="flex-start">
+            <Grid item xs={9}>
+              <OrderStepper />
+              {STEP_CONTENT[activeStep]}
+              <StapperButtons />
             </Grid>
-          </Box>
-        )}
+            <OrderCard />
+          </Grid>
+        </Box>
       </Box>
     </OrderContext.Provider>
   )

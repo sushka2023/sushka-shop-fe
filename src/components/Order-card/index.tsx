@@ -9,7 +9,7 @@ import { OrderContext } from '../../pages/order-page'
 import { calculateTotal, formatter } from '../../helpers/formatterTotalPrice'
 
 const OrderCard = () => {
-  const { orderList } = useContext(OrderContext)!
+  const { orderList, isLoadingBasketItems } = useContext(OrderContext)
 
   const totalPrice = calculateTotal(orderList)
 
@@ -18,6 +18,7 @@ const OrderCard = () => {
   return (
     <Grid item xs={3}>
       <Card sx={cardStyle}>
+        {isLoadingBasketItems && <div>loading...</div>}
         <Typography
           variant="h3"
           fontFamily="Comfortaa"

@@ -10,7 +10,7 @@ import { Inputs, PaymentMethodTypes } from '../../pages/order-page/types'
 import { PAYMENT_METHODS } from '../../pages/order-page/constants'
 
 const OrderPayment = () => {
-  const { control, setValue, orderDetails } = useContext(OrderContext)!
+  const { control, setValue, orderDetails } = useContext(OrderContext)
   const [call, setCall] = useState(orderDetails?.call)
 
   useEffect(() => setCall(orderDetails?.call), [orderDetails])

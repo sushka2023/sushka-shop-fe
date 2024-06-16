@@ -1,5 +1,6 @@
 import axiosInstance from '../../axios/settings'
 import { BasketItemsResponse } from '../../types'
+import { OrderDetailsType } from './types'
 
 const getBasketItems = async () => {
   const { data } =
@@ -24,4 +25,26 @@ const removeProduct = async (id: number) => {
   return data
 }
 
-export { getBasketItems, removeProduct, getProductForId }
+const createOrder = async ({
+  paymentType,
+  call,
+  otherRecipient,
+  fullNameOtherRecipient,
+  phoneOtherRecipient,
+  comment
+}: OrderDetailsType) => {
+  const data = await axiosInstance.post('api/orders/create_for_auth_user', {
+    selected_nova_poshta_id: 0,
+    selected_ukr_poshta_id: 0,
+    payment_type: paymentType,
+    call_manager: call,
+    is_another_recipient: otherRecipient,
+    full_name_another_recipient: fullNameOtherRecipient,
+    phone_number_another_recipient: phoneOtherRecipient,
+    comment: comment
+  })
+
+  return data
+}
+
+export { getBasketItems, removeProduct, getProductForId, createOrder }

@@ -6,7 +6,7 @@ import { btnContainerStyle, btnBackStyle, btnNextStyle } from './style'
 import { OrderContext } from '../../pages/order-page'
 
 const StapperButtons = () => {
-  const { activeStep, setActiveStep } = useContext(OrderContext)!
+  const { activeStep, setActiveStep, isLoadingOrder } = useContext(OrderContext)
 
   return (
     <Box sx={btnContainerStyle}>
@@ -20,15 +20,11 @@ const StapperButtons = () => {
         </Button>
       </Box>
 
-      <Box sx={{ width: '28%' }} />
+      <Box width="28%" />
       <Box width="100%" maxWidth="250px">
-        <Button
-          type="submit"
-          fullWidth
-          onClick={() => setActiveStep((prevActiveStep) => prevActiveStep + 1)}
-          sx={btnNextStyle}
-        >
+        <Button type="submit" fullWidth sx={btnNextStyle}>
           {activeStep === STEPS.length - 1 ? 'Оформити замовлення' : 'Далі'}
+          {isLoadingOrder && <div>loading...</div>}
         </Button>
       </Box>
     </Box>
