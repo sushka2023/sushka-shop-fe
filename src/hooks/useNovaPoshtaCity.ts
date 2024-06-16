@@ -37,7 +37,8 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
 
 export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
-  const [valueInput, setValueInput] = useState<string>('')
+  const [valInputCity, setValInputCity] = useState<string>('')
+  console.log('✌️valInputCity --->', valInputCity)
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleCityFetch = async (cityName: string) => {
@@ -70,32 +71,32 @@ export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
     [novaPoshtaCity]
   )
   const options = useMemo(() => {
-    if (!valueInput) return cityDefault
+    if (!valInputCity) return cityDefault
     const filteredCities = cityDefault.filter((city) =>
-      city.toLowerCase().includes(valueInput.toLowerCase())
+      city.toLowerCase().includes(valInputCity.toLowerCase())
     )
     return filteredCities.length > 0 ? filteredCities : cityRenderNP
-  }, [valueInput, cityRenderNP])
+  }, [valInputCity, cityRenderNP])
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (
-        valueInput &&
-        valueInput.length > 3 &&
-        !cityDefault.includes(valueInput) &&
-        !/[()]/.test(valueInput)
+        valInputCity &&
+        valInputCity.length > 3 &&
+        !cityDefault.includes(valInputCity) &&
+        !/[()]/.test(valInputCity)
       ) {
         setNovaPoshtaCity([])
-        handleCityFetch(valueInput)
+        handleCityFetch(valInputCity)
       }
     }, 1000)
 
     return () => clearTimeout(timer)
-  }, [valueInput])
+  }, [valInputCity])
 
   return {
-    valueInput,
-    setValueInput,
+    valInputCity,
+    setValInputCity,
     loading,
     options,
     novaPoshtaCity,

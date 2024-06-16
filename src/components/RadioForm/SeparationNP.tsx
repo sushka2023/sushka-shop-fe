@@ -23,7 +23,7 @@ export const SeparationNP: FC<PropsType> = ({
   setError
 }) => {
   const {
-    setValueInput,
+    setValInputCity,
     loading: cityLoading,
     options,
     novaPoshtaCity,
@@ -31,34 +31,72 @@ export const SeparationNP: FC<PropsType> = ({
   } = useNovaPoshtaCity(clearErrors)
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [warehouses, setWarehouses] = useState<any[]>([])
-  const [valueInput1, setValueInput1] = useState<string>('')
+  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    const fetchWarehouses = async () => {
-      try {
-        if (settleRef) {
-          const response = await axiosInstance.get(
-            `/api/nova_poshta/warehouses/${settleRef}`
-          )
-          console.log('✌️response --->', response)
-          setWarehouses(response.data)
-        }
-      } catch (error) {
-        console.log('✌️error --->', error)
-      }
+    if (!valInputWarehouse) {
+      setWarehouses([])
     }
+  }, [valInputWarehouse])
 
-    fetchWarehouses()
-  }, [settleRef])
+  const fetchWarehouses = async (val: string) => {
+    setLoading(true)
+    try {
+      if (settleRef) {
+        const response = await axiosInstance.get(
+          '/api/nova_poshta/warehouses/branches/',
+          {
+            params: {
+              settle_ref: settleRef,
+              search_term: val
+            }
+          }
+        )
+        console.log('✌️response --->', response)
+        setWarehouses(response.data)
+      }
+    } catch (error) {
+      console.log('✌️error --->', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  const optionsData = useMemo(() => {
-    return warehouses.map((warehouse) => warehouse.address_warehouse)
+  useEffect(() => {
+    if (valInputWarehouse) {
+      const timer = setTimeout(() => {
+        fetchWarehouses(valInputWarehouse)
+      }, 1000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [valInputWarehouse])
+
+  const MAX_LENGTH = 50
+
+  const optionsDataCity = useMemo(() => {
+    return warehouses.map(
+      (warehouse) =>
+        warehouse.address_warehouse
+          .replace(/\(до 30 кг на одне місце\)/g, '')
+          .replace(/\(до 30 кг\)/g, '')
+          .replace(/\(до 10 кг\)/g, '')
+          .replace(/\(до 5 кг\)/g, '')
+          .replace(/\(до 200 кг\)/g, '')
+          .replace(/\(до 1100 кг \)/g, '')
+          .replace(/\n/g, '')
+          .replace(/№(\d+)\s*:/g, '№$1:')
+          .trim()
+          .slice(0, MAX_LENGTH) +
+        (warehouse.address_warehouse.length > MAX_LENGTH ? '...' : '')
+    )
   }, [warehouses])
 
   const onChangeCity = useCallback(
     (_event: any, value: string) => {
       setValue('pickupNP', value)
-      setValueInput(value)
+      setValInputCity(value)
 
       if (value && novaPoshtaCity && novaPoshtaCity[0]?.Addresses) {
         const [descriptionPart, areaPart] = value.split(' (')
@@ -81,15 +119,15 @@ export const SeparationNP: FC<PropsType> = ({
         clearErrors('pickupNP')
       }
     },
-    [setValue, setValueInput, novaPoshtaCity, cityDefault, clearErrors]
+    [setValue, setValInputCity, novaPoshtaCity, cityDefault, clearErrors]
   )
 
   const onChangeWarehouse = useCallback(
     (_event: any, value: string) => {
       setValue('warehouse', value)
-      setValueInput1(value)
+      setValInputWarehouse(value)
     },
-    [setValue, setValueInput1]
+    [setValue, setValInputWarehouse]
   )
 
   return (
@@ -105,16 +143,16 @@ export const SeparationNP: FC<PropsType> = ({
           options={options}
           onChange={onChangeCity}
           loading={cityLoading}
-          setValueInput={setValueInput}
+          setValueInput={setValInputCity}
         />
 
         <AutocompleteCustom
           name="warehouse"
           register={register}
-          options={optionsData}
+          options={optionsDataCity}
           onChange={onChangeWarehouse}
-          loading={false}
-          setValueInput={setValueInput1}
+          loading={loading}
+          setValueInput={setValInputWarehouse}
         />
       </>
     )
