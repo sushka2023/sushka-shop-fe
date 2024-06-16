@@ -5,6 +5,8 @@ const btnContainerStyle = {
 }
 
 const btnNextStyle = {
+  'width': '100%',
+  'maxWidth': '250px',
   'textTransform': 'upperCase',
   'fontWeight': '600',
   'padding': '15px 30px',

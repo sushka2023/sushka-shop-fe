@@ -4,9 +4,16 @@ import { Button } from '../UI/Button'
 import { STEPS } from '../../pages/order-page/constants'
 import { btnContainerStyle, btnBackStyle, btnNextStyle } from './style'
 import { OrderContext } from '../../pages/order-page'
+import ClipLoader from 'react-spinners/ClipLoader'
 
 const StapperButtons = () => {
   const { activeStep, setActiveStep, isLoadingOrder } = useContext(OrderContext)
+
+  const generateButtonContent = () => {
+    if (isLoadingOrder) return <ClipLoader size={12} color={'#FFFFFF'} />
+
+    return activeStep === STEPS.length - 1 ? 'Оформити замовлення' : 'Далі'
+  }
 
   return (
     <Box sx={btnContainerStyle}>
@@ -21,12 +28,9 @@ const StapperButtons = () => {
       </Box>
 
       <Box width="28%" />
-      <Box width="100%" maxWidth="250px">
-        <Button type="submit" fullWidth sx={btnNextStyle}>
-          {activeStep === STEPS.length - 1 ? 'Оформити замовлення' : 'Далі'}
-          {isLoadingOrder && <div>loading...</div>}
-        </Button>
-      </Box>
+      <Button type="submit" fullWidth sx={btnNextStyle}>
+        {generateButtonContent()}
+      </Button>
     </Box>
   )
 }

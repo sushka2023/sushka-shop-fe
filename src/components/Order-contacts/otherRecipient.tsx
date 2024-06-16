@@ -1,11 +1,11 @@
-import { useContext } from 'react'
-import { Box, InputLabel } from '@mui/material'
+import { Fragment, useContext } from 'react'
+import { Box, InputLabel, FormHelperText } from '@mui/material'
 import { OutlinedInput } from '../UI/Field'
 import { Controller } from 'react-hook-form'
 import { OrderContext } from '../../pages/order-page'
 
 const OtherRecipient = () => {
-  const { control, register } = useContext(OrderContext)!
+  const { control, register, errors, otherRecipient } = useContext(OrderContext)
 
   return (
     <Box display="flex" gap="50px">
@@ -15,11 +15,18 @@ const OtherRecipient = () => {
           name="fullNameOtherRecipient"
           control={control}
           render={({ field }) => (
-            <OutlinedInput
-              {...field}
-              fullWidth
-              {...register('fullNameOtherRecipient')}
-            />
+            <Fragment>
+              <OutlinedInput
+                {...field}
+                fullWidth
+                required={otherRecipient}
+                error={!!errors.fullNameOtherRecipient}
+                {...register('fullNameOtherRecipient')}
+              />
+              <FormHelperText error={!!errors.fullNameOtherRecipient}>
+                {errors.fullNameOtherRecipient?.message}
+              </FormHelperText>
+            </Fragment>
           )}
         />
       </Box>
@@ -29,11 +36,18 @@ const OtherRecipient = () => {
           name="phoneOtherRecipient"
           control={control}
           render={({ field }) => (
-            <OutlinedInput
-              {...field}
-              fullWidth
-              {...register('phoneOtherRecipient')}
-            />
+            <Fragment>
+              <OutlinedInput
+                {...field}
+                fullWidth
+                required={otherRecipient}
+                error={!!errors.phoneOtherRecipient}
+                {...register('phoneOtherRecipient')}
+              />
+              <FormHelperText error={!!errors.phoneOtherRecipient}>
+                {errors.phoneOtherRecipient?.message}
+              </FormHelperText>
+            </Fragment>
           )}
         />
       </Box>

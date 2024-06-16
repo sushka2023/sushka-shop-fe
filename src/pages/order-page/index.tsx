@@ -8,12 +8,14 @@ import OrderContacts from '../../components/Order-contacts'
 import OrderCard from '../../components/Order-card'
 import { loadBasketItems, loadLocalStorageItems, sendOrder } from './utils'
 import { UserResponse } from '../../types'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, Resolver } from 'react-hook-form'
 import { OrderDelivery } from '../../components/Order-delivery'
 import { useAuth } from '../../hooks/use-auth'
 import { BasketItemsResponse } from '../../types'
 import { Inputs, OrderDetailsType, OrderContextType } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { userInfoSchema } from './validationSchemas'
 
 const OrderContext = createContext<OrderContextType>({} as OrderContextType)
 
@@ -28,8 +30,15 @@ const OrderPage = () => {
   const [orderNumber, setOrderNumber] = useState<number | null>(null)
   const { user } = useAuth()
 
-  const { handleSubmit, register, control, setValue } = useForm<Inputs>({
-    defaultValues: ORDER_FORM_DEFAULT_VALUES
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    formState: { errors }
+  } = useForm<Inputs>({
+    defaultValues: ORDER_FORM_DEFAULT_VALUES,
+    resolver: yupResolver(userInfoSchema) as Resolver<Inputs>
   })
 
   const overwriteFormValues = (user: UserResponse) => {
@@ -51,7 +60,8 @@ const OrderPage = () => {
     otherRecipient,
     setOtherRecipient,
     isLoadingBasketItems,
-    isLoadingOrder
+    isLoadingOrder,
+    errors
   }
 
   const STEP_CONTENT = [
@@ -71,6 +81,7 @@ const OrderPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setOrderDetails(data)
+    console.log(data)
 
     if (activeStep === STEPS.length - 1) {
       sendOrder(data, setOrderNumber, setError, setIsLoadingOrder)
@@ -88,6 +99,7 @@ const OrderPage = () => {
           sx={{ flexGrow: 1 }}
           component="form"
           onSubmit={handleSubmit(onSubmit)}
+          noValidate
         >
           <Grid container width="88%" spacing={0} alignItems="flex-start">
             <Grid item xs={9}>

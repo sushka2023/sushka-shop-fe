@@ -1,5 +1,11 @@
-import { Box, Checkbox, FormControlLabel, InputLabel } from '@mui/material'
-import { useState, useContext } from 'react'
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  FormHelperText,
+  InputLabel
+} from '@mui/material'
+import { useState, useContext, Fragment } from 'react'
 import { Typography } from '../../components/UI/Typography'
 import { OutlinedInput } from '../UI/Field'
 import ModalPortal from '../../components/modal-portal/ModalPortal'
@@ -12,8 +18,14 @@ import { wrappStyle } from './style'
 const OrderContacts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { otherRecipient, setOtherRecipient, setValue, control, register } =
-    useContext(OrderContext)!
+  const {
+    otherRecipient,
+    setOtherRecipient,
+    setValue,
+    control,
+    register,
+    errors
+  } = useContext(OrderContext)
 
   const resetValueOtherRecipient = () => {
     setValue('fullNameOtherRecipient', '')
@@ -59,12 +71,18 @@ const OrderContacts = () => {
               name="firstName"
               control={control}
               render={({ field }) => (
-                <OutlinedInput
-                  {...field}
-                  required
-                  fullWidth
-                  {...register('firstName')}
-                />
+                <Fragment>
+                  <OutlinedInput
+                    {...field}
+                    required
+                    fullWidth
+                    error={!!errors.firstName}
+                    {...register('firstName')}
+                  />
+                  <FormHelperText error={!!errors.firstName}>
+                    {errors.firstName?.message}
+                  </FormHelperText>
+                </Fragment>
               )}
             />
           </Box>
@@ -74,12 +92,18 @@ const OrderContacts = () => {
               name="lastName"
               control={control}
               render={({ field }) => (
-                <OutlinedInput
-                  {...field}
-                  required
-                  fullWidth
-                  {...register('lastName')}
-                />
+                <Fragment>
+                  <OutlinedInput
+                    {...field}
+                    required
+                    fullWidth
+                    error={!!errors.lastName}
+                    {...register('lastName')}
+                  />
+                  <FormHelperText error={!!errors.lastName}>
+                    {errors.lastName?.message}
+                  </FormHelperText>
+                </Fragment>
               )}
             />
           </Box>
@@ -89,12 +113,18 @@ const OrderContacts = () => {
               name="email"
               control={control}
               render={({ field }) => (
-                <OutlinedInput
-                  {...field}
-                  required
-                  fullWidth
-                  {...register('email')}
-                />
+                <Fragment>
+                  <OutlinedInput
+                    {...field}
+                    required
+                    fullWidth
+                    error={!!errors.email}
+                    {...register('email')}
+                  />
+                  <FormHelperText error={!!errors.email}>
+                    {errors.email?.message}
+                  </FormHelperText>
+                </Fragment>
               )}
             />
           </Box>
@@ -104,12 +134,18 @@ const OrderContacts = () => {
               name="phone"
               control={control}
               render={({ field }) => (
-                <OutlinedInput
-                  {...field}
-                  required
-                  fullWidth
-                  {...register('phone')}
-                />
+                <Fragment>
+                  <OutlinedInput
+                    {...field}
+                    required
+                    fullWidth
+                    error={!!errors.phone}
+                    {...register('phone')}
+                  />
+                  <FormHelperText error={!!errors.phone}>
+                    {errors.phone?.message}
+                  </FormHelperText>
+                </Fragment>
               )}
             />
           </Box>

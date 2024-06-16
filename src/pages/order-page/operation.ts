@@ -3,26 +3,38 @@ import { BasketItemsResponse } from '../../types'
 import { OrderDetailsType } from './types'
 
 const getBasketItems = async () => {
-  const { data } =
-    await axiosInstance.get<BasketItemsResponse[]>(`api/basket_items/`)
-  return data
+  try {
+    const { data } =
+      await axiosInstance.get<BasketItemsResponse[]>(`api/basket_items/`)
+    return data
+  } catch (e) {
+    throw new Error('Помилка під час завантаження корзини')
+  }
 }
 
 const getProductForId = async (productId: string) => {
-  const { data } = await axiosInstance.get<BasketItemsResponse>(
-    `api/product/${productId}`
-  )
-  return data
+  try {
+    const { data } = await axiosInstance.get<BasketItemsResponse>(
+      `api/product/${productId}`
+    )
+    return data
+  } catch (e) {
+    throw new Error('Помилка під час отримання продукту')
+  }
 }
 
 const removeProduct = async (id: number) => {
-  const data = await axiosInstance.delete(`api/basket_items/remove`, {
-    data: {
-      id
-    }
-  })
+  try {
+    const data = await axiosInstance.delete(`api/basket_items/remove`, {
+      data: {
+        id
+      }
+    })
 
-  return data
+    return data
+  } catch (e) {
+    throw new Error('Помилка під час видалення продукту')
+  }
 }
 
 const createOrder = async ({
@@ -33,18 +45,22 @@ const createOrder = async ({
   phoneOtherRecipient,
   comment
 }: OrderDetailsType) => {
-  const data = await axiosInstance.post('api/orders/create_for_auth_user', {
-    selected_nova_poshta_id: 0,
-    selected_ukr_poshta_id: 0,
-    payment_type: paymentType,
-    call_manager: call,
-    is_another_recipient: otherRecipient,
-    full_name_another_recipient: fullNameOtherRecipient,
-    phone_number_another_recipient: phoneOtherRecipient,
-    comment: comment
-  })
+  try {
+    const data = await axiosInstance.post('api/orders/create_for_auth_user', {
+      selected_nova_poshta_id: 0,
+      selected_ukr_poshta_id: 0,
+      payment_type: paymentType,
+      call_manager: call,
+      is_another_recipient: otherRecipient,
+      full_name_another_recipient: fullNameOtherRecipient,
+      phone_number_another_recipient: phoneOtherRecipient,
+      comment: comment
+    })
 
-  return data
+    return data
+  } catch (e) {
+    throw new Error('Помилка під час створення замовлення')
+  }
 }
 
 export { getBasketItems, removeProduct, getProductForId, createOrder }

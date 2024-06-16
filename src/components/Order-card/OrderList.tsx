@@ -7,10 +7,14 @@ import { listStyle, listItemStyle, closeIconStyle } from './style'
 import axiosInstance from '../../axios/settings'
 import { useAuth } from '../../hooks/use-auth'
 import { formatter } from '../../helpers/formatterTotalPrice'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { useTheme } from '@mui/material/styles'
 
 const OrderList = () => {
-  const { orderList, setOrderList } = useContext(OrderContext)!
+  const { orderList, setOrderList, isLoadingBasketItems } =
+    useContext(OrderContext)!
   const { user } = useAuth()
+  const theme = useTheme()
 
   const removeProduct = async (id: number) => {
     try {
@@ -33,6 +37,9 @@ const OrderList = () => {
 
   return (
     <List sx={listStyle}>
+      {isLoadingBasketItems && (
+        <ClipLoader size={30} color={theme.palette.primary.darker} />
+      )}
       {orderList?.map((order) => (
         <ListItem key={order.id} sx={listItemStyle}>
           <Box display="flex" gap="20px">

@@ -17,6 +17,7 @@ const dividerStyle = {
 const listStyle = {
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
   gap: '25px',
   maxHeight: '400px',
   overflow: 'auto'

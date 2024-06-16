@@ -1,5 +1,10 @@
 import { BasketItemsResponse } from '../../types'
-import { UseFormRegister, Control, UseFormSetValue } from 'react-hook-form'
+import {
+  UseFormRegister,
+  Control,
+  UseFormSetValue,
+  FieldErrors
+} from 'react-hook-form'
 
 export enum PaymentMethodTypes {
   wayforpay = 'liqpay',
@@ -12,9 +17,9 @@ export type Inputs = {
   lastName: string
   email: string
   phone: string
-  otherRecipient: boolean
-  fullNameOtherRecipient: string
-  phoneOtherRecipient: string
+  otherRecipient?: boolean | undefined
+  fullNameOtherRecipient?: string | undefined
+  phoneOtherRecipient?: string | undefined
   paymentType: PaymentMethodTypes
   comment: string
   call: boolean
@@ -35,4 +40,5 @@ export type OrderContextType = {
   setOtherRecipient: React.Dispatch<React.SetStateAction<boolean>>
   isLoadingBasketItems: boolean
   isLoadingOrder: boolean
+  errors: FieldErrors<Inputs>
 }
