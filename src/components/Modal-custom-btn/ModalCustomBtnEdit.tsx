@@ -71,11 +71,9 @@ export const BasicModal = () => {
             onClick={handleClickLogout}
             sx={{
               ...btnEditModWin,
-              ...{
-                width: 250,
-                height: 50,
-                textTransform: 'capitalize'
-              }
+              width: 250,
+              height: 50,
+              textTransform: 'capitalize'
             }}
             disabled={isLoadingBtn}
           >
