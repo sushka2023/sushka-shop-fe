@@ -8,6 +8,7 @@ import { MuiCheckbox } from '../overrides/checkbox'
 import { MuiStepper } from '../overrides/stepper'
 import { MuiTabs } from '../overrides/tabs'
 import { MuiTab } from '../overrides/tab'
+import { MuiContainer } from '../overrides/container'
 
 const COMPONENTS: Pick<ThemeOptions, 'components'> = {
   components: {
@@ -19,6 +20,7 @@ const COMPONENTS: Pick<ThemeOptions, 'components'> = {
     MuiCheckbox,
     MuiStepper,
     MuiTabs,
+    MuiContainer,
     MuiTab: {
       defaultProps: {
         disableFocusRipple: true,
