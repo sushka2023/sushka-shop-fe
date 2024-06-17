@@ -1,17 +1,33 @@
-/* eslint-disable */
-import { FC, useEffect, useState, useCallback, useMemo } from 'react'
+import React, { FC, useEffect, useState, useCallback, useMemo } from 'react'
 import { ErrorMessage } from '../Error/Error'
-import { AutocompleteCustom } from '../AutocompleteCustom/AutocompleteCustom'
+import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import axiosInstance from '../../axios/settings'
 
 type PropsType = {
   selectedValue: any
   errors: any
-  setError: (name: string, error: { type: string; message: string }) => void
   register: (name: string) => any
   setValue: (name: string, value: any) => void
   clearErrors: (name: string) => void
+}
+
+const getCityRef = (value: string, novaPoshtaCity: any[]) => {
+  const [descriptionPart, areaPart] = value.split(' (')
+  const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
+  const area = areaPart.replace(' обл.', '').replace(')', '')
+
+  const selectedCity = novaPoshtaCity[0]?.Addresses.find(
+    (address: any) =>
+      address.MainDescription === mainDescription && address.Area === area
+  )
+
+  return selectedCity ? selectedCity.Ref : null
+}
+
+const getDefaultCityRef = (value: string, cityDefault: any[]) => {
+  const defaultCity = cityDefault.find((city) => city.name === value)
+  return defaultCity ? defaultCity.ref : null
 }
 
 export const SeparationNP: FC<PropsType> = ({
@@ -19,20 +35,26 @@ export const SeparationNP: FC<PropsType> = ({
   errors,
   register,
   setValue,
-  clearErrors,
-  setError
+  clearErrors
 }) => {
   const {
+    valInputCity,
     setValInputCity,
     loading: cityLoading,
     options,
     novaPoshtaCity,
     cityDefault
-  } = useNovaPoshtaCity(clearErrors)
+  } = useNovaPoshtaCity()
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [warehouses, setWarehouses] = useState<any[]>([])
   const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+
+  const disabledBtn = () => {
+    if (!valInputCity) {
+      return true
+    }
+  }
 
   useEffect(() => {
     if (!valInputWarehouse) {
@@ -95,28 +117,17 @@ export const SeparationNP: FC<PropsType> = ({
 
   const onChangeCity = useCallback(
     (_event: any, value: string) => {
-      setValue('pickupNP', value)
+      setValue('city', value)
       setValInputCity(value)
+      clearErrors('city')
 
-      if (value && novaPoshtaCity && novaPoshtaCity[0]?.Addresses) {
-        const [descriptionPart, areaPart] = value.split(' (')
-        const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
-        const area = areaPart.replace(' обл.', '').replace(')', '')
-
-        const selectedCity = novaPoshtaCity[0]?.Addresses.find(
-          (address: any) =>
-            address.MainDescription === mainDescription && address.Area === area
-        )
-
-        if (selectedCity) {
-          setSettleRef(selectedCity.Ref)
-        } else {
-          setSettleRef(null)
-        }
-      }
-
-      if (cityDefault.includes(value)) {
-        clearErrors('pickupNP')
+      if (cityDefault.some((city) => city.name === value)) {
+        setSettleRef(getDefaultCityRef(value, cityDefault))
+        clearErrors('city')
+      } else if (value && novaPoshtaCity.length > 0) {
+        setSettleRef(getCityRef(value, novaPoshtaCity))
+      } else {
+        setSettleRef(null)
       }
     },
     [setValue, setValInputCity, novaPoshtaCity, cityDefault, clearErrors]
@@ -126,36 +137,40 @@ export const SeparationNP: FC<PropsType> = ({
     (_event: any, value: string) => {
       setValue('warehouse', value)
       setValInputWarehouse(value)
+      clearErrors('warehouse')
     },
     [setValue, setValInputWarehouse]
   )
 
   return (
     selectedValue === 'female' && (
-      <>
+      <React.Fragment>
         <ErrorMessage
-          error={errors.pickupNP}
+          error={errors.city || errors.warehouse}
           styles={{ position: 'relative' }}
         />
         <AutocompleteCustom
-          name="pickupNP"
+          name="city"
+          placeholder="Оберіть населений пункт"
           register={register}
           options={options}
+          errors={errors}
           onChange={onChangeCity}
           loading={cityLoading}
           setValueInput={setValInputCity}
         />
-
         <AutocompleteCustom
           name="warehouse"
+          placeholder="Оберіть відділення"
           register={register}
           options={optionsDataCity}
+          errors={errors}
+          disabled={disabledBtn()}
           onChange={onChangeWarehouse}
           loading={loading}
           setValueInput={setValInputWarehouse}
         />
-      </>
+      </React.Fragment>
     )
   )
 }
-/* eslint-enable */

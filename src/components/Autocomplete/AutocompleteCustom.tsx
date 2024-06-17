@@ -1,17 +1,17 @@
 import React, { FC, ReactNode } from 'react'
 import { Autocomplete, CircularProgress, TextField } from '@mui/material'
-import {
-  ListboxComponent,
-  StyledPopper
-} from '../Autocomplete/VariableSizeList'
+import { ListboxComponent, StyledPopper } from './VariableSizeList'
 
 type PropsType = {
   name: string
+  placeholder?: string
   register: (name: string) => any
   options: string[]
   onChange: (event: any, value: string) => void
   loading: boolean
   setValueInput: (value: string) => void
+  errors: any
+  disabled?: any
 }
 
 export const AutocompleteCustom: FC<PropsType> = ({
@@ -20,7 +20,10 @@ export const AutocompleteCustom: FC<PropsType> = ({
   options,
   onChange,
   loading,
-  setValueInput
+  setValueInput,
+  errors,
+  placeholder,
+  disabled
 }) => {
   return (
     <Autocomplete
@@ -28,17 +31,19 @@ export const AutocompleteCustom: FC<PropsType> = ({
       id="name"
       sx={{ width: 300, mt: 2 }}
       disableListWrap
+      onError={errors[name] ? () => {} : undefined}
       PopperComponent={StyledPopper}
       ListboxComponent={ListboxComponent}
       options={options}
       loading={loading}
+      disabled={disabled}
       noOptionsText="Немає варіантів"
       onInputChange={(_, val) => setValueInput(val)}
       onChange={onChange}
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Оберіть населений пункт"
+          placeholder={placeholder}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

@@ -1,8 +1,13 @@
-/* eslint-disable */
 import { useState, useEffect, useMemo } from 'react'
 
-const cityDefault = ['Львів', 'Одеса', 'Дніпро', 'Харків', 'Рівне']
-
+const cityDefault = [
+  { name: 'Київ', ref: 'e718a680-4b33-11e4-ab6d-005056801329' },
+  { name: 'Львів', ref: 'e71abb60-4b33-11e4-ab6d-005056801329' },
+  { name: 'Одеса', ref: 'e71c2a15-4b33-11e4-ab6d-005056801329' },
+  { name: 'Дніпро', ref: 'e717110a-4b33-11e4-ab6d-005056801329' },
+  { name: 'Харків', ref: 'e71f8842-4b33-11e4-ab6d-005056801329' },
+  { name: 'Рівне', ref: 'e71d65e1-4b33-11e4-ab6d-005056801329' }
+]
 const fetchNovaPoshtaCity = async (cityName: string) => {
   const apiKey = 'f07607422838cfac21a0d1b8603086ca'
   const requestOptions = {
@@ -35,7 +40,7 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
   return data.data
 }
 
-export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
+export const useNovaPoshtaCity = () => {
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
   const [valInputCity, setValInputCity] = useState<string>('')
   console.log('✌️valInputCity --->', valInputCity)
@@ -71,10 +76,10 @@ export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
     [novaPoshtaCity]
   )
   const options = useMemo(() => {
-    if (!valInputCity) return cityDefault
-    const filteredCities = cityDefault.filter((city) =>
-      city.toLowerCase().includes(valInputCity.toLowerCase())
-    )
+    if (!valInputCity) return cityDefault.map((city) => city.name)
+    const filteredCities = cityDefault
+      .map((city) => city.name)
+      .filter((city) => city.toLowerCase().includes(valInputCity.toLowerCase()))
     return filteredCities.length > 0 ? filteredCities : cityRenderNP
   }, [valInputCity, cityRenderNP])
 
@@ -83,7 +88,7 @@ export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
       if (
         valInputCity &&
         valInputCity.length > 3 &&
-        !cityDefault.includes(valInputCity) &&
+        !cityDefault.some((city) => city.name === valInputCity) &&
         !/[()]/.test(valInputCity)
       ) {
         setNovaPoshtaCity([])
@@ -103,4 +108,3 @@ export const useNovaPoshtaCity = (clearErrors: (name: string) => void) => {
     cityDefault
   }
 }
-/* eslint-enable */

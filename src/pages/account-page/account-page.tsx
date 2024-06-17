@@ -47,6 +47,7 @@ function a11yProps(index: number) {
 export default function AccountPage() {
   const [value, setValue] = useState(0)
   const { user } = useAuth()
+  console.log('✌️user --->', user)
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setValue(newValue)
@@ -105,7 +106,7 @@ export default function AccountPage() {
           </Box>
         </Box>
       </Fragment>
-      <Box sx={stWavePink}> </Box>
+      <Box sx={stWavePink} />
     </Box>
   )
 }

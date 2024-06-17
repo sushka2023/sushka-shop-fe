@@ -5,8 +5,16 @@ import ListSubheader from '@mui/material/ListSubheader'
 import Popper from '@mui/material/Popper'
 import { useTheme, styled } from '@mui/material/styles'
 import { VariableSizeList, ListChildComponentProps } from 'react-window'
-import { Typography, autocompleteClasses } from '@mui/material'
-import * as React from 'react'
+import { Box, Typography, autocompleteClasses } from '@mui/material'
+import {
+  HTMLAttributes,
+  ReactElement,
+  createContext,
+  forwardRef,
+  useContext,
+  useEffect,
+  useRef
+} from 'react'
 
 const LISTBOX_PADDING = 8
 
@@ -38,16 +46,16 @@ function renderRow(props: ListChildComponentProps) {
   )
 }
 
-const OuterElementContext = React.createContext({})
+const OuterElementContext = createContext({})
 
-const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
-  const outerProps = React.useContext(OuterElementContext)
-  return <div ref={ref} {...props} {...outerProps} />
+const OuterElementType = forwardRef<HTMLDivElement>((props, ref) => {
+  const outerProps = useContext(OuterElementContext)
+  return <Box ref={ref} {...props} {...outerProps} />
 })
 
 function useResetCache(data: any) {
-  const ref = React.useRef<VariableSizeList>(null)
-  React.useEffect(() => {
+  const ref = useRef<VariableSizeList>(null)
+  useEffect(() => {
     if (ref.current != null) {
       ref.current.resetAfterIndex(0, true)
     }
@@ -55,14 +63,14 @@ function useResetCache(data: any) {
   return ref
 }
 
-export const ListboxComponent = React.forwardRef<
+export const ListboxComponent = forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLElement>
+  HTMLAttributes<HTMLElement>
 >(function ListboxComponent(props, ref) {
   const { children, ...other } = props
-  const itemData: React.ReactElement[] = []
-  ;(children as React.ReactElement[]).forEach(
-    (item: React.ReactElement & { children?: React.ReactElement[] }) => {
+  const itemData: ReactElement[] = []
+  ;(children as ReactElement[]).forEach(
+    (item: ReactElement & { children?: ReactElement[] }) => {
       itemData.push(item)
       itemData.push(...(item.children || []))
     }
@@ -73,9 +81,9 @@ export const ListboxComponent = React.forwardRef<
     noSsr: true
   })
   const itemCount = itemData.length
-  const itemSize = smUp ? 76 : 48
+  const itemSize = smUp ? 56 : 48
 
-  const getChildSize = (child: React.ReactElement) => {
+  const getChildSize = (child: ReactElement) => {
     if (child.hasOwnProperty('group')) {
       return 48
     }
@@ -93,7 +101,7 @@ export const ListboxComponent = React.forwardRef<
   const gridRef = useResetCache(itemCount)
 
   return (
-    <div ref={ref}>
+    <Box ref={ref}>
       <OuterElementContext.Provider value={other}>
         <VariableSizeList
           itemData={itemData}
@@ -109,7 +117,7 @@ export const ListboxComponent = React.forwardRef<
           {renderRow}
         </VariableSizeList>
       </OuterElementContext.Provider>
-    </div>
+    </Box>
   )
 })
 
@@ -122,5 +130,3 @@ export const StyledPopper = styled(Popper)({
     }
   }
 })
-
-/* eslint-enable */

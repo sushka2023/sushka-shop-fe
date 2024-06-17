@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { FC, useState } from 'react'
 import { ErrorMessage } from '../Error/Error'
-import { AutocompleteCustom } from '../AutocompleteCustom/AutocompleteCustom'
+import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 
 type PropsType = {

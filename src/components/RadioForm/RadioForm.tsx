@@ -34,7 +34,6 @@ const RadioForm: FC<PropsType> = ({
         <SeparationNP
           selectedValue={selectedValue}
           errors={errors}
-          setError={setError}
           register={register}
           setValue={setValue}
           clearErrors={clearErrors}

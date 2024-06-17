@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 import InfoConfirmationModal from './ModalCustomWindow'
 import { Typography } from '@mui/material'
 import { Button } from '../UI/Button'
@@ -9,14 +9,15 @@ import RadioForm from '../RadioForm/RadioForm'
 
 interface ModalCustomFormRadiusProps {
   openModal?: boolean
-  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenModal?: Dispatch<SetStateAction<boolean>>
 }
 
 export const AddressRetention = Yup.object().shape({
-  pickupNP: Yup.string().required('Заповніть поле')
+  city: Yup.string().required('Виберіть населений пункт'),
+  warehouse: Yup.string().required('Виберіть відділення')
 })
 
-export const ModalCustomFormRadius: React.FC<ModalCustomFormRadiusProps> = ({
+export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
   openModal = false,
   setOpenModal = () => {}
 }) => {
