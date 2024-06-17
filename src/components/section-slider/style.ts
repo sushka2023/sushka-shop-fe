@@ -1,8 +1,6 @@
 export const sectionBg = {
-  marginTop: 'clamp(25rem, 21.786rem + 16.07vw, 47.5rem)',
-  marginBottom: '200px',
-  backgroundColor: 'pink.darker',
-  position: 'relative'
+  backgroundColor: 'pink.darker'
+  // position: 'relative'
   // border: '1px solid black'
 
   // lg: {
@@ -21,18 +19,34 @@ export const sectionBg = {
 //   backgroundSize: 'cover'
 // }
 
-export const border = {
-  width: '100%',
-  position: 'absolute',
-  top: 'clamp(-9.375rem, -10vw, -1.75rem)',
-  left: '0px',
+// export const border = {
+//   width: '100%',
+//   position: 'absolute',
+//   top: 'clamp(-9.375rem, -10vw, -1.75rem)',
+//   left: '0px',
 
-  lg: {
-    top: 'clamp(-16.875rem, -10vw, -9.375rem)'
-  }
+//   lg: {
+//     top: 'clamp(-16.875rem, -10vw, -9.375rem)'
+//   }
+// }
+
+export const border = {
+  backgroundImage: 'url(/src/icons/borderslider.svg)',
+  width: '100%',
+  height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: '100%',
+  marginTop: '254px'
 }
 
-export const borderSecond = {}
+export const borderSecond = {
+  backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
+  width: '100%',
+  height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: '100%',
+  marginBottom: '200px'
+}
 
 // export const borderSecond = {
 //   backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
@@ -44,28 +58,28 @@ export const borderSecond = {}
 //   backgroundRepeat: 'repeat-x'
 // }
 
-export const sliderContainer = {
-  lg: {
-    '& > div': {
-      'border': '1px solid red',
-      'position': 'relative',
-      'maxWidth': '1360px',
-      'margin': '0 auto',
-      'padding': '72px 40px',
-      'display': 'flex',
-      'alignItems': 'center',
-      'gap': '20px',
-      '&::before': {
-        display: 'none' // Або будь-який інший стиль, який вам потрібен
-      }
-    }
-  },
-  sm: {
-    '& > div': {
-      padding: '0px'
-    }
-  }
-}
+// export const sliderContainer = {
+//   lg: {
+//     '& > div': {
+//       'border': '1px solid red',
+//       'position': 'relative',
+//       'maxWidth': '1360px',
+//       'margin': '0 auto',
+//       'padding': '72px 40px',
+//       'display': 'flex',
+//       'alignItems': 'center',
+//       'gap': '20px',
+//       '&::before': {
+//         display: 'none' // Або будь-який інший стиль, який вам потрібен
+//       }
+//     }
+//   },
+//   sm: {
+//     '& > div': {
+//       padding: '0px'
+//     }
+//   }
+// }
 
 export const sliderTitle = {
   color: 'background.default',
@@ -85,12 +99,10 @@ export const slideElement = {
   boxSizing: 'border-box',
   borderRadius: '10px',
   backgroundColor: 'background.default',
-  mb: '20px',
-  // mr: '10px',
-  // border: '1px solid red',
   display: 'flex',
   flexDirection: 'column',
-  // height: '100vh', // Задайте висоту контейнера, якщо необхідно
+  cursor: 'pointer',
+  mb: '20px',
 
   sm: {
     border: '1px solid green',

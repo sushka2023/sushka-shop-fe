@@ -1,11 +1,11 @@
 import styles from './sliderSection.module.scss'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import Slider, { Settings } from 'react-slick'
 import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
-import borderTop from '/src/icons/borderslider.svg'
+// import borderTop from '/src/icons/borderslider.svg'
 // import borderBottom from '/src/icons/bordersecondslider.svg'
 import {
   Box,
@@ -18,10 +18,10 @@ import List from '@mui/material/List'
 
 import {
   border,
-  // borderSecond,
+  borderSecond,
   customButton,
   lastSlider,
-  sectionBg,
+  // sectionBg,
   // sliderContainer,
   sliderTitle
 } from './style'
@@ -87,41 +87,44 @@ const SlideSection = () => {
   }
 
   return (
-    <Box component="section" sx={sectionBg}>
-      {/* <Box sx={border}></Box> */}
+    <Fragment>
+      <Box sx={border}></Box>
       <Box
+        component="section"
+        sx={{
+          backgroundColor: 'pink.darker'
+          // border: '1px solid',
+          // borderColor: 'pink.darker'
+        }}
+      >
+        {/* <Box
         component="img"
         src={borderTop}
         sx={{ ...border, [theme.breakpoints.up('lg')]: border.lg }}
-      ></Box>
-      <Container
-        maxWidth="lg"
-        // sx={{
-        //   ...sliderContainer.lg,
-        //   [theme.breakpoints.down('sm')]: sliderContainer.sm
-        // }}
-      >
-        <Typography
-          sx={{
-            ...sliderTitle,
-            [theme.breakpoints.between('sm', 'lg')]: sliderTitle.md,
-            [theme.breakpoints.down('sm')]: sliderTitle.sm
-          }}
-          variant="h2"
-          component="h2"
-        >
-          Популярні товари
-        </Typography>
+      ></Box> */}
+        <Container maxWidth="lg">
+          <Typography
+            sx={{
+              ...sliderTitle,
+              [theme.breakpoints.between('sm', 'lg')]: sliderTitle.md,
+              [theme.breakpoints.down('sm')]: sliderTitle.sm
+            }}
+            variant="h2"
+            component="h2"
+          >
+            Популярні товари
+          </Typography>
 
-        <Slider {...settings} className={styles.sliderContainer}>
-          {Array.from({ length: 5 }, (_, index) => {
-            return <Box key={index}>{renderSlide(index)}</Box>
-          })}
-        </Slider>
-      </Container>
-      {/* <Box sx={borderSecond}></Box> */}
-      {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
-    </Box>
+          <Slider {...settings} className={styles.sliderContainer}>
+            {Array.from({ length: 5 }, (_, index) => {
+              return <Box key={index}>{renderSlide(index)}</Box>
+            })}
+          </Slider>
+        </Container>
+        {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
+      </Box>
+      <Box sx={borderSecond}></Box>
+    </Fragment>
   )
 }
 
