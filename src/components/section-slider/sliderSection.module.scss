@@ -7,7 +7,8 @@
   position: relative;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 72px 40px;
+  // padding: 72px 40px;
+  padding: 20px 20px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -33,16 +34,21 @@
   align-items: center;
   margin-bottom: 40px;
 
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
   &:hover {
     cursor: pointer;
   }
 
   &.prev {
-    left: 5px;
+    left: -5px;
   }
 
   &.next {
-    right: 10px;
+    right: -5px;
   }
 }
 

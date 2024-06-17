@@ -17,8 +17,8 @@ import {
 import List from '@mui/material/List'
 
 import {
-  border,
-  borderSecond,
+  // border,
+  // borderSecond,
   customButton,
   lastSlider,
   // sectionBg,
@@ -86,9 +86,25 @@ const SlideSection = () => {
     }
   }
 
+  const CreateBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
+    position: 'relative',
+    [positionWave]: '2px', // динамічний ключ (top або bottom)
+    backgroundImage: `url(${url})`,
+    width: '100%',
+    height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: '100%'
+  })
+
+  const borderTop = CreateBorderStyle('/src/icons/borderslider.svg', 'top')
+  const borderBottom = CreateBorderStyle(
+    '/src/icons/bordersecondslider.svg',
+    'bottom'
+  )
+
   return (
     <Fragment>
-      <Box sx={border}></Box>
+      <Box sx={{ ...borderTop, mt: '254px' }}></Box>
       <Box
         component="section"
         sx={{
@@ -123,7 +139,7 @@ const SlideSection = () => {
         </Container>
         {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
       </Box>
-      <Box sx={borderSecond}></Box>
+      <Box sx={{ ...borderBottom, mb: '200px' }}></Box>
     </Fragment>
   )
 }

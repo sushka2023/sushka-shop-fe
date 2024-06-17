@@ -31,6 +31,8 @@ export const sectionBg = {
 // }
 
 export const border = {
+  position: 'relative',
+  top: '2px',
   backgroundImage: 'url(/src/icons/borderslider.svg)',
   width: '100%',
   height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
@@ -40,6 +42,8 @@ export const border = {
 }
 
 export const borderSecond = {
+  position: 'relative',
+  bottom: '2px',
   backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
   width: '100%',
   height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
