@@ -4,9 +4,11 @@
 /* eslint-disable */
 import type { ImageResponseReview } from './ImageResponseReview';
 import type { Rating } from './Rating';
+import type { UserReviewResponse } from './UserReviewResponse';
 export type ReviewResponse = {
     id: number;
     user_id: number;
+    user: UserReviewResponse;
     product_id: number;
     rating: Rating;
     description: string;

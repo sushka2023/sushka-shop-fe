@@ -1,13 +1,13 @@
+import { useContext } from 'react'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 import { STEPS } from '../../pages/order-page/constants'
+import { OrderContext } from '../../pages/order-page'
 
-type Props = {
-  activeStep: number
-}
+const OrderStepper = () => {
+  const { activeStep } = useContext(OrderContext)!
 
-const OrderStepper: React.FC<Props> = ({ activeStep }) => {
   return (
     <Stepper activeStep={activeStep}>
       {STEPS.map((label) => (
