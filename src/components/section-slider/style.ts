@@ -87,7 +87,7 @@ export const borderSecond = {
 
 export const sliderTitle = {
   color: 'background.default',
-  mb: '16px',
+  mb: '40px',
 
   xl: {
     fontSize: '48px'
@@ -109,8 +109,8 @@ export const slideElement = {
   mb: '20px',
 
   sm: {
-    border: '1px solid green',
-    minHeight: 'clamp(13.5rem, 7.5rem + 30vw, 18.75rem)'
+    // border: '1px solid green'
+    // minHeight: 'clamp(13.5rem, 7.5rem + 30vw, 18.75rem)'
   }
 }
 
@@ -135,10 +135,14 @@ export const slideInfo = {
   // textAlign: 'center',
   fontSize: '22px',
   fontWeight: 600,
-  padding: '10px 30px 20px 30px',
+  padding: '20px 30px 20px 30px',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+
+  md: {
+    padding: '10px 15px'
+  }
 }
 
 export const lastSlider = {
@@ -185,11 +189,11 @@ export const cardPararaph = {
 
 export const cardBold = {
   color: 'secondary.darker',
-  fontSize: '22px',
+  fontSize: 'clamp(0.813rem, 0.017rem + 2.12vw, 1.375rem)',
   fontWeight: '600',
 
   sm: {
-    fontSize: '13px'
+    fontWeight: '400'
   }
 }
 

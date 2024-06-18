@@ -79,7 +79,13 @@ const HeroSection = () => {
           </Link>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              height: 'clamp(14.375rem, 4.375rem + 50vw, 23.125rem)'
+            }
+          }}
+        >
           {isSmallScreen ? (
             <Box
               component="img"

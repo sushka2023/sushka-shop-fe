@@ -82,7 +82,7 @@ const SlideSection = () => {
         </Box>
       )
     } else {
-      return <CustomSlider index={index + 1} width={400} />
+      return <CustomSlider index={index + 1} width={400} height="auto" />
     }
   }
 
@@ -104,7 +104,9 @@ const SlideSection = () => {
 
   return (
     <Fragment>
-      <Box sx={{ ...borderTop, mt: '254px' }}></Box>
+      <Box
+        sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
+      ></Box>
       <Box
         component="section"
         sx={{
@@ -118,7 +120,7 @@ const SlideSection = () => {
         src={borderTop}
         sx={{ ...border, [theme.breakpoints.up('lg')]: border.lg }}
       ></Box> */}
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" sx={{ padding: '0px 14px !important' }}>
           <Typography
             sx={{
               ...sliderTitle,
@@ -139,7 +141,12 @@ const SlideSection = () => {
         </Container>
         {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
       </Box>
-      <Box sx={{ ...borderBottom, mb: '200px' }}></Box>
+      <Box
+        sx={{
+          ...borderBottom,
+          mb: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)'
+        }}
+      ></Box>
     </Fragment>
   )
 }

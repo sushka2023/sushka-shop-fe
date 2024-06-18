@@ -23,7 +23,6 @@ const CustomSlider: FC<Props> = (props) => {
 
   return (
     <Box>
-      {/*  */}
       <Box data-index={index}>
         <Box
           sx={{
@@ -49,14 +48,14 @@ const CustomSlider: FC<Props> = (props) => {
               }}
             />
           </Box>
-          <Box sx={slideInfo}>
+          <Box
+            sx={{ ...slideInfo, [theme.breakpoints.down('md')]: slideInfo.md }}
+          >
             <Typography
-              component="h3"
               variant="h3"
               sx={{
                 ...cardBold,
-                [theme.breakpoints.down('sm')]: cardBold.sm,
-                fontWeight: '400'
+                [theme.breakpoints.down('sm')]: cardBold.sm
               }}
             >
               Мандаринова пастила
@@ -74,7 +73,12 @@ const CustomSlider: FC<Props> = (props) => {
             <Typography
               component="span"
               variant="caption"
-              sx={{ ...cardBold, [theme.breakpoints.down('sm')]: cardBold.sm }}
+              sx={{
+                ...cardBold,
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: 'clamp(0.938rem, 0.318rem + 1.65vw, 1.375rem)'
+                }
+              }}
             >
               200грн / 100гр.
             </Typography>
