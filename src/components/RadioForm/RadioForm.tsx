@@ -10,6 +10,7 @@ type PropsType = {
   errors: any
   setError: any
   clearErrors: any
+  getValues: any
 }
 
 const RadioForm: FC<PropsType> = ({
@@ -18,7 +19,8 @@ const RadioForm: FC<PropsType> = ({
   setValue,
   errors,
   setError,
-  clearErrors
+  clearErrors,
+  getValues
 }) => {
   const [selectedValue, setSelectedValue] = useState<string>('female')
 
@@ -37,6 +39,7 @@ const RadioForm: FC<PropsType> = ({
           register={register}
           setValue={setValue}
           clearErrors={clearErrors}
+          getValues={getValues}
         />
 
         <FormControlLabel value="male" control={<Radio />} label="Male" />

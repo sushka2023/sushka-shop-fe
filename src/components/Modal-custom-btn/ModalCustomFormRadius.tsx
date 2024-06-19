@@ -13,8 +13,8 @@ interface ModalCustomFormRadiusProps {
 }
 
 export const AddressRetention = Yup.object().shape({
-  city: Yup.string().required('Виберіть населений пункт'),
-  warehouse: Yup.string().required('Виберіть відділення')
+  // city: Yup.string().required('Виберіть населений пункт'),
+  // warehouse: Yup.string().required('Виберіть відділення')
 })
 
 export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
@@ -27,6 +27,7 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
     setValue,
     setError,
     clearErrors,
+    getValues,
     formState: { errors }
   } = useForm<any>({
     resolver: yupResolver(AddressRetention)
@@ -60,6 +61,7 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
             errors={errors}
             setError={setError}
             clearErrors={clearErrors}
+            getValues={getValues}
           >
             <Button type="submit" variant="contained">
               Submit

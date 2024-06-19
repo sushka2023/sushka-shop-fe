@@ -43,7 +43,6 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
 export const useNovaPoshtaCity = () => {
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
   const [valInputCity, setValInputCity] = useState<string>('')
-  console.log('✌️valInputCity --->', valInputCity)
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleCityFetch = async (cityName: string) => {
@@ -51,7 +50,6 @@ export const useNovaPoshtaCity = () => {
       setLoading(true)
       const data = await fetchNovaPoshtaCity(cityName)
       const addresses = data[0]?.Addresses || []
-      console.log('✌️addresses --->', addresses)
       if (
         addresses.length > 0 &&
         addresses.some((address: any) => address.Warehouses > 0)

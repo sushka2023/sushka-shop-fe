@@ -10,6 +10,7 @@ type PropsType = {
   register: (name: string) => any
   setValue: (name: string, value: any) => void
   clearErrors: (name: string) => void
+  getValues: (name: string) => any
 }
 
 const getCityRef = (value: string, novaPoshtaCity: any[]) => {
@@ -35,7 +36,8 @@ export const SeparationNP: FC<PropsType> = ({
   errors,
   register,
   setValue,
-  clearErrors
+  clearErrors,
+  getValues
 }) => {
   const {
     valInputCity,
@@ -47,20 +49,23 @@ export const SeparationNP: FC<PropsType> = ({
   } = useNovaPoshtaCity()
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [warehouses, setWarehouses] = useState<any[]>([])
-  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+  const [valInputWarehouse, setValInputWarehouse] = useState<string | null>('')
   const [loading, setLoading] = useState<boolean>(false)
 
-  const disabledBtn = () => {
-    if (!valInputCity) {
-      return true
-    }
-  }
+  const disabledBtn = () => !valInputCity
 
   useEffect(() => {
     if (!valInputWarehouse) {
       setWarehouses([])
     }
   }, [valInputWarehouse])
+
+  useEffect(() => {
+    if (disabledBtn()) {
+      setValue('warehouse', null)
+      setValInputWarehouse(null)
+    }
+  }, [disabledBtn, setValue])
 
   const fetchWarehouses = async (val: string) => {
     setLoading(true)
@@ -88,6 +93,7 @@ export const SeparationNP: FC<PropsType> = ({
   useEffect(() => {
     if (valInputWarehouse) {
       const timer = setTimeout(() => {
+        console.log('✌️valInputWarehouse --->', valInputWarehouse)
         fetchWarehouses(valInputWarehouse)
       }, 1000)
 
@@ -166,6 +172,7 @@ export const SeparationNP: FC<PropsType> = ({
           options={optionsDataCity}
           errors={errors}
           disabled={disabledBtn()}
+          val={disabledBtn() ? '' : getValues('warehouse')}
           onChange={onChangeWarehouse}
           loading={loading}
           setValueInput={setValInputWarehouse}

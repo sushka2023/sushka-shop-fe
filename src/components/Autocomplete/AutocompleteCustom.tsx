@@ -12,6 +12,7 @@ type PropsType = {
   setValueInput: (value: string) => void
   errors: any
   disabled?: any
+  val?: any
 }
 
 export const AutocompleteCustom: FC<PropsType> = ({
@@ -23,12 +24,18 @@ export const AutocompleteCustom: FC<PropsType> = ({
   setValueInput,
   errors,
   placeholder,
-  disabled
+  disabled,
+  val
 }) => {
+  const isOptionEqualToValue = (option: any, value: string | null) => {
+    // Customize the equality test here
+    return option === value || (option === null && value === '')
+  }
   return (
     <Autocomplete
       {...register(name)}
       id="name"
+      value={val}
       sx={{ width: 300, mt: 2 }}
       disableListWrap
       onError={errors[name] ? () => {} : undefined}
@@ -40,6 +47,7 @@ export const AutocompleteCustom: FC<PropsType> = ({
       noOptionsText="Немає варіантів"
       onInputChange={(_, val) => setValueInput(val)}
       onChange={onChange}
+      isOptionEqualToValue={isOptionEqualToValue}
       renderInput={(params) => (
         <TextField
           {...params}
