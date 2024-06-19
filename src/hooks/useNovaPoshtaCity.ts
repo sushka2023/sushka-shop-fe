@@ -59,20 +59,32 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
   return data.data
 }
 
-export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
+type PropsTypes = {
+  setValue: (name: string, value: any) => void
+  clearErrors: (name: string) => void
+  setSettleRef: (ref: string | null) => void
+}
+const TIMER = 1000
+
+export const useNovaPoshtaCity = ({
+  setValue,
+  clearErrors,
+  setSettleRef
+}: PropsTypes) => {
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
   const [valInputCity, setValInputCity] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
+  const [messageOptionCity, setMessageOptionCity] = useState<string>('')
 
   const handleCityFetch = async (cityName: string) => {
     try {
       setLoading(true)
       const data = await fetchNovaPoshtaCity(cityName)
       const addresses = data[0]?.Addresses || []
-      if (
-        addresses.length > 0 &&
-        addresses.some((address: any) => address.Warehouses > 0)
-      ) {
+
+      if (addresses.length === 0) {
+        setMessageOptionCity('Не знайдено')
+      } else if (addresses.some((address: any) => address.Warehouses > 0)) {
         setNovaPoshtaCity(data)
       }
     } catch (error) {
@@ -92,6 +104,7 @@ export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
         : [],
     [novaPoshtaCity]
   )
+
   const options = useMemo(() => {
     if (!valInputCity) return cityDefault.map((city) => city.name)
     const filteredCities = cityDefault
@@ -103,15 +116,17 @@ export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (
-        valInputCity &&
-        valInputCity.length > 3 &&
-        !cityDefault.some((city) => city.name === valInputCity) &&
-        !/[()]/.test(valInputCity)
+        !valInputCity ||
+        valInputCity.length <= 3 ||
+        cityDefault.some((city) => city.name === valInputCity) ||
+        /[()]/.test(valInputCity)
       ) {
+        setMessageOptionCity('Почніть водити текст...')
+      } else {
         setNovaPoshtaCity([])
         handleCityFetch(valInputCity)
       }
-    }, 1000)
+    }, TIMER)
 
     return () => clearTimeout(timer)
   }, [valInputCity])
@@ -130,8 +145,16 @@ export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
         setSettleRef(null)
       }
     },
-    [setValue, setValInputCity, novaPoshtaCity, cityDefault, clearErrors]
+    [
+      setValue,
+      setValInputCity,
+      novaPoshtaCity,
+      cityDefault,
+      clearErrors,
+      setSettleRef
+    ]
   )
+
   return {
     valInputCity,
     setValInputCity,
@@ -141,6 +164,7 @@ export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
     cityDefault,
     onChangeCity,
     getCityRef,
-    getDefaultCityRef
+    getDefaultCityRef,
+    messageOptionCity
   }
 }

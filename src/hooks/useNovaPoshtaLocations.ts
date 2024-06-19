@@ -1,46 +1,76 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import axiosInstance from '../axios/settings'
 
+const fetchNovaPoshtaWarehouse = async (
+  cityRef: string,
+  searchTerm: string
+) => {
+  const response = await axiosInstance.get(
+    '/api/nova_poshta/warehouses/branches/',
+    {
+      params: {
+        settle_ref: cityRef,
+        search_term: searchTerm
+      }
+    }
+  )
+
+  if (!response.data.length) {
+    throw new Error('Не знайдено')
+  }
+
+  return response.data
+}
+
+type WarehousesTypes = {
+  address_warehouse: string
+  id: number
+}
+const TIMER = 1000
 export const useNovaPoshtaLocations = () => {
-  const [warehouses, setWarehouses] = useState<any[]>([])
-  const [valInputWarehouse, setValInputWarehouse] = useState<string | null>('')
+  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+  const [warehouses, setWarehouses] = useState<WarehousesTypes[]>([])
   const [settleRef, setSettleRef] = useState<string | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
   const [newRequest, setNewRequest] = useState<boolean>(true)
-  console.log('✌️newRequest --->', newRequest)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [messageOptionLoc, setMessageOptionLoc] = useState<string>('')
+
+  const fetchWarehouses = useCallback(
+    async (searchTerm: string) => {
+      if (!settleRef) return
+      setLoading(true)
+
+      try {
+        const data = await fetchNovaPoshtaWarehouse(settleRef, searchTerm)
+        setWarehouses(data)
+      } catch (error) {
+        console.error('Error fetching warehouses:', error)
+        setMessageOptionLoc('Не знайдено')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [settleRef, setMessageOptionLoc]
+  )
+
+  useEffect(() => {
+    if (!valInputWarehouse) {
+      setWarehouses([])
+      setNewRequest(true)
+      setMessageOptionLoc('Почніть водити текст...')
+    }
+  }, [valInputWarehouse, setMessageOptionLoc])
 
   useEffect(() => {
     if (newRequest && valInputWarehouse) {
       const timer = setTimeout(() => {
+        setMessageOptionLoc('Почніть водити текст...')
         fetchWarehouses(valInputWarehouse)
-      }, 1000)
+      }, TIMER)
 
       return () => clearTimeout(timer)
     }
-  }, [valInputWarehouse])
-
-  const fetchWarehouses = async (val: string) => {
-    setLoading(true)
-    try {
-      if (settleRef) {
-        const response = await axiosInstance.get(
-          '/api/nova_poshta/warehouses/branches/',
-          {
-            params: {
-              settle_ref: settleRef,
-              search_term: val
-            }
-          }
-        )
-        console.log('✌️response --->', response)
-        setWarehouses(response.data)
-      }
-    } catch (error) {
-      console.log('✌️error --->', error)
-    } finally {
-      setLoading(false)
-    }
-  }
+  }, [valInputWarehouse, newRequest, fetchWarehouses, setMessageOptionLoc])
 
   return {
     valInputWarehouse,
@@ -48,8 +78,8 @@ export const useNovaPoshtaLocations = () => {
     warehouses,
     setWarehouses,
     setSettleRef,
-    loading,
     setNewRequest,
-    newRequest
+    loading,
+    messageOptionLoc
   }
 }

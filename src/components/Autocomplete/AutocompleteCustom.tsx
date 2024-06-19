@@ -13,6 +13,7 @@ type PropsType = {
   errors: any
   disabled?: any
   val?: any
+  optionsText: any
 }
 
 export const AutocompleteCustom: FC<PropsType> = ({
@@ -25,7 +26,8 @@ export const AutocompleteCustom: FC<PropsType> = ({
   errors,
   placeholder,
   disabled,
-  val
+  val,
+  optionsText
 }) => {
   const isOptionEqualToValue = (option: any, value: string | null) => {
     return option === value || option === null || value === ''
@@ -43,7 +45,8 @@ export const AutocompleteCustom: FC<PropsType> = ({
       options={options}
       loading={loading}
       disabled={disabled}
-      noOptionsText="Немає варіантів"
+      clearOnEscape
+      noOptionsText={optionsText}
       onInputChange={(_, val) => setValueInput(val)}
       onChange={onChange}
       isOptionEqualToValue={isOptionEqualToValue}

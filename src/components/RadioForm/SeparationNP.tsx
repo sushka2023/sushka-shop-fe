@@ -12,6 +12,7 @@ type PropsType = {
   clearErrors: (name: string) => void
   getValues: (name: string) => any
 }
+const MAX_LENGTH = 50
 
 export const SeparationNP: FC<PropsType> = ({
   selectedValue,
@@ -22,12 +23,11 @@ export const SeparationNP: FC<PropsType> = ({
   getValues
 }) => {
   const {
-    valInputWarehouse,
     setValInputWarehouse,
     warehouses,
-    setWarehouses,
     setSettleRef,
     setNewRequest,
+    messageOptionLoc,
     loading: locationLoading
   } = useNovaPoshtaLocations()
 
@@ -39,32 +39,27 @@ export const SeparationNP: FC<PropsType> = ({
     novaPoshtaCity,
     cityDefault,
     getDefaultCityRef,
-    getCityRef
-  } = useNovaPoshtaCity({ setValue, clearErrors, setSettleRef })
+    getCityRef,
+    messageOptionCity
+  } = useNovaPoshtaCity({
+    setValue,
+    clearErrors,
+    setSettleRef
+  })
 
   const [isDisabled, setIsDisabled] = useState(!valInputCity)
-  console.log('✌️isDisabled --->', isDisabled)
 
   useEffect(() => {
     setIsDisabled(!valInputCity)
   }, [valInputCity])
 
   useEffect(() => {
-    if (!valInputWarehouse) {
-      setWarehouses([])
-      setNewRequest(true)
-    }
-  }, [valInputWarehouse])
-
-  useEffect(() => {
     if (isDisabled) {
       setValue('warehouse', null)
-      setValInputWarehouse(null)
+      setValInputWarehouse('')
       setNewRequest(true)
     }
-  }, [isDisabled])
-
-  const MAX_LENGTH = 50
+  }, [isDisabled, setValue, setValInputWarehouse, setNewRequest])
 
   const optionsDataCity = useMemo(() => {
     return warehouses.map(
@@ -98,7 +93,16 @@ export const SeparationNP: FC<PropsType> = ({
         setSettleRef(null)
       }
     },
-    [setValue, setValInputCity, novaPoshtaCity, cityDefault, clearErrors]
+    [
+      setValue,
+      setValInputCity,
+      novaPoshtaCity,
+      cityDefault,
+      clearErrors,
+      getDefaultCityRef,
+      getCityRef,
+      setSettleRef
+    ]
   )
 
   const onChangeWarehouse = useCallback(
@@ -107,9 +111,8 @@ export const SeparationNP: FC<PropsType> = ({
       setValInputWarehouse(value)
       clearErrors('warehouse')
       setNewRequest(false)
-      // setWarehouses([])
     },
-    [setValue, setValInputWarehouse]
+    [setValue, setValInputWarehouse, clearErrors, setNewRequest]
   )
 
   return (
@@ -119,6 +122,7 @@ export const SeparationNP: FC<PropsType> = ({
           error={errors.city || errors.warehouse}
           styles={{ position: 'relative' }}
         />
+
         <AutocompleteCustom
           name="city"
           placeholder="Оберіть населений пункт"
@@ -128,7 +132,9 @@ export const SeparationNP: FC<PropsType> = ({
           onChange={onChangeCity}
           loading={cityLoading}
           setValueInput={setValInputCity}
+          optionsText={messageOptionCity}
         />
+
         <AutocompleteCustom
           name="warehouse"
           placeholder="Оберіть відділення"
@@ -140,6 +146,7 @@ export const SeparationNP: FC<PropsType> = ({
           onChange={onChangeWarehouse}
           loading={locationLoading}
           setValueInput={setValInputWarehouse}
+          optionsText={messageOptionLoc}
         />
       </React.Fragment>
     )
