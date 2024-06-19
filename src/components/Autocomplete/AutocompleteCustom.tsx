@@ -28,8 +28,7 @@ export const AutocompleteCustom: FC<PropsType> = ({
   val
 }) => {
   const isOptionEqualToValue = (option: any, value: string | null) => {
-    // Customize the equality test here
-    return option === value || (option === null && value === '')
+    return option === value || option === null || value === ''
   }
   return (
     <Autocomplete

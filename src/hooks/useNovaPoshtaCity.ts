@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 
 const cityDefault = [
   { name: 'Київ', ref: 'e718a680-4b33-11e4-ab6d-005056801329' },
@@ -8,6 +8,25 @@ const cityDefault = [
   { name: 'Харків', ref: 'e71f8842-4b33-11e4-ab6d-005056801329' },
   { name: 'Рівне', ref: 'e71d65e1-4b33-11e4-ab6d-005056801329' }
 ]
+
+const getCityRef = (value: string, novaPoshtaCity: any[]) => {
+  const [descriptionPart, areaPart] = value.split(' (')
+  const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
+  const area = areaPart.replace(' обл.', '').replace(')', '')
+
+  const selectedCity = novaPoshtaCity[0]?.Addresses.find(
+    (address: any) =>
+      address.MainDescription === mainDescription && address.Area === area
+  )
+
+  return selectedCity ? selectedCity.Ref : null
+}
+
+const getDefaultCityRef = (value: string, cityDefault: any[]) => {
+  const defaultCity = cityDefault.find((city) => city.name === value)
+  return defaultCity ? defaultCity.ref : null
+}
+
 const fetchNovaPoshtaCity = async (cityName: string) => {
   const apiKey = 'f07607422838cfac21a0d1b8603086ca'
   const requestOptions = {
@@ -40,7 +59,7 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
   return data.data
 }
 
-export const useNovaPoshtaCity = () => {
+export const useNovaPoshtaCity = ({ setValue, clearErrors, setSettleRef }) => {
   const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
   const [valInputCity, setValInputCity] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
@@ -97,12 +116,31 @@ export const useNovaPoshtaCity = () => {
     return () => clearTimeout(timer)
   }, [valInputCity])
 
+  const onChangeCity = useCallback(
+    (_event: any, value: string) => {
+      setValue('city', value)
+      setValInputCity(value)
+      clearErrors('city')
+      if (cityDefault.some((city) => city.name === value)) {
+        setSettleRef(getDefaultCityRef(value, cityDefault))
+        clearErrors('city')
+      } else if (value && novaPoshtaCity.length > 0) {
+        setSettleRef(getCityRef(value, novaPoshtaCity))
+      } else {
+        setSettleRef(null)
+      }
+    },
+    [setValue, setValInputCity, novaPoshtaCity, cityDefault, clearErrors]
+  )
   return {
     valInputCity,
     setValInputCity,
     loading,
     options,
     novaPoshtaCity,
-    cityDefault
+    cityDefault,
+    onChangeCity,
+    getCityRef,
+    getDefaultCityRef
   }
 }

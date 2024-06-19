@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState, useCallback, useMemo } from 'react'
+import React, { FC, useEffect, useCallback, useMemo, useState } from 'react'
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
-import axiosInstance from '../../axios/settings'
+import { useNovaPoshtaLocations } from '../../hooks/useNovaPoshtaLocations'
 
 type PropsType = {
   selectedValue: any
@@ -11,24 +11,6 @@ type PropsType = {
   setValue: (name: string, value: any) => void
   clearErrors: (name: string) => void
   getValues: (name: string) => any
-}
-
-const getCityRef = (value: string, novaPoshtaCity: any[]) => {
-  const [descriptionPart, areaPart] = value.split(' (')
-  const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
-  const area = areaPart.replace(' обл.', '').replace(')', '')
-
-  const selectedCity = novaPoshtaCity[0]?.Addresses.find(
-    (address: any) =>
-      address.MainDescription === mainDescription && address.Area === area
-  )
-
-  return selectedCity ? selectedCity.Ref : null
-}
-
-const getDefaultCityRef = (value: string, cityDefault: any[]) => {
-  const defaultCity = cityDefault.find((city) => city.name === value)
-  return defaultCity ? defaultCity.ref : null
 }
 
 export const SeparationNP: FC<PropsType> = ({
@@ -40,66 +22,47 @@ export const SeparationNP: FC<PropsType> = ({
   getValues
 }) => {
   const {
+    valInputWarehouse,
+    setValInputWarehouse,
+    warehouses,
+    setWarehouses,
+    setSettleRef,
+    setNewRequest,
+    loading: locationLoading
+  } = useNovaPoshtaLocations()
+
+  const {
     valInputCity,
     setValInputCity,
     loading: cityLoading,
     options,
     novaPoshtaCity,
-    cityDefault
-  } = useNovaPoshtaCity()
-  const [settleRef, setSettleRef] = useState<string | null>(null)
-  const [warehouses, setWarehouses] = useState<any[]>([])
-  const [valInputWarehouse, setValInputWarehouse] = useState<string | null>('')
-  const [loading, setLoading] = useState<boolean>(false)
+    cityDefault,
+    getDefaultCityRef,
+    getCityRef
+  } = useNovaPoshtaCity({ setValue, clearErrors, setSettleRef })
 
-  const disabledBtn = () => !valInputCity
+  const [isDisabled, setIsDisabled] = useState(!valInputCity)
+  console.log('✌️isDisabled --->', isDisabled)
+
+  useEffect(() => {
+    setIsDisabled(!valInputCity)
+  }, [valInputCity])
 
   useEffect(() => {
     if (!valInputWarehouse) {
       setWarehouses([])
+      setNewRequest(true)
     }
   }, [valInputWarehouse])
 
   useEffect(() => {
-    if (disabledBtn()) {
+    if (isDisabled) {
       setValue('warehouse', null)
       setValInputWarehouse(null)
+      setNewRequest(true)
     }
-  }, [disabledBtn, setValue])
-
-  const fetchWarehouses = async (val: string) => {
-    setLoading(true)
-    try {
-      if (settleRef) {
-        const response = await axiosInstance.get(
-          '/api/nova_poshta/warehouses/branches/',
-          {
-            params: {
-              settle_ref: settleRef,
-              search_term: val
-            }
-          }
-        )
-        console.log('✌️response --->', response)
-        setWarehouses(response.data)
-      }
-    } catch (error) {
-      console.log('✌️error --->', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (valInputWarehouse) {
-      const timer = setTimeout(() => {
-        console.log('✌️valInputWarehouse --->', valInputWarehouse)
-        fetchWarehouses(valInputWarehouse)
-      }, 1000)
-
-      return () => clearTimeout(timer)
-    }
-  }, [valInputWarehouse])
+  }, [isDisabled])
 
   const MAX_LENGTH = 50
 
@@ -126,7 +89,6 @@ export const SeparationNP: FC<PropsType> = ({
       setValue('city', value)
       setValInputCity(value)
       clearErrors('city')
-
       if (cityDefault.some((city) => city.name === value)) {
         setSettleRef(getDefaultCityRef(value, cityDefault))
         clearErrors('city')
@@ -144,6 +106,8 @@ export const SeparationNP: FC<PropsType> = ({
       setValue('warehouse', value)
       setValInputWarehouse(value)
       clearErrors('warehouse')
+      setNewRequest(false)
+      // setWarehouses([])
     },
     [setValue, setValInputWarehouse]
   )
@@ -171,10 +135,10 @@ export const SeparationNP: FC<PropsType> = ({
           register={register}
           options={optionsDataCity}
           errors={errors}
-          disabled={disabledBtn()}
-          val={disabledBtn() ? '' : getValues('warehouse')}
+          disabled={isDisabled}
+          val={isDisabled ? '' : getValues('warehouse')}
           onChange={onChangeWarehouse}
-          loading={loading}
+          loading={locationLoading}
           setValueInput={setValInputWarehouse}
         />
       </React.Fragment>
