@@ -5,12 +5,19 @@ import IconBowl from '../../icons/bowl.svg?react'
 import IconBox from '../../icons/box.svg?react'
 import ApllePic from '../../images/aplle-pic.jpg'
 import FruitMixSecond from '../../images/fruit-mix-2.jpg'
-import { Box, Container, List, ListItem, Typography } from '@mui/material'
+import {
+  Box,
+  Container,
+  List,
+  ListItem,
+  Typography,
+  useTheme
+} from '@mui/material'
 import {
   paragraphItalic,
   paragraphWrapper,
   yourChoiceList,
-  // yourChoiceListItem,
+  test23,
   yourChoiceParagraph,
   yourChoiceWrapper
 } from './style'
@@ -20,18 +27,21 @@ const test = {
 }
 
 const ITEMS_LIST = [
-  { icon: <IconMix />, text: 'Без цукру \n та барвників' },
+  { icon: <IconMix />, text: 'Без цукру та барвників' },
   { icon: <IconApple />, text: '100% натурально' },
   { icon: <IconBowl />, text: 'Якісний продукт' },
   { icon: <IconBox />, text: 'Дійсно поживно' }
 ]
 
 const SectionYourChoice = () => {
+  const theme = useTheme()
+
   return (
     <Container
+      maxWidth="lg"
       className={styles.sectionYourChoice}
       id="aboutProduct"
-      sx={{ m: '50px 0' }}
+      sx={{ mt: '100px' }}
     >
       <Box sx={yourChoiceWrapper}>
         <Box minWidth="50%">
@@ -93,15 +103,17 @@ const SectionYourChoice = () => {
       </Box>
       <List sx={yourChoiceList}>
         {ITEMS_LIST.map((item, index) => (
-          <ListItem key={index} className={styles.yourChoiceListItem}>
+          <ListItem
+            key={index}
+            className={styles.yourChoiceListItem}
+            sx={{ [theme.breakpoints.down('sm')]: test23.sm }}
+          >
             {item.icon}
             <Typography
+              className={styles.listItemCaption}
               sx={{
-                color: 'secondary.darker',
-                fontWeight: 600,
-                fontSize: '40px'
+                color: 'secondary.darker'
               }}
-              // className={styles.listItemCaption}
             >
               {item.text}
             </Typography>
@@ -109,7 +121,7 @@ const SectionYourChoice = () => {
         ))}
       </List>
       <Box sx={yourChoiceWrapper}>
-        <Box width={680}>
+        <Box sx={paragraphWrapper}>
           <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             Тут знайдеш близько{' '}
             <Typography component="span" variant="caption" sx={paragraphItalic}>
@@ -118,13 +130,11 @@ const SectionYourChoice = () => {
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </Typography>
-          <br />
           <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             Познайомишся з 20-ма фруктами у вигляді чипсів. Усе перераховане
             висушене при бережних температурах у дегідраторах за всіма ТУ,
             зібране у зручні пакунки та готове радувати кращих людей.
           </Typography>
-          <br />
           <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
@@ -134,7 +144,14 @@ const SectionYourChoice = () => {
             </Typography>
           </Typography>
         </Box>
-        <Box component="img" src={FruitMixSecond} alt="fruit mix" width={555} />
+        <Box minWidth="50%">
+          <Box
+            component="img"
+            src={FruitMixSecond}
+            alt="fruit mix"
+            width="100%"
+          />
+        </Box>
       </Box>
     </Container>
   )

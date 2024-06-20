@@ -24,19 +24,12 @@ export const yourChoiceList = {
   gap: '10px'
 }
 
-// export const yourChoiceListItem = {
-//   width: '281px',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   flexDirection: 'column',
-//   gap: '30px',
-//   color: 'secondary.darker',
-//   fontFamily: 'body1.fontFamily',
-//   fontSize: '22px',
-//   fontWeight: '600',
-//   lineHeight: '120%'
-// }
+export const test23 = {
+  sm: {
+    border: '1px solid red',
+    padding: 0
+  }
+}
 
 export const paragraphItalic = {
   fontSize: '18px',
