@@ -4,8 +4,8 @@
   }
   p,
   span {
-    // font-size: clamp(0.938rem, 0.804rem + 0.36vw, 1.125rem);
-    font-size: 15px !important;
+    font-size: clamp(0.875rem, 0.283rem + 1.32vw, 1.125rem);
+    // font-size: 15px !important;
   }
 }
 .yourChoiceListItem {
@@ -31,4 +31,13 @@
 //   .yourChoiceListItem {
 //     border: 1px solid red;
 //   }
-// }
+// }clamp(15.625rem, 6.743rem + 19.74vw, 19.375rem)
+
+@media (min-width: 720px) and (max-width: 1024px) {
+  .yourChoiceWrapper {
+    img {
+      border: 1px solid red;
+      height: clamp(15.625rem, 6.743rem + 19.74vw, 19.375rem);
+    }
+  }
+}

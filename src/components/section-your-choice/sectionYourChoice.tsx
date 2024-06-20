@@ -120,7 +120,7 @@ const SectionYourChoice = () => {
           </ListItem>
         ))}
       </List>
-      <Box sx={yourChoiceWrapper}>
+      <Box sx={yourChoiceWrapper} className={styles.yourChoiceWrapper}>
         <Box sx={paragraphWrapper}>
           <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
             Тут знайдеш близько{' '}
