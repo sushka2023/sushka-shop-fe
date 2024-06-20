@@ -1,7 +1,8 @@
 export const yourChoiceWrapper = {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  gap: 'clamp(1.563rem, -13.822rem + 24.04vw, 7.813rem)'
 }
 
 export const yourChoiceParagraph = {
@@ -12,7 +13,7 @@ export const yourChoiceParagraph = {
 export const paragraphWrapper = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px'
+  gap: '10px'
 }
 
 export const yourChoiceList = {
@@ -20,22 +21,22 @@ export const yourChoiceList = {
   marginBottom: '77px',
   display: 'flex',
   justifyСontent: 'center',
-  gap: '33px;'
+  gap: '10px'
 }
 
-export const yourChoiceListItem = {
-  width: '281px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  gap: '30px',
-  color: 'secondary.darker',
-  fontFamily: 'body1.fontFamily',
-  fontSize: '22px',
-  fontWeight: '600',
-  lineHeight: '120%'
-}
+// export const yourChoiceListItem = {
+//   width: '281px',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   flexDirection: 'column',
+//   gap: '30px',
+//   color: 'secondary.darker',
+//   fontFamily: 'body1.fontFamily',
+//   fontSize: '22px',
+//   fontWeight: '600',
+//   lineHeight: '120%'
+// }
 
 export const paragraphItalic = {
   fontSize: '18px',

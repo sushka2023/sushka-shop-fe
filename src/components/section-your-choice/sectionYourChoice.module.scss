@@ -1,5 +1,35 @@
 @import '../../styles/base/base.scss';
 
+.sectionYourChoice {
+  h2 {
+    font-size: clamp(1.063rem, -0.321rem + 3.69vw, 3rem);
+  }
+  p,
+  span {
+    // font-size: clamp(0.938rem, 0.804rem + 0.36vw, 1.125rem);
+    // font-size: 11px !important;
+  }
+}
+
+.yourChoiceListItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  gap: 10px;
+}
+
+// .listItemCaption {
+//   height: 80px;
+//   display: flex;
+//   align-items: center;
+//   text-align: center;
+//   font-size: clamp(0.813rem, 0.411rem + 1.07vw, 1.375rem) !important;
+//   font-weight: 600 !important;
+// }
+
 // .sectionYourChoice {
 //   @include page-container;
 // }
@@ -30,14 +60,14 @@
 //   line-height: 140%;
 // }
 
-.paragraphItalic {
-  color: $green-dark-200;
-  font-family: $open-sans;
-  font-size: 18px;
-  font-style: italic;
-  font-weight: $font-weight-700;
-  line-height: 150%;
-}
+// .paragraphItalic {
+//   color: $green-dark-200;
+//   font-family: $open-sans;
+//   font-size: 18px;
+//   font-style: italic;
+//   font-weight: $font-weight-700;
+//   line-height: 150%;
+// }
 
 // .paragraphWrapper {
 //   display: flex;
@@ -45,51 +75,51 @@
 //   gap: 20px;
 // }
 
-.yourChoiceList {
-  margin-top: 80px;
-  margin-bottom: 77px;
-  display: flex;
-  gap: 33px;
-  justify-content: center;
-}
+// .yourChoiceList {
+//   margin-top: 80px;
+//   margin-bottom: 77px;
+//   display: flex;
+//   gap: 33px;
+//   justify-content: center;
+// }
 
-.yourChoiceListItem {
-  width: 281px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 30px;
-  color: $green-dark-200;
-  font-family: $open-sans;
-  font-size: 22px;
-  font-weight: $font-weight-600;
-  line-height: 120%;
-}
+// .yourChoiceListItem {
+//   width: 281px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   flex-direction: column;
+//   gap: 30px;
+//   color: $green-dark-200;
+//   font-family: $open-sans;
+//   font-size: 22px;
+//   font-weight: $font-weight-600;
+//   line-height: 120%;
+// }
 
-.yourChoiceLastBlock {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+// .yourChoiceLastBlock {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
 
-.yourChoiceLastBlockWrapper {
-  width: 680px;
-}
+// .yourChoiceLastBlockWrapper {
+//   width: 680px;
+// }
 
-.yourChoiceLastBlockPararaph {
-  color: $green-dark-200;
-  font-family: $open-sans;
-  font-size: 18px;
-  font-weight: $font-weight-400;
-  line-height: 140%;
-}
+// .yourChoiceLastBlockPararaph {
+//   color: $green-dark-200;
+//   font-family: $open-sans;
+//   font-size: 18px;
+//   font-weight: $font-weight-400;
+//   line-height: 140%;
+// }
 
-.yourChoiceLastBlockPararaphItalic {
-  color: $green-dark-200;
-  font-family: $open-sans;
-  font-size: 18px;
-  font-style: italic;
-  font-weight: $font-weight-700;
-  line-height: 140%;
-}
+// .yourChoiceLastBlockPararaphItalic {
+//   color: $green-dark-200;
+//   font-family: $open-sans;
+//   font-size: 18px;
+//   font-style: italic;
+//   font-weight: $font-weight-700;
+//   line-height: 140%;
+// }

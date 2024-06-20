@@ -86,27 +86,20 @@ const HeroSection = () => {
             }
           }}
         >
-          {isSmallScreen ? (
-            <Box
-              component="img"
-              src={HeroMobilePic}
-              alt="dried fruits in plastic bags"
-              sx={{
-                ...sloganImgLogo.sm
-              }}
-            />
-          ) : (
-            <Box
-              height={205}
-              component="img"
-              src={HeroPic}
-              alt="dried fruits in plastic bags"
-              sx={{
-                ...sloganImgLogo.lg,
-                [theme.breakpoints.between('sm', 'md')]: sloganImgLogo.md
-              }}
-            />
-          )}
+          <Box
+            height={isSmallScreen ? undefined : 205}
+            component="img"
+            src={isSmallScreen ? HeroMobilePic : HeroPic}
+            alt="dried fruits in plastic bags"
+            sx={
+              isSmallScreen
+                ? sloganImgLogo.sm
+                : {
+                    ...sloganImgLogo.lg,
+                    [theme.breakpoints.between('sm', 'md')]: sloganImgLogo.md
+                  }
+            }
+          />
         </Box>
       </Container>
     </Box>

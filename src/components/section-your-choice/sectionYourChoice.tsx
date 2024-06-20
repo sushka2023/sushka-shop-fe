@@ -1,3 +1,4 @@
+import styles from './sectionYourChoice.module.scss'
 import IconMix from '../../icons/mix.svg?react'
 import IconApple from '../../icons/apple.svg?react'
 import IconBowl from '../../icons/bowl.svg?react'
@@ -9,13 +10,17 @@ import {
   paragraphItalic,
   paragraphWrapper,
   yourChoiceList,
-  yourChoiceListItem,
+  // yourChoiceListItem,
   yourChoiceParagraph,
   yourChoiceWrapper
 } from './style'
 
-const itemsList = [
-  { icon: <IconMix />, text: 'Без цукру та барвників' },
+const test = {
+  fontSize: 'clamp(0.938rem, 0.804rem + 0.36vw, 1.125rem)'
+}
+
+const ITEMS_LIST = [
+  { icon: <IconMix />, text: 'Без цукру \n та барвників' },
   { icon: <IconApple />, text: '100% натурально' },
   { icon: <IconBowl />, text: 'Якісний продукт' },
   { icon: <IconBox />, text: 'Дійсно поживно' }
@@ -23,26 +28,40 @@ const itemsList = [
 
 const SectionYourChoice = () => {
   return (
-    <Container id="aboutProduct" sx={{ pt: '10px' }}>
+    <Container
+      className={styles.sectionYourChoice}
+      id="aboutProduct"
+      sx={{ m: '50px 0' }}
+    >
       <Box sx={yourChoiceWrapper}>
-        <Box
-          component="img"
-          src={ApllePic}
-          alt="falling apples"
-          maxWidth={555}
-        />
-        <Box width={690}>
+        <Box minWidth="50%">
+          <Box
+            component="img"
+            src={ApllePic}
+            alt="falling apples"
+            width="100%"
+          />
+        </Box>
+        <Box>
           <Typography
             component="h2"
             variant="h2"
-            sx={{ mb: '40px', color: 'secondary.darker' }}
+            sx={{
+              mb: 'clamp(1.25rem, 0.357rem + 2.38vw, 2.5rem)',
+              fontWeight: 700,
+              color: 'secondary.darker'
+            }}
           >
             Твій свідомий вибір
           </Typography>
           <Box sx={paragraphWrapper}>
-            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
-              Наша продукція містить домішки турботи, які підіймають рівень
-              <br />
+            <Typography
+              component="p"
+              variant="body1"
+              sx={{ ...yourChoiceParagraph, ...test }}
+            >
+              Наша продукція містить домішки турботи, які підіймають рівень{' '}
+              {/* <br /> */}
               <Typography
                 component="span"
                 variant="caption"
@@ -53,8 +72,9 @@ const SectionYourChoice = () => {
               в організмі!
             </Typography>
             <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
-              Все, що приносить користь, поєднано у рулетах пастили <br /> та
-              ломтиках фріпсів.
+              Все, що приносить користь, поєднано у рулетах пастили
+              {/* <br />  */}
+              та ломтиках фріпсів.
             </Typography>
             <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
               Як юзати ці смаколики знає навіть дитина: жуй, кусай, ламай,
@@ -72,10 +92,19 @@ const SectionYourChoice = () => {
         </Box>
       </Box>
       <List sx={yourChoiceList}>
-        {itemsList.map((item, index) => (
-          <ListItem key={index} sx={yourChoiceListItem}>
+        {ITEMS_LIST.map((item, index) => (
+          <ListItem key={index} className={styles.yourChoiceListItem}>
             {item.icon}
-            {item.text}
+            <Typography
+              sx={{
+                color: 'secondary.darker',
+                fontWeight: 600,
+                fontSize: '40px'
+              }}
+              // className={styles.listItemCaption}
+            >
+              {item.text}
+            </Typography>
           </ListItem>
         ))}
       </List>

@@ -124,7 +124,7 @@ export const slideImage = {
 
   img: {
     // border: '1px solid red',
-    paddingTop: '40px'
+    paddingTop: 'clamp(1.25rem, -2.5rem + 7.81vw, 2.5rem)'
   }
 }
 
