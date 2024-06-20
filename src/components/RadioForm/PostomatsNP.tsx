@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useCallback, useMemo, useState } from 'react'
+import { FC, useEffect, useCallback, useMemo, useState, Fragment } from 'react'
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
-import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import { useNovaPoshtaLocations } from '../../hooks/useNovaPoshtaLocations'
+import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 
 type PropsType = {
   selectedValue: any
@@ -14,7 +14,7 @@ type PropsType = {
 }
 const MAX_LENGTH = 50
 
-export const SeparationNP: FC<PropsType> = ({
+export const NovaPoshtaPostomats: FC<PropsType> = ({
   selectedValue,
   errors,
   register,
@@ -55,7 +55,7 @@ export const SeparationNP: FC<PropsType> = ({
 
   useEffect(() => {
     if (isDisabled) {
-      setValue('warehouse', null)
+      setValue('branches', null)
       setValInputWarehouse('')
       setNewRequest(true)
     }
@@ -107,17 +107,17 @@ export const SeparationNP: FC<PropsType> = ({
 
   const onChangeWarehouse = useCallback(
     (_event: any, value: string) => {
-      setValue('warehouse', value)
+      setValue('branches', value)
       setValInputWarehouse(value)
-      clearErrors('warehouse')
+      clearErrors('branches')
       setNewRequest(false)
     },
     [setValue, setValInputWarehouse, clearErrors, setNewRequest]
   )
 
   return (
-    selectedValue === 'female' && (
-      <React.Fragment>
+    selectedValue === 'novaPoshtaPostomats' && (
+      <Fragment>
         <ErrorMessage
           error={errors.city || errors.warehouse}
           styles={{ position: 'relative' }}
@@ -142,13 +142,13 @@ export const SeparationNP: FC<PropsType> = ({
           options={optionsDataCity}
           errors={errors}
           disabled={isDisabled}
-          val={isDisabled ? '' : getValues('warehouse')}
+          val={isDisabled ? '' : getValues('branches')}
           onChange={onChangeWarehouse}
           loading={locationLoading}
           setValueInput={setValInputWarehouse}
           optionsText={messageOptionLoc}
         />
-      </React.Fragment>
+      </Fragment>
     )
   )
 }

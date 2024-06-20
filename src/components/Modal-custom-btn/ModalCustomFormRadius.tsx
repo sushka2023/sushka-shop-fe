@@ -34,7 +34,7 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
   })
 
   const onSubmit: SubmitHandler<any> = (data) => {
-    console.log(data)
+    console.log(data.branches)
   }
 
   return (

@@ -1,7 +1,8 @@
 import React, { useState, FC, ReactNode } from 'react'
 import { Radio, RadioGroup, FormControlLabel, Typography } from '@mui/material'
-import { SeparationNP } from './SeparationNP'
+import { NovaPoshtaBranch } from './BranchesNP'
 import { AddressNP } from './AddressNP'
+import { NovaPoshtaPostomats } from './PostomatsNP'
 
 type PropsType = {
   children: ReactNode
@@ -22,7 +23,8 @@ const RadioForm: FC<PropsType> = ({
   clearErrors,
   getValues
 }) => {
-  const [selectedValue, setSelectedValue] = useState<string>('female')
+  const [selectedValue, setSelectedValue] =
+    useState<string>('novaPoshtaBranches')
 
   return (
     <React.Fragment>
@@ -32,8 +34,25 @@ const RadioForm: FC<PropsType> = ({
         value={selectedValue}
         onChange={(e) => setSelectedValue(e.target.value)}
       >
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <SeparationNP
+        <FormControlLabel
+          value="novaPoshtaBranches"
+          control={<Radio />}
+          label="Нова пошта (відділення)"
+        />
+        <NovaPoshtaBranch
+          selectedValue={selectedValue}
+          errors={errors}
+          register={register}
+          setValue={setValue}
+          clearErrors={clearErrors}
+          getValues={getValues}
+        />
+        <FormControlLabel
+          value="novaPoshtaPostomats"
+          control={<Radio />}
+          label="Нова пошта (поштомат)"
+        />
+        <NovaPoshtaPostomats
           selectedValue={selectedValue}
           errors={errors}
           register={register}
