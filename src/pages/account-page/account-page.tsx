@@ -47,7 +47,6 @@ function a11yProps(index: number) {
 export default function AccountPage() {
   const [value, setValue] = useState(0)
   const { user } = useAuth()
-  console.log('✌️user --->', user)
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
     setValue(newValue)

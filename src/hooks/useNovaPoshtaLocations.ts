@@ -1,39 +1,52 @@
 import { useState, useEffect, useCallback } from 'react'
 import axiosInstance from '../axios/settings'
 
-const fetchNovaPoshtaWarehouse = async (
-  cityRef: string,
-  searchTerm: string
-) => {
-  const response = await axiosInstance.get(
-    '/api/nova_poshta/warehouses/branches/',
-    {
-      params: {
-        settle_ref: cityRef,
-        search_term: searchTerm
-      }
-    }
-  )
-
-  if (!response.data.length) {
-    throw new Error('Не знайдено')
-  }
-
-  return response.data
-}
-
 type WarehousesTypes = {
   address_warehouse: string
   id: number
 }
+
 const TIMER = 1000
-export const useNovaPoshtaLocations = () => {
-  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+
+export const useNovaPoshtaLocations = ({
+  url,
+  numSearch,
+  valInputWarehouse,
+  setValInputWarehouse
+}: {
+  url: string
+  numSearch: number
+  valInputWarehouse: string
+  setValInputWarehouse: React.Dispatch<React.SetStateAction<string>>
+}) => {
   const [warehouses, setWarehouses] = useState<WarehousesTypes[]>([])
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [newRequest, setNewRequest] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
   const [messageOptionLoc, setMessageOptionLoc] = useState<string>('')
+
+  const fetchNovaPoshtaWarehouse = useCallback(
+    async (cityRef: string, searchTerm: string) => {
+      try {
+        const response = await axiosInstance.get(url, {
+          params: {
+            settle_ref: cityRef,
+            search_term: searchTerm
+          }
+        })
+
+        if (!response.data.length) {
+          throw new Error('Не знайдено')
+        }
+
+        return response.data
+      } catch (error) {
+        console.error('Error fetching warehouses:', error)
+        throw error
+      }
+    },
+    []
+  )
 
   const fetchWarehouses = useCallback(
     async (searchTerm: string) => {
@@ -50,7 +63,7 @@ export const useNovaPoshtaLocations = () => {
         setLoading(false)
       }
     },
-    [settleRef, setMessageOptionLoc]
+    [settleRef, fetchNovaPoshtaWarehouse]
   )
 
   useEffect(() => {
@@ -62,7 +75,7 @@ export const useNovaPoshtaLocations = () => {
   }, [valInputWarehouse, setMessageOptionLoc])
 
   useEffect(() => {
-    if (newRequest && valInputWarehouse) {
+    if (newRequest && valInputWarehouse.length >= numSearch) {
       const timer = setTimeout(() => {
         setMessageOptionLoc('Почніть водити текст...')
         fetchWarehouses(valInputWarehouse)

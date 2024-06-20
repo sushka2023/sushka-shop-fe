@@ -12,24 +12,32 @@ type PropsType = {
   clearErrors: (name: string) => void
   getValues: (name: string) => any
 }
+
 const MAX_LENGTH = 50
+const url = '/api/nova_poshta/warehouses/postomats/'
+const numSearch = 4
 
 export const NovaPoshtaPostomats: FC<PropsType> = ({
   selectedValue,
   errors,
   register,
   setValue,
-  clearErrors,
-  getValues
+  clearErrors
 }) => {
+  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+
   const {
-    setValInputWarehouse,
     warehouses,
     setSettleRef,
     setNewRequest,
     messageOptionLoc,
     loading: locationLoading
-  } = useNovaPoshtaLocations()
+  } = useNovaPoshtaLocations({
+    url,
+    numSearch,
+    valInputWarehouse,
+    setValInputWarehouse
+  })
 
   const {
     valInputCity,
@@ -55,22 +63,25 @@ export const NovaPoshtaPostomats: FC<PropsType> = ({
 
   useEffect(() => {
     if (isDisabled) {
-      setValue('branches', null)
+      setValue('postomats', '')
       setValInputWarehouse('')
+      setSelectedWarehouseValue(null)
       setNewRequest(true)
     }
   }, [isDisabled, setValue, setValInputWarehouse, setNewRequest])
+  const [selectedWarehouseValue, setSelectedWarehouseValue] = useState<
+    string | null
+  >(null)
 
-  const optionsDataCity = useMemo(() => {
+  useEffect(() => {
+    setSelectedWarehouseValue(null)
+  }, [!valInputWarehouse])
+
+  const optionsData = useMemo(() => {
     return warehouses.map(
       (warehouse) =>
         warehouse.address_warehouse
-          .replace(/\(до 30 кг на одне місце\)/g, '')
-          .replace(/\(до 30 кг\)/g, '')
-          .replace(/\(до 10 кг\)/g, '')
-          .replace(/\(до 5 кг\)/g, '')
-          .replace(/\(до 200 кг\)/g, '')
-          .replace(/\(до 1100 кг \)/g, '')
+          .replace(/"Нова Пошта"/g, '')
           .replace(/\n/g, '')
           .replace(/№(\d+)\s*:/g, '№$1:')
           .trim()
@@ -107,19 +118,23 @@ export const NovaPoshtaPostomats: FC<PropsType> = ({
 
   const onChangeWarehouse = useCallback(
     (_event: any, value: string) => {
-      setValue('branches', value)
-      setValInputWarehouse(value)
-      clearErrors('branches')
-      setNewRequest(false)
+      const selectedWarehouse = optionsData.find((option) => option === value)
+      if (selectedWarehouse) {
+        setValue('postomats', selectedWarehouse)
+        setValInputWarehouse(value)
+        setSelectedWarehouseValue(value)
+        setNewRequest(false)
+      }
+      clearErrors('postomats')
     },
-    [setValue, setValInputWarehouse, clearErrors, setNewRequest]
+    [setValue, setValInputWarehouse, clearErrors, setNewRequest, optionsData]
   )
 
   return (
     selectedValue === 'novaPoshtaPostomats' && (
       <Fragment>
         <ErrorMessage
-          error={errors.city || errors.warehouse}
+          error={errors.city || errors.postomats}
           styles={{ position: 'relative' }}
         />
 
@@ -136,13 +151,13 @@ export const NovaPoshtaPostomats: FC<PropsType> = ({
         />
 
         <AutocompleteCustom
-          name="warehouse"
+          name="postomats"
           placeholder="Оберіть відділення"
           register={register}
-          options={optionsDataCity}
+          options={optionsData.map((option) => option)}
           errors={errors}
           disabled={isDisabled}
-          val={isDisabled ? '' : getValues('branches')}
+          val={isDisabled ? '' : selectedWarehouseValue}
           onChange={onChangeWarehouse}
           loading={locationLoading}
           setValueInput={setValInputWarehouse}

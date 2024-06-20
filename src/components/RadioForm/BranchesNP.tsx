@@ -14,6 +14,8 @@ type PropsType = {
 }
 
 const MAX_LENGTH = 50
+const url = '/api/nova_poshta/warehouses/branches/'
+const numSearch = 1
 
 export const NovaPoshtaBranch: FC<PropsType> = ({
   selectedValue,
@@ -22,14 +24,21 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
   setValue,
   clearErrors
 }) => {
+  const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
+  console.log('✌️valInputWarehouse --->', valInputWarehouse)
+
   const {
-    setValInputWarehouse,
     warehouses,
     setSettleRef,
     setNewRequest,
     messageOptionLoc,
     loading: locationLoading
-  } = useNovaPoshtaLocations()
+  } = useNovaPoshtaLocations({
+    url,
+    numSearch,
+    valInputWarehouse,
+    setValInputWarehouse
+  })
 
   const {
     valInputCity,
@@ -65,7 +74,11 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
     string | null
   >(null)
 
-  const optionsDataCity = useMemo(() => {
+  useEffect(() => {
+    setSelectedWarehouseValue(null)
+  }, [!valInputWarehouse])
+
+  const optionsData = useMemo(() => {
     return warehouses.map((warehouse) => ({
       label:
         warehouse.address_warehouse
@@ -112,24 +125,18 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
 
   const onChangeWarehouse = useCallback(
     (_event: any, value: string) => {
-      const selectedWarehouse = optionsDataCity.find(
+      const selectedWarehouse = optionsData.find(
         (option) => option.label === value
       )
       if (selectedWarehouse) {
-        setValue('branches', selectedWarehouse.id) // Зберегти ідентифікатор у useForm
+        setValue('branches', selectedWarehouse.id)
         setValInputWarehouse(value)
         setSelectedWarehouseValue(value)
         setNewRequest(false)
       }
       clearErrors('branches')
     },
-    [
-      setValue,
-      setValInputWarehouse,
-      clearErrors,
-      setNewRequest,
-      optionsDataCity
-    ]
+    [setValue, setValInputWarehouse, clearErrors, setNewRequest, optionsData]
   )
 
   return (
@@ -156,7 +163,7 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
           name="branches"
           placeholder="Оберіть відділення"
           register={register}
-          options={optionsDataCity.map((option) => option.label)}
+          options={optionsData.map((option) => option.label)}
           errors={errors}
           disabled={isDisabled}
           val={isDisabled ? '' : selectedWarehouseValue}
