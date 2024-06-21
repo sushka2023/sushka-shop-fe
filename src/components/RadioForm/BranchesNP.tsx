@@ -25,7 +25,9 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
   clearErrors
 }) => {
   const [valInputWarehouse, setValInputWarehouse] = useState<string>('')
-  console.log('✌️valInputWarehouse --->', valInputWarehouse)
+  const [selectedWarehouseValue, setSelectedWarehouseValue] = useState<
+    string | null
+  >(null)
 
   const {
     warehouses,
@@ -59,8 +61,16 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
   const [isDisabled, setIsDisabled] = useState(!valInputCity)
 
   useEffect(() => {
+    setSelectedWarehouseValue(null)
+  }, [!valInputWarehouse])
+
+  useEffect(() => {
     setIsDisabled(!valInputCity)
-  }, [valInputCity])
+  }, [!valInputCity])
+
+  useEffect(() => {
+    setValInputCity('')
+  }, [selectedValue])
 
   useEffect(() => {
     if (isDisabled) {
@@ -69,14 +79,7 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
       setSelectedWarehouseValue(null)
       setNewRequest(true)
     }
-  }, [isDisabled, setValue, setValInputWarehouse, setNewRequest])
-  const [selectedWarehouseValue, setSelectedWarehouseValue] = useState<
-    string | null
-  >(null)
-
-  useEffect(() => {
-    setSelectedWarehouseValue(null)
-  }, [!valInputWarehouse])
+  }, [isDisabled])
 
   const optionsData = useMemo(() => {
     return warehouses.map((warehouse) => ({

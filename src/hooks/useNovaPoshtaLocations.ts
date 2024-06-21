@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback } from 'react'
+import {
+  useState,
+  useEffect,
+  useCallback,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import axiosInstance from '../axios/settings'
 
 type WarehousesTypes = {
@@ -17,7 +23,7 @@ export const useNovaPoshtaLocations = ({
   url: string
   numSearch: number
   valInputWarehouse: string
-  setValInputWarehouse: React.Dispatch<React.SetStateAction<string>>
+  setValInputWarehouse: Dispatch<SetStateAction<string>>
 }) => {
   const [warehouses, setWarehouses] = useState<WarehousesTypes[]>([])
   const [settleRef, setSettleRef] = useState<string | null>(null)
@@ -45,7 +51,7 @@ export const useNovaPoshtaLocations = ({
         throw error
       }
     },
-    []
+    [url]
   )
 
   const fetchWarehouses = useCallback(
@@ -72,7 +78,7 @@ export const useNovaPoshtaLocations = ({
       setNewRequest(true)
       setMessageOptionLoc('Почніть водити текст...')
     }
-  }, [valInputWarehouse, setMessageOptionLoc])
+  }, [valInputWarehouse])
 
   useEffect(() => {
     if (newRequest && valInputWarehouse.length >= numSearch) {
@@ -83,7 +89,7 @@ export const useNovaPoshtaLocations = ({
 
       return () => clearTimeout(timer)
     }
-  }, [valInputWarehouse, newRequest, fetchWarehouses, setMessageOptionLoc])
+  }, [valInputWarehouse, newRequest, fetchWarehouses])
 
   return {
     valInputWarehouse,

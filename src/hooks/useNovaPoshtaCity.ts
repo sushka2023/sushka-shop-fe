@@ -64,6 +64,7 @@ type PropsTypes = {
   clearErrors: (name: string) => void
   setSettleRef: (ref: string | null) => void
 }
+
 const TIMER = 1000
 
 export const useNovaPoshtaCity = ({
