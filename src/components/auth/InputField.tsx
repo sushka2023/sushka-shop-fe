@@ -1,15 +1,14 @@
 import { Grid, InputLabel, OutlinedInput } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '../Error/Error'
-
-type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
+import { FC } from 'react'
 
 interface InputFieldProps {
-  label: string
   type: string
+  id?: string
+  label?: string
   register?: UseFormRegisterReturn
   error?: any
-  id?: InputId
   disabled?: boolean
   placeholder?: string
   defaultValue?: string
@@ -17,7 +16,7 @@ interface InputFieldProps {
   sxLabel?: object
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const InputField: FC<InputFieldProps> = ({
   id,
   label,
   defaultValue,

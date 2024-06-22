@@ -35,9 +35,9 @@ export const AutocompleteCustom: FC<PropsType> = ({
   return (
     <Autocomplete
       {...register(name)}
-      id="name"
+      id={name}
       value={val}
-      sx={{ width: 300, mt: 2 }}
+      sx={{ width: 400, mt: 2 }}
       disableListWrap
       onError={errors[name] ? () => {} : undefined}
       PopperComponent={StyledPopper}

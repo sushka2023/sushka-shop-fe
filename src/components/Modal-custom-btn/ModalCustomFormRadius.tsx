@@ -18,9 +18,13 @@ interface ModalCustomFormRadiusProps {
   setOpenModal?: Dispatch<SetStateAction<boolean>>
 }
 
-export const AddressRetention = Yup.object().shape({
+const AddressRetention = Yup.object().shape({
   // city: Yup.string().required('Виберіть населений пункт'),
-  // warehouse: Yup.string().required('Виберіть відділення')
+  // branches: Yup.string().when('city', {
+  //   is: (value) => value !== undefined && value !== '',
+  //   then: Yup.string().required('Виберіть відділення'),
+  //   otherwise: Yup.string().notRequired()
+  // })
 })
 
 export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
@@ -47,11 +51,10 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
   const onSubmit: SubmitHandler<any> = async (values) => {
     console.log('✌️values --->', values)
     console.log(values.branches)
-    const data = {
-      post_id: user?.posts.id,
-      nova_poshta_id: values.branches
-    }
-    console.log('✌️data --->', data)
+    // const data = {
+    //   post_id: user?.posts.id,
+    //   nova_poshta_id: values.branches
+    // }
     // try {
     //   const response = await axiosInstance.post('/api/posts/add_nova_poshta_warehouse', data)
     //   dispatch(currentUser({ accessToken, operationType: 'currentUser' }))

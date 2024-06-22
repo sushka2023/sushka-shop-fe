@@ -62,7 +62,11 @@ const RadioForm: FC<PropsType> = ({
           getValues={getValues}
         />
 
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
+        <FormControlLabel
+          value="novaPoshtaAddress"
+          control={<Radio />}
+          label="Нова пошта (адресна)"
+        />
         <AddressNP
           selectedValue={selectedValue}
           errors={errors}
