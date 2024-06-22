@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
-import InfoConfirmationModal from './ModalCustomWindow'
+import { ModalCustom } from './ModalCustomWindow'
 import { Typography } from '@mui/material'
 import { Button } from '../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -63,7 +63,7 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
   }
 
   return (
-    <InfoConfirmationModal
+    <ModalCustom
       openModal={openModal}
       setOpenModal={setOpenModal}
       yourStBoxModalWindow={{
@@ -94,6 +94,6 @@ export const ModalCustomFormRadius: FC<ModalCustomFormRadiusProps> = ({
           </RadioForm>
         </form>
       </React.Fragment>
-    </InfoConfirmationModal>
+    </ModalCustom>
   )
 }
