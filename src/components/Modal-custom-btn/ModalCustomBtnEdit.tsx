@@ -1,84 +1,86 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
-import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../redux/store'
-import {
-  BootstrapButton,
-  editBtnAccount,
-  styleBoxModalWindow,
-  styleBtnEditModalWindow,
-  styleBtnModalWindow
-} from './style'
-interface AuthState {
-  accessToken: string
+import { Button } from '../UI/Button'
+import { btnEditAccount, btnEditModWin } from './style'
+import { ModalCustom } from './ModalCustomWindow'
+
+type RootState = {
+  auth: {
+    accessToken: string
+  }
 }
-interface RootState {
-  auth: AuthState
-}
+
 export const BasicModal = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
 
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const [openModal, setOpenModal] = useState(false)
 
   const token = useSelector((state: RootState) => state.auth.accessToken)
 
-  const handleClickLogout = () => {
-    dispatch(logout({ accessToken: token! }))
+  const handleClickLogout = async () => {
+    try {
+      setIsLoadingBtn(true)
+      await dispatch(logout({ accessToken: token! }))
+    } catch (error) {
+      console.error('Logout error:', error)
+    } finally {
+      setIsLoadingBtn(false)
+    }
   }
 
   return (
-    <div>
-      <Button onClick={handleOpen} sx={editBtnAccount}>
+    <React.Fragment>
+      <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
         Вийти
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={styleBoxModalWindow}>
-          <Typography
-            id="modal-modal-title"
-            component="p"
-            style={{ fontSize: 22, fontWeight: 600 }}
-          >
-            Вийти з аккаунта
-          </Typography>
+      <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
+        <Typography
+          id="modal-modal-title"
+          variant="body1"
+          sx={{ fontSize: 22, fontWeight: 600 }}
+        >
+          Вийти з аккаунта
+        </Typography>
 
-          <Typography
-            id="modal-modal-description"
-            sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
+        <Typography
+          id="modal-modal-description"
+          variant="body2"
+          sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
+        >
+          Ви точно бажаєте вийти зі свого аккаунта?
+        </Typography>
+        <Stack spacing={2} direction="row" sx={{ marginTop: '40px' }}>
+          <Button
+            variant="outlined"
+            onClick={() => setOpenModal(false)}
+            sx={{
+              width: 250,
+              height: 50,
+              textTransform: 'capitalize'
+            }}
           >
-            Ви точно бажаєте вийти зі свого аккаунта?
-          </Typography>
-          <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
-            <BootstrapButton
-              onClick={handleClose}
-              variant="contained"
-              sx={styleBtnModalWindow}
-              disableRipple
-            >
-              Скасувати
-            </BootstrapButton>
-            <BootstrapButton
-              onClick={handleClickLogout}
-              variant="contained"
-              sx={styleBtnEditModalWindow}
-              disableRipple
-            >
-              Вийти
-            </BootstrapButton>
-          </Stack>
-        </Box>
-      </Modal>
-    </div>
+            Скасувати
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleClickLogout}
+            sx={{
+              ...btnEditModWin,
+              width: 250,
+              height: 50,
+              textTransform: 'capitalize'
+            }}
+            disabled={isLoadingBtn}
+          >
+            {isLoadingBtn ? 'Loading...' : 'Вийти'}
+          </Button>
+        </Stack>
+      </ModalCustom>
+    </React.Fragment>
   )
 }

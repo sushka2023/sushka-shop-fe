@@ -1,146 +1,70 @@
-import { Button, styled } from '@mui/material'
-
-export const BootstrapButton = styled(Button)({
-  boxShadow: 'none',
-  textTransform: 'none',
-  fontSize: 16,
-  padding: '6px 12px',
-  border: '1px solid',
-  lineHeight: 1.5
-})
-
-export const editBtnAccount = {
-  '&.MuiButton-root:hover': {
-    backgroundColor: '#EDA4A4'
-  },
+export const btnEditAccount = {
+  'marginLeft': 'auto',
   'borderRadius': '20px',
-  'border': 0,
   'cursor': 'pointer',
   'fontFamily': 'Open Sans',
   'fontWeight': 600,
   'fontStyle': '16px',
-  'textAlign': 'center',
-  'color': '#FFFFFF',
+  'color': 'background.default',
   'padding': '21px 40px',
-  'backgroundColor': '#FCA1A9'
-}
-export const styleBoxModalWindow = {
-  position: 'absolute' as const,
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 580,
-  height: '291px',
-  bgcolor: 'background.paper',
-  borderRadius: '20px',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  fontFamily: 'Open Sans',
-  color: '#567343'
-}
-export const styleBtnModalWindow = {
-  'width': 250,
-  'height': 50,
-  'bgcolor': 'background.paper',
-  'borderRadius': '10px',
-  'color': '#FCC812',
-  'border': '2px solid #FCC812',
-  'lineHeight': '18.2px',
-  'fontStyle': '14px',
-  'fontFamily': 'Open Sans',
-  'fontWeight': 700,
-  '&:hover': {
-    backgroundColor: '#FCC812',
-    boxShadow: 'none',
-    border: '2px solid #FCC812',
-    color: '#FFFFFF'
-  }
-}
-export const styleBtnEditModalWindow = {
-  'width': 250,
-  'height': 50,
-  'bgcolor': '#D21C1C',
-  'borderRadius': '10px',
-  'color': '#FFFFFF',
-  'border': '0',
-  'lineHeight': '18.2px',
-  'fontStyle': '14px',
-  'fontFamily': 'Open Sans',
-  'fontWeight': 700,
-  '&:hover': {
-    backgroundColor: '#DB4949'
+  'bgcolor': 'pink.darker',
+  '&.MuiButton-root:hover': {
+    bgcolor: 'error.light',
+    color: 'background.default'
   }
 }
 
-export const stBoxModalWindow = {
+export const btnEditModWin = {
+  '&.MuiButton-root': {
+    bgcolor: 'error.darker',
+    color: 'background.default',
+    border: 'none'
+  },
+  '&:hover': {
+    bgcolor: 'error.dark',
+    color: 'background.default'
+  },
+  '&.Mui-disabled': {
+    bgcolor: 'error.dark',
+    color: 'background.default'
+  }
+}
+
+export const boxModWin = {
   width: '100%',
   maxWidth: 600,
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  backgroundColor: 'background.paper',
+  bgcolor: 'background.paper',
   borderRadius: '20px',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
   alignItems: 'center',
-  color: '#567343',
+  color: 'secondary.darker',
   padding: '30px 20px 50px 20px',
   border: 'none',
   fontFamily: 'Open Sans'
 }
 
-export const stBtnEmail = {
-  'borderRadius': 3,
-  'padding': '15px 80px',
-  'backgroundColor': '#FCC812',
-  'fontFamily': 'Open Sans',
-  'fontWeight': 700,
-  'fontSize': 14,
-  'border': '2px solid transparent',
-  'boxShadow': 'none !important',
-  '&:hover': {
-    backgroundColor: '#FFFFFF',
-    color: '#FCC812',
-    border: '2px solid #FCC812',
-    cursor: 'pointer'
-  }
-}
-
-export const stLinkEmail = {
-  height: 30,
-  display: 'inline-block',
-  alignItems: 'center',
-  color: '#D21C1C'
-}
-
-export const stEmailP2 = {
+export const emailIconLink = {
+  color: 'error.darker',
+  borderBottom: '0.5px solid ',
+  borderColor: 'error.darker',
   fontSize: 18,
-  fontWeight: 400,
-  textAlign: 'center',
-  padding: '0 80px'
-}
-
-export const stIconLinkEmail = {
-  fontFamily: 'Open Sans',
-  borderBottom: '0.5px solid #D21C1C',
-  fontSize: 18
-}
-
-export const stEmailSpan = { fontSize: '22px', fontWeight: 600 }
-export const stIconEmail: React.CSSProperties = {
-  marginRight: 5,
+  fontWeight: 500,
   position: 'relative',
-  top: 5
+  bottom: 5,
+  ml: 1
 }
-export const stLinkEmailList = {
-  marginLeft: 10,
-  fontSize: 14,
+
+export const emailLinkList = {
+  ml: 1,
+  fontSize: 16,
   fontWeight: 600,
-  borderBottom: '0.5px solid #567343',
+  borderBottom: '0.5px solid',
+  BorderColor: 'secondary.darker',
   cursor: 'pointer'
 }
-export const stLinkEmailP = { fontSize: 14, fontWeight: 400, margin: '40px 0' }
