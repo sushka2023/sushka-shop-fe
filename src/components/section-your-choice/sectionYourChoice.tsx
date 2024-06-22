@@ -3,8 +3,8 @@ import IconMix from '../../icons/mix.svg?react'
 import IconApple from '../../icons/apple.svg?react'
 import IconBowl from '../../icons/bowl.svg?react'
 import IconBox from '../../icons/box.svg?react'
-import ApllePic from '../../images/aplle-pic.jpg'
-import FruitMixSecond from '../../images/fruit-mix-2.jpg'
+import ApllePic from '../../images/aplle-pic.png'
+import FruitMixSecond from '../../images/fruit-mix-2.png'
 import {
   Box,
   Container,
@@ -13,18 +13,6 @@ import {
   Typography,
   useTheme
 } from '@mui/material'
-import {
-  paragraphItalic,
-  paragraphWrapper,
-  yourChoiceList,
-  test23,
-  yourChoiceParagraph,
-  yourChoiceWrapper
-} from './style'
-
-const test = {
-  fontSize: 'clamp(0.938rem, 0.804rem + 0.36vw, 1.125rem)'
-}
 
 const ITEMS_LIST = [
   { icon: <IconMix />, text: 'Без цукру та барвників' },
@@ -41,10 +29,10 @@ const SectionYourChoice = () => {
       maxWidth="lg"
       className={styles.sectionYourChoice}
       id="aboutProduct"
-      sx={{ mt: '100px' }}
+      sx={{ color: 'secondary.darker' }}
     >
-      <Box sx={yourChoiceWrapper}>
-        <Box minWidth="50%">
+      <Box className={styles.yourChoiceWrapper}>
+        <Box className={styles.apllePic} minWidth="50%">
           <Box
             component="img"
             src={ApllePic}
@@ -54,46 +42,30 @@ const SectionYourChoice = () => {
         </Box>
         <Box>
           <Typography
-            component="h2"
             variant="h2"
             sx={{
               mb: 'clamp(1.25rem, 0.357rem + 2.38vw, 2.5rem)',
-              fontWeight: 700,
-              color: 'secondary.darker'
+              fontWeight: 700
             }}
           >
             Твій свідомий вибір
           </Typography>
-          <Box sx={paragraphWrapper}>
-            <Typography
-              component="p"
-              variant="body1"
-              sx={{ ...yourChoiceParagraph, ...test }}
-            >
+          <Box className={styles.paragraphWrapper}>
+            <Typography variant="body1">
               Наша продукція містить домішки турботи, які підіймають рівень{' '}
-              {/* <br /> */}
-              <Typography
-                component="span"
-                variant="caption"
-                sx={paragraphItalic}
-              >
+              <Typography variant="caption" className={styles.paragraphItalic}>
                 дофамінів{' '}
               </Typography>
               в організмі!
             </Typography>
-            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
-              Все, що приносить користь, поєднано у рулетах пастили
-              {/* <br />  */}
-              та ломтиках фріпсів.
+            <Typography variant="body1">
+              Все, що приносить користь, поєднано у рулетах пастили та ломтиках
+              фріпсів.
             </Typography>
-            <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
+            <Typography variant="body1">
               Як юзати ці смаколики знає навіть дитина: жуй, кусай, ламай,
               хрусти, відривай, облизуй та отримуй{' '}
-              <Typography
-                component="span"
-                variant="caption"
-                sx={paragraphItalic}
-              >
+              <Typography variant="caption" className={styles.paragraphItalic}>
                 природну користь{' '}
               </Typography>
               в результаті.
@@ -101,55 +73,57 @@ const SectionYourChoice = () => {
           </Box>
         </Box>
       </Box>
-      <List sx={yourChoiceList}>
+      <List
+        className={styles.yourChoiceList}
+        sx={{
+          margin: '80px 0',
+          [theme.breakpoints.down(768)]: { margin: '30px 0' }
+        }}
+      >
         {ITEMS_LIST.map((item, index) => (
           <ListItem
             key={index}
             className={styles.yourChoiceListItem}
-            sx={{ [theme.breakpoints.down('sm')]: test23.sm }}
+            sx={{ [theme.breakpoints.down(768)]: { padding: 0 } }}
           >
             {item.icon}
-            <Typography
-              className={styles.listItemCaption}
-              sx={{
-                color: 'secondary.darker'
-              }}
-            >
+            <Typography className={styles.listItemCaption}>
               {item.text}
             </Typography>
           </ListItem>
         ))}
       </List>
-      <Box sx={yourChoiceWrapper}>
-        <Box sx={paragraphWrapper}>
-          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
+      <Box className={styles.yourChoiceWrapper}>
+        <Box className={styles.paragraphWrapper}>
+          <Typography variant="body1">
             Тут знайдеш близько{' '}
-            <Typography component="span" variant="caption" sx={paragraphItalic}>
+            <Typography variant="caption" className={styles.paragraphItalic}>
               30 смаків
             </Typography>{' '}
             пастили, від кислої до солодкої, від класичної до незвичної, з
             горіхами чи без.
           </Typography>
-          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
+          <Typography variant="body1">
             Познайомишся з 20-ма фруктами у вигляді чипсів. Усе перераховане
             висушене при бережних температурах у дегідраторах за всіма ТУ,
             зібране у зручні пакунки та готове радувати кращих людей.
           </Typography>
-          <Typography component="p" variant="body1" sx={yourChoiceParagraph}>
+          <Typography variant="body1">
             З нами ти обереш той подарунок рідним, що так довго шукав, дозволиш
             собі смачно поїсти перед тренуванням, дасиш волю своїм смаковим
             фантазіям і обов’язково скажеш:{' '}
-            <Typography component="span" variant="caption" sx={paragraphItalic}>
+            <Typography variant="caption" className={styles.paragraphItalic}>
               «Це смачно!»
             </Typography>
           </Typography>
         </Box>
-        <Box minWidth="50%">
+        <Box className={styles.fruitMixSecond} minWidth="50%">
           <Box
             component="img"
             src={FruitMixSecond}
             alt="fruit mix"
             width="100%"
+            height="clamp(17.5rem, 5rem + 25vw, 27.5rem)"
           />
         </Box>
       </Box>

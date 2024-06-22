@@ -1,15 +1,42 @@
+import styles from './sectionAboutUs.module.scss'
 import { Box, Container, Typography } from '@mui/material'
 import FruitMix from '../../images/fruit-mix-1.jpg'
 import {
   aboutUsParagraph,
-  aboutUsParagraphItalic,
-  sectionAboutUs
+  aboutUsParagraphItalic
+  // sectionAboutUs
 } from './style'
+
+const AboutUsParagraph = () => {
+  return (
+    <Typography variant="body1">
+      Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну пастилу та
+      фріпси.
+    </Typography>
+  )
+}
 
 const SectionAboutUs = () => {
   return (
-    <Container sx={sectionAboutUs} id="aboutUs">
-      <Box>
+    <Container
+      maxWidth="lg"
+      className={styles.sectionAboutUs}
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '40px'
+      }}
+      id="aboutUs"
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}
+      >
         <Typography
           component="h2"
           variant="h2"
@@ -29,7 +56,7 @@ const SectionAboutUs = () => {
             яблука!{' '}
           </Typography>
         </Typography>
-        <br />
+        {/* <br /> */}
         <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо{' '}
           <Typography
@@ -43,15 +70,16 @@ const SectionAboutUs = () => {
           обирають наші натуральні смаколики замість цукерок зі складними
           компонентами.
         </Typography>
-        <br />
+        {/* <br /> */}
+        <AboutUsParagraph />
+        {/* <br /> */}
+      </Box>
+      <Box minWidth="50%" className={styles.aboutSectionCap}>
         <Typography component="p" variant="body1" sx={aboutUsParagraph}>
           Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну пастилу
           та фріпси.
         </Typography>
-        <br />
-      </Box>
-      <Box>
-        <Box component="img" src={FruitMix} alt="fruit mix" width={670} />
+        <Box component="img" src={FruitMix} alt="fruit mix" width="100%" />
       </Box>
     </Container>
   )
