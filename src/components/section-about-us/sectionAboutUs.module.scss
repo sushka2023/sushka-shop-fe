@@ -5,17 +5,23 @@
   }
 }
 
-.aboutSectionCap {
-  // border: 1px solid red;
-  display: flex;
-  align-items: center;
+.aboutUsParagraphItalic {
+  font-style: italic;
+  font-weight: 700;
+}
 
-  p {
-    width: 50%;
-    // border: 1px solid gold;
+@media (max-width: 599px) {
+  // sm breakpoint
+  .sectionAboutUs {
+    flex-direction: column !important;
   }
-  img {
-    width: 60%;
-    // border: 1px solid gold;
+
+  .aboutSectionCap {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 55%;
+    }
   }
 }

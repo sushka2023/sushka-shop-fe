@@ -1,15 +1,11 @@
 import styles from './sectionAboutUs.module.scss'
-import { Box, Container, Typography } from '@mui/material'
-import FruitMix from '../../images/fruit-mix-1.jpg'
-import {
-  aboutUsParagraph,
-  aboutUsParagraphItalic
-  // sectionAboutUs
-} from './style'
+import { Box, Container, Typography, Theme, useTheme } from '@mui/material'
+import { SxProps } from '@mui/system'
+import FruitMix from '../../images/fruit-mix-1.png'
 
-const AboutUsParagraph = () => {
+const AboutUsParagraph: React.FC<{ sx?: SxProps<Theme> }> = ({ sx }) => {
   return (
-    <Typography variant="body1">
+    <Typography variant="body1" sx={sx}>
       Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну пастилу та
       фріпси.
     </Typography>
@@ -17,6 +13,8 @@ const AboutUsParagraph = () => {
 }
 
 const SectionAboutUs = () => {
+  const theme = useTheme()
+
   return (
     <Container
       maxWidth="lg"
@@ -26,7 +24,8 @@ const SectionAboutUs = () => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '40px'
+        gap: 'clamp(0.625rem, -2.028rem + 7.08vw, 2.5rem)',
+        color: 'secondary.darker'
       }}
       id="aboutUs"
     >
@@ -37,48 +36,43 @@ const SectionAboutUs = () => {
           gap: '10px'
         }}
       >
-        <Typography
-          component="h2"
-          variant="h2"
-          sx={{ color: 'secondary.darker' }}
-        >
-          Про нас
-        </Typography>
-        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
+        <Typography variant="h2">Про нас</Typography>
+        <Typography variant="body1">
           Відверто кажучи, ми маленьке крафтове виробництво корисних смаколиків.
           Любимо усе, що дає нам матінка природа, а ще сильніше
           <Typography
-            component="span"
             variant="caption"
-            sx={aboutUsParagraphItalic}
+            className={styles.aboutUsParagraphItalic}
           >
             {' '}
             яблука!{' '}
           </Typography>
         </Typography>
         {/* <br /> */}
-        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
-          Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо{' '}
+        <Typography component="p" variant="body1">
+          Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо і{' '}
           <Typography
-            component="span"
             variant="caption"
-            sx={aboutUsParagraphItalic}
+            className={styles.aboutUsParagraphItalic}
           >
-            і обожнюємо Україну
+            обожнюємо Україну
           </Typography>
           . Наша продукція зростає і покращується, оскільки все більше людей
           обирають наші натуральні смаколики замість цукерок зі складними
           компонентами.
         </Typography>
-        {/* <br /> */}
-        <AboutUsParagraph />
-        {/* <br /> */}
+        <AboutUsParagraph
+          sx={{
+            [theme.breakpoints.down('sm')]: { display: 'none' }
+          }}
+        />
       </Box>
-      <Box minWidth="50%" className={styles.aboutSectionCap}>
-        <Typography component="p" variant="body1" sx={aboutUsParagraph}>
-          Будь сильним, дбай про своє здоров’я, а ми подбаємо про смачну пастилу
-          та фріпси.
-        </Typography>
+      <Box minWidth="55%" className={styles.aboutSectionCap}>
+        <AboutUsParagraph
+          sx={{
+            [theme.breakpoints.up('sm')]: { display: 'none' }
+          }}
+        />
         <Box component="img" src={FruitMix} alt="fruit mix" width="100%" />
       </Box>
     </Container>
