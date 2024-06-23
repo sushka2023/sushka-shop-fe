@@ -1,4 +1,7 @@
 .sectionAboutUs {
+  h2 {
+    font-size: clamp(1.063rem, -0.321rem + 3.69vw, 3rem);
+  }
   p,
   span {
     font-size: clamp(0.938rem, 0.703rem + 0.47vw, 1.125rem);
@@ -10,7 +13,7 @@
   font-weight: 700;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 600px) {
   // sm breakpoint
   .sectionAboutUs {
     flex-direction: column !important;

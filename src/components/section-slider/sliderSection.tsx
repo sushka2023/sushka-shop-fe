@@ -111,15 +111,8 @@ const SlideSection = () => {
         component="section"
         sx={{
           backgroundColor: 'pink.darker'
-          // border: '1px solid',
-          // borderColor: 'pink.darker'
         }}
       >
-        {/* <Box
-        component="img"
-        src={borderTop}
-        sx={{ ...border, [theme.breakpoints.up('lg')]: border.lg }}
-      ></Box> */}
         <Container maxWidth="lg" sx={{ padding: '0px 14px !important' }}>
           <Typography
             sx={{
@@ -139,7 +132,6 @@ const SlideSection = () => {
             })}
           </Slider>
         </Container>
-        {/* <Box component="img" src={borderBottom} sx={borderSecond}></Box> */}
       </Box>
       <Box
         sx={{

@@ -1,4 +1,4 @@
-export const accordionData = [
+export const ACCORDION_DATA = [
   {
     question: 'Що я можу придбати у вашому магазині?',
     answer: `У нашому асортименті представлені вироби пастили та фріпсів.

@@ -77,7 +77,7 @@ const SectionYourChoice = () => {
         className={styles.yourChoiceList}
         sx={{
           margin: '80px 0',
-          [theme.breakpoints.down(768)]: { margin: '30px 0' }
+          [theme.breakpoints.down(768)]: { margin: '15px 0' }
         }}
       >
         {ITEMS_LIST.map((item, index) => (

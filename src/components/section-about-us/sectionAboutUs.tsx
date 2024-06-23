@@ -49,7 +49,7 @@ const SectionAboutUs = () => {
           </Typography>
         </Typography>
         {/* <br /> */}
-        <Typography component="p" variant="body1">
+        <Typography variant="body1">
           Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо і{' '}
           <Typography
             variant="caption"
@@ -67,13 +67,19 @@ const SectionAboutUs = () => {
           }}
         />
       </Box>
-      <Box minWidth="55%" className={styles.aboutSectionCap}>
+      <Box minWidth="40%" className={styles.aboutSectionCap}>
         <AboutUsParagraph
           sx={{
             [theme.breakpoints.up('sm')]: { display: 'none' }
           }}
         />
-        <Box component="img" src={FruitMix} alt="fruit mix" width="100%" />
+        <Box
+          component="img"
+          src={FruitMix}
+          alt="fruit mix"
+          width="100%"
+          // sx={{ [theme.breakpoints.up('md')]: { width: '50%' } }}
+        />
       </Box>
     </Container>
   )
