@@ -8,7 +8,7 @@ const CustomSlider: FC<Props> = (props) => {
   return (
     <div className={styles.slideWrapper}>
       <div {...props} className={styles.slideElement}>
-        <img src="/src/images/review.svg?react" alt="" />
+        <img src="/src/images/review.svg?react" alt="review client" />
         <IconFavorite className={styles.cardFavorite} />
       </div>
     </div>

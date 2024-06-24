@@ -28,6 +28,11 @@
   justify-content: center;
   flex-direction: column;
   gap: clamp(0rem, -2.653rem + 7.08vw, 1.875rem);
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .listItemCaption {
@@ -67,5 +72,8 @@
         height: auto;
       }
     }
+  }
+  .yourChoiceList {
+    gap: 5px;
   }
 }

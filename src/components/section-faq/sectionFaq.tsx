@@ -71,8 +71,6 @@ const borderTop = CreateBorderStyle('/src/icons/wave.svg', 'top')
 
 const SectionFaq = () => {
   return (
-    // <Box component="section" sx={accordionSection} id="faq">
-    /* <Box sx={border}></Box> */
     <Fragment>
       <Box
         sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
@@ -81,7 +79,8 @@ const SectionFaq = () => {
         component="section"
         sx={{
           backgroundColor: 'turquoise.darker',
-          color: 'background.default'
+          color: 'background.default',
+          pb: 'clamp(8.75rem, 6.964rem + 4.76vw, 11.25rem)'
         }}
       >
         <Container maxWidth="lg" className={styles.accordionSection}>
@@ -113,7 +112,6 @@ const SectionFaq = () => {
         </Container>
       </Box>
     </Fragment>
-    // </Box>
   )
 }
 

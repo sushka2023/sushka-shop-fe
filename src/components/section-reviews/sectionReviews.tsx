@@ -99,7 +99,7 @@ const SectionReviews = () => {
       <Box
         sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
       >
-        <Box className={styles.iconWrapper}>
+        <Box className={styles.iconCherry}>
           <IconCherry />
         </Box>
       </Box>
@@ -146,7 +146,7 @@ const SectionReviews = () => {
           mb: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)'
         }}
       >
-        <Box className={styles.iconBwrapper}>
+        <Box className={styles.iconBanana}>
           <IconBanana />
         </Box>
       </Box>
