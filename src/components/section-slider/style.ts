@@ -1,89 +1,6 @@
 export const sectionBg = {
   backgroundColor: 'pink.darker'
-  // position: 'relative'
-  // border: '1px solid black'
-
-  // lg: {
-  //   marginTop: 'clamp(25rem, 4.911rem + 22.32vw, 40.625rem)'
-  // }
 }
-
-// export const border = {
-//   backgroundImage: 'url(/src/icons/borderslider.svg)',
-//   position: 'absolute',
-//   top: '-110px',
-//   height: 'auto',
-//   zIndex: '-1',
-//   backgroundRepeat: 'repeat',
-//   width: 'clamp(20rem, 100vw, 90rem)',
-//   backgroundSize: 'cover'
-// }
-
-// export const border = {
-//   width: '100%',
-//   position: 'absolute',
-//   top: 'clamp(-9.375rem, -10vw, -1.75rem)',
-//   left: '0px',
-
-//   lg: {
-//     top: 'clamp(-16.875rem, -10vw, -9.375rem)'
-//   }
-// }
-
-export const border = {
-  position: 'relative',
-  top: '2px',
-  backgroundImage: 'url(/src/icons/borderslider.svg)',
-  width: '100%',
-  height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: '100%',
-  marginTop: '254px'
-}
-
-export const borderSecond = {
-  position: 'relative',
-  bottom: '2px',
-  backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
-  width: '100%',
-  height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: '100%',
-  marginBottom: '200px'
-}
-
-// export const borderSecond = {
-//   backgroundImage: 'url(/src/icons/bordersecondslider.svg)',
-//   position: 'absolute',
-//   height: '135px',
-//   zIndex: '-1',
-//   width: '100%',
-//   backgroundSize: 'cover',
-//   backgroundRepeat: 'repeat-x'
-// }
-
-// export const sliderContainer = {
-//   lg: {
-//     '& > div': {
-//       'border': '1px solid red',
-//       'position': 'relative',
-//       'maxWidth': '1360px',
-//       'margin': '0 auto',
-//       'padding': '72px 40px',
-//       'display': 'flex',
-//       'alignItems': 'center',
-//       'gap': '20px',
-//       '&::before': {
-//         display: 'none' // Або будь-який інший стиль, який вам потрібен
-//       }
-//     }
-//   },
-//   sm: {
-//     '& > div': {
-//       padding: '0px'
-//     }
-//   }
-// }
 
 export const sliderTitle = {
   color: 'background.default',
@@ -106,16 +23,10 @@ export const slideElement = {
   display: 'flex',
   flexDirection: 'column',
   cursor: 'pointer',
-  mb: '20px',
-
-  sm: {
-    // border: '1px solid green'
-    // minHeight: 'clamp(13.5rem, 7.5rem + 30vw, 18.75rem)'
-  }
+  mb: '20px'
 }
 
 export const slideImage = {
-  // border: '1px solid green',
   position: 'relative',
   height: 'auto',
   display: 'block',
@@ -147,10 +58,14 @@ export const slideInfo = {
 
 export const lastSlider = {
   // maxWidth: '168px',
-  height: '595px',
+  // height: '595px',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  alignItems: 'center',
+  position: 'absolute'
+  // top: '50%',
+  // left: '50%',
+  // transform: 'translate(-50%, -50%)'
 }
 
 export const cardFavorite = {
@@ -196,34 +111,6 @@ export const cardBold = {
     fontWeight: '400'
   }
 }
-
-// export const ArrowStyle = {
-//   lg: {
-//     'position': 'absolute',
-//     'top': '50%',
-//     'width': '40px',
-//     'height': '40px',
-//     'background': 'none',
-//     'display': 'flex',
-//     'justifyContent': 'flex-end',
-//     'alignItems': 'center',
-//     'mb': '40px',
-//     '&:hover': {
-//       cursor: 'pointer'
-//     }
-//   },
-//   sm: {
-//     display: 'none'
-//   }
-// }
-
-// export const ArrowStylePrev = {
-//   left: '5px'
-// }
-
-// export const ArrowStyleNext = {
-//   right: '10px'
-// }
 
 export const customButton = {
   'color': 'secondary.darker',

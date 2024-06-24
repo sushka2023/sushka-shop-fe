@@ -1,4 +1,4 @@
-// import styles from './sliderSection.module.scss'
+import styles from './sliderSection.module.scss'
 // import IconFavorite from '../../icons/favorite.svg?react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
@@ -22,14 +22,9 @@ const CustomSlider: FC<Props> = (props) => {
   const theme = useTheme()
 
   return (
-    <Box>
+    <Box className={styles.sliderCard}>
       <Box data-index={index}>
-        <Box
-          sx={{
-            ...slideElement,
-            [theme.breakpoints.down('sm')]: slideElement.sm
-          }}
-        >
+        <Box sx={slideElement}>
           <Box sx={slideImage}>
             <Box
               sx={{

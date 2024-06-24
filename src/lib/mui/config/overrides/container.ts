@@ -2,7 +2,7 @@ import { Components, Theme } from '@mui/material'
 const MuiContainer: Components<Theme>['MuiContainer'] = {
   styleOverrides: {
     root: {
-      padding: '0 clamp(0.875rem, 0.429rem + 1.19vw, 1.5rem) !important'
+      padding: '0 clamp(0.938rem, -0.179rem + 2.98vw, 2.5rem) !important'
     }
   }
 }

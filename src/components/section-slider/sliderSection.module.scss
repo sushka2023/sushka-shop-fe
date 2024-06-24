@@ -22,20 +22,26 @@
   }
 }
 
-.sliderContainer > div:nth-child(2) > div {
+.sliderCard {
   // border: 1px solid red;
-  height: clamp(
-    29.375rem,
-    12.5rem + 35.16vw,
-    35rem
-  ); /*mn470 - mx560; 768 - 1024*/
+  padding: 10px;
+  // height: auto;
 }
 
-.sliderContainer > div:nth-child(2) > div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+// .sliderContainer > div:nth-child(2) > div {
+//   // border: 1px solid red;
+//   height: clamp(
+//     29.375rem,
+//     12.5rem + 35.16vw,
+//     35rem
+//   ); /*mn470 - mx560; 768 - 1024*/
+// }
+
+// .sliderContainer > div:nth-child(2) > div:first-child {
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+// }
 
 .arrow {
   position: absolute;

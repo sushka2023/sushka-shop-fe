@@ -30,7 +30,7 @@ import { Button } from '../UI/Button'
 const SlideSection = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const settings: Settings = {
     dots: true,
@@ -113,7 +113,7 @@ const SlideSection = () => {
           backgroundColor: 'pink.darker'
         }}
       >
-        <Container maxWidth="lg" sx={{ padding: '0px 14px !important' }}>
+        <Container maxWidth="lg">
           <Typography
             sx={{
               ...sliderTitle,
