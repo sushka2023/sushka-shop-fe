@@ -48,24 +48,12 @@ const SectionReviews = () => {
     customPaging: (i) => {
       return (
         <Box
-          // sx={{
-          //   width: '17px',
-          //   height: '17px',
-          //   backgroundColor:
-          //     activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)',
-          //   borderRadius: '17px'
-          // },[theme.breakpoints.down('sm')]: {width: '17px',
-          //   height: '17px',}}
           sx={{
-            width: '17px',
-            height: '17px',
-            backgroundColor:
-              activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)',
+            width: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
+            height: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
             borderRadius: '17px',
-            [theme.breakpoints.down('md')]: {
-              width: '10px',
-              height: '10px'
-            }
+            backgroundColor:
+              activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)'
           }}
         />
       )
@@ -114,7 +102,8 @@ const SectionReviews = () => {
             variant="h2"
             sx={{
               color: 'background.default',
-              fontSize: 'clamp(1.063rem, -0.321rem + 3.69vw, 3rem)'
+              fontSize: 'clamp(1.063rem, -0.321rem + 3.69vw, 3rem)',
+              fontWeight: 700
             }}
           >
             Відгуки

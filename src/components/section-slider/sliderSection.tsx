@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom'
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
 import CustomSlider from './customSlider'
-// import borderTop from '/src/icons/borderslider.svg'
-// import borderBottom from '/src/icons/bordersecondslider.svg'
+
 import {
   Box,
   Container,
@@ -16,15 +15,6 @@ import {
 } from '@mui/material'
 import List from '@mui/material/List'
 
-import {
-  // border,
-  // borderSecond,
-  customButton,
-  lastSlider,
-  // sectionBg,
-  // sliderContainer,
-  sliderTitle
-} from './style'
 import { Button } from '../UI/Button'
 
 const SlideSection = () => {
@@ -42,8 +32,20 @@ const SlideSection = () => {
     nextArrow: <ArrowNext />,
     appendDots: (dots) => {
       return (
-        <Box sx={{ bottom: '0px', left: '0px' }}>
-          <List sx={{ margin: '0px' }}> {dots} </List>
+        <Box
+          sx={{
+            bottom: '0px',
+            left: '0px',
+            zIndex: 1,
+            [theme.breakpoints.down('md')]: {
+              bottom: '-15px'
+            },
+            [theme.breakpoints.down('sm')]: {
+              bottom: '-25px'
+            }
+          }}
+        >
+          <List sx={{ m: '0px' }}> {dots} </List>
         </Box>
       )
     },
@@ -51,9 +53,10 @@ const SlideSection = () => {
       return (
         <Box
           sx={{
-            width: '17px',
-            height: '17px',
+            width: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
+            height: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
             borderRadius: '17px',
+
             background:
               activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)'
           }}
@@ -68,16 +71,29 @@ const SlideSection = () => {
   const renderSlide = (index: number) => {
     if (index === 4) {
       return (
-        <Box sx={lastSlider}>
-          <Link
-            style={{ width: '100%', maxWidth: '300px' }}
-            to="catalog/11"
-            // className={`${styles.customButton} ${styles.customLink}`}
-          >
-            <Button fullWidth variant="contained" sx={customButton}>
+        <Box className={styles.lastSlider}>
+          <Link style={{ width: '100%', maxWidth: '300px' }} to="catalog/11">
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                'width': 'clamp(7.813rem, -2.188rem + 50vw, 16.563rem)',
+                'fontSize': 'clamp(0.75rem, 0.654rem + 0.38vw, 1rem)',
+                'padding':
+                  'clamp(0.25rem, -0.24rem + 1.74vw, 0.875rem) clamp(0.5rem, -0.48rem + 3.48vw, 1.75rem)',
+                'ml': 'clamp(0.313rem, -0.13rem + 1.18vw, 0.625rem)',
+                'color': 'secondary.darker',
+                'backgroundColor': 'background.default',
+                'border': 'none',
+                '&:hover': {
+                  color: 'secondary.darker',
+                  border: '2px solid',
+                  borderColor: 'secondary.darker'
+                }
+              }}
+            >
               Переглянути каталог
             </Button>
-            {/* <ArrowBtn className={styles.arrowBtn} width={10} height={17} /> */}
           </Link>
         </Box>
       )
@@ -112,17 +128,10 @@ const SlideSection = () => {
         sx={{
           backgroundColor: 'pink.darker'
         }}
+        className={styles.sectionSlider}
       >
         <Container maxWidth="lg">
-          <Typography
-            sx={{
-              ...sliderTitle,
-              [theme.breakpoints.between('sm', 'lg')]: sliderTitle.md,
-              [theme.breakpoints.down('sm')]: sliderTitle.sm
-            }}
-            variant="h2"
-            component="h2"
-          >
+          <Typography sx={{ color: 'background.default' }} variant="h2">
             Популярні товари
           </Typography>
 

@@ -1,8 +1,6 @@
-// import styles from './HeroSection.module.scss'
-
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import HeroPic from '../../images/hero-pic.jpg'
+import HeroPic from '../../images/hero-pic.png'
 import HeroMobilePic from '../../images/HeroMobile-pic.png'
 import { RootState } from '../../redux/store'
 import { Button } from '../UI/Button'

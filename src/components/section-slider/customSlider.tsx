@@ -1,18 +1,8 @@
 import styles from './sliderSection.module.scss'
-// import IconFavorite from '../../icons/favorite.svg?react'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShopItem from '../../images/shop-item.jpg'
 import { FC, HTMLProps } from 'react'
 import { Box, Typography, useTheme } from '@mui/material'
-import {
-  cardPararaph,
-  cardBold,
-  slideElement,
-  slideImage,
-  cardFavorite,
-  sliderButton,
-  slideInfo
-} from './style'
 import { Button } from '../UI/Button'
 
 type Props = HTMLProps<HTMLDivElement> & { index: number }
@@ -24,8 +14,14 @@ const CustomSlider: FC<Props> = (props) => {
   return (
     <Box className={styles.sliderCard}>
       <Box data-index={index}>
-        <Box sx={slideElement}>
-          <Box sx={slideImage}>
+        <Box
+          className={styles.slideElement}
+          sx={{
+            backgroundColor: 'background.default',
+            color: 'secondary.darker'
+          }}
+        >
+          <Box className={styles.slideImage}>
             <Box
               sx={{
                 maxWidth: '100%',
@@ -37,39 +33,26 @@ const CustomSlider: FC<Props> = (props) => {
               alt="mandarin pastille"
             />
             <FavoriteBorderIcon
+              className={styles.cardFavorite}
               sx={{
-                ...cardFavorite.lg,
-                [theme.breakpoints.down('sm')]: cardFavorite.sm
+                'color': theme.palette.error.dark,
+                '&:hover': {
+                  color: theme.palette.primary.darker
+                }
               }}
             />
           </Box>
-          <Box
-            sx={{ ...slideInfo, [theme.breakpoints.down('md')]: slideInfo.md }}
-          >
-            <Typography
-              variant="h3"
-              sx={{
-                ...cardBold,
-                [theme.breakpoints.down('sm')]: cardBold.sm
-              }}
-            >
+          <Box className={styles.slideInfo}>
+            <Typography variant="h3" className={styles.cardBold}>
               Мандаринова пастила
             </Typography>
-            <Typography
-              component="p"
-              variant="body2"
-              sx={{
-                ...cardPararaph,
-                [theme.breakpoints.down('sm')]: cardPararaph.sm
-              }}
-            >
+            <Typography variant="body2" className={styles.cardPararaph}>
               Мандаринова пастила Мандаринова пастила Мандаринова пастила
             </Typography>
             <Typography
-              component="span"
               variant="caption"
+              className={styles.cardBold}
               sx={{
-                ...cardBold,
                 [theme.breakpoints.down('sm')]: {
                   fontSize: 'clamp(0.938rem, 0.318rem + 1.65vw, 1.375rem)'
                 }
@@ -79,11 +62,7 @@ const CustomSlider: FC<Props> = (props) => {
             </Typography>
           </Box>
         </Box>
-        <Button
-          sx={{ [theme.breakpoints.down('sm')]: sliderButton }}
-          variant="contained"
-          fullWidth
-        >
+        <Button className={styles.sliderButton} variant="contained" fullWidth>
           Купити
         </Button>
       </Box>

@@ -1,47 +1,47 @@
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
-@import '../../styles/base/base.scss';
-
 .sliderContainer {
-  // border: 1px solid red;
   position: relative;
   max-width: 1360px;
   margin: 0 auto;
-
   padding: 0 clamp(0rem, -6.154rem + 9.62vw, 2.5rem);
   padding-bottom: clamp(1.25rem, -1.321rem + 6.33vw, 4.375rem);
-  // padding-left: clamp(0rem, -6.154rem + 9.62vw, 2.5rem);
-  // padding-right: clamp(0.625rem, -3.99rem + 7.21vw, 2.5rem);
-  // padding: 20px 20px;
   display: flex;
   align-items: center;
   gap: 20px;
 
   &::before {
-    display: none; // Або будь-який інший стиль, який вам потрібен
+    display: none;
+  }
+}
+
+.sectionSlider {
+  h2 {
+    margin-bottom: clamp(1.25rem, 0.357rem + 2.38vw, 2.5rem);
+    font-size: 48px;
   }
 }
 
 .sliderCard {
-  // border: 1px solid red;
   padding: 10px;
-  // height: auto;
 }
 
-// .sliderContainer > div:nth-child(2) > div {
-//   // border: 1px solid red;
-//   height: clamp(
-//     29.375rem,
-//     12.5rem + 35.16vw,
-//     35rem
-//   ); /*mn470 - mx560; 768 - 1024*/
-// }
+.slideInfo {
+  flex-grow: 1;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-// .sliderContainer > div:nth-child(2) > div:first-child {
-//   display: flex;
-//   align-items: center;
-//   gap: 20px;
-// }
+.lastSlider {
+  width: clamp(7.813rem, 3.795rem + 20.09vw, 21.875rem);
+  height: clamp(27.5rem, 20.58rem + 18.45vw, 37.188rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
 
 .arrow {
   position: absolute;
@@ -72,232 +72,120 @@
   }
 }
 
-@media (max-width: 1024px) {
-  // sm breakpoint
+.sliderCard {
+  .slideElement {
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .slideImage {
+    position: relative;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    flex-grow: 1;
+
+    img {
+      padding-top: clamp(1.25rem, -2.5rem + 7.81vw, 2.5rem);
+    }
+  }
+
+  .cardFavorite {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .cardPararaph {
+    max-width: 320px;
+    font-size: 18px;
+    margin: 7px 0 40px 0;
+  }
+
+  .sliderButton {
+    width: 100%;
+    font-size: clamp(0.875rem, 0.777rem + 0.35vw, 1rem);
+    padding: clamp(0.25rem, -0.24rem + 1.74vw, 0.875rem)
+      clamp(0.5rem, -0.48rem + 3.48vw, 1.75rem);
+  }
+
+  .cardBold {
+    font-size: clamp(0.813rem, 0.017rem + 2.12vw, 1.375rem);
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1023px) {
+  .sectionSlider {
+    h2 {
+      font-size: clamp(1.438rem, -0.774rem + 5.9vw, 3rem);
+    }
+  }
+
+  .slideInfo {
+    padding: 20px 20px;
+  }
+  .lastSlider {
+    width: clamp(16.563rem, -0.949rem + 46.7vw, 28.938rem);
+    height: clamp(28.438rem, 15.613rem + 34.2vw, 37.5rem);
+  }
   .arrow {
     display: none;
   }
 }
 
-// @media (max-width: 768px) {
-//   // sm breakpoint
-//   .sliderContainer {
-//     border: 1px solid red;
-//     height: clamp(21.875rem, 8.158rem + 58.52vw, 36.25rem);
-//   }
-// }
+@media (max-width: 599px) {
+  .sectionSlider {
+    h2 {
+      font-size: 17px;
+    }
+  }
 
-// .sectionHeader {
-//   color: $white-200;
-//   font-family: $nunito;
-//   font-size: 48px;
-//   font-weight: $font-weight-500;
-// }
+  .sliderCard {
+    padding: 0px 5px;
 
-// .ArrowPrevStyle {
-//   width: 40px;
-//   height: 40px;
-//   background: none;
-//   transform: rotate(180deg);
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
+    .cardFavorite {
+      top: 15px;
+      right: 15px;
+      font-size: 1.25rem;
+    }
 
-//   &:hover {
-//     cursor: pointer;
-//   }
-// }
+    .slideElement {
+      margin-bottom: 10px;
+    }
 
-// .slideElement {
-//   max-width: 400px;
-//   box-sizing: border-box;
-// }
+    .slideInfo {
+      padding: 15px 15px;
 
-// .slideImage {
-//   position: relative;
-//   padding: 40px 20px 32px;
-//   max-width: 100%;
-//   height: auto;
-//   display: block;
-//   margin: 0 auto;
+      h3 {
+        height: 39px;
+      }
+    }
 
-//   & img {
-//     max-width: 100%;
-//     height: auto;
-//   }
-// }
+    .cardPararaph {
+      display: none;
+    }
 
-// .cardTitle {
-//   padding: 0px 40px 30px;
-// }
+    .cardBold {
+      font-weight: 400;
+    }
+  }
 
-// .cardContent {
-//   border-radius: 10px;
-//   background-color: $white-200;
-// }
+  .lastSlider {
+    width: clamp(8.438rem, -1.563rem + 50vw, 17.188rem);
+    height: clamp(13.25rem, 9.807rem + 23.21vw, 20.313rem);
+  }
 
-// .cardFavorite {
-//   position: absolute;
-//   top: 40px;
-//   right: 34px;
-//   fill: $green-dark-200;
-
-//   &:hover {
-//     fill: $yellow-200;
-//     cursor: pointer;
-//   }
-// }
-
-// .cardButtom {
-//   margin-top: 20px;
-//   border-radius: 10px;
-//   border: none;
-//   display: flex;
-//   width: 100%;
-//   height: 60px;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: $yellow-200;
-//   color: $white-200;
-//   font-family: $open-sans;
-//   font-size: 16px;
-//   font-weight: $font-weight-700;
-//   line-height: 130%;
-//   text-transform: uppercase;
-//   cursor: pointer;
-
-//   &:hover {
-//     color: $pink-200;
-//     background-color: $light-200;
-//   }
-
-//   &:active {
-//     color: $white-200;
-//     background-color: $yellow-200;
-//   }
-// }
-
-// .lastSlider {
-//   max-width: 400px;
-//   height: 595px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
-
-// .cardHeader {
-//   margin-bottom: 18px;
-//   color: $green-dark-200;
-//   font-family: $open-sans;
-//   font-size: 22px;
-//   font-weight: $font-weight-600;
-//   line-height: 120%;
-// }
-
-// .cardPararaph {
-//   max-width: 320px;
-//   color: $green-dark-200;
-//   font-family: $open-sans;
-//   font-size: 17px;
-//   font-weight: $font-weight-300;
-//   line-height: 140%;
-//   margin-bottom: 70px;
-// }
-
-// .slideImage {
-//   border: 1px solid green;
-//   position: 'relative';
-//   height: auto;
-//   display: block;
-//   margin: 0 auto;
-//   flex-grow: 1;
-
-//   img {
-//     // border: 1px solid red;
-//     padding-top: 40px;
-//   }
-// }
-
-// .cardFavorite {
-//   position: absolute;
-//   top: 15px;
-//   right: 15px;
-//   color: 'secondary.darker';
-
-//   &:hover {
-//     color: 'primary.darker';
-//     cursor: pointer;
-//   }
-// }
-
-// customButton
-// customLink
-// arrowBtn
-
-// .customButton {
-//   width: 300px;
-//   height: 50px;
-//   border-radius: 20px;
-//   background: $white-200;
-//   border: none;
-//   cursor: pointer;
-//   font-family: $open-sans;
-//   font-size: 16px;
-//   font-weight: $font-weight-700;
-//   line-height: 130%;
-//   text-transform: uppercase;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   gap: 12px;
-
-//   &.customLink {
-//     color: $green-dark-200;
-//   }
-
-//   &:hover {
-//     border: 2px solid $green-dark-200;
-//   }
-
-//   &:active {
-//     background: $green-dark-200;
-
-//     &.customLink {
-//       color: $white-200;
-//     }
-
-//     .arrowBtn {
-//       fill: $white-200;
-//     }
-//   }
-// }
-
-// .ArrowNextStyle {
-//   width: 40px;
-//   height: 40px;
-//   background: none;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-
-//   &:hover {
-//     cursor: pointer;
-//   }
-// }
-
-// .arrow {
-//   fill: $white-200;
-// }
-
-// .arrowBtn {
-//   fill: $green-dark-200;
-// }
-
-// .cardBold {
-// color: 'secondary.darker';
-// font-size: '22px';
-// font-weight: 600;
-// }
-// sm: {
-//   fontSize: '13px'
-// }
+  .customButton {
+    margin-left: 5px !important;
+  }
+}

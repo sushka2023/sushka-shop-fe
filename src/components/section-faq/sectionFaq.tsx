@@ -96,11 +96,14 @@ const SectionFaq = () => {
               disableGutters
               elevation={0}
               square
-              sx={{ color: 'background.default' }}
+              sx={{
+                color: 'background.default'
+              }}
             >
               <AccordionSummary
                 aria-controls={`panel${index}-content`}
                 id={`panel${index}-header`}
+                className={styles.accordionItem}
               >
                 <Typography variant="h3">{item.question}</Typography>
               </AccordionSummary>

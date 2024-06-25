@@ -1,11 +1,17 @@
 .accordionSection {
   h2 {
     font-size: clamp(1.063rem, -0.321rem + 3.69vw, 3rem);
+    font-weight: 700;
   }
   h3 {
     font-size: clamp(0.938rem, 0.179rem + 2.02vw, 2rem);
   }
   p {
     font-size: clamp(0.813rem, 0.547rem + 0.71vw, 1rem);
+  }
+  .accordionItem {
+    div {
+      margin: 16px 0px;
+    }
   }
 }
