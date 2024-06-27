@@ -1,3 +1,4 @@
+import styles from './heroSection.module.scss'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import HeroPic from '../../images/hero-pic.png'
@@ -11,14 +12,6 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material'
-import {
-  mainBlock,
-  slogan,
-  sloganImgLogo,
-  sloganParagraph,
-  sloganButton,
-  sloganTitle
-} from './style'
 
 const HeroSection = () => {
   const allCategories = useSelector(
@@ -26,7 +19,7 @@ const HeroSection = () => {
   )
 
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(601))
 
   const firstCategoryId = `/catalog/${allCategories && allCategories[0].id}`
 
@@ -34,32 +27,17 @@ const HeroSection = () => {
     <Box component="section">
       <Container
         sx={{
-          ...mainBlock,
-          [theme.breakpoints.between('sm', 'lg')]: mainBlock.lg,
-          [theme.breakpoints.down('sm')]: mainBlock.sm
+          color: 'secondary.darker'
         }}
+        className={styles.mainBlock}
       >
-        <Box sx={slogan}>
-          <Typography
-            sx={{
-              color: 'secondary.darker',
-              [theme.breakpoints.between('sm', 'lg')]: sloganTitle.md,
-              [theme.breakpoints.down('sm')]: sloganTitle.sm
-            }}
-            component="h1"
-            variant="h1"
-          >
+        <Box className={styles.slogan}>
+          <Typography className={styles.sloganTitle} variant="h1">
             Найсолодші ласощі <br />
             <em>від природи,</em>
             <br /> зроблені з любов`ю
           </Typography>
-          <Typography
-            component="p"
-            variant="body1"
-            sx={{
-              ...sloganParagraph
-            }}
-          >
+          <Typography variant="body1" className={styles.sloganParagraph}>
             Відкрийте для себе неперевершені смаки нашої <br /> повністю
             натуральної фруктової <br /> пастили та фріпсів
           </Typography>
@@ -70,7 +48,7 @@ const HeroSection = () => {
             <Button
               fullWidth
               variant="contained"
-              sx={{ [theme.breakpoints.down('md')]: sloganButton }}
+              className={styles.sloganButton}
             >
               Переглянути каталог
             </Button>
@@ -89,13 +67,8 @@ const HeroSection = () => {
             component="img"
             src={isSmallScreen ? HeroMobilePic : HeroPic}
             alt="dried fruits in plastic bags"
-            sx={
-              isSmallScreen
-                ? sloganImgLogo.sm
-                : {
-                    ...sloganImgLogo.lg,
-                    [theme.breakpoints.between('sm', 'md')]: sloganImgLogo.md
-                  }
+            className={
+              isSmallScreen ? styles.sloganImgLogoSM : styles.sloganImgLogo
             }
           />
         </Box>

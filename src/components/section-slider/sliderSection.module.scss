@@ -85,13 +85,13 @@
 
   .slideImage {
     position: relative;
-    height: auto;
     display: block;
     margin: 0 auto;
     flex-grow: 1;
 
     img {
       padding-top: clamp(1.25rem, -2.5rem + 7.81vw, 2.5rem);
+      height: auto;
     }
   }
 

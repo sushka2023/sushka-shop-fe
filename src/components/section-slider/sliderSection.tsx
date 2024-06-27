@@ -76,6 +76,7 @@ const SlideSection = () => {
             <Button
               fullWidth
               variant="contained"
+              className={styles.customButton}
               sx={{
                 'width': 'clamp(7.813rem, -2.188rem + 50vw, 16.563rem)',
                 'fontSize': 'clamp(0.75rem, 0.654rem + 0.38vw, 1rem)',
@@ -102,7 +103,7 @@ const SlideSection = () => {
     }
   }
 
-  const CreateBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
+  const createBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
     position: 'relative',
     [positionWave]: '2px', // динамічний ключ (top або bottom)
     backgroundImage: `url(${url})`,
@@ -112,8 +113,8 @@ const SlideSection = () => {
     backgroundSize: '100%'
   })
 
-  const borderTop = CreateBorderStyle('/src/icons/borderslider.svg', 'top')
-  const borderBottom = CreateBorderStyle(
+  const borderTop = createBorderStyle('/src/icons/borderslider.svg', 'top')
+  const borderBottom = createBorderStyle(
     '/src/icons/bordersecondslider.svg',
     'bottom'
   )

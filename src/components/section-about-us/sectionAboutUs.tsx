@@ -48,7 +48,6 @@ const SectionAboutUs = () => {
             яблука!{' '}
           </Typography>
         </Typography>
-        {/* <br /> */}
         <Typography variant="body1">
           Ми любимо солодке і спорт, малечу та її батьків, а також мандруємо і{' '}
           <Typography
@@ -73,13 +72,7 @@ const SectionAboutUs = () => {
             [theme.breakpoints.up('sm')]: { display: 'none' }
           }}
         />
-        <Box
-          component="img"
-          src={FruitMix}
-          alt="fruit mix"
-          width="100%"
-          // sx={{ [theme.breakpoints.up('md')]: { width: '50%' } }}
-        />
+        <Box component="img" src={FruitMix} alt="fruit mix" width="100%" />
       </Box>
     </Container>
   )

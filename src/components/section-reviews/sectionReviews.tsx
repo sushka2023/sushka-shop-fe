@@ -63,7 +63,7 @@ const SectionReviews = () => {
     }
   }
 
-  const CreateBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
+  const createBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
     position: 'relative',
     [positionWave]: '2px', // динамічний ключ (top або bottom)
     backgroundImage: `url(${url})`,
@@ -73,11 +73,11 @@ const SectionReviews = () => {
     backgroundSize: '100%'
   })
 
-  const borderTop = CreateBorderStyle(
+  const borderTop = createBorderStyle(
     '/src/icons/bordersliderreview.svg',
     'top'
   )
-  const borderBottom = CreateBorderStyle(
+  const borderBottom = createBorderStyle(
     '/src/icons/bordersecondsliderreview.svg',
     'bottom'
   )

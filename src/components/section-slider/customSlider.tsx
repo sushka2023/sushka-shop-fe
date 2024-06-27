@@ -7,8 +7,7 @@ import { Button } from '../UI/Button'
 
 type Props = HTMLProps<HTMLDivElement> & { index: number }
 
-const CustomSlider: FC<Props> = (props) => {
-  const { index } = props
+const CustomSlider: FC<Props> = ({ index }) => {
   const theme = useTheme()
 
   return (
