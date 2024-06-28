@@ -76,7 +76,6 @@ const SlideSection = () => {
             <Button
               fullWidth
               variant="contained"
-              className={styles.customButton}
               sx={{
                 'width': 'clamp(7.813rem, -2.188rem + 50vw, 16.563rem)',
                 'fontSize': 'clamp(0.75rem, 0.654rem + 0.38vw, 1rem)',
@@ -90,6 +89,9 @@ const SlideSection = () => {
                   color: 'secondary.darker',
                   border: '2px solid',
                   borderColor: 'secondary.darker'
+                },
+                [theme.breakpoints.down('sm')]: {
+                  ml: '5px'
                 }
               }}
             >
