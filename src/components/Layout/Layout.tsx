@@ -4,7 +4,7 @@ import Header from './header/index'
 import Breadcrumbs from './breadcrumbs/Breadcrumbs'
 import Footer from './footer/index'
 
-function Layout() {
+const Layout = () => {
   const location = useLocation()
   const homePath = location.pathname === '/'
 
