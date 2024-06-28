@@ -12,7 +12,7 @@ const THEME_TYPOGRAPHY = {
   body1: {
     fontFamily: OPEN_SANS_REGULAR.font,
     fontSize: '1rem',
-    fontWeigh: OPEN_SANS_REGULAR.weight,
+    fontWeight: OPEN_SANS_REGULAR.weight,
     lineHeight: 'normal'
   },
   body2: {
@@ -62,19 +62,19 @@ const THEME_TYPOGRAPHY = {
   h6: {
     fontFamily: OPEN_SANS_REGULAR.font,
     fontSize: '1rem',
-    fontWeigh: OPEN_SANS_REGULAR.weight,
+    fontWeight: OPEN_SANS_REGULAR.weight,
     lineHeight: 'normal'
   },
   subtitle1: {
     fontFamily: OPEN_SANS_BOLD.font,
     fontSize: '0.875rem',
-    fontWeigh: OPEN_SANS_BOLD.weight,
+    fontWeight: OPEN_SANS_BOLD.weight,
     lineHeight: 'normal'
   },
   subtitle2: {
     fontFamily: OPEN_SANS_REGULAR.font,
     fontSize: '0.875rem',
-    fontWeigh: OPEN_SANS_REGULAR.weight,
+    fontWeight: OPEN_SANS_REGULAR.weight,
     lineHeight: 'normal'
   }
 } as const
