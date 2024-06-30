@@ -23,6 +23,7 @@ import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
 import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 import { AccountPage } from './pages/account-page/account-page'
 import { OrderPage } from './pages/order-page'
+import CrmClientsPage from './pages/crm-clients-page/CrmClientsPage'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -87,10 +88,7 @@ function App() {
 
           <Route path="products/:params" element={<CrmAddNewProduct />} />
 
-          <Route
-            path="clients"
-            element={<div style={{ marginBottom: '500px' }}>Clients page</div>}
-          />
+          <Route path="clients" element={<CrmClientsPage />} />
           <Route
             path="clients/:params"
             element={
