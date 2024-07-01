@@ -1,3 +1,5 @@
+import { CardRenderer } from './CardRenderer'
+
 export const DeliveryAddress = () => {
-  return <div>DeliveryAddress</div>
+  return <CardRenderer />
 }

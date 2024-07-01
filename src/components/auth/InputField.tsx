@@ -1,14 +1,14 @@
-import { Grid, InputLabel, OutlinedInput, FormHelperText } from '@mui/material'
+import { Grid, InputLabel, OutlinedInput } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
-
-type InputId = 'first_name' | 'last_name' | 'email' | 'phone_number'
+import { ErrorMessage } from '../Error/Error'
+import { FC } from 'react'
 
 interface InputFieldProps {
-  label: string
   type: string
+  id?: string
+  label?: string
   register?: UseFormRegisterReturn
   error?: any
-  id?: InputId
   disabled?: boolean
   placeholder?: string
   defaultValue?: string
@@ -16,7 +16,7 @@ interface InputFieldProps {
   sxLabel?: object
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const InputField: FC<InputFieldProps> = ({
   id,
   label,
   defaultValue,
@@ -41,17 +41,7 @@ const InputField: React.FC<InputFieldProps> = ({
       disabled={disabled}
       sx={sxInput}
     />
-    {error && (
-      <FormHelperText
-        sx={{
-          color: 'error.darker',
-          fontWeight: 500,
-          position: 'absolute'
-        }}
-      >
-        {error.message}
-      </FormHelperText>
-    )}
+    <ErrorMessage error={error} />
   </Grid>
 )
 
