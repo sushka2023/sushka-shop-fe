@@ -7,6 +7,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
+import { HoverPopUp } from './HoverPopUp'
 const DEFAULT_VALUE = {
   name: '',
   size: 0
@@ -19,16 +20,14 @@ const FeedbackForm = () => {
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
   const [fileSelected, setFileSelected] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { isLoggedIn } = useAuth()
-
+  const [isHovered, setIsHovered] = useState(false)
+  const { isLoggedIn, user } = useAuth()
   const [searchParams] = useSearchParams()
-
   const searchToken = Object.fromEntries(searchParams.entries())
-
   useEffect(() => {
     Object.keys(searchToken).length > 0 && setIsModalOpen(true)
   }, [searchToken])
-
+  const isUserNotActive = !user?.is_active
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -85,7 +84,10 @@ const FeedbackForm = () => {
             <label
               htmlFor="fileInput"
               className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
+              <HoverPopUp isVisible={isHovered} />
               <span>Додати фото</span>
               <span className={styles.plusIcon}>+</span>
               <input
@@ -97,13 +99,26 @@ const FeedbackForm = () => {
               />
             </label>
           </div>
-          {fileSelected && <FileInfo file={file} onDelete={handleFileDelete} />}
+          <FileInfo
+            file={file}
+            onDelete={handleFileDelete}
+            isVisible={fileSelected}
+          />
           <div className={styles.submitWrapper}>
             <Rating onRate={handleRatingChange} />
-            <button type="submit" className={styles.feedbackFormBtn}>
+            <button
+              type="submit"
+              disabled={isUserNotActive}
+              className={styles.feedbackFormBtn}
+            >
               Відправити
             </button>
           </div>
+          {isUserNotActive && (
+            <p className={styles.emailActivation}>
+              <a href="#">Підтвердіть</a> пошту, щоб залишити відгук
+            </p>
+          )}
         </form>
       ) : (
         <div className={styles.feedbackUnauth}>
