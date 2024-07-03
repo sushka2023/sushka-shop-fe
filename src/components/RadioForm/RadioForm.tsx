@@ -1,33 +1,40 @@
-import React, { useState, FC, ReactNode } from 'react'
+import { FC, Fragment, ReactNode } from 'react'
 import { Radio, RadioGroup, FormControlLabel, Typography } from '@mui/material'
 import { NovaPoshtaBranch } from './BranchesNP'
-import { AddressNP } from './AddressNP'
 import { NovaPoshtaPostomats } from './PostomatsNP'
+import { AddressNP } from './AddressNP'
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormClearErrors,
+  FieldValues
+} from 'react-hook-form'
 
-type PropsType = {
+type RadioFormProps = {
+  register: UseFormRegister<FieldValues>
+  setValue: UseFormSetValue<FieldValues>
+  errors: FieldErrors
+  clearErrors: UseFormClearErrors<FieldValues>
   children: ReactNode
-  register: any
-  setValue: any
-  errors: any
+  selectedValue: string
   setError: any
-  clearErrors: any
-  getValues: any
+  setSelectedValue: (value: string) => void
 }
+export type FormProps = Omit<RadioFormProps, 'children' | 'setSelectedValue'>
 
-const RadioForm: FC<PropsType> = ({
-  children,
+export const RadioForm: FC<RadioFormProps> = ({
   register,
   setValue,
   errors,
   setError,
   clearErrors,
-  getValues
+  selectedValue,
+  setSelectedValue,
+  children
 }) => {
-  const [selectedValue, setSelectedValue] =
-    useState<string>('novaPoshtaBranches')
-
   return (
-    <React.Fragment>
+    <Fragment>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         name="radio-buttons-group"
@@ -39,51 +46,55 @@ const RadioForm: FC<PropsType> = ({
           control={<Radio />}
           label="Нова пошта (відділення)"
         />
-        <NovaPoshtaBranch
-          selectedValue={selectedValue}
-          errors={errors}
-          register={register}
-          setValue={setValue}
-          clearErrors={clearErrors}
-          getValues={getValues}
-        />
+        {selectedValue === 'novaPoshtaBranches' && (
+          <NovaPoshtaBranch
+            selectedValue={selectedValue}
+            errors={errors}
+            setError={setError}
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+          />
+        )}
 
         <FormControlLabel
           value="novaPoshtaPostomats"
           control={<Radio />}
           label="Нова пошта (поштомат)"
         />
-        <NovaPoshtaPostomats
-          selectedValue={selectedValue}
-          errors={errors}
-          register={register}
-          setValue={setValue}
-          clearErrors={clearErrors}
-          getValues={getValues}
-        />
+        {selectedValue === 'novaPoshtaPostomats' && (
+          <NovaPoshtaPostomats
+            selectedValue={selectedValue}
+            errors={errors}
+            setError={setError}
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+          />
+        )}
 
         <FormControlLabel
           value="novaPoshtaAddress"
           control={<Radio />}
           label="Нова пошта (адресна)"
         />
-        <AddressNP
-          selectedValue={selectedValue}
-          errors={errors}
-          setError={setError}
-          register={register}
-          setValue={setValue}
-          clearErrors={clearErrors}
-        />
+        {selectedValue === 'novaPoshtaAddress' && (
+          <AddressNP
+            selectedValue={selectedValue}
+            errors={errors}
+            setError={setError}
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+          />
+        )}
 
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+        <FormControlLabel value="other" control={<Radio />} label="Інше" />
         {selectedValue === 'other' && (
-          <Typography>Additional text for Other option</Typography>
+          <Typography>Додатковий текст для варіанту </Typography>
         )}
       </RadioGroup>
       {children}
-    </React.Fragment>
+    </Fragment>
   )
 }
-
-export default RadioForm

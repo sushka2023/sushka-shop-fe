@@ -1,52 +1,46 @@
-import React, { FC, ReactNode } from 'react'
+import { FC, Fragment, ReactNode, SyntheticEvent } from 'react'
 import { Autocomplete, CircularProgress, TextField } from '@mui/material'
 import { ListboxComponent, StyledPopper } from './VariableSizeList'
+import { FieldValues, UseFormRegister } from 'react-hook-form'
 
-type PropsType = {
+interface AutocompleteCustomProps {
   name: string
-  placeholder?: string
-  register: (name: string) => any
+  register: UseFormRegister<FieldValues>
   options: string[]
-  onChange: (event: any, value: string) => void
+  onChange: (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => void
   loading: boolean
   setValueInput: (value: string) => void
-  errors: any
-  disabled?: any
-  val?: any
-  optionsText: any
+  placeholder: string
+  disabled?: boolean
+  value?: string | null
+  noOptionsText: string
 }
 
-export const AutocompleteCustom: FC<PropsType> = ({
-  name,
-  register,
-  options,
+export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
   onChange,
-  loading,
-  setValueInput,
-  errors,
   placeholder,
-  disabled,
-  val,
-  optionsText
+  register,
+  setValueInput,
+  name,
+  ...props
 }) => {
   const isOptionEqualToValue = (option: any, value: string | null) => {
     return option === value || option === null || value === ''
   }
+
   return (
     <Autocomplete
+      {...props}
       {...register(name)}
       id={name}
-      value={val}
       sx={{ width: 400, mt: 2 }}
       disableListWrap
-      onError={errors[name] ? () => {} : undefined}
       PopperComponent={StyledPopper}
       ListboxComponent={ListboxComponent}
-      options={options}
-      loading={loading}
-      disabled={disabled}
       clearOnEscape
-      noOptionsText={optionsText}
       onInputChange={(_, val) => setValueInput(val)}
       onChange={onChange}
       isOptionEqualToValue={isOptionEqualToValue}
@@ -57,8 +51,8 @@ export const AutocompleteCustom: FC<PropsType> = ({
           InputProps={{
             ...params.InputProps,
             endAdornment: (
-              <React.Fragment>
-                {loading && (
+              <Fragment>
+                {props.loading && (
                   <CircularProgress
                     color="inherit"
                     size={23}
@@ -70,7 +64,7 @@ export const AutocompleteCustom: FC<PropsType> = ({
                   />
                 )}
                 {params.InputProps.endAdornment}
-              </React.Fragment>
+              </Fragment>
             )
           }}
         />
@@ -78,7 +72,6 @@ export const AutocompleteCustom: FC<PropsType> = ({
       renderOption={(props, option, state) =>
         [props, option, state.index] as ReactNode
       }
-      renderGroup={(params) => params as any}
     />
   )
 }

@@ -1,7 +1,7 @@
 import { FormHelperText } from '@mui/material'
-import { FC } from 'react'
+import { CSSProperties, FC } from 'react'
 
-export const ErrorMessage: FC<{ error: any; styles?: any }> = ({
+export const ErrorMessage: FC<{ error: any; styles?: CSSProperties }> = ({
   error,
   styles
 }) => {

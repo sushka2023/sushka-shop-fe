@@ -1,23 +1,23 @@
-import { FC, useEffect, useCallback, useMemo, useState, Fragment } from 'react'
+import {
+  FC,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  Fragment,
+  SyntheticEvent
+} from 'react'
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaLocations } from '../../hooks/useNovaPoshtaLocations'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
+import { FormProps } from './RadioForm'
+import { generateOptionsData } from '../../utils/nova-poshta/branches'
 
-type PropsType = {
-  selectedValue: any
-  errors: any
-  register: (name: string) => any
-  setValue: (name: string, value: any) => void
-  clearErrors: (name: string) => void
-  getValues: (name: string) => any
-}
-
-const MAX_LENGTH = 50
 const url = '/api/nova_poshta/warehouses/branches/'
 const numSearch = 1
 
-export const NovaPoshtaBranch: FC<PropsType> = ({
+export const NovaPoshtaBranch: FC<FormProps> = ({
   selectedValue,
   errors,
   register,
@@ -48,66 +48,51 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
     loading: cityLoading,
     options,
     novaPoshtaCity,
-    cityDefault,
+    CITY_DEFAULT,
     getDefaultCityRef,
     getCityRef,
     messageOptionCity
-  } = useNovaPoshtaCity({
-    setValue,
-    clearErrors,
-    setSettleRef
-  })
+  } = useNovaPoshtaCity()
 
   const [isDisabled, setIsDisabled] = useState(!valInputCity)
 
   useEffect(() => {
-    setSelectedWarehouseValue(null)
-  }, [!valInputWarehouse])
-
-  useEffect(() => {
     setIsDisabled(!valInputCity)
-  }, [!valInputCity])
+    setSelectedWarehouseValue(null)
+  }, [valInputCity])
 
   useEffect(() => {
     setValInputCity('')
   }, [selectedValue])
 
   useEffect(() => {
+    setSelectedWarehouseValue(null)
+    setValue('branches', null)
+  }, [!valInputWarehouse])
+
+  useEffect(() => {
     if (isDisabled) {
-      setValue('branches', '')
+      setValue('cityBranches', null)
+      setValue('branches', null)
       setValInputWarehouse('')
       setSelectedWarehouseValue(null)
       setNewRequest(true)
+      clearErrors('branches')
     }
   }, [isDisabled])
 
   const optionsData = useMemo(() => {
-    return warehouses.map((warehouse) => ({
-      label:
-        warehouse.address_warehouse
-          .replace(/\(до 30 кг на одне місце\)/g, '')
-          .replace(/\(до 30 кг\)/g, '')
-          .replace(/\(до 10 кг\)/g, '')
-          .replace(/\(до 5 кг\)/g, '')
-          .replace(/\(до 200 кг\)/g, '')
-          .replace(/\(до 1100 кг \)/g, '')
-          .replace(/\n/g, '')
-          .replace(/№(\d+)\s*:/g, '№$1:')
-          .trim()
-          .slice(0, MAX_LENGTH) +
-        (warehouse.address_warehouse.length > MAX_LENGTH ? '...' : ''),
-      id: warehouse.id
-    }))
+    return generateOptionsData(warehouses)
   }, [warehouses])
 
   const onChangeCity = useCallback(
-    (_event: any, value: string) => {
-      setValue('city', value)
-      setValInputCity(value)
-      clearErrors('city')
-      if (cityDefault.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, cityDefault))
-        clearErrors('city')
+    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
+      setValue('cityBranches', value)
+      setValInputCity(value ?? '')
+      clearErrors('cityBranches')
+      if (CITY_DEFAULT.some((city) => city.name === value)) {
+        setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+        clearErrors('cityBranches')
       } else if (value && novaPoshtaCity.length > 0) {
         setSettleRef(getCityRef(value, novaPoshtaCity))
       } else {
@@ -118,7 +103,7 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
       setValue,
       setValInputCity,
       novaPoshtaCity,
-      cityDefault,
+      CITY_DEFAULT,
       clearErrors,
       getDefaultCityRef,
       getCityRef,
@@ -126,40 +111,39 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
     ]
   )
 
-  const onChangeWarehouse = useCallback(
-    (_event: any, value: string) => {
-      const selectedWarehouse = optionsData.find(
-        (option) => option.label === value
-      )
-      if (selectedWarehouse) {
-        setValue('branches', selectedWarehouse.id)
-        setValInputWarehouse(value)
-        setSelectedWarehouseValue(value)
-        setNewRequest(false)
-      }
-      clearErrors('branches')
-    },
-    [setValue, setValInputWarehouse, clearErrors, setNewRequest, optionsData]
-  )
+  const onChangeWarehouse = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    const selectedWarehouse = optionsData.find(
+      (option) => option.label === value
+    )
+    if (selectedWarehouse) {
+      setValue('branches', selectedWarehouse.id)
+      setValInputWarehouse(value ?? '')
+      setSelectedWarehouseValue(value)
+      setNewRequest(false)
+    }
+    clearErrors('branches')
+  }
 
   return (
     selectedValue === 'novaPoshtaBranches' && (
       <Fragment>
         <ErrorMessage
-          error={errors.city || errors.branches}
+          error={errors.cityBranches || errors.branches}
           styles={{ position: 'relative' }}
         />
 
         <AutocompleteCustom
-          name="city"
+          name="cityBranches"
           placeholder="Оберіть населений пункт"
           register={register}
           options={options}
-          errors={errors}
           onChange={onChangeCity}
           loading={cityLoading}
           setValueInput={setValInputCity}
-          optionsText={messageOptionCity}
+          noOptionsText={messageOptionCity}
         />
 
         <AutocompleteCustom
@@ -167,13 +151,12 @@ export const NovaPoshtaBranch: FC<PropsType> = ({
           placeholder="Оберіть відділення"
           register={register}
           options={optionsData.map((option) => option.label)}
-          errors={errors}
           disabled={isDisabled}
-          val={isDisabled ? '' : selectedWarehouseValue}
+          value={isDisabled ? '' : selectedWarehouseValue}
           onChange={onChangeWarehouse}
           loading={locationLoading}
           setValueInput={setValInputWarehouse}
-          optionsText={messageOptionLoc}
+          noOptionsText={messageOptionLoc}
         />
       </Fragment>
     )

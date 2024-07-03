@@ -1,13 +1,6 @@
-/* eslint-disable */
-
-import useMediaQuery from '@mui/material/useMediaQuery'
-import ListSubheader from '@mui/material/ListSubheader'
-import Popper from '@mui/material/Popper'
-import { useTheme, styled } from '@mui/material/styles'
-import { VariableSizeList, ListChildComponentProps } from 'react-window'
-import { Box, Typography, autocompleteClasses } from '@mui/material'
 import {
   HTMLAttributes,
+  MutableRefObject,
   ReactElement,
   createContext,
   forwardRef,
@@ -15,18 +8,23 @@ import {
   useEffect,
   useRef
 } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import ListSubheader from '@mui/material/ListSubheader'
+import Popper from '@mui/material/Popper'
+import { useTheme, styled } from '@mui/material/styles'
+import { VariableSizeList, ListChildComponentProps } from 'react-window'
+import { Box, Typography, autocompleteClasses } from '@mui/material'
 
 const LISTBOX_PADDING = 8
 
-function renderRow(props: ListChildComponentProps) {
-  const { data, index, style } = props
+function renderRow({ data, index, style }: ListChildComponentProps) {
   const dataSet = data[index]
   const inlineStyle = {
     ...style,
     top: (style.top as number) + LISTBOX_PADDING
   }
 
-  if (dataSet.hasOwnProperty('group')) {
+  if ('group' in dataSet) {
     return (
       <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
         {dataSet.group}
@@ -46,15 +44,17 @@ function renderRow(props: ListChildComponentProps) {
   )
 }
 
-const OuterElementContext = createContext({})
+const OuterElementContext = createContext<HTMLAttributes<HTMLElement> | null>(
+  null
+)
 
 const OuterElementType = forwardRef<HTMLDivElement>((props, ref) => {
   const outerProps = useContext(OuterElementContext)
   return <Box ref={ref} {...props} {...outerProps} />
 })
 
-function useResetCache(data: any) {
-  const ref = useRef<VariableSizeList>(null)
+function useResetCache<T>(data: T): MutableRefObject<VariableSizeList | null> {
+  const ref = useRef<VariableSizeList | null>(null)
   useEffect(() => {
     if (ref.current != null) {
       ref.current.resetAfterIndex(0, true)
@@ -66,8 +66,7 @@ function useResetCache(data: any) {
 export const ListboxComponent = forwardRef<
   HTMLDivElement,
   HTMLAttributes<HTMLElement>
->(function ListboxComponent(props, ref) {
-  const { children, ...other } = props
+>(function ListboxComponent({ children, ...other }, ref) {
   const itemData: ReactElement[] = []
   ;(children as ReactElement[]).forEach(
     (item: ReactElement & { children?: ReactElement[] }) => {
@@ -84,7 +83,7 @@ export const ListboxComponent = forwardRef<
   const itemSize = smUp ? 56 : 48
 
   const getChildSize = (child: ReactElement) => {
-    if (child.hasOwnProperty('group')) {
+    if ('group' in child) {
       return 48
     }
 

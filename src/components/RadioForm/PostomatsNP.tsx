@@ -1,23 +1,23 @@
-import { FC, useEffect, useCallback, useMemo, useState, Fragment } from 'react'
+import {
+  FC,
+  useEffect,
+  useMemo,
+  useState,
+  Fragment,
+  SyntheticEvent
+} from 'react'
+
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaLocations } from '../../hooks/useNovaPoshtaLocations'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
+import { FormProps } from './RadioForm'
+import { generateOptionsData } from '../../utils/nova-poshta/postomats'
 
-type PropsType = {
-  selectedValue: any
-  errors: any
-  register: (name: string) => any
-  setValue: (name: string, value: any) => void
-  clearErrors: (name: string) => void
-  getValues: (name: string) => any
-}
-
-const MAX_LENGTH = 50
 const url = '/api/nova_poshta/warehouses/postomats/'
-const numSearch = 4
+const numSearch = 3
 
-export const NovaPoshtaPostomats: FC<PropsType> = ({
+export const NovaPoshtaPostomats: FC<FormProps> = ({
   selectedValue,
   errors,
   register,
@@ -48,126 +48,106 @@ export const NovaPoshtaPostomats: FC<PropsType> = ({
     loading: cityLoading,
     options,
     novaPoshtaCity,
-    cityDefault,
+    CITY_DEFAULT,
     getDefaultCityRef,
     getCityRef,
     messageOptionCity
-  } = useNovaPoshtaCity({
-    setValue,
-    clearErrors,
-    setSettleRef
-  })
+  } = useNovaPoshtaCity()
 
   const [isDisabled, setIsDisabled] = useState(!valInputCity)
 
   useEffect(() => {
-    setSelectedWarehouseValue(null)
-  }, [!valInputWarehouse])
-
-  useEffect(() => {
     setIsDisabled(!valInputCity)
-  }, [!valInputCity])
+    setSelectedWarehouseValue(null)
+  }, [valInputCity])
 
   useEffect(() => {
     setValInputCity('')
   }, [selectedValue])
 
   useEffect(() => {
+    setSelectedWarehouseValue(null)
+    setValue('postomats', null)
+  }, [!valInputWarehouse])
+
+  useEffect(() => {
     if (isDisabled) {
-      setValue('branches', '')
+      setValue('cityPostomats', null)
+      setValue('postomats', null)
       setValInputWarehouse('')
       setSelectedWarehouseValue(null)
       setNewRequest(true)
+      clearErrors('postomats')
     }
-  }, [isDisabled])
+  }, [isDisabled, setValue, setNewRequest])
 
   const optionsData = useMemo(() => {
-    return warehouses.map(
-      (warehouse) =>
-        warehouse.address_warehouse
-          .replace(/"Нова Пошта"/g, '')
-          .replace(/\n/g, '')
-          .replace(/№(\d+)\s*:/g, '№$1:')
-          .trim()
-          .slice(0, MAX_LENGTH) +
-        (warehouse.address_warehouse.length > MAX_LENGTH ? '...' : '')
-    )
+    return generateOptionsData(warehouses)
   }, [warehouses])
 
-  const onChangeCity = useCallback(
-    (_event: any, value: string) => {
-      setValue('city', value)
-      setValInputCity(value)
-      clearErrors('city')
-      if (cityDefault.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, cityDefault))
-        clearErrors('city')
-      } else if (value && novaPoshtaCity.length > 0) {
-        setSettleRef(getCityRef(value, novaPoshtaCity))
-      } else {
-        setSettleRef(null)
-      }
-    },
-    [
-      setValue,
-      setValInputCity,
-      novaPoshtaCity,
-      cityDefault,
-      clearErrors,
-      getDefaultCityRef,
-      getCityRef,
-      setSettleRef
-    ]
-  )
+  const onChangeCity = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    setValue('cityPostomats', value)
+    setValInputCity(value ?? '')
+    clearErrors('cityPostomats')
+    if (CITY_DEFAULT.some((city) => city.name === value)) {
+      setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+      clearErrors('cityPostomats')
+    } else if (value && novaPoshtaCity.length > 0) {
+      setSettleRef(getCityRef(value, novaPoshtaCity))
+    } else {
+      setSettleRef(null)
+    }
+  }
 
-  const onChangeWarehouse = useCallback(
-    (_event: any, value: string) => {
-      const selectedWarehouse = optionsData.find((option) => option === value)
-      if (selectedWarehouse) {
-        setValue('postomats', selectedWarehouse)
-        setValInputWarehouse(value)
-        setSelectedWarehouseValue(value)
-        setNewRequest(false)
-      }
-      clearErrors('postomats')
-    },
-    [setValue, setValInputWarehouse, clearErrors, setNewRequest, optionsData]
-  )
+  const onChangeWarehouse = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    const selectedWarehouse = optionsData.find(
+      (option) => option.label === value
+    )
+    if (selectedWarehouse) {
+      setValue('postomats', selectedWarehouse.id)
+      setValInputWarehouse(value ?? '')
+      setSelectedWarehouseValue(value)
+      setNewRequest(false)
+    }
+    clearErrors('postomats')
+  }
 
   return (
-    selectedValue === 'novaPoshtaPostomats' && (
-      <Fragment>
-        <ErrorMessage
-          error={errors.city || errors.postomats}
-          styles={{ position: 'relative' }}
-        />
+    <Fragment>
+      <ErrorMessage
+        error={errors.cityPostomats || errors.postomats}
+        styles={{ position: 'relative' }}
+      />
 
-        <AutocompleteCustom
-          name="city"
-          placeholder="Оберіть населений пункт"
-          register={register}
-          options={options}
-          errors={errors}
-          onChange={onChangeCity}
-          loading={cityLoading}
-          setValueInput={setValInputCity}
-          optionsText={messageOptionCity}
-        />
+      <AutocompleteCustom
+        name="cityPostomats"
+        placeholder="Оберіть населений пункт"
+        register={register}
+        options={options}
+        onChange={onChangeCity}
+        loading={cityLoading}
+        setValueInput={setValInputCity}
+        noOptionsText={messageOptionCity}
+      />
 
-        <AutocompleteCustom
-          name="postomats"
-          placeholder="Оберіть відділення"
-          register={register}
-          options={optionsData.map((option) => option)}
-          errors={errors}
-          disabled={isDisabled}
-          val={isDisabled ? '' : selectedWarehouseValue}
-          onChange={onChangeWarehouse}
-          loading={locationLoading}
-          setValueInput={setValInputWarehouse}
-          optionsText={messageOptionLoc}
-        />
-      </Fragment>
-    )
+      <AutocompleteCustom
+        name="postomats"
+        placeholder="Оберіть відділення"
+        register={register}
+        options={optionsData.map((option) => option.label)}
+        disabled={isDisabled}
+        value={isDisabled ? '' : selectedWarehouseValue}
+        onChange={onChangeWarehouse}
+        loading={locationLoading}
+        setValueInput={setValInputWarehouse}
+        noOptionsText={messageOptionLoc}
+      />
+    </Fragment>
   )
 }

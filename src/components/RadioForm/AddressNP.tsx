@@ -1,8 +1,16 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
-import { ErrorMessage } from '../Error/Error'
+import {
+  FC,
+  Fragment,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import { Box, OutlinedInput } from '@mui/material'
+import { FormProps } from './RadioForm'
+import { ErrorMessage } from '../Error/Error'
 
 const fetchNovaPoshtaaddress = async (
   refCity: string | null,
@@ -38,17 +46,11 @@ const fetchNovaPoshtaaddress = async (
   const data = await response.json()
   return data.data
 }
-
-type PropsType = {
-  selectedValue: any
-  errors: any
-  setError: (name: string, error: { type: string; message: string }) => void
-  register: (name: string) => any
-  setValue: (name: string, value: any) => void
-  clearErrors: (name: string) => void
+type AddressNP = {
+  Present: string
 }
 
-export const AddressNP: FC<PropsType> = ({
+export const AddressNP: FC<FormProps> = ({
   selectedValue,
   errors,
   register,
@@ -56,51 +58,91 @@ export const AddressNP: FC<PropsType> = ({
   clearErrors
 }) => {
   const [settleRef, setSettleRef] = useState<string | null>(null)
-  const [novaPoshtaAddress, setNovaPoshtaAddress] = useState<any[]>([])
+  const [novaPoshtaAddress, setNovaPoshtaAddress] = useState<AddressNP[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [messageOptionAddress, setMessageOptionAddress] = useState<string>('')
   const [valInputAddress, setValInputAddress] = useState<string>('')
+
+  const [selectedWarehouseValue, setSelectedWarehouseValue] = useState<
+    string | null
+  >(null)
 
   const {
     setValInputCity,
     loading: cityLoading,
     options,
     novaPoshtaCity,
-    cityDefault,
+    CITY_DEFAULT,
+    valInputCity,
     getDefaultCityRef,
     getCityRef,
     messageOptionCity
-  } = useNovaPoshtaCity({
-    setValue,
-    clearErrors,
-    setSettleRef
-  })
+  } = useNovaPoshtaCity()
+
+  const [isDisabled, setIsDisabled] = useState(!valInputCity)
+
+  useEffect(() => {
+    setIsDisabled(!valInputCity)
+    setSelectedWarehouseValue(null)
+    clearErrors()
+  }, [!valInputCity])
+
+  useEffect(() => {
+    setSelectedWarehouseValue(null)
+    setValue('house', null)
+    setValue('apartament', null)
+    setValue('floor', null)
+  }, [!valInputAddress])
+
+  useEffect(() => {
+    if (isDisabled) {
+      setValue('cityAddress', null)
+      setValue('address', null)
+      setValInputAddress('')
+      setSelectedWarehouseValue(null)
+      clearErrors('address')
+    }
+  }, [isDisabled])
 
   const onChangeCity = useCallback(
-    (_event: any, value: string) => {
-      setValue('city', value)
+    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
+      if (value === null) {
+        return
+      }
+
+      setValue('cityAddress', value)
       setValInputCity(value)
-      clearErrors('city')
-      if (cityDefault.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, cityDefault))
-        clearErrors('city')
-      } else if (value && novaPoshtaCity.length > 0) {
+      clearErrors('cityAddress')
+
+      if (CITY_DEFAULT.some((city) => city.name === value)) {
+        setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+      } else if (novaPoshtaCity.length > 0) {
         setSettleRef(getCityRef(value, novaPoshtaCity))
       } else {
         setSettleRef(null)
       }
     },
-    [novaPoshtaCity, cityDefault]
+    [
+      setValue,
+      setValInputCity,
+      clearErrors,
+      CITY_DEFAULT,
+      novaPoshtaCity,
+      setSettleRef
+    ]
   )
 
-  const onChangeAddress = useCallback(
-    (_event: any, value: string) => {
+  const onChangeAddress = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    if (value !== null) {
+      setSelectedWarehouseValue(value)
       setValue('address', value)
       setValInputAddress(value)
       clearErrors('address')
-    },
-    [novaPoshtaAddress, cityDefault]
-  )
+    }
+  }
 
   const handleCityFetch = async (
     refCity: string | null,
@@ -109,7 +151,6 @@ export const AddressNP: FC<PropsType> = ({
     try {
       setLoading(true)
       const data = await fetchNovaPoshtaaddress(refCity, valAddress)
-      console.log('✌️data --->', data)
       const addresses = data[0]?.Addresses || []
 
       setNovaPoshtaAddress(addresses)
@@ -122,7 +163,6 @@ export const AddressNP: FC<PropsType> = ({
       setLoading(false)
     }
   }
-  useEffect(() => {}, [selectedValue])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -139,21 +179,20 @@ export const AddressNP: FC<PropsType> = ({
 
   return (
     selectedValue === 'novaPoshtaAddress' && (
-      <React.Fragment>
+      <Fragment>
         <ErrorMessage
-          error={errors.address_np_city}
+          error={errors.cityAddress || errors.address || errors.house}
           styles={{ position: 'relative' }}
         />
         <AutocompleteCustom
-          name="city"
+          name="cityAddress"
           placeholder="Оберіть населений пункт"
           register={register}
           options={options}
-          errors={errors}
           onChange={onChangeCity}
           loading={cityLoading}
           setValueInput={setValInputCity}
-          optionsText={messageOptionCity}
+          noOptionsText={messageOptionCity}
         />
 
         <AutocompleteCustom
@@ -161,11 +200,12 @@ export const AddressNP: FC<PropsType> = ({
           placeholder="Вулиця"
           register={register}
           options={novaPoshtaAddress.map((addr) => addr.Present)}
-          errors={errors}
           onChange={onChangeAddress}
           loading={loading}
+          value={isDisabled ? '' : selectedWarehouseValue}
           setValueInput={setValInputAddress}
-          optionsText={messageOptionAddress}
+          noOptionsText={messageOptionAddress}
+          disabled={!valInputCity}
         />
         <Box sx={{ display: 'flex', gap: 2, width: 400, m: '15px 0' }}>
           <OutlinedInput
@@ -173,27 +213,24 @@ export const AddressNP: FC<PropsType> = ({
             {...register('house')}
             type="text"
             placeholder="Будинок"
-            // error={!!error}
-            // disabled={disabled}
+            disabled={!valInputAddress}
           />
           <OutlinedInput
             id="2"
             {...register('floor')}
             type="text"
             placeholder="Поверх"
-            // error={!!error}
-            // disabled={disabled}
+            disabled={!valInputAddress}
           />
           <OutlinedInput
             id="3"
             {...register('apartament')}
             type="text"
             placeholder="Квартира"
-            // error={!!error}
-            // disabled={disabled}
+            disabled={!valInputAddress}
           />
         </Box>
-      </React.Fragment>
+      </Fragment>
     )
   )
 }

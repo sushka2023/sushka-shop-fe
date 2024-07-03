@@ -6,11 +6,7 @@ import {
   SetStateAction
 } from 'react'
 import axiosInstance from '../axios/settings'
-
-type WarehousesTypes = {
-  address_warehouse: string
-  id: number
-}
+import { WarehouseType } from '../utils/nova-poshta/branches'
 
 const TIMER = 1000
 
@@ -25,7 +21,7 @@ export const useNovaPoshtaLocations = ({
   valInputWarehouse: string
   setValInputWarehouse: Dispatch<SetStateAction<string>>
 }) => {
-  const [warehouses, setWarehouses] = useState<WarehousesTypes[]>([])
+  const [warehouses, setWarehouses] = useState<WarehouseType[]>([])
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [newRequest, setNewRequest] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
@@ -76,14 +72,14 @@ export const useNovaPoshtaLocations = ({
     if (!valInputWarehouse) {
       setWarehouses([])
       setNewRequest(true)
-      setMessageOptionLoc('Почніть водити текст...')
+      setMessageOptionLoc('Почніть вводити текст...')
     }
   }, [valInputWarehouse])
 
   useEffect(() => {
     if (newRequest && valInputWarehouse.length >= numSearch) {
       const timer = setTimeout(() => {
-        setMessageOptionLoc('Почніть водити текст...')
+        setMessageOptionLoc('Почніть вводити текст...')
         fetchWarehouses(valInputWarehouse)
       }, TIMER)
 

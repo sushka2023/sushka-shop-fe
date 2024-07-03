@@ -1,6 +1,23 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
-const cityDefault = [
+type Address = {
+  Ref: string
+  MainDescription: string
+  Area: string
+  Warehouses: number
+  SettlementTypeCode: string
+}
+
+type CityData = {
+  Addresses: Address[]
+}
+
+type DefaultCity = {
+  name: string
+  ref: string
+}
+
+const CITY_DEFAULT: DefaultCity[] = [
   { name: 'Київ', ref: 'e718a680-4b33-11e4-ab6d-005056801329' },
   { name: 'Львів', ref: 'e71abb60-4b33-11e4-ab6d-005056801329' },
   { name: 'Одеса', ref: 'e71c2a15-4b33-11e4-ab6d-005056801329' },
@@ -9,25 +26,33 @@ const cityDefault = [
   { name: 'Рівне', ref: 'e71d65e1-4b33-11e4-ab6d-005056801329' }
 ]
 
-const getCityRef = (value: string, novaPoshtaCity: any[]) => {
+const TIMER = 1000
+
+const getCityRef = (
+  value: string,
+  novaPoshtaCity: CityData[]
+): string | null => {
   const [descriptionPart, areaPart] = value.split(' (')
   const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
   const area = areaPart.replace(' обл.', '').replace(')', '')
 
   const selectedCity = novaPoshtaCity[0]?.Addresses.find(
-    (address: any) =>
+    (address) =>
       address.MainDescription === mainDescription && address.Area === area
   )
 
   return selectedCity ? selectedCity.Ref : null
 }
 
-const getDefaultCityRef = (value: string, cityDefault: any[]) => {
-  const defaultCity = cityDefault.find((city) => city.name === value)
+const getDefaultCityRef = (
+  value: string | null,
+  CITY_DEFAULT: DefaultCity[]
+): string | null => {
+  const defaultCity = CITY_DEFAULT.find((city) => city.name === value)
   return defaultCity ? defaultCity.ref : null
 }
 
-const fetchNovaPoshtaCity = async (cityName: string) => {
+const fetchNovaPoshtaCity = async (cityName: string): Promise<CityData[]> => {
   const apiKey = 'f07607422838cfac21a0d1b8603086ca'
   const requestOptions = {
     method: 'POST',
@@ -59,20 +84,8 @@ const fetchNovaPoshtaCity = async (cityName: string) => {
   return data.data
 }
 
-type PropsTypes = {
-  setValue: (name: string, value: any) => void
-  clearErrors: (name: string) => void
-  setSettleRef: (ref: string | null) => void
-}
-
-const TIMER = 1000
-
-export const useNovaPoshtaCity = ({
-  setValue,
-  clearErrors,
-  setSettleRef
-}: PropsTypes) => {
-  const [novaPoshtaCity, setNovaPoshtaCity] = useState<any[]>([])
+export const useNovaPoshtaCity = () => {
+  const [novaPoshtaCity, setNovaPoshtaCity] = useState<CityData[]>([])
   const [valInputCity, setValInputCity] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [messageOptionCity, setMessageOptionCity] = useState<string>('')
@@ -85,7 +98,7 @@ export const useNovaPoshtaCity = ({
 
       if (addresses.length === 0) {
         setMessageOptionCity('Не знайдено')
-      } else if (addresses.some((address: any) => address.Warehouses > 0)) {
+      } else if (addresses.some((address) => address.Warehouses > 0)) {
         setNovaPoshtaCity(data)
       }
     } catch (error) {
@@ -99,7 +112,7 @@ export const useNovaPoshtaCity = ({
     () =>
       novaPoshtaCity.length > 0
         ? novaPoshtaCity[0].Addresses.map(
-            (address: any) =>
+            (address) =>
               `${address.SettlementTypeCode} ${address.MainDescription} (${address.Area} обл.)`
           )
         : [],
@@ -107,10 +120,10 @@ export const useNovaPoshtaCity = ({
   )
 
   const options = useMemo(() => {
-    if (!valInputCity) return cityDefault.map((city) => city.name)
-    const filteredCities = cityDefault
-      .map((city) => city.name)
-      .filter((city) => city.toLowerCase().includes(valInputCity.toLowerCase()))
+    if (!valInputCity) return CITY_DEFAULT.map((city) => city.name)
+    const filteredCities = CITY_DEFAULT.map((city) => city.name).filter(
+      (city) => city.toLowerCase().includes(valInputCity.toLowerCase())
+    )
     return filteredCities.length > 0 ? filteredCities : cityRenderNP
   }, [valInputCity, cityRenderNP])
 
@@ -119,42 +132,17 @@ export const useNovaPoshtaCity = ({
       if (
         !valInputCity ||
         valInputCity.length <= 3 ||
-        cityDefault.some((city) => city.name === valInputCity) ||
+        CITY_DEFAULT.some((city) => city.name === valInputCity) ||
         /[()]/.test(valInputCity)
       ) {
-        setMessageOptionCity('Почніть водити текст...')
+        setMessageOptionCity('Почніть вводити текст...')
       } else {
         setNovaPoshtaCity([])
         handleCityFetch(valInputCity)
       }
     }, TIMER)
-
     return () => clearTimeout(timer)
   }, [valInputCity])
-
-  const onChangeCity = useCallback(
-    (_event: any, value: string) => {
-      setValue('city', value)
-      setValInputCity(value)
-      clearErrors('city')
-      if (cityDefault.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, cityDefault))
-        clearErrors('city')
-      } else if (value && novaPoshtaCity.length > 0) {
-        setSettleRef(getCityRef(value, novaPoshtaCity))
-      } else {
-        setSettleRef(null)
-      }
-    },
-    [
-      setValue,
-      setValInputCity,
-      novaPoshtaCity,
-      cityDefault,
-      clearErrors,
-      setSettleRef
-    ]
-  )
 
   return {
     valInputCity,
@@ -162,8 +150,7 @@ export const useNovaPoshtaCity = ({
     loading,
     options,
     novaPoshtaCity,
-    cityDefault,
-    onChangeCity,
+    CITY_DEFAULT,
     getCityRef,
     getDefaultCityRef,
     messageOptionCity
