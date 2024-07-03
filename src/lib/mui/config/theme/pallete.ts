@@ -58,7 +58,12 @@ import {
   SAPPHIRINE_LIGHTER,
   OTHER_RED,
   OTHER_BLUE,
-  OTHER_LIGHT_PINK
+  OTHER_LIGHT_PINK,
+  PEACH_DARKER,
+  PEACH_DARK,
+  PEACH_MEDIUM,
+  PEACH_LIGHT,
+  PEACH_LIGHTER
 } from '../colors'
 
 const PALETTE_CORE: PaletteOptions = {
@@ -146,6 +151,13 @@ const PALETTE_CORE: PaletteOptions = {
     main: OTHER_RED,
     light: OTHER_BLUE,
     lighter: OTHER_LIGHT_PINK
+  },
+  peach: {
+    darker: PEACH_DARKER,
+    dark: PEACH_DARK,
+    main: PEACH_MEDIUM,
+    light: PEACH_LIGHT,
+    lighter: PEACH_LIGHTER
   }
 }
 

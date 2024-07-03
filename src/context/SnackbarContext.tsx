@@ -1,5 +1,4 @@
 import { FC, ReactNode, createContext, useState } from 'react'
-import CustomSnackbar from '../components/CustomSnackbar/CustomSnackbar'
 
 type SnackbarData = {
   open: boolean
@@ -36,7 +35,6 @@ export const SnackbarProvider: FC<{ children: ReactNode }> = ({ children }) => {
       value={{ snackbarData, showSnackbar, hideSnackbar }}
     >
       {children}
-      <CustomSnackbar />
     </SnackbarContext.Provider>
   )
 }
