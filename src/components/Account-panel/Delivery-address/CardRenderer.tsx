@@ -6,7 +6,13 @@ import { stCard, stDeleteBtn } from './style'
 import { ModalCustomFormRadius } from '../../Modal-custom-btn/ModalCustomFormRadius'
 import { useAuth } from '../../../hooks/use-auth'
 import { AddressDetails } from './AddressDetails'
-
+import AddIcon from '@mui/icons-material/Add'
+import { Typography } from '../../UI/Typography'
+import axiosInstance from '../../../axios/settings'
+import { currentUser } from '../../../redux/authentication/operation'
+import { getToken } from '../../../utils/cookie/token'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../../redux/store'
 export type AddressDetailsType = {
   id: number
   address_warehouse?: string
@@ -45,17 +51,58 @@ interface UkrPoshtaResponse
     | 'house_number'
   > {}
 
+const accessToken = getToken()
 export const CardRenderer: FC = () => {
+  const dispatch = useDispatch<AppDispatch>()
   const [openModal, setOpenModal] = useState(false)
   const { user } = useAuth()
-
   const addressUser: (NovaPoshtaDataResponse | UkrPoshtaResponse)[] = [
     ...(user?.posts?.nova_poshta ?? []),
     ...(user?.posts?.ukr_poshta ?? [])
   ]
 
+  const isAddButtonDisabled = () => {
+    return addressUser.length >= 3
+  }
+
   const getCleanedAddress = (addressWarehouse?: string) =>
-    addressWarehouse ? addressWarehouse.replace(/"Нова Пошта"/g, '') : ''
+    addressWarehouse ? addressWarehouse.replace(/"Нова Пошта"/g, '').trim() : ''
+
+  const deleteAddress = async ({
+    id,
+    postCode,
+    postsId
+  }: {
+    id: number
+    postCode?: string
+    postsId?: number
+  }) => {
+    const endpoint = postCode
+      ? '/api/posts/remove_ukr_postal_office'
+      : '/api/posts/remove_nova_poshta_data'
+
+    const requestData = postCode
+      ? { ukr_poshta_id: id }
+      : { post_id: postsId, nova_poshta_id: id }
+
+    try {
+      await axiosInstance.delete(endpoint, { data: requestData })
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
+    } catch (error) {
+      console.error('Помилка видалення адреси:', error)
+    }
+  }
+
+  const handleDelCard = async (index: number) => {
+    const { id, post_code } = addressUser[index]
+    const postsId = user?.posts.id
+
+    try {
+      await deleteAddress({ id, postCode: post_code, postsId })
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <Fragment>
@@ -64,17 +111,17 @@ export const CardRenderer: FC = () => {
           {addressUser.map((elem, index) => (
             <Grid key={index} item xs={12} sm={6} md={3}>
               <Box sx={stCard}>
-                <Button sx={stDeleteBtn}>
-                  <DeleteOutlineIcon sx={{ width: '20px', height: '20px' }} />
-                </Button>
-                <Box>
-                  <AddressDetails
-                    address={elem as AddressDetailsType}
-                    cleanedAddress={getCleanedAddress(
-                      'address_warehouse' in elem ? elem.address_warehouse : ''
-                    )}
-                  />
-                </Box>
+                <Button
+                  onClick={() => handleDelCard(index)}
+                  sx={stDeleteBtn}
+                  endIcon={<DeleteOutlineIcon sx={{ mr: '11px' }} />}
+                />
+                <AddressDetails
+                  address={elem as AddressDetailsType}
+                  cleanedAddress={getCleanedAddress(
+                    'address_warehouse' in elem ? elem.address_warehouse : ''
+                  )}
+                />
               </Box>
               <Button
                 sx={{ padding: '10px 30px' }}
@@ -89,12 +136,35 @@ export const CardRenderer: FC = () => {
           <Grid item xs={12} sm={6} md={3}>
             <Button
               onClick={() => setOpenModal(true)}
-              sx={{ padding: '10px 30px', backgroundColor: '#FFFFFF', mt: 2 }}
+              endIcon={<AddIcon sx={{ width: 25, height: 25 }} />}
+              sx={{
+                'padding': '10px 30px',
+                'backgroundColor': '#FFFFFF',
+                'borderRadius': 20,
+                'fontWeight': 500,
+                'fontSize': 18,
+                'mt': 2,
+                '&:hover': {
+                  backgroundColor: '#FFFFFF',
+                  color: '#9AAB8E'
+                },
+                '&.Mui-disabled': {
+                  backgroundColor: '#E8E8E8',
+                  color: '#FFFFFF'
+                }
+              }}
               fullWidth
               variant="text"
+              disabled={isAddButtonDisabled()}
             >
-              додати адресу
+              Додати адресу
             </Button>
+            {isAddButtonDisabled() && (
+              <Typography variant="body1" sx={{ mt: 1 }}>
+                *Максимальна кількість адрес. Видаліть непотрібну адресу,
+                <br /> щоб додати нову
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Box>

@@ -45,7 +45,7 @@ export const AddressDetails: FC<AddressDetailsProps> = ({
   address,
   cleanedAddress
 }) => {
-  const isUkrPoshta = address.post_code === '33000'
+  const isUkrPoshta = !!address.post_code
   const LogoComponent = getLogoComponent(isUkrPoshta)
   const novaPoshtaType = isUkrPoshta
     ? 'Адресна'
@@ -54,14 +54,14 @@ export const AddressDetails: FC<AddressDetailsProps> = ({
 
   return (
     <Fragment>
-      <LogoComponent style={{ margin: '0 10px' }} />
+      <LogoComponent style={{ margin: '0 5px' }} />
       <Box sx={{ display: 'inline-block' }}>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ fontSize: 22, fontWeight: 600 }}>
           {isUkrPoshta ? 'Укрпошта' : 'Нова Пошта'}
         </Typography>
-        <Typography variant="body2">{novaPoshtaType}</Typography>
+        <Typography variant="body1">{novaPoshtaType}</Typography>
       </Box>
-      <Typography sx={{ margin: '45px 10px 0 10px' }} variant="body1">
+      <Typography sx={{ margin: '25px 10px 0 10px' }} variant="body1">
         {formattedAddress}
       </Typography>
     </Fragment>

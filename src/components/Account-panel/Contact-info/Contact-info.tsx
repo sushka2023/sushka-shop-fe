@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { FC, Fragment, useState } from 'react'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch } from 'react-redux'
@@ -27,7 +27,7 @@ type ContactInfoProps = {
 
 const accessToken = getToken()
 
-export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
+export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
@@ -60,7 +60,7 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
   })
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Box sx={{ mb: 2 }}>
         <Typography variant="h3">Ваша контактна інформація</Typography>
         <Typography variant="body2" sx={{ fontSize: 18 }}>
@@ -126,6 +126,6 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
           </Grid>
         </form>
       </Box>
-    </React.Fragment>
+    </Fragment>
   )
 }

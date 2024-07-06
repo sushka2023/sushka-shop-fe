@@ -14,9 +14,6 @@ export const stDeleteBtn = {
   'height': '40px',
   'backgroundColor': '#F6D2D2',
   'borderRadius': '50%',
-  'display': 'flex',
-  'justifyContent': 'center',
-  'alignItems': 'center',
   'color': '#D21C1C',
   'padding': 0,
   '&:hover': {
