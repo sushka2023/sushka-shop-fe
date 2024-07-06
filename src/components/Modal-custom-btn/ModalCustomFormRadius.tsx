@@ -5,13 +5,36 @@ import { Button } from '../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioForm } from '../RadioForm/RadioForm'
-// import { useAuth } from '../../hooks/use-auth'
+import { useAuth } from '../../hooks/use-auth'
 import * as Yup from 'yup'
+import axiosInstance from '../../axios/settings'
+import { useDispatch } from 'react-redux'
+import { currentUser } from '../../redux/authentication/operation'
+import { getToken } from '../../utils/cookie/token'
+import { AppDispatch } from '../../redux/store'
 
 type PropsType = {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
+type User = {
+  posts: {
+    id: number
+  }
+}
+
+type FormValues = {
+  cityBranches?: string
+  branches?: string
+  cityPostomats?: string
+  postomats?: string
+  cityAddress?: string
+  address?: string
+  house?: string
+  floor?: string
+  apartment?: string
+}
+
 const getAddressRetentionSchema = (selectedValue: string) => {
   switch (selectedValue) {
     case 'novaPoshtaBranches':
@@ -30,7 +53,7 @@ const getAddressRetentionSchema = (selectedValue: string) => {
         address: Yup.string().required('Введіть вулицю'),
         house: Yup.string().required('Введіть будинок'),
         floor: Yup.string().notRequired(),
-        apartament: Yup.string().notRequired()
+        apartment: Yup.string().notRequired()
       })
     default:
       return Yup.object().shape({})
@@ -41,7 +64,9 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
   openModal,
   setOpenModal
 }) => {
-  // const { user } = useAuth()
+  const { user } = useAuth()
+  const accessToken = getToken()
+  const dispatch = useDispatch<AppDispatch>()
 
   const [selectedValue, setSelectedValue] =
     useState<string>('novaPoshtaBranches')
@@ -52,7 +77,7 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
 
   useEffect(() => {
     clearErrors()
-  }, [selectedValue])
+  }, [selectedValue, openModal])
 
   useEffect(() => {
     setAddressRetention(getAddressRetentionSchema(selectedValue))
@@ -64,25 +89,53 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
     setValue,
     clearErrors,
     setError,
+    reset,
     formState: { errors }
-  } = useForm<any>({
+  } = useForm<FormValues>({
     resolver: yupResolver(AddressRetention)
   })
 
-  const onSubmit: SubmitHandler<any> = async (values) => {
-    console.log('✌️values --->', values)
-    // const data = {
-    //   post_id: user?.posts.id,
-    //   nova_poshta_id: values.branches
-    // }
-    // try {
-    //   const response = await axiosInstance.post('/api/posts/add_nova_poshta_warehouse', data)
-    //   dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
-    //   console.log('✌️response --->', response);
-    //   return response
-    // } catch (error) {
+  const getEndpoint = (selectedValue: string) =>
+    selectedValue === 'novaPoshtaAddress'
+      ? '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
+      : '/api/posts/add_nova_poshta_warehouse'
 
-    // }
+  const getData = (
+    values: FormValues,
+    selectedValue: string,
+    user: User | null
+  ) =>
+    selectedValue === 'novaPoshtaAddress'
+      ? {
+          street: values.address,
+          house_number: values.house,
+          apartment_number: values.apartment ?? '',
+          floor: values.floor ?? 0,
+          city: values.cityAddress
+        }
+      : {
+          post_id: user?.posts.id,
+          nova_poshta_id:
+            selectedValue === 'novaPoshtaBranches'
+              ? values.branches
+              : values.postomats
+        }
+
+  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    const endpoint = getEndpoint(selectedValue)
+    const data = getData(values, selectedValue, user)
+
+    try {
+      const response = await axiosInstance.post(endpoint, data)
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
+      console.log('✌️response --->', response)
+      return response
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      setOpenModal(false)
+      reset()
+    }
   }
 
   return (

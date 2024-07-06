@@ -1,4 +1,5 @@
 export const stCard = {
+  height: '180px',
   position: 'relative',
   backgroundColor: 'background.default',
   margin: '10px 0',
