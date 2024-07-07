@@ -7,9 +7,10 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
+import axiosInstance from '../../axios/settings'
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density'
+  id: 'role' | 'date' | 'email' | 'phone' | 'change'
   label: string
   minWidth?: number
   align?: 'right'
@@ -17,68 +18,157 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'role', label: 'Роль користувача', minWidth: 170 },
+  { id: 'date', label: 'Дата оформлення', minWidth: 100 },
   {
-    id: 'population',
-    label: 'Population',
+    id: 'email',
+    label: 'Електронна пошта',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US')
   },
   {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
+    id: 'phone',
+    label: 'Номер телефону',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US')
   },
   {
-    id: 'density',
-    label: 'Density',
+    id: 'change',
+    label: 'Змінити',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toFixed(2)
   }
 ]
 
-interface Data {
-  name: string
-  code: string
-  population: number
-  size: number
-  density: number
-}
+// interface Data {
+//   role: string
+//   date: string
+//   email: number
+//   phone: number
+//   change: number
+// }
 
-function createData(
-  name: string,
-  code: string,
-  population: number,
-  size: number
-): Data {
-  const density = population / size
-  return { name, code, population, size, density }
-}
+// function createData(
+//   role: string,
+//   date: string,
+//   email: number,
+//   phone: number
+// ): Data {
+//   const change = email / phone
+//   return { role, date, email, phone, change }
+// }
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767)
-]
+// const rows = [
+//   createData('India', 'IN', 1324171354, 3287263),
+//   createData('China', 'CN', 1403500365, 9596961),
+//   createData('Italy', 'IT', 60483973, 301340),
+//   createData('United States', 'US', 327167434, 9833520),
+//   createData('Canada', 'CA', 37602103, 9984670),
+//   createData('Australia', 'AU', 25475400, 7692024),
+//   createData('Germany', 'DE', 83019200, 357578),
+//   createData('Ireland', 'IE', 4857000, 70273),
+//   createData('Mexico', 'MX', 126577691, 1972550),
+//   createData('Japan', 'JP', 126317000, 377973),
+//   createData('France', 'FR', 67022000, 640679),
+//   createData('United Kingdom', 'GB', 67545757, 242495),
+//   createData('Russia', 'RU', 146793744, 17098246),
+//   createData('Nigeria', 'NG', 200962417, 923768),
+//   createData('Brazil', 'BR', 210147125, 8515767),
+//   createData('India', 'IN', 1324171354, 3287263),
+//   createData('China', 'CN', 1403500365, 9596961),
+//   createData('Italy', 'IT', 60483973, 301340),
+//   createData('United States', 'US', 327167434, 9833520),
+//   createData('Canada', 'CA', 37602103, 9984670),
+//   createData('Australia', 'AU', 25475400, 7692024),
+//   createData('Germany', 'DE', 83019200, 357578),
+//   createData('Ireland', 'IE', 4857000, 70273),
+//   createData('Mexico', 'MX', 126577691, 1972550),
+//   createData('Japan', 'JP', 126317000, 377973),
+//   createData('France', 'FR', 67022000, 640679),
+//   createData('United Kingdom', 'GB', 67545757, 242495),
+//   createData('Russia', 'RU', 146793744, 17098246),
+//   createData('Nigeria', 'NG', 200962417, 923768),
+//   createData('Brazil', 'BR', 210147125, 8515767),
+//   createData('India', 'IN', 1324171354, 3287263),
+//   createData('China', 'CN', 1403500365, 9596961),
+//   createData('Italy', 'IT', 60483973, 301340),
+//   createData('United States', 'US', 327167434, 9833520),
+//   createData('Canada', 'CA', 37602103, 9984670),
+//   createData('Australia', 'AU', 25475400, 7692024),
+//   createData('Germany', 'DE', 83019200, 357578),
+//   createData('Ireland', 'IE', 4857000, 70273),
+//   createData('Mexico', 'MX', 126577691, 1972550),
+//   createData('Japan', 'JP', 126317000, 377973),
+//   createData('France', 'FR', 67022000, 640679),
+//   createData('United Kingdom', 'GB', 67545757, 242495),
+//   createData('Russia', 'RU', 146793744, 17098246),
+//   createData('Nigeria', 'NG', 200962417, 923768),
+//   createData('Brazil', 'BR', 210147125, 8515767),
+//   createData('India', 'IN', 1324171354, 3287263),
+//   createData('China', 'CN', 1403500365, 9596961),
+//   createData('Italy', 'IT', 60483973, 301340),
+//   createData('United States', 'US', 327167434, 9833520),
+//   createData('Canada', 'CA', 37602103, 9984670),
+//   createData('Australia', 'AU', 25475400, 7692024),
+//   createData('Germany', 'DE', 83019200, 357578),
+//   createData('Ireland', 'IE', 4857000, 70273),
+//   createData('Mexico', 'MX', 126577691, 1972550),
+//   createData('Japan', 'JP', 126317000, 377973),
+//   createData('France', 'FR', 67022000, 640679),
+//   createData('United Kingdom', 'GB', 67545757, 242495),
+//   createData('Russia', 'RU', 146793744, 17098246),
+//   createData('Nigeria', 'NG', 200962417, 923768),
+//   createData('Brazil', 'BR', 210147125, 8515767)
+// ]
+
+// interface FilteredUser {
+//   role: string
+//   created_at: string
+//   email: string
+//   phone: string | null
+// }
 
 export default function StickyHeadTable() {
+  const [clients, setClients] = React.useState([])
+
+  React.useEffect(() => {
+    const fetchCrmClients = async () => {
+      try {
+        // const { data } = await axiosInstance.get<any>(`api/users/all_for_crm`)
+        const { data } = await axiosInstance.get<any>(
+          `api/users/all_for_crm?limit=100&offset=1`
+        )
+
+        const filteredUsers = data.map((user: any) => {
+          const { id, role, created_at, email, phone_number: phone } = user
+          // console.log(user)
+
+          return { id, role, created_at, email, phone }
+        })
+
+        setClients(filteredUsers)
+        console.log(filteredUsers)
+
+        // const filteredData = data.filter((item) => {
+        //   return !item.is_deleted
+        // })
+        // const filteredArchivedData = data.filter((item) => {
+        //   return item.is_deleted
+        // })
+
+        // setCategories(filteredData)
+        // setArchivedCategories(filteredArchivedData)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchCrmClients()
+  }, [])
+
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
@@ -111,11 +201,12 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {/* {rows */}
+            {clients
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column) => {
                       const value = row[column.id]
                       return (
@@ -135,7 +226,7 @@ export default function StickyHeadTable() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={clients.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

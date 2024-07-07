@@ -1,5 +1,6 @@
 import StickyHeadTable from './StickyHeadTable'
 import { Box } from '@mui/material'
+
 // import styles from './crmClientsPage.module.scss'
 
 const CrmClientsPage = () => {
