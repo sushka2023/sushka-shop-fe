@@ -27,6 +27,7 @@ const CITY_DEFAULT: DefaultCity[] = [
 ]
 
 const TIMER = 1000
+export const apiKey = import.meta.env.API_KEY
 
 const getCityRef = (
   value: string,
@@ -53,7 +54,6 @@ const getDefaultCityRef = (
 }
 
 const fetchNovaPoshtaCity = async (cityName: string): Promise<CityData[]> => {
-  const apiKey = 'f07607422838cfac21a0d1b8603086ca'
   const requestOptions = {
     method: 'POST',
     headers: {

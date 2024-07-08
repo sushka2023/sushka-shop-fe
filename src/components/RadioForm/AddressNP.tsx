@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
-import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
+import { apiKey, useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import { Box, OutlinedInput } from '@mui/material'
 import { FormProps } from './RadioForm'
 import { ErrorMessage } from '../Error/Error'
@@ -16,7 +16,6 @@ const fetchNovaPoshtaaddress = async (
   refCity: string | null,
   valAddress: string
 ) => {
-  const apiKey = 'f07607422838cfac21a0d1b8603086ca'
   const requestOptions = {
     method: 'POST',
     headers: {
