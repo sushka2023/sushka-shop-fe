@@ -1,22 +1,23 @@
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { ModalCustom } from './ModalCustomWindow'
-import { Typography } from '@mui/material'
-import { Button } from '../UI/Button'
+import { Box, Typography, Button } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioForm } from '../RadioForm/RadioForm'
 import { useAuth } from '../../hooks/use-auth'
-import * as Yup from 'yup'
 import axiosInstance from '../../axios/settings'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../redux/authentication/operation'
 import { getToken } from '../../utils/cookie/token'
 import { AppDispatch } from '../../redux/store'
+import { AddressAddSchema } from '../auth/validation'
+import { useSnackbar } from '../../hooks/useSnackbar'
 
 type PropsType = {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
+
 type User = {
   posts: {
     id: number
@@ -35,53 +36,20 @@ type FormValues = {
   apartment?: string
 }
 
-const getAddressRetentionSchema = (selectedValue: string) => {
-  switch (selectedValue) {
-    case 'novaPoshtaBranches':
-      return Yup.object().shape({
-        cityBranches: Yup.string().required('Виберіть населений пункт'),
-        branches: Yup.string().required('Виберіть відділення')
-      })
-    case 'novaPoshtaPostomats':
-      return Yup.object().shape({
-        cityPostomats: Yup.string().required('Виберіть населений пункт'),
-        postomats: Yup.string().required('Виберіть відділення')
-      })
-    case 'novaPoshtaAddress':
-      return Yup.object().shape({
-        cityAddress: Yup.string().required('Виберіть населений пункт'),
-        address: Yup.string().required('Введіть вулицю'),
-        house: Yup.string().required('Введіть будинок'),
-        floor: Yup.string().notRequired(),
-        apartment: Yup.string().notRequired()
-      })
-    default:
-      return Yup.object().shape({})
-  }
-}
-
 export const ModalCustomFormRadius: FC<PropsType> = ({
   openModal,
   setOpenModal
 }) => {
   const { user } = useAuth()
   const accessToken = getToken()
+  const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
-
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
   const [selectedValue, setSelectedValue] =
     useState<string>('novaPoshtaBranches')
-
   const [AddressRetention, setAddressRetention] = useState(
-    getAddressRetentionSchema(selectedValue)
+    AddressAddSchema(selectedValue)
   )
-
-  useEffect(() => {
-    clearErrors()
-  }, [selectedValue, openModal])
-
-  useEffect(() => {
-    setAddressRetention(getAddressRetentionSchema(selectedValue))
-  }, [selectedValue])
 
   const {
     handleSubmit,
@@ -94,6 +62,18 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
   } = useForm<FormValues>({
     resolver: yupResolver(AddressRetention)
   })
+
+  useEffect(() => {
+    setSelectedValue('novaPoshtaBranches')
+  }, [openModal])
+
+  useEffect(() => {
+    clearErrors()
+  }, [selectedValue, openModal])
+
+  useEffect(() => {
+    setAddressRetention(AddressAddSchema(selectedValue))
+  }, [selectedValue])
 
   const getEndpoint = (selectedValue: string) =>
     selectedValue === 'novaPoshtaAddress'
@@ -128,12 +108,15 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
     try {
       const response = await axiosInstance.post(endpoint, data)
       dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
-      console.log('✌️response --->', response)
+      showSnackbar({ error: false, message: 'Ваші зміни успішно збережені!' })
+      setIsLoadingBtn(true)
+      setOpenModal(false)
       return response
     } catch (error) {
+      showSnackbar({ error: false, message: 'Сталась помилка' })
       console.error('Error submitting form:', error)
     } finally {
-      setOpenModal(false)
+      setIsLoadingBtn(false)
       reset()
     }
   }
@@ -146,11 +129,15 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
         alignItems: 'start'
       }}
     >
-      <React.Fragment>
+      <Box sx={{ p: '0 25px' }}>
         <Typography id="modal-modal-title" variant="h3">
-          Ваша збережена адреса №3
+          Додати нову адресу
         </Typography>
-        <Typography id="modal-modal-description" component="p">
+        <Typography
+          sx={{ fontSize: 18, m: '10px 0 20px 0' }}
+          id="modal-modal-description"
+          component="p"
+        >
           Ми збережемо введені дані, щоб оформлення <br />
           Вашого наступного замовлення було швидшим.
         </Typography>
@@ -164,13 +151,26 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
             selectedValue={selectedValue}
             errors={errors}
             clearErrors={clearErrors}
-          >
-            <Button type="submit" variant="contained">
-              Submit
+          />
+          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+            <Button
+              sx={{ height: 50, width: 200 }}
+              onClick={() => setOpenModal(false)}
+              variant="outlined"
+            >
+              Скасувати
             </Button>
-          </RadioForm>
+            <Button
+              sx={{ height: 50, width: 200 }}
+              type="submit"
+              variant="contained"
+              disabled={isLoadingBtn}
+            >
+              {isLoadingBtn ? 'Завантаження...' : 'Зберегти'}
+            </Button>
+          </Box>
         </form>
-      </React.Fragment>
+      </Box>
     </ModalCustom>
   )
 }

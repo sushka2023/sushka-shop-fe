@@ -79,7 +79,7 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
       setNewRequest(true)
       clearErrors('postomats')
     }
-  }, [isDisabled, setValue, setNewRequest])
+  }, [isDisabled, setValue, setNewRequest, clearErrors])
 
   const optionsData = useMemo(() => {
     return generateOptionsData(warehouses)

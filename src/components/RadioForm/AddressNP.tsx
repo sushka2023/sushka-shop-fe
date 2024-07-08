@@ -49,7 +49,10 @@ const fetchNovaPoshtaaddress = async (
 type AddressNP = {
   Present: string
 }
-
+const getErrorMessage = (errors: any) => {
+  const fields = ['cityAddress', 'address', 'house', 'floor', 'apartment']
+  return fields.map((field) => errors[field]).find(Boolean) || ''
+}
 export const AddressNP: FC<FormProps> = ({
   selectedValue,
   errors,
@@ -90,7 +93,7 @@ export const AddressNP: FC<FormProps> = ({
   useEffect(() => {
     setSelectedWarehouseValue(null)
     setValue('house', null)
-    setValue('apartament', null)
+    setValue('apartment', null)
     setValue('floor', null)
   }, [!valInputAddress])
 
@@ -176,14 +179,12 @@ export const AddressNP: FC<FormProps> = ({
 
     return () => clearTimeout(timer)
   }, [valInputAddress])
+  const errorMessage = getErrorMessage(errors)
 
   return (
     selectedValue === 'novaPoshtaAddress' && (
       <Fragment>
-        <ErrorMessage
-          error={errors.cityAddress || errors.address || errors.house}
-          styles={{ position: 'relative' }}
-        />
+        <ErrorMessage error={errorMessage} styles={{ position: 'relative' }} />
         <AutocompleteCustom
           name="cityAddress"
           placeholder="Оберіть населений пункт"
@@ -224,7 +225,7 @@ export const AddressNP: FC<FormProps> = ({
           />
           <OutlinedInput
             id="3"
-            {...register('apartament')}
+            {...register('apartment')}
             type="text"
             placeholder="Квартира"
             disabled={!valInputAddress}

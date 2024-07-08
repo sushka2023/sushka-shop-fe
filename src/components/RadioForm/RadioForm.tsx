@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode } from 'react'
+import { FC, Fragment } from 'react'
 import { Radio, RadioGroup, FormControlLabel, Typography } from '@mui/material'
 import { NovaPoshtaBranch } from './BranchesNP'
 import { NovaPoshtaPostomats } from './PostomatsNP'
@@ -16,11 +16,11 @@ type RadioFormProps = {
   setValue: UseFormSetValue<FieldValues>
   errors: FieldErrors
   clearErrors: UseFormClearErrors<FieldValues>
-  children: ReactNode
   selectedValue: string
   setError: any
   setSelectedValue: (value: string) => void
 }
+
 export type FormProps = Omit<RadioFormProps, 'children' | 'setSelectedValue'>
 
 export const RadioForm: FC<RadioFormProps> = ({
@@ -30,8 +30,7 @@ export const RadioForm: FC<RadioFormProps> = ({
   setError,
   clearErrors,
   selectedValue,
-  setSelectedValue,
-  children
+  setSelectedValue
 }) => {
   return (
     <Fragment>
@@ -44,7 +43,12 @@ export const RadioForm: FC<RadioFormProps> = ({
         <FormControlLabel
           value="novaPoshtaBranches"
           control={<Radio />}
-          label="Нова пошта (відділення)"
+          label={
+            <Typography sx={{ pointerEvents: 'auto' }}>
+              Нова пошта (відділення)
+            </Typography>
+          }
+          sx={{ pointerEvents: 'none' }}
         />
         {selectedValue === 'novaPoshtaBranches' && (
           <NovaPoshtaBranch
@@ -60,7 +64,12 @@ export const RadioForm: FC<RadioFormProps> = ({
         <FormControlLabel
           value="novaPoshtaPostomats"
           control={<Radio />}
-          label="Нова пошта (поштомат)"
+          label={
+            <Typography sx={{ pointerEvents: 'auto' }}>
+              Нова пошта (поштомат)
+            </Typography>
+          }
+          sx={{ pointerEvents: 'none' }}
         />
         {selectedValue === 'novaPoshtaPostomats' && (
           <NovaPoshtaPostomats
@@ -76,7 +85,12 @@ export const RadioForm: FC<RadioFormProps> = ({
         <FormControlLabel
           value="novaPoshtaAddress"
           control={<Radio />}
-          label="Нова пошта (адресна)"
+          label={
+            <Typography sx={{ pointerEvents: 'auto' }}>
+              Нова пошта (адресна)
+            </Typography>
+          }
+          sx={{ pointerEvents: 'none' }}
         />
         {selectedValue === 'novaPoshtaAddress' && (
           <AddressNP
@@ -89,12 +103,16 @@ export const RadioForm: FC<RadioFormProps> = ({
           />
         )}
 
-        <FormControlLabel value="other" control={<Radio />} label="Інше" />
-        {selectedValue === 'other' && (
-          <Typography>Додатковий текст для варіанту </Typography>
-        )}
+        <FormControlLabel
+          value="urkPoshta"
+          control={<Radio />}
+          label={
+            <Typography sx={{ pointerEvents: 'auto' }}>Укрпошта</Typography>
+          }
+          sx={{ pointerEvents: 'none' }}
+        />
+        {selectedValue === 'urkPoshta' && <Typography>Urk</Typography>}
       </RadioGroup>
-      {children}
     </Fragment>
   )
 }

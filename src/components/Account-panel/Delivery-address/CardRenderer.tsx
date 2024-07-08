@@ -13,6 +13,8 @@ import { currentUser } from '../../../redux/authentication/operation'
 import { getToken } from '../../../utils/cookie/token'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
+import { useSnackbar } from '../../../hooks/useSnackbar'
+
 export type AddressDetailsType = {
   id: number
   address_warehouse?: string
@@ -51,8 +53,34 @@ interface UkrPoshtaResponse
     | 'house_number'
   > {}
 
+const deleteAddress = async ({
+  id,
+  postCode,
+  postsId
+}: {
+  id: number
+  postCode?: string
+  postsId?: number
+}) => {
+  const endpoint = postCode
+    ? '/api/posts/remove_ukr_postal_office'
+    : '/api/posts/remove_nova_poshta_data'
+
+  const requestData = postCode
+    ? { ukr_poshta_id: id }
+    : { post_id: postsId, nova_poshta_id: id }
+
+  try {
+    await axiosInstance.delete(endpoint, { data: requestData })
+  } catch (error) {
+    console.error('Помилка видалення адреси:', error)
+  }
+}
+
 const accessToken = getToken()
+
 export const CardRenderer: FC = () => {
+  const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
   const [openModal, setOpenModal] = useState(false)
   const { user } = useAuth()
@@ -68,44 +96,28 @@ export const CardRenderer: FC = () => {
   const getCleanedAddress = (addressWarehouse?: string) =>
     addressWarehouse ? addressWarehouse.replace(/"Нова Пошта"/g, '').trim() : ''
 
-  const deleteAddress = async ({
-    id,
-    postCode,
-    postsId
-  }: {
-    id: number
-    postCode?: string
-    postsId?: number
-  }) => {
-    const endpoint = postCode
-      ? '/api/posts/remove_ukr_postal_office'
-      : '/api/posts/remove_nova_poshta_data'
-
-    const requestData = postCode
-      ? { ukr_poshta_id: id }
-      : { post_id: postsId, nova_poshta_id: id }
-
-    try {
-      await axiosInstance.delete(endpoint, { data: requestData })
-      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
-    } catch (error) {
-      console.error('Помилка видалення адреси:', error)
-    }
-  }
-
   const handleDelCard = async (index: number) => {
     const { id, post_code } = addressUser[index]
     const postsId = user?.posts.id
 
     try {
       await deleteAddress({ id, postCode: post_code, postsId })
+      showSnackbar({ error: false, message: 'Адреса видалена...' })
+      dispatch(currentUser({ accessToken, operationType: 'currentUser' }))
     } catch (error) {
+      showSnackbar({ error: false, message: 'Сталась помилка' })
       console.error(error)
     }
   }
 
   return (
     <Fragment>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h3">Ваші адреси доставки</Typography>
+        <Typography variant="body2" sx={{ fontSize: 18 }}>
+          Тут ви можете змінити ваші дані
+        </Typography>
+      </Box>
       <Box sx={{ width: { xs: '100%', sm: '60%', md: '100%' } }}>
         <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
           {addressUser.map((elem, index) => (
@@ -123,14 +135,6 @@ export const CardRenderer: FC = () => {
                   )}
                 />
               </Box>
-              <Button
-                sx={{ padding: '10px 30px' }}
-                fullWidth
-                variant="contained"
-                onClick={() => setOpenModal(true)}
-              >
-                редагувати
-              </Button>
             </Grid>
           ))}
           <Grid item xs={12} sm={6} md={3}>

@@ -2,7 +2,7 @@ import { FC, Fragment, ReactNode, SyntheticEvent } from 'react'
 import { Autocomplete, CircularProgress, TextField } from '@mui/material'
 import { ListboxComponent, StyledPopper } from './VariableSizeList'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
-
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 interface AutocompleteCustomProps {
   name: string
   register: UseFormRegister<FieldValues>
@@ -44,6 +44,7 @@ export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
       onInputChange={(_, val) => setValueInput(val)}
       onChange={onChange}
       isOptionEqualToValue={isOptionEqualToValue}
+      popupIcon={<ExpandMoreIcon sx={{ color: 'secondary.darker' }} />}
       renderInput={(params) => (
         <TextField
           {...params}

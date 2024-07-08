@@ -7,7 +7,7 @@ import { getToken } from '../../../utils/cookie/token'
 import { AppDispatch } from '../../../redux/store'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
 import { UserResponse } from '../../../types'
-import { ChangeDataSchema } from '../../auth/validation'
+import { ChangeUserSchema } from '../../auth/validation'
 import InputField from '../../auth/InputField'
 import { Button } from '../../UI/Button'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -56,7 +56,7 @@ export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({
-    resolver: yupResolver(ChangeDataSchema)
+    resolver: yupResolver(ChangeUserSchema)
   })
 
   return (
