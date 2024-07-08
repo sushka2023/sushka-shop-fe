@@ -1,3 +1,4 @@
+import CustomIcons from './PaginationCRM'
 import StickyHeadTable from './StickyHeadTable'
 import { Box } from '@mui/material'
 
@@ -8,6 +9,7 @@ const CrmClientsPage = () => {
     <Box>
       <h2>Client page</h2>
       <StickyHeadTable />
+      <CustomIcons />
     </Box>
   )
 }
