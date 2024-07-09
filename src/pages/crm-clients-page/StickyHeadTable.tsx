@@ -23,7 +23,7 @@ export default function BasicTable() {
     const fetchCrmClients = async () => {
       try {
         const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=5&offset=1`
+          `api/users/all_for_crm?limit=10&offset=1`
         )
         console.log(data)
 
@@ -43,7 +43,7 @@ export default function BasicTable() {
   }, [])
 
   return (
-    <TableContainer component={Paper} sx={{ background: 'inherit' }}>
+    <TableContainer component={Paper} sx={{ borderTopLeftRadius: '10px' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
