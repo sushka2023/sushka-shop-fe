@@ -1,41 +1,41 @@
 import { Box, Typography } from '@mui/material'
-import { stH3 } from '../../auth/style'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axiosInstance from '../../../axios/settings'
 import { Button } from '../../UI/Button'
 import CreateIcon from '@mui/icons-material/Create'
-const items = [0, 1, 2, 3]
+import { format } from 'date-fns'
+import { uk } from 'date-fns/locale'
+
+type OrdersType = {
+  created_at: string
+  price_order: number
+}
 const divToInsert = (
   <Box
     key="inserted_div"
-    sx={{ border: '1px solid #FEEEE1', width: '80%', margin: '10 auto' }}
+    sx={{
+      border: '1.5px solid #FEEEE1',
+      width: '90%',
+      margin: '0 auto',
+      borderRadius: 10
+    }}
   ></Box>
 )
-const elementsWithDiv = items.map((item, index) => (
-  <React.Fragment key={index}>
-    {index > 0 && divToInsert}
-    <Box
-      sx={{
-        height: 150,
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer'
-      }}
-    >
-      {item} hello
-    </Box>
-  </React.Fragment>
-))
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString)
+  return format(date, 'd MMM yyyy', { locale: uk })
+}
 
 export const OrderHistory = () => {
+  const [orders, setOrders] = useState<OrdersType[]>([])
+  console.log('✌️orders --->', orders)
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const currentUser = {
-          /* Об'єкт поточного користувача */
-        }
-        const limit = 10 // Задайте бажане обмеження кількості замовлень
-        const offset = 0 // Задайте бажаний зсув
+        const currentUser = {}
+        const limit = 10
+        const offset = 0
 
         const response = await axiosInstance.get(
           '/api/orders/for_current_user',
@@ -47,7 +47,8 @@ export const OrderHistory = () => {
             }
           }
         )
-        console.log('✌️response --->', response)
+        const data = response.data.orders
+        setOrders(data)
       } catch (error) {
         console.error('Error fetching orders:', error)
       }
@@ -64,9 +65,7 @@ export const OrderHistory = () => {
           justifyContent: 'space-between'
         }}
       >
-        <Typography variant="h3" sx={{ ...stH3 }}>
-          Ваші замовлення
-        </Typography>
+        <Typography variant="h3">Ваші замовлення</Typography>
         <Button
           sx={{
             'padding': '10px 20px',
@@ -99,10 +98,36 @@ export const OrderHistory = () => {
           sx={{
             backgroundColor: '#FFFFFF',
             borderRadius: 2,
-            gridColumn: { xs: 'span 12', md: 'span 4' }
+            gridColumn: { xs: 'span 12', md: 'span 4' },
+            maxHeight: 462,
+            overflow: 'hidden'
           }}
         >
-          {elementsWithDiv}
+          <Box
+            sx={{
+              maxHeight: '100%',
+              overflowY: 'auto'
+            }}
+          >
+            {orders.map((elem, index) => (
+              <Box key={index}>
+                {index > 0 && divToInsert}
+
+                <Box
+                  sx={{
+                    height: 120,
+                    cursor: 'pointer',
+                    p: 2
+                  }}
+                >
+                  <Typography variant="body1">
+                    {formatDate(elem.created_at)}
+                  </Typography>
+                  {elem.price_order}
+                </Box>
+              </Box>
+            ))}
+          </Box>
         </Box>
 
         <Box
