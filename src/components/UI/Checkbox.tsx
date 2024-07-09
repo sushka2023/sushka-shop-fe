@@ -1,8 +1,8 @@
 import { Checkbox as CheckboxMui, CheckboxProps } from '@mui/material'
-import { FC } from 'react'
+import { forwardRef } from 'react'
 
-const Checkbox: FC<CheckboxProps> = ({ ...props }) => {
-  return <CheckboxMui {...props} />
-}
+const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>((props, ref) => {
+  return <CheckboxMui {...props} ref={ref} />
+})
 
 export { Checkbox }

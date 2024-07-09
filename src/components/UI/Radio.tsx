@@ -1,8 +1,8 @@
 import { Radio as RadioMui, RadioProps } from '@mui/material'
-import { FC } from 'react'
+import { forwardRef } from 'react'
 
-const Radio: FC<RadioProps> = ({ ...props }) => {
-  return <RadioMui {...props} />
-}
+const Radio = forwardRef<HTMLButtonElement, RadioProps>((props, ref) => {
+  return <RadioMui {...props} ref={ref} />
+})
 
 export { Radio }

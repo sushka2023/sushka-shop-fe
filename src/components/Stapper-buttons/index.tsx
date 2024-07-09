@@ -1,14 +1,20 @@
+import { useContext } from 'react'
 import { Box } from '@mui/material'
 import { Button } from '../UI/Button'
 import { STEPS } from '../../pages/order-page/constants'
 import { btnContainerStyle, btnBackStyle, btnNextStyle } from './style'
+import { OrderContext } from '../../pages/order-page'
+import ClipLoader from 'react-spinners/ClipLoader'
 
-type Props = {
-  activeStep: number
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>
-}
+const StapperButtons = () => {
+  const { activeStep, setActiveStep, isLoadingOrder } = useContext(OrderContext)
 
-const StapperButtons: React.FC<Props> = ({ activeStep, setActiveStep }) => {
+  const generateButtonContent = () => {
+    if (isLoadingOrder) return <ClipLoader size={12} color={'#FFFFFF'} />
+
+    return activeStep === STEPS.length - 1 ? 'Оформити замовлення' : 'Далі'
+  }
+
   return (
     <Box sx={btnContainerStyle}>
       <Box>
@@ -21,16 +27,10 @@ const StapperButtons: React.FC<Props> = ({ activeStep, setActiveStep }) => {
         </Button>
       </Box>
 
-      <Box sx={{ width: '28%' }} />
-      <Box width="100%" maxWidth="250px">
-        <Button
-          fullWidth
-          onClick={() => setActiveStep((prevActiveStep) => prevActiveStep + 1)}
-          sx={btnNextStyle}
-        >
-          {activeStep === STEPS.length - 1 ? 'Оформити замовлення' : 'Далі'}
-        </Button>
-      </Box>
+      <Box width="28%" />
+      <Button type="submit" fullWidth sx={btnNextStyle}>
+        {generateButtonContent()}
+      </Button>
     </Box>
   )
 }
