@@ -43,7 +43,10 @@ export default function BasicTable() {
   }, [])
 
   return (
-    <TableContainer component={Paper} sx={{ borderTopLeftRadius: '10px' }}>
+    <TableContainer
+      component={Paper}
+      sx={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
+    >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -58,7 +61,7 @@ export default function BasicTable() {
           {clients.map((row) => (
             <TableRow
               key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {row.role}

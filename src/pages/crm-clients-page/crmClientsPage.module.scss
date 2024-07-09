@@ -1,0 +1,36 @@
+.pagination {
+  // border: 1px solid red;
+  width: 100%;
+
+  ul {
+    // border: 1px solid blue;
+    position: relative;
+    justify-content: center;
+    height: 40px;
+
+    li:first-child > button,
+    li:last-child > button {
+      border: 1px solid #5d5fef;
+      position: absolute;
+      width: 174px;
+      height: 40px;
+      color: #5d5fef;
+
+      div {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+      }
+    }
+
+    li:first-child > button {
+      left: 0;
+      top: 0;
+    }
+
+    li:last-child > button {
+      right: 0;
+      top: 0;
+    }
+  }
+}
