@@ -1,21 +1,39 @@
 import { useState, useEffect, createContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Box, Grid } from '@mui/material'
-import { ORDER_FORM_DEFAULT_VALUES, STEPS } from './constants'
+import {
+  CURRENCY,
+  ORDER_FORM_DEFAULT_VALUES,
+  STEPS,
+  TRANSACTION_SECURE_TYPE
+} from './constants'
 import { containerStyle } from './style'
 import OrderStepper from '../../components/Order-stepper'
 import StapperButtons from '../../components/Stapper-buttons'
 import OrderContacts from '../../components/Order-contacts'
 import OrderCard from '../../components/Order-card'
-import { loadBasketItems, loadLocalStorageItems, sendOrder } from './utils'
+import {
+  generateSignature,
+  loadBasketItems,
+  loadLocalStorageItems,
+  sendOrder
+} from './utils'
 import { UserResponse } from '../../types'
 import { useForm, SubmitHandler, Resolver } from 'react-hook-form'
 import { OrderDelivery } from '../../components/Order-delivery'
 import { useAuth } from '../../hooks/use-auth'
 import { BasketItemsResponse } from '../../types'
-import { Inputs, OrderDetailsType, OrderContextType } from './types'
+import {
+  Inputs,
+  OrderDetailsType,
+  OrderContextType,
+  PaymentMethodTypes,
+  RequestPayment
+} from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { userInfoSchema } from './validationSchemas'
+import { calculateTotal } from '../../helpers/formatterTotalPrice'
 
 const OrderContext = createContext<OrderContextType>({} as OrderContextType)
 
@@ -29,6 +47,7 @@ const OrderPage = () => {
   const [error, setError] = useState('')
   const [orderNumber, setOrderNumber] = useState<number | null>(null)
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -70,6 +89,56 @@ const OrderPage = () => {
     <OrderPayment key={2} />
   ]
 
+  const generateOrderReference = () => {
+    return `ORDER-${new Date().getTime()}`
+  }
+
+  const handlePayment = async () => {
+    const merchantAccount = import.meta.env.VITE_API_MERCHANT_ACCOUNT
+    const merchantDomainName = import.meta.env.VITE_API_DOMAIN_NAME
+    const orderReference = generateOrderReference()
+    const productName = orderList.map((item) => item.product.name)
+    const productCount = orderList.map((item) => item.quantity)
+    const productPrice = orderList.map((item) => item.product.prices[0].price)
+    const orderDate = Math.floor(Date.now() / 1000).toString()
+    const amount = calculateTotal(orderList)
+
+    const requestData: RequestPayment = {
+      merchantAccount,
+      merchantDomainName,
+      orderReference,
+      orderDate,
+      amount,
+      productName,
+      productCount,
+      productPrice,
+      merchantTransactionSecureType: TRANSACTION_SECURE_TYPE,
+      currency: CURRENCY
+    }
+
+    requestData.merchantSignature = generateSignature(requestData)
+
+    const wayforpay = new Wayforpay()
+
+    wayforpay.run(requestData, function onApproved() {
+      sendOrder(orderDetails, setOrderNumber, setError, setIsLoadingOrder)
+
+      user ? navigate('/account') : navigate('/')
+    })
+  }
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://secure.wayforpay.com/server/pay-widget.js'
+    script.id = 'widget-wfp-script'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
   useEffect(() => {
     if (user) {
       overwriteFormValues(user)
@@ -81,13 +150,19 @@ const OrderPage = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setOrderDetails(data)
-    console.log(data)
+
+    if (
+      activeStep === STEPS.length - 1 &&
+      data.paymentType === PaymentMethodTypes.wayforpay
+    ) {
+      return handlePayment()
+    }
 
     if (activeStep === STEPS.length - 1) {
-      sendOrder(data, setOrderNumber, setError, setIsLoadingOrder)
-    } else {
-      setActiveStep((prevStep) => prevStep + 1)
+      return sendOrder(data, setOrderNumber, setError, setIsLoadingOrder)
     }
+
+    setActiveStep((prevStep) => prevStep + 1)
   }
 
   return (
@@ -101,6 +176,7 @@ const OrderPage = () => {
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
+          <Box>{}</Box>
           <Grid container width="88%" spacing={0} alignItems="flex-start">
             <Grid item xs={9}>
               <OrderStepper />

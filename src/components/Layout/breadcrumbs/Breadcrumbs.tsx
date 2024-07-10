@@ -93,7 +93,9 @@ const Breadcrumbs = () => {
               >
                 {getUkrainianName(item!)}
               </Link>
-              <IconArrow className={styles.IconArrow} />
+              {index === pathnames().length - 1 ? null : (
+                <IconArrow className={styles.IconArrow} />
+              )}
             </li>
           )
         })}

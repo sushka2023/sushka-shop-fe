@@ -42,3 +42,17 @@ export type OrderContextType = {
   isLoadingOrder: boolean
   errors: FieldErrors<Inputs>
 }
+
+export type RequestPayment = {
+  merchantAccount: string
+  merchantDomainName: string
+  merchantTransactionSecureType: string
+  orderReference: string
+  orderDate: string
+  amount: number
+  currency: string
+  productName: string[]
+  productCount: number[]
+  productPrice: number[]
+  merchantSignature?: string
+}

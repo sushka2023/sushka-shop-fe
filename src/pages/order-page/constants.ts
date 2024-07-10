@@ -25,7 +25,12 @@ const PAYMENT_METHODS = [
   { method: PaymentMethodTypes.byDetails, label: 'Оплата за реквізитами' }
 ]
 
+const CURRENCY = 'UAH'
+const TRANSACTION_SECURE_TYPE = 'AUTO'
+
 export {
+  CURRENCY,
+  TRANSACTION_SECURE_TYPE,
   STEPS,
   SUM,
   TARIFF,

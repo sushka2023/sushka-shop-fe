@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getToken } from '../utils/cookie/token'
 
-export const BASE_URL = 'https://www.test-store.shop/'
+export const BASE_URL = import.meta.env.VITE_API_URL
 export const COOKIE_TOKEN_NAME = 'token'
 
 const axiosInstance = axios.create({

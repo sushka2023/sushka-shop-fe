@@ -43,11 +43,13 @@ const createOrder = async ({
   otherRecipient,
   fullNameOtherRecipient,
   phoneOtherRecipient,
-  comment
+  comment,
+  phone
 }: OrderDetailsType) => {
   try {
     const data = await axiosInstance.post('api/orders/create_for_auth_user', {
-      selected_nova_poshta_id: 0,
+      phone_number_current_user: phone,
+      selected_nova_poshta_id: 12406,
       selected_ukr_poshta_id: 0,
       payment_type: paymentType,
       call_manager: call,

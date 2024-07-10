@@ -1,7 +1,8 @@
+import CryptoJS from 'crypto-js'
 import { BasketItemsResponse, ProductResponse } from '../../types'
 import { getLocalStorageData } from '../../utils/local-storage'
 import { createOrder, getBasketItems, getProductForId } from './operation'
-import { OrderDetailsType } from './types'
+import { OrderDetailsType, RequestPayment } from './types'
 
 type CallbackFunction<T> = (value: T) => void
 
@@ -90,4 +91,44 @@ const pricing = (priceArray: BasketItemsResponse[]) => {
   })
 }
 
-export { loadBasketItems, loadLocalStorageItems, sendOrder, pricing }
+const generateHash = (string: string, key: string) => {
+  return CryptoJS.HmacMD5(string, key).toString(CryptoJS.enc.Hex)
+}
+
+const generateSignature = (requestData: RequestPayment) => {
+  const {
+    merchantAccount,
+    merchantDomainName,
+    orderReference,
+    orderDate,
+    amount,
+    currency,
+    productName,
+    productCount,
+    productPrice
+  } = requestData
+
+  const signatureString = [
+    merchantAccount,
+    merchantDomainName,
+    orderReference,
+    orderDate,
+    amount,
+    currency,
+    ...productName,
+    ...productCount,
+    ...productPrice
+  ].join(';')
+
+  const SECRET_KEY = import.meta.env.VITE_API_SECRET_KEY
+
+  return generateHash(signatureString, SECRET_KEY)
+}
+
+export {
+  loadBasketItems,
+  loadLocalStorageItems,
+  sendOrder,
+  pricing,
+  generateSignature
+}
