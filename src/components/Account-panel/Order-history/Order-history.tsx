@@ -6,7 +6,8 @@ import CreateIcon from '@mui/icons-material/Create'
 
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
-  console.log('✌️orders --->', orders)
+  const [selectedOrderProducts, setSelectedOrderProducts] = useState<any[]>([])
+  console.log('✌️selectedOrderProducts --->', selectedOrderProducts)
 
   return (
     <Fragment>
@@ -45,7 +46,11 @@ export const OrderHistory = () => {
           gridTemplateColumns: 'repeat(12, 1fr)'
         }}
       >
-        <OrdersList orders={orders} setOrders={setOrders} />
+        <OrdersList
+          orders={orders}
+          setOrders={setOrders}
+          setSelectedOrderProducts={setSelectedOrderProducts}
+        />
         <Box
           sx={{
             border: '1px solid',

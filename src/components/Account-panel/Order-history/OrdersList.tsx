@@ -13,17 +13,21 @@ import { Box } from '@mui/material'
 import { format } from 'date-fns'
 import { uk } from 'date-fns/locale'
 import { Typography } from '../../UI/Typography'
+import { Status, StepCustom } from '../../Step/Step'
+import { useTheme } from '@mui/material/styles'
 
 export type OrdersType = {
+  ordered_products: any[]
   created_at: string
+  status_order: Status
   price_order: number
   id: number
-  ordered_products: any[]
 }
 
 type OrdersListProps = {
   orders: OrdersType[]
   setOrders: Dispatch<SetStateAction<OrdersType[]>>
+  setSelectedOrderProducts: Dispatch<SetStateAction<any[]>>
 }
 
 const formatDate = (dateString: string) => {
@@ -39,7 +43,7 @@ const fetchOrders = async (
 ) => {
   try {
     setLoading(true)
-    const limit = 3
+    const limit = 5
     const offset = (page - 1) * limit
 
     const response = await axiosInstance.get('/api/orders/for_current_user', {
@@ -48,17 +52,31 @@ const fetchOrders = async (
 
     const data = response.data.orders
 
-    setOrders((prevOrders) => [...prevOrders, ...data])
+    setOrders((prevOrders) => {
+      const uniqueOrders = data.filter(
+        (newOrder: { id: number }) =>
+          !prevOrders.some((order) => order.id === newOrder.id)
+      )
+      return [...prevOrders, ...uniqueOrders]
+    })
+
     if (data.length > 0 && page === 1) setSelectedOrderId(data[0].id)
     setHasMore(data.length > 0)
-    setLoading(false)
   } catch (error) {
     console.error('Error fetching orders:', error)
+  } finally {
     setLoading(false)
   }
 }
 
-export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
+export const OrdersList: FC<OrdersListProps> = ({
+  orders,
+  setOrders,
+  setSelectedOrderProducts
+}) => {
+  console.log('✌️orders --->', orders)
+
+  const theme = useTheme()
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
@@ -83,8 +101,25 @@ export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
     fetchOrders(page, setOrders, setLoading, setHasMore, setSelectedOrderId)
   }, [page])
 
+  useEffect(() => {
+    const selectedOrder = orders.find((order) => order.id === selectedOrderId)
+    if (selectedOrder) {
+      setSelectedOrderProducts(selectedOrder.ordered_products)
+    }
+  }, [selectedOrderId])
+
   const handleOrderClick = (orderId: number) => {
     setSelectedOrderId(orderId)
+    const selectedOrder = orders.find((order) => order.id === orderId)
+    if (selectedOrder) {
+      setSelectedOrderProducts(selectedOrder.ordered_products)
+    }
+  }
+
+  const getProductLabel = (count: number) => {
+    if (count === 1) return 'товар'
+    if (count >= 2 && count <= 4) return 'товари'
+    return 'товарів'
   }
 
   const renderOrder = (
@@ -101,7 +136,8 @@ export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
               border: '1.5px solid #FEEEE1',
               width: '90%',
               margin: '0 auto',
-              borderRadius: 10
+              borderRadius: 10,
+              cursor: 'pointer'
             }}
           />
         )}
@@ -111,12 +147,11 @@ export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
           sx={{
             'position': 'relative',
             'height': 100,
-            'cursor': 'pointer',
             'padding': '25px 20px',
             'display': 'flex',
-            'alignItems': 'center',
+            'justifyContent': 'space-between',
             '&:hover': {
-              backgroundColor: !isSelected ? '#f0f0f0' : 'none'
+              backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
             },
             '&::before': {
               content: '""',
@@ -124,19 +159,30 @@ export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
               left: 0,
               width: 5,
               height: '70%',
-              backgroundColor: 'orange',
+              backgroundColor: 'primary.darker',
               borderRadius: 10,
               display: isSelected ? 'block' : 'none'
             }
           }}
         >
           <Box>
-            <Typography variant="body1">
+            <Typography variant="body2" fontWeight={400}>
               {formatDate(order.created_at)}
             </Typography>
-            {order.price_order}
-            <p>{order.id}</p>
+            <Typography
+              variant="body1"
+              fontSize={18}
+              fontWeight={600}
+              sx={{ '&::after': { content: '" ₴"' } }}
+            >
+              {order.price_order}
+            </Typography>
+            <Typography variant="body1">
+              {order.ordered_products.length}{' '}
+              {getProductLabel(order.ordered_products.length)}
+            </Typography>
           </Box>
+          <StepCustom status={order.status_order} />
         </Box>
       </Fragment>
     )
@@ -167,3 +213,5 @@ export const OrdersList: FC<OrdersListProps> = ({ orders, setOrders }) => {
     </Box>
   )
 }
+
+export default OrdersList
