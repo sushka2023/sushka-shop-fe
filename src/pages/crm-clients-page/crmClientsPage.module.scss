@@ -34,3 +34,30 @@
     }
   }
 }
+
+.table {
+  // color: #64748b;
+
+  // th,
+  // td {
+  //   color: inherit;
+  // }
+
+  th > span {
+    border-radius: 10px;
+    padding: 5px 10px;
+  }
+
+  .roleAdmin {
+    color: #e11d48;
+    background: #f6e5ef;
+  }
+  .roleModerator {
+    color: #e07706;
+    background: #fff9e3;
+  }
+  .roleUser {
+    color: #5d5fef;
+    background: #eff3ff;
+  }
+}

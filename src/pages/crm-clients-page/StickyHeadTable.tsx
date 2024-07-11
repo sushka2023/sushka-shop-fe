@@ -1,3 +1,5 @@
+import styles from './crmClientsPage.module.scss'
+
 import { useEffect, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -6,6 +8,9 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { Typography } from '@mui/material'
+import { useTheme } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
 import axiosInstance from '../../axios/settings'
 
 type ClientType = {
@@ -16,7 +21,21 @@ type ClientType = {
   email: string
 }
 
+const getRoleClassName = (role: string) => {
+  switch (role) {
+    case 'admin':
+      return styles.roleAdmin
+    case 'moderator':
+      return styles.roleModerator
+    case 'user':
+      return styles.roleUser
+    default:
+      return ''
+  }
+}
+
 export default function BasicTable() {
+  const theme = useTheme()
   const [clients, setClients] = useState<ClientType[]>([])
 
   useEffect(() => {
@@ -45,16 +64,27 @@ export default function BasicTable() {
   return (
     <TableContainer
       component={Paper}
-      sx={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
+      sx={{
+        borderTopLeftRadius: '10px',
+        borderTopRightRadius: '10px'
+      }}
     >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table
+        className={styles.table}
+        sx={{
+          'minWidth': 650,
+          'color': '#64748b',
+          'th, td': { color: 'inherit' }
+        }}
+        aria-label="simple table"
+      >
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ background: theme.palette.grey[50] }}>
             <TableCell>Роль користувача</TableCell>
-            <TableCell align="right">Дата оформлення</TableCell>
-            <TableCell align="right">Електронна пошта</TableCell>
-            <TableCell align="right">Номер телефону</TableCell>
-            <TableCell align="right">Змінити</TableCell>
+            <TableCell align="center">Дата оформлення</TableCell>
+            <TableCell align="center">Електронна пошта</TableCell>
+            <TableCell align="center">Номер телефону</TableCell>
+            <TableCell align="center">Змінити</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -64,14 +94,21 @@ export default function BasicTable() {
               // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.role}
+                <Typography
+                  component="span"
+                  className={getRoleClassName(row.role)}
+                >
+                  {row.role}
+                </Typography>
               </TableCell>
-              <TableCell align="right">{row.created_at}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
-              <TableCell align="right">
-                {row.phone ? row.phone : 'номер ще не вказано'}
+              <TableCell align="center">{row.created_at}</TableCell>
+              <TableCell align="center">{row.email}</TableCell>
+              <TableCell align="center">
+                {row.phone ? row.phone : 'номер не вказано'}
               </TableCell>
-              <TableCell align="right">Edit</TableCell>
+              <TableCell align="center">
+                <EditIcon />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
