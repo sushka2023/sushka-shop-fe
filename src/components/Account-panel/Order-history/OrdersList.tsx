@@ -136,8 +136,7 @@ export const OrdersList: FC<OrdersListProps> = ({
               border: '1.5px solid #FEEEE1',
               width: '90%',
               margin: '0 auto',
-              borderRadius: 10,
-              cursor: 'pointer'
+              borderRadius: 10
             }}
           />
         )}
@@ -150,6 +149,7 @@ export const OrdersList: FC<OrdersListProps> = ({
             'padding': '25px 20px',
             'display': 'flex',
             'justifyContent': 'space-between',
+            'cursor': 'pointer',
             '&:hover': {
               backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
             },
@@ -165,18 +165,25 @@ export const OrdersList: FC<OrdersListProps> = ({
             }
           }}
         >
-          <Box>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-around"
+          >
             <Typography variant="body2" fontWeight={400}>
               {formatDate(order.created_at)}
             </Typography>
-            <Typography
-              variant="body1"
-              fontSize={18}
-              fontWeight={600}
-              sx={{ '&::after': { content: '" ₴"' } }}
-            >
-              {order.price_order}
+            <Typography variant="body2" fontSize={18} fontWeight={600}>
+              {order.price_order}{' '}
+              <span
+                style={{
+                  fontFamily: 'Comfortaa'
+                }}
+              >
+                ₴
+              </span>
             </Typography>
+
             <Typography variant="body1">
               {order.ordered_products.length}{' '}
               {getProductLabel(order.ordered_products.length)}
@@ -213,5 +220,3 @@ export const OrdersList: FC<OrdersListProps> = ({
     </Box>
   )
 }
-
-export default OrdersList
