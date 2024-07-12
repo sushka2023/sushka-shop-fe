@@ -150,8 +150,9 @@ export const StepCustom: FC<StepCustomProps> = ({ status }) => {
         width: '200px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-around',
-        cursor: 'pointer'
+        justifyContent: 'flex-end',
+        cursor: 'pointer',
+        gap: 1
       }}
     >
       <Box display="flex" alignItems="center" gap={2}>

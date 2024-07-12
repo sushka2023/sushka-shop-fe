@@ -1,13 +1,17 @@
 import { Fragment, useState } from 'react'
-import { OrdersList, OrdersType } from './OrdersList'
+import { OrdersList, OrdersType, SelectedOrder } from './OrdersList'
 import { Button } from '../../UI/Button'
 import { Box, Typography } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
+import { OrderProducts } from './OrderProducts'
 
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
+  const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
+    null
+  )
+
   const [selectedOrderProducts, setSelectedOrderProducts] = useState<any[]>([])
-  console.log('✌️selectedOrderProducts --->', selectedOrderProducts)
 
   return (
     <Fragment>
@@ -50,16 +54,13 @@ export const OrderHistory = () => {
           orders={orders}
           setOrders={setOrders}
           setSelectedOrderProducts={setSelectedOrderProducts}
+          selectedOrderId={selectedOrderId}
+          setSelectedOrderId={setSelectedOrderId}
         />
-        <Box
-          sx={{
-            border: '1px solid',
-            gridColumn: { xs: 'span 12', md: 'span 8' }
-          }}
-        >
-          <Box sx={{ border: '1px solid', mb: 3 }}>xs=4</Box>
-          <Box sx={{ border: '1px solid' }}>xs=4</Box>
-        </Box>
+        <OrderProducts
+          orderId={selectedOrderId}
+          products={selectedOrderProducts}
+        />
       </Box>
     </Fragment>
   )

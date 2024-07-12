@@ -24,9 +24,16 @@ export type OrdersType = {
   id: number
 }
 
+export type SelectedOrder = {
+  id: number
+  ordered_products: number
+}
+
 type OrdersListProps = {
   orders: OrdersType[]
+  selectedOrderId: SelectedOrder | null
   setOrders: Dispatch<SetStateAction<OrdersType[]>>
+  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
   setSelectedOrderProducts: Dispatch<SetStateAction<any[]>>
 }
 
@@ -39,7 +46,7 @@ const fetchOrders = async (
   setOrders: Dispatch<SetStateAction<OrdersType[]>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setHasMore: Dispatch<SetStateAction<boolean>>,
-  setSelectedOrderId: Dispatch<SetStateAction<number | null>>
+  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
 ) => {
   try {
     setLoading(true)
@@ -60,7 +67,12 @@ const fetchOrders = async (
       return [...prevOrders, ...uniqueOrders]
     })
 
-    if (data.length > 0 && page === 1) setSelectedOrderId(data[0].id)
+    if (data.length > 0 && page === 1) {
+      setSelectedOrderId({
+        id: data[0].id,
+        ordered_products: data[0].ordered_products.length
+      })
+    }
     setHasMore(data.length > 0)
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -72,15 +84,14 @@ const fetchOrders = async (
 export const OrdersList: FC<OrdersListProps> = ({
   orders,
   setOrders,
-  setSelectedOrderProducts
+  setSelectedOrderProducts,
+  selectedOrderId,
+  setSelectedOrderId
 }) => {
-  console.log('✌️orders --->', orders)
-
   const theme = useTheme()
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
-  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null)
   const observer = useRef<IntersectionObserver>()
 
   const lastOrderElementRef = useCallback(
@@ -102,16 +113,21 @@ export const OrdersList: FC<OrdersListProps> = ({
   }, [page])
 
   useEffect(() => {
-    const selectedOrder = orders.find((order) => order.id === selectedOrderId)
+    const selectedOrder = orders.find(
+      (order) => order.id === selectedOrderId?.id
+    )
     if (selectedOrder) {
       setSelectedOrderProducts(selectedOrder.ordered_products)
     }
   }, [selectedOrderId])
 
   const handleOrderClick = (orderId: number) => {
-    setSelectedOrderId(orderId)
     const selectedOrder = orders.find((order) => order.id === orderId)
     if (selectedOrder) {
+      setSelectedOrderId({
+        id: orderId,
+        ordered_products: selectedOrder.ordered_products.length
+      })
       setSelectedOrderProducts(selectedOrder.ordered_products)
     }
   }
@@ -127,7 +143,7 @@ export const OrdersList: FC<OrdersListProps> = ({
     index: number,
     ref?: (node: Element | null) => void
   ) => {
-    const isSelected = selectedOrderId === order.id
+    const isSelected = selectedOrderId?.id === order.id
     return (
       <Fragment key={order.id}>
         {index > 0 && (
@@ -171,7 +187,7 @@ export const OrdersList: FC<OrdersListProps> = ({
             justifyContent="space-around"
           >
             <Typography variant="body2" fontWeight={400}>
-              {formatDate(order.created_at)}
+              #{order.id} ({formatDate(order.created_at)})
             </Typography>
             <Typography variant="body2" fontSize={18} fontWeight={600}>
               {order.price_order}{' '}
