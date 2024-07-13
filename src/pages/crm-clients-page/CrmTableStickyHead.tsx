@@ -1,6 +1,5 @@
 import styles from './crmClientsPage.module.scss'
 
-import { useEffect, useState } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -10,16 +9,11 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Typography } from '@mui/material'
 import { useTheme } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
-import axiosInstance from '../../axios/settings'
 
-type ClientType = {
-  id: number
-  role: string
-  created_at: string
-  phone: string
-  email: string
-}
+import { ClientType } from './CrmClientsPage'
 
 const getRoleClassName = (role: string) => {
   switch (role) {
@@ -34,32 +28,8 @@ const getRoleClassName = (role: string) => {
   }
 }
 
-export default function BasicTable() {
+export default function BasicTable({ clients }: { clients: ClientType[] }) {
   const theme = useTheme()
-  const [clients, setClients] = useState<ClientType[]>([])
-
-  useEffect(() => {
-    const fetchCrmClients = async () => {
-      try {
-        const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=10&offset=1`
-        )
-        console.log(data)
-
-        const filteredUsers = data.map((user: ClientType) => {
-          const { id, role, created_at, email, phone } = user
-          return { id, role, created_at, email, phone }
-        })
-
-        setClients(filteredUsers)
-        console.log(filteredUsers)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchCrmClients()
-  }, [])
 
   return (
     <TableContainer
@@ -107,7 +77,11 @@ export default function BasicTable() {
                 {row.phone ? row.phone : 'номер не вказано'}
               </TableCell>
               <TableCell align="center">
-                <EditIcon />
+                <Tooltip title="Edit">
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}

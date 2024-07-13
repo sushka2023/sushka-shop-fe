@@ -22,8 +22,14 @@ const ArrowRight = () => {
   )
 }
 
-export default function CustomIcons() {
+interface PaginationCRMProps {
+  page: number
+  pageQty: number
+}
+
+export default function PaginationCRM({ page, pageQty }: PaginationCRMProps) {
   const theme = useTheme()
+  console.log(page)
 
   return (
     <Stack
@@ -36,7 +42,7 @@ export default function CustomIcons() {
     >
       <Pagination
         className={styles.pagination}
-        count={10}
+        count={pageQty}
         renderItem={(item) => (
           <PaginationItem
             slots={{ previous: ArrowLeft, next: ArrowRight }}
