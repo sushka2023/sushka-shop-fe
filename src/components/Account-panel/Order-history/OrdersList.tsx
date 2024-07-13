@@ -9,7 +9,7 @@ import {
   useState
 } from 'react'
 import axiosInstance from '../../../axios/settings'
-import { Box } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import { format } from 'date-fns'
 import { uk } from 'date-fns/locale'
 import { Typography } from '../../UI/Typography'
@@ -39,6 +39,12 @@ type OrdersListProps = {
 
 const formatDate = (dateString: string) => {
   return format(new Date(dateString), 'd MMM yyyy', { locale: uk })
+}
+
+export const getProductLabel = (count: number) => {
+  if (count === 1) return 'товар'
+  if (count >= 2 && count <= 4) return 'товари'
+  return 'товарів'
 }
 
 const fetchOrders = async (
@@ -132,12 +138,6 @@ export const OrdersList: FC<OrdersListProps> = ({
     }
   }
 
-  const getProductLabel = (count: number) => {
-    if (count === 1) return 'товар'
-    if (count >= 2 && count <= 4) return 'товари'
-    return 'товарів'
-  }
-
   const renderOrder = (
     order: OrdersType,
     index: number,
@@ -147,13 +147,8 @@ export const OrdersList: FC<OrdersListProps> = ({
     return (
       <Fragment key={order.id}>
         {index > 0 && (
-          <Box
-            sx={{
-              border: '1.5px solid #FEEEE1',
-              width: '90%',
-              margin: '0 auto',
-              borderRadius: 10
-            }}
+          <Divider
+            sx={{ border: '1px solid #FEEEE1', width: '90%', margin: '0 auto' }}
           />
         )}
         <Box
@@ -186,14 +181,21 @@ export const OrdersList: FC<OrdersListProps> = ({
             flexDirection="column"
             justifyContent="space-around"
           >
-            <Typography variant="body2" fontWeight={400}>
-              #{order.id} ({formatDate(order.created_at)})
+            <Typography variant="body2" fontWeight={400} fontSize={18}>
+              <span style={{ fontWeight: 600, fontSize: 22 }}>
+                #{order.id}{' '}
+              </span>
+              <span style={{ display: 'inline-block' }}>
+                ({formatDate(order.created_at)})
+              </span>{' '}
             </Typography>
             <Typography variant="body2" fontSize={18} fontWeight={600}>
               {order.price_order}{' '}
               <span
                 style={{
-                  fontFamily: 'Comfortaa'
+                  fontFamily: 'Comfortaa',
+                  fontWeight: 500,
+                  fontSize: 14
                 }}
               >
                 ₴
@@ -217,7 +219,8 @@ export const OrdersList: FC<OrdersListProps> = ({
         backgroundColor: '#FFFFFF',
         borderRadius: 2,
         gridColumn: { xs: 'span 12', md: 'span 4' },
-        maxHeight: 456,
+        maxHeight: 453,
+        minHeight: 453,
         overflow: 'hidden'
       }}
     >

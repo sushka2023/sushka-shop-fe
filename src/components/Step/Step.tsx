@@ -87,7 +87,7 @@ const QontoConnector = styled(StepConnector)<{
       theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
     borderTopWidth: 2,
     borderRadius: 3,
-    width: '58px',
+    width: '49px',
     cursor: 'pointer'
   }
 }))
@@ -147,15 +147,15 @@ export const StepCustom: FC<StepCustomProps> = ({ status }) => {
   return (
     <Box
       sx={{
-        width: '200px',
+        width: '170px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         cursor: 'pointer',
-        gap: 1
+        gap: 0.5
       }}
     >
-      <Box display="flex" alignItems="center" gap={2}>
+      <Box display="flex" alignItems="center" gap={1}>
         {typeof IconComponent === 'string' ? (
           <img
             src={IconComponent}

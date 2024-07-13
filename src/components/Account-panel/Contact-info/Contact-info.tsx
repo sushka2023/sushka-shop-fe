@@ -28,6 +28,7 @@ type ContactInfoProps = {
 const accessToken = getToken()
 
 export const ContactInfo: React.FC<ContactInfoProps> = ({ user }) => {
+  console.log('✌️user --->', user)
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()

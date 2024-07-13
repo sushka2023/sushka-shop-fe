@@ -7,6 +7,7 @@ import { OrderProducts } from './OrderProducts'
 
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
+  console.log('✌️orders --->', orders)
   const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
     null
   )
