@@ -4,10 +4,10 @@ import { Container, Tab, Tabs } from '@mui/material'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
 import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
-import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/Delivery-address'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
+import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 
 type TabPanelProps = {
   children?: React.ReactNode
