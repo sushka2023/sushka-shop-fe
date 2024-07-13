@@ -2,7 +2,7 @@ import { FC, Fragment } from 'react'
 import { Box, Typography } from '@mui/material'
 import LogoNP from '../../../icons/logoNP.svg?react'
 import LogoUrk from '../../../icons/logoUrk.svg?react'
-import { AddressDetailsType } from './CardRenderer'
+import { AddressDetailsType } from './DeliveryAddress'
 
 type AddressDetailsProps = {
   address: AddressDetailsType

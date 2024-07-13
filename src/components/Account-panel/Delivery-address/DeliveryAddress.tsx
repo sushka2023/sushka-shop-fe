@@ -1,8 +1,8 @@
+import { useTheme } from '@mui/material/styles'
 import { FC, Fragment, useState } from 'react'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, IconButton, Tooltip } from '@mui/material'
 import { Button } from '../../UI/Button'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import { stCard, stDeleteBtn } from './style'
 import { ModalCustomFormRadius } from '../../Modal-custom-btn/ModalCustomFormRadius'
 import { useAuth } from '../../../hooks/use-auth'
 import { AddressDetails } from './AddressDetails'
@@ -14,6 +14,7 @@ import { getToken } from '../../../utils/cookie/token'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
 import { useSnackbar } from '../../../hooks/useSnackbar'
+import { stAddBtn, stCard, stDeleteBtn } from './style'
 
 export type AddressDetailsType = {
   id: number
@@ -79,10 +80,12 @@ const deleteAddress = async ({
 
 const accessToken = getToken()
 
-export const CardRenderer: FC = () => {
+export const DeliveryAddress: FC = () => {
+  const theme = useTheme()
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
   const [openModal, setOpenModal] = useState(false)
+  const [disabled, setDisabled] = useState(false)
   const { user } = useAuth()
   const addressUser: (NovaPoshtaDataResponse | UkrPoshtaResponse)[] = [
     ...(user?.posts?.nova_poshta ?? []),
@@ -99,7 +102,7 @@ export const CardRenderer: FC = () => {
   const handleDelCard = async (index: number) => {
     const { id, post_code } = addressUser[index]
     const postsId = user?.posts.id
-
+    setDisabled(true)
     try {
       await deleteAddress({ id, postCode: post_code, postsId })
       showSnackbar({ error: false, message: 'Адреса видалена...' })
@@ -107,6 +110,8 @@ export const CardRenderer: FC = () => {
     } catch (error) {
       showSnackbar({ error: false, message: 'Сталась помилка' })
       console.error(error)
+    } finally {
+      setDisabled(false)
     }
   }
 
@@ -123,11 +128,15 @@ export const CardRenderer: FC = () => {
           {addressUser.map((elem, index) => (
             <Grid key={index} item xs={12} sm={6} md={3}>
               <Box sx={stCard}>
-                <Button
-                  onClick={() => handleDelCard(index)}
+                <Tooltip
+                  title="Delete"
                   sx={stDeleteBtn}
-                  endIcon={<DeleteOutlineIcon sx={{ mr: '11px' }} />}
-                />
+                  onClick={() => handleDelCard(index)}
+                >
+                  <IconButton disabled={disabled}>
+                    <DeleteOutlineIcon />
+                  </IconButton>
+                </Tooltip>
                 <AddressDetails
                   address={elem as AddressDetailsType}
                   cleanedAddress={getCleanedAddress(
@@ -141,22 +150,7 @@ export const CardRenderer: FC = () => {
             <Button
               onClick={() => setOpenModal(true)}
               endIcon={<AddIcon sx={{ width: 25, height: 25 }} />}
-              sx={{
-                'padding': '10px 30px',
-                'backgroundColor': '#FFFFFF',
-                'borderRadius': 20,
-                'fontWeight': 500,
-                'fontSize': 18,
-                'mt': 2,
-                '&:hover': {
-                  backgroundColor: '#FFFFFF',
-                  color: '#9AAB8E'
-                },
-                '&.Mui-disabled': {
-                  backgroundColor: '#E8E8E8',
-                  color: '#FFFFFF'
-                }
-              }}
+              sx={stAddBtn(theme)}
               fullWidth
               variant="text"
               disabled={isAddButtonDisabled()}
