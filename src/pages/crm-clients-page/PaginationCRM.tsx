@@ -22,7 +22,7 @@ const ArrowRight = () => {
   )
 }
 
-interface PaginationCRMProps {
+type PaginationCRMProps = {
   page: number
   pageQty: number
 }

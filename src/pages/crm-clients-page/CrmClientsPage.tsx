@@ -19,19 +19,19 @@ const CrmClientsPage = () => {
   const [clients, setClients] = useState<ClientType[]>([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
-  const [pageQty, setPageQty] = useState(5)
   console.log('CrmClientsPage  setPage:', setPage)
+  const [pageQty, setPageQty] = useState(5)
   console.log('CrmClientsPage  setPageQty:', setPageQty)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
-        const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=10&offset=${page}`
+        const response = await axiosInstance.get<any>(
+          `api/users/all_for_crm?limit=10000000&offset=${page}`
         )
-        console.log(data)
+        console.log(response)
 
-        const filteredUsers = data.map((user: ClientType) => {
+        const filteredUsers = response.data.map((user: ClientType) => {
           const { id, role, created_at, email, phone } = user
           return { id, role, created_at, email, phone }
         })
