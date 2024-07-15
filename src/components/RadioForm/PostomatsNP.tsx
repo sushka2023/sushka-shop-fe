@@ -103,22 +103,21 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
     []
   )
 
-  const onChangeWarehouse = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
-      const selectedWarehouse = optionsData.find(
-        (option) => option.label === value
-      )
-      if (selectedWarehouse) {
-        setValue('postomats', selectedWarehouse.id)
-        setValInputWarehouse(value ?? '')
-        setSelectedWarehouseValue(value)
-        setNewRequest(false)
-      }
-      clearErrors('postomats')
-    },
-    []
-  )
-
+  const onChangeWarehouse = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    const selectedWarehouse = optionsData.find(
+      (option) => option.label === value
+    )
+    if (selectedWarehouse) {
+      setValue('postomats', selectedWarehouse.id)
+      setValInputWarehouse(value ?? '')
+      setSelectedWarehouseValue(value)
+      setNewRequest(false)
+    }
+    clearErrors('postomats')
+  }
   return (
     <Fragment>
       <ErrorMessage
