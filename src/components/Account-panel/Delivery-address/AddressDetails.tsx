@@ -1,44 +1,16 @@
 import { FC, Fragment } from 'react'
 import { Box, Typography } from '@mui/material'
-import LogoNP from '../../../icons/logoNP.svg?react'
-import LogoUrk from '../../../icons/logoUrk.svg?react'
+
 import { AddressDetailsType } from './DeliveryAddress'
+import {
+  getFormattedAddress,
+  getLogoComponent,
+  getNovaPoshtaType
+} from '../../../helpers/addressDetails'
 
 type AddressDetailsProps = {
   address: AddressDetailsType
   cleanedAddress: string
-}
-
-const getLogoComponent = (isUkrPoshta: boolean) =>
-  isUkrPoshta ? LogoUrk : LogoNP
-
-const getNovaPoshtaType = (addressWarehouse: string) => {
-  if (addressWarehouse.includes('Поштомат')) return 'Поштомат'
-  if (addressWarehouse.includes('Відділення')) return 'Відділення'
-  return 'Адресна'
-}
-
-const getCityArea = (city: string, area?: string) =>
-  `${city}${area ? `, ${area}` : ''}`
-
-const getStreetAddress = (street?: string, houseNumber?: string) =>
-  `${street ?? ''} ${houseNumber ?? ''}`
-
-const getApartmentFloor = (apartmentNumber?: string, floor?: number) =>
-  `${apartmentNumber ? `, кв. ${apartmentNumber}` : ''}${floor ? `, поверх ${floor}` : ''}`
-
-const getFormattedAddress = (
-  address: AddressDetailsType,
-  cleanedAddress: string
-) => {
-  const cityArea = getCityArea(address.city, address.area)
-  const streetAddress = getStreetAddress(address.street, address.house_number)
-  const apartmentFloor = getApartmentFloor(
-    address.apartment_number,
-    address.floor
-  )
-
-  return `${cityArea}${cleanedAddress ? `, ${cleanedAddress}` : `, ${streetAddress}${apartmentFloor}`}`
 }
 
 export const AddressDetails: FC<AddressDetailsProps> = ({

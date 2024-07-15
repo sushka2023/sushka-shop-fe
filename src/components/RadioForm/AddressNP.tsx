@@ -7,51 +7,23 @@ import {
   useState
 } from 'react'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
-import { apiKey, useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
+import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import { Box, OutlinedInput } from '@mui/material'
 import { FormProps } from './RadioForm'
-import { ErrorMessage } from '../Error/Error'
+import { ErrorMessage, ErrorType } from '../Error/Error'
+import { fetchNovaPoshtaaddress } from './operations'
 
-const fetchNovaPoshtaaddress = async (
-  refCity: string | null,
-  valAddress: string
-) => {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      apiKey,
-      modelName: 'AddressGeneral',
-      calledMethod: 'searchSettlementStreets',
-      methodProperties: {
-        StreetName: valAddress,
-        SettlementRef: refCity,
-        Limit: 50
-      }
-    })
-  }
-
-  const response = await fetch(
-    'https://api.novaposhta.ua/v2.0/json/',
-    requestOptions
-  )
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  const data = await response.json()
-  return data.data
-}
 type AddressNP = {
   Present: string
 }
-const getErrorMessage = (errors: any) => {
+
+const TIMER = 1000
+
+const getErrorMessage = (errors: Record<string, ErrorType>): ErrorType => {
   const fields = ['cityAddress', 'address', 'house', 'floor', 'apartment']
-  return fields.map((field) => errors[field]).find(Boolean) || ''
+  return fields.map((field) => errors[field]).find(Boolean) || undefined
 }
+
 export const AddressNP: FC<FormProps> = ({
   selectedValue,
   errors,
@@ -124,27 +96,20 @@ export const AddressNP: FC<FormProps> = ({
         setSettleRef(null)
       }
     },
-    [
-      setValue,
-      setValInputCity,
-      clearErrors,
-      CITY_DEFAULT,
-      novaPoshtaCity,
-      setSettleRef
-    ]
+    []
   )
 
-  const onChangeAddress = (
-    _event: SyntheticEvent<Element, Event>,
-    value: string | null
-  ) => {
-    if (value !== null) {
-      setSelectedWarehouseValue(value)
-      setValue('address', value)
-      setValInputAddress(value)
-      clearErrors('address')
-    }
-  }
+  const onChangeAddress = useCallback(
+    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
+      if (value !== null) {
+        setSelectedWarehouseValue(value)
+        setValue('address', value)
+        setValInputAddress(value)
+        clearErrors('address')
+      }
+    },
+    []
+  )
 
   const handleCityFetch = async (
     refCity: string | null,
@@ -174,7 +139,7 @@ export const AddressNP: FC<FormProps> = ({
       } else {
         handleCityFetch(settleRef, valInputAddress)
       }
-    }, 1000)
+    }, TIMER)
 
     return () => clearTimeout(timer)
   }, [valInputAddress])

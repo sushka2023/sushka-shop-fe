@@ -117,7 +117,7 @@ export const DeliveryAddress: FC = () => {
 
   return (
     <Fragment>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 5 }}>
         <Typography variant="h3">Ваші адреси доставки</Typography>
         <Typography variant="body2" sx={{ fontSize: 18 }}>
           Тут ви можете змінити ваші дані

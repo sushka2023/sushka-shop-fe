@@ -4,7 +4,8 @@ import {
   useMemo,
   useState,
   Fragment,
-  SyntheticEvent
+  SyntheticEvent,
+  useCallback
 } from 'react'
 
 import { ErrorMessage } from '../Error/Error'
@@ -85,38 +86,38 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
     return generateOptionsData(warehouses)
   }, [warehouses])
 
-  const onChangeCity = (
-    _event: SyntheticEvent<Element, Event>,
-    value: string | null
-  ) => {
-    setValue('cityPostomats', value)
-    setValInputCity(value ?? '')
-    clearErrors('cityPostomats')
-    if (CITY_DEFAULT.some((city) => city.name === value)) {
-      setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+  const onChangeCity = useCallback(
+    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
+      setValue('cityPostomats', value)
+      setValInputCity(value ?? '')
       clearErrors('cityPostomats')
-    } else if (value && novaPoshtaCity.length > 0) {
-      setSettleRef(getCityRef(value, novaPoshtaCity))
-    } else {
-      setSettleRef(null)
-    }
-  }
+      if (CITY_DEFAULT.some((city) => city.name === value)) {
+        setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+        clearErrors('cityPostomats')
+      } else if (value && novaPoshtaCity.length > 0) {
+        setSettleRef(getCityRef(value, novaPoshtaCity))
+      } else {
+        setSettleRef(null)
+      }
+    },
+    []
+  )
 
-  const onChangeWarehouse = (
-    _event: SyntheticEvent<Element, Event>,
-    value: string | null
-  ) => {
-    const selectedWarehouse = optionsData.find(
-      (option) => option.label === value
-    )
-    if (selectedWarehouse) {
-      setValue('postomats', selectedWarehouse.id)
-      setValInputWarehouse(value ?? '')
-      setSelectedWarehouseValue(value)
-      setNewRequest(false)
-    }
-    clearErrors('postomats')
-  }
+  const onChangeWarehouse = useCallback(
+    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
+      const selectedWarehouse = optionsData.find(
+        (option) => option.label === value
+      )
+      if (selectedWarehouse) {
+        setValue('postomats', selectedWarehouse.id)
+        setValInputWarehouse(value ?? '')
+        setSelectedWarehouseValue(value)
+        setNewRequest(false)
+      }
+      clearErrors('postomats')
+    },
+    []
+  )
 
   return (
     <Fragment>

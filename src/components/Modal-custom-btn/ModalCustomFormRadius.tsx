@@ -24,7 +24,7 @@ type User = {
   }
 }
 
-type FormValues = {
+export type FormValues = {
   cityBranches?: string
   branches?: string
   cityPostomats?: string

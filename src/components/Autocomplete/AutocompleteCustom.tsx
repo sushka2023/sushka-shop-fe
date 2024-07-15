@@ -27,7 +27,10 @@ export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
   name,
   ...props
 }) => {
-  const isOptionEqualToValue = (option: any, value: string | null) => {
+  const isOptionEqualToValue = (
+    option: string | null,
+    value: string | null
+  ) => {
     return option === value || option === null || value === ''
   }
 

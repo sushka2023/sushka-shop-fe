@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react'
+import { Dispatch, FC, Fragment } from 'react'
 import { Radio, RadioGroup, FormControlLabel, Typography } from '@mui/material'
 import { NovaPoshtaBranch } from './BranchesNP'
 import { NovaPoshtaPostomats } from './PostomatsNP'
@@ -8,7 +8,8 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormClearErrors,
-  FieldValues
+  FieldValues,
+  UseFormSetError
 } from 'react-hook-form'
 
 type RadioFormProps = {
@@ -17,8 +18,8 @@ type RadioFormProps = {
   errors: FieldErrors
   clearErrors: UseFormClearErrors<FieldValues>
   selectedValue: string
-  setError: any
-  setSelectedValue: (value: string) => void
+  setError: UseFormSetError<FieldValues>
+  setSelectedValue: Dispatch<string>
 }
 
 export type FormProps = Omit<RadioFormProps, 'children' | 'setSelectedValue'>
