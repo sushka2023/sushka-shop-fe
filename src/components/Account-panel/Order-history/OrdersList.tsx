@@ -5,10 +5,8 @@ import {
   SetStateAction,
   useCallback,
   useEffect,
-  useRef,
-  useState
+  useRef
 } from 'react'
-import axiosInstance from '../../../axios/settings'
 import { Box, Divider } from '@mui/material'
 import { format } from 'date-fns'
 import { uk } from 'date-fns/locale'
@@ -32,8 +30,10 @@ export type SelectedOrder = {
 type OrdersListProps = {
   orders: OrdersType[]
   selectedOrderId: SelectedOrder | null
-  setOrders: Dispatch<SetStateAction<OrdersType[]>>
+  loading: boolean
+  hasMore: boolean
   setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
+  setPage: Dispatch<SetStateAction<number>>
   setSelectedOrderProducts: Dispatch<SetStateAction<any[]>>
 }
 
@@ -47,57 +47,17 @@ export const getProductLabel = (count: number) => {
   return 'товарів'
 }
 
-const fetchOrders = async (
-  page: number,
-  setOrders: Dispatch<SetStateAction<OrdersType[]>>,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-  setHasMore: Dispatch<SetStateAction<boolean>>,
-  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
-) => {
-  try {
-    setLoading(true)
-    const limit = 5
-    const offset = (page - 1) * limit
-
-    const response = await axiosInstance.get('/api/orders/for_current_user', {
-      params: { limit, offset }
-    })
-
-    const data = response.data.orders
-
-    setOrders((prevOrders) => {
-      const uniqueOrders = data.filter(
-        (newOrder: { id: number }) =>
-          !prevOrders.some((order) => order.id === newOrder.id)
-      )
-      return [...prevOrders, ...uniqueOrders]
-    })
-
-    if (data.length > 0 && page === 1) {
-      setSelectedOrderId({
-        id: data[0].id,
-        ordered_products: data[0].ordered_products.length
-      })
-    }
-    setHasMore(data.length > 0)
-  } catch (error) {
-    console.error('Error fetching orders:', error)
-  } finally {
-    setLoading(false)
-  }
-}
-
 export const OrdersList: FC<OrdersListProps> = ({
   orders,
-  setOrders,
   setSelectedOrderProducts,
   selectedOrderId,
-  setSelectedOrderId
+  setSelectedOrderId,
+  loading,
+  hasMore,
+  setPage
 }) => {
   const theme = useTheme()
-  const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [hasMore, setHasMore] = useState(true)
+
   const observer = useRef<IntersectionObserver>()
 
   const lastOrderElementRef = useCallback(
@@ -106,17 +66,13 @@ export const OrdersList: FC<OrdersListProps> = ({
       if (observer.current) observer.current.disconnect()
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPage((prevPage) => prevPage + 1)
+          setPage((prevPage: number) => prevPage + 1)
         }
       })
       if (node) observer.current.observe(node)
     },
     [loading, hasMore]
   )
-
-  useEffect(() => {
-    fetchOrders(page, setOrders, setLoading, setHasMore, setSelectedOrderId)
-  }, [page])
 
   useEffect(() => {
     const selectedOrder = orders.find(
