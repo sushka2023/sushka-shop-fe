@@ -1,5 +1,6 @@
 import styles from './crmClientsPage.module.scss'
 
+import { useLocation, useNavigate } from 'react-router-dom'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -30,6 +31,12 @@ const getRoleClassName = (role: string) => {
 
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
   const theme = useTheme()
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleRowClick = (id: number) => {
+    navigate(`/crm/clients/${id}`, { state: { from: location.pathname } })
+  }
 
   return (
     <TableContainer
@@ -61,6 +68,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
           {clients.map((row) => (
             <TableRow
               key={row.id}
+              onClick={() => handleRowClick(row.id)}
               // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -71,7 +79,9 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
                   {row.role}
                 </Typography>
               </TableCell>
-              <TableCell align="center">{row.created_at}</TableCell>
+              <TableCell align="center">
+                {row.created_at.split('T')[0]}
+              </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">
                 {row.phone ? row.phone : 'номер не вказано'}

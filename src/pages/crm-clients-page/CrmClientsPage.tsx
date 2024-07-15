@@ -1,10 +1,11 @@
 // import styles from './crmClientsPage.module.scss'
 
-import PaginationCRM from './PaginationCRM'
-import StickyHeadTable from './CrmTableStickyHead'
+import { useEffect, useState } from 'react'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { useEffect, useState } from 'react'
+
+import PaginationCRM from './PaginationCRM'
+import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
 export type ClientType = {
@@ -15,27 +16,35 @@ export type ClientType = {
   email: string
 }
 
+const CLIENT_QUANTITY = 5
+
 const CrmClientsPage = () => {
   const [clients, setClients] = useState<ClientType[]>([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
-  console.log('CrmClientsPage  setPage:', setPage)
   const [pageQty, setPageQty] = useState(5)
-  console.log('CrmClientsPage  setPageQty:', setPageQty)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
-        const response = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=10000000&offset=${page}`
+        const { data } = await axiosInstance.get<any>(
+          `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${page}`
         )
-        console.log(response)
+        // const response = await axiosInstance.get<any>(
+        //   `/api/orders/for_current_user?limit=${CLIENT_QUANTITY}&offset=${page}`
+        // )
+        // console.log('response', response)
 
-        const filteredUsers = response.data.map((user: ClientType) => {
+        const filteredUsers = data.users.map((user: ClientType) => {
           const { id, role, created_at, email, phone } = user
           return { id, role, created_at, email, phone }
         })
 
+        const totalNumberOfPages = Math.ceil(
+          data.total_count_users / CLIENT_QUANTITY
+        )
+
+        setPageQty(totalNumberOfPages)
         setClients(filteredUsers)
         console.log(filteredUsers)
       } catch (error) {
@@ -44,7 +53,7 @@ const CrmClientsPage = () => {
     }
 
     fetchCrmClients()
-  }, [])
+  }, [page])
 
   return (
     <Box p="44px 30px 34px 30px" color="#64748B">
@@ -82,7 +91,7 @@ const CrmClientsPage = () => {
         />
       </Box>
       <StickyHeadTable clients={clients} />
-      <PaginationCRM page={page} pageQty={pageQty} />
+      <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} />
     </Box>
   )
 }

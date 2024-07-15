@@ -25,11 +25,13 @@ const ArrowRight = () => {
 type PaginationCRMProps = {
   page: number
   pageQty: number
+  setPage: (page: number) => void
 }
 
-export default function PaginationCRM({ page, pageQty }: PaginationCRMProps) {
+export default function PaginationCRM(props: PaginationCRMProps) {
+  const { page, pageQty, setPage } = props
+
   const theme = useTheme()
-  console.log(page)
 
   return (
     <Stack
@@ -43,6 +45,8 @@ export default function PaginationCRM({ page, pageQty }: PaginationCRMProps) {
       <Pagination
         className={styles.pagination}
         count={pageQty}
+        page={page}
+        onChange={(_, num) => setPage(num)}
         renderItem={(item) => (
           <PaginationItem
             slots={{ previous: ArrowLeft, next: ArrowRight }}
