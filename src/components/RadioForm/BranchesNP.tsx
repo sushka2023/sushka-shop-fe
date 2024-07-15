@@ -102,21 +102,21 @@ export const NovaPoshtaBranch: FC<FormProps> = ({
     []
   )
 
-  const onChangeWarehouse = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
-      const selectedWarehouse = optionsData.find(
-        (option) => option.label === value
-      )
-      if (selectedWarehouse) {
-        setValue('branches', selectedWarehouse.id)
-        setValInputWarehouse(value ?? '')
-        setSelectedWarehouseValue(value)
-        setNewRequest(false)
-      }
-      clearErrors('branches')
-    },
-    []
-  )
+  const onChangeWarehouse = (
+    _event: SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => {
+    const selectedWarehouse = optionsData.find(
+      (option) => option.label === value
+    )
+    if (selectedWarehouse) {
+      setValue('branches', selectedWarehouse.id)
+      setValInputWarehouse(value ?? '')
+      setSelectedWarehouseValue(value)
+      setNewRequest(false)
+    }
+    clearErrors('branches')
+  }
 
   return (
     selectedValue === 'novaPoshtaBranches' && (
