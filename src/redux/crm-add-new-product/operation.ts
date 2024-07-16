@@ -162,7 +162,6 @@ export const createNewProduct = createAsyncThunk<string, CreateProductParams>(
         product_category_id: product.main_category,
         sub_categories_id: product.sub_categories,
         product_status: product.product_status,
-        promotional: true,
         new_product: true,
         is_popular: false
       })
