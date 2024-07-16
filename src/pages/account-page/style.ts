@@ -19,5 +19,6 @@ export const stTabsNav = {
 export const stContainerTabPanel = {
   backgroundColor: 'pink.lighter',
   color: 'secondary.darker',
-  fontFamily: 'Comfortaa'
+  fontFamily: 'Comfortaa',
+  p: '40px 0'
 }

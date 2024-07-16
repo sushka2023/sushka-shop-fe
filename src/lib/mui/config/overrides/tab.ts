@@ -4,6 +4,7 @@ import { SEMI_BOLD_WEIGHT } from '../fonts/config'
 const MuiTab: Components<Theme>['MuiTab'] = {
   styleOverrides: {
     root: ({ theme }) => ({
+      width: '20%',
       whiteSpace: 'pre-line',
       textTransform: 'none',
       color: theme.palette.secondary.darker,

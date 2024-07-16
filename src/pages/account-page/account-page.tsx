@@ -42,25 +42,23 @@ export const AccountPage = () => {
 
   return (
     <React.Fragment>
-      <Container>
-        <Box sx={{ p: '40px 0' }}>
-          <Tabs
-            value={value}
-            onChange={(_, newValue) => setValue(newValue)}
-            aria-label="basic tabs example"
-            sx={stTabsNav}
-          >
-            <Tab disableRipple label="Контактна інформація" {...a11yProps(0)} />
-            <Tab disableRipple label="Ваші адреси доставки" {...a11yProps(1)} />
-            <Tab disableRipple label="Історія замовлень" {...a11yProps(2)} />
-            <Tab disableRipple label="Змінити пароль" {...a11yProps(3)} />
-            <BasicModal />
-          </Tabs>
-        </Box>
+      <Container sx={{ p: '40px 0' }}>
+        <Tabs
+          value={value}
+          onChange={(_, newValue) => setValue(newValue)}
+          aria-label="basic tabs example"
+          sx={stTabsNav}
+        >
+          <Tab disableRipple label="Контактна інформація" {...a11yProps(0)} />
+          <Tab disableRipple label="Ваші адреси доставки" {...a11yProps(1)} />
+          <Tab disableRipple label="Історія замовлень" {...a11yProps(2)} />
+          <Tab disableRipple label="Змінити пароль" {...a11yProps(3)} />
+          <BasicModal />
+        </Tabs>
       </Container>
       <Box sx={stContainerTabPanel}>
         {user ? (
-          <Container sx={{ p: '40px 0' }}>
+          <Container>
             <CustomTabPanel value={value} index={0}>
               <ContactInfo user={user} />
             </CustomTabPanel>

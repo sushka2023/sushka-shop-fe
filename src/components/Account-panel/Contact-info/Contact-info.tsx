@@ -61,59 +61,67 @@ export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
 
   return (
     <Fragment>
-      <Box sx={{ mb: 2 }}>
+      <Box>
         <Typography variant="h3">Ваша контактна інформація</Typography>
         <Typography variant="body2" sx={{ fontSize: 18 }}>
           Тут ви можете змінити ваші дані
         </Typography>
       </Box>
       <EmailConfirmationModal is_active={is_active} email={email} />
-      <Box sx={{ width: '60%', mt: 2 }}>
+      <Box sx={{ maxWidth: '100%', width: 800, mt: 2 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid
             container
-            rowSpacing={3}
-            columnSpacing={{ xs: 1, sm: 2, md: 6 }}
+            rowSpacing={{ xs: 2, sm: 3 }}
+            columnSpacing={{ sm: 3, md: 6 }}
           >
-            <InputField
-              type="text"
-              id="first_name"
-              label="Ім’я"
-              defaultValue={first_name}
-              register={register('first_name')}
-              error={errors.first_name}
-              sxInput={stInput}
-              sxLabel={{ mt: 2 }}
-            />
-            <InputField
-              type="text"
-              id="last_name"
-              label="Прізвище"
-              defaultValue={last_name}
-              register={register('last_name')}
-              error={errors.last_name}
-              sxInput={stInput}
-              sxLabel={{ mt: 2 }}
-            />
-            <InputField
-              type="text"
-              label="Електронна пошта"
-              defaultValue={email}
-              disabled
-              sxInput={stInput}
-              sxLabel={{ mt: 2 }}
-            />
-            <InputField
-              type="text"
-              id="phone_number"
-              label="Номер телефону"
-              defaultValue={phone_number || ''}
-              register={register('phone_number')}
-              error={errors.phone_number}
-              sxInput={stInput}
-              sxLabel={{ mt: 2 }}
-            />
-            <Grid item xs={12} md={6} mt={3}>
+            <Grid item xs={12} sm={6}>
+              <InputField
+                type="text"
+                id="first_name"
+                label="Ім’я"
+                defaultValue={first_name}
+                register={register('first_name')}
+                error={errors.first_name}
+                sxInput={stInput}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <InputField
+                type="text"
+                id="last_name"
+                label="Прізвище"
+                defaultValue={last_name}
+                register={register('last_name')}
+                error={errors.last_name}
+                sxInput={stInput}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <InputField
+                type="text"
+                label="Електронна пошта"
+                defaultValue={email}
+                disabled
+                sxInput={stInput}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <InputField
+                type="text"
+                id="phone_number"
+                label="Номер телефону"
+                defaultValue={phone_number || ''}
+                register={register('phone_number')}
+                error={errors.phone_number}
+                sxInput={stInput}
+              />
+            </Grid>
+
+            <Grid item xs={12} mt={{ xs: 1, sm: 3 }}>
               <Button
                 sx={{ width: 200, height: 50 }}
                 disabled={isLoadingBtn}
