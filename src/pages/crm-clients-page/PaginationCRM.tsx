@@ -53,6 +53,15 @@ export default function PaginationCRM(props: PaginationCRMProps) {
             {...item}
           />
         )}
+        sx={{
+          '& .MuiPaginationItem-root': {
+            color: '#5D5FEF'
+          },
+          '& .MuiPaginationItem-root.Mui-selected': {
+            backgroundColor: '#5D5FEF',
+            color: '#fff'
+          }
+        }}
       />
     </Stack>
   )

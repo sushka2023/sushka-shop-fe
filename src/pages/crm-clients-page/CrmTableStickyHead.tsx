@@ -66,11 +66,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
         </TableHead>
         <TableBody>
           {clients.map((row) => (
-            <TableRow
-              key={row.id}
-              onClick={() => handleRowClick(row.id)}
-              // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
               <TableCell component="th" scope="row">
                 <Typography
                   component="span"

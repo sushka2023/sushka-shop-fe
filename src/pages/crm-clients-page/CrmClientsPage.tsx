@@ -1,5 +1,3 @@
-// import styles from './crmClientsPage.module.scss'
-
 import { useEffect, useState } from 'react'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
@@ -30,10 +28,6 @@ const CrmClientsPage = () => {
         const { data } = await axiosInstance.get<any>(
           `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${page}`
         )
-        // const response = await axiosInstance.get<any>(
-        //   `/api/orders/for_current_user?limit=${CLIENT_QUANTITY}&offset=${page}`
-        // )
-        // console.log('response', response)
 
         const filteredUsers = data.users.map((user: ClientType) => {
           const { id, role, created_at, email, phone } = user
@@ -46,7 +40,6 @@ const CrmClientsPage = () => {
 
         setPageQty(totalNumberOfPages)
         setClients(filteredUsers)
-        console.log(filteredUsers)
       } catch (error) {
         console.error(error)
       }
@@ -65,7 +58,7 @@ const CrmClientsPage = () => {
           mb: '34px'
         }}
       >
-        <Typography variant="h3">Client page</Typography>
+        <Typography variant="h3">Клієнти </Typography>
         <TextField
           InputProps={{
             startAdornment: (
