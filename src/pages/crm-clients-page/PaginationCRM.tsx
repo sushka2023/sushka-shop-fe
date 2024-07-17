@@ -3,24 +3,9 @@ import styles from './crmClientsPage.module.scss'
 import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import Stack from '@mui/material/Stack'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { Box, useTheme } from '@mui/material'
-
-const ArrowLeft = () => {
-  return (
-    <Box>
-      <ArrowBackIcon /> Попередня
-    </Box>
-  )
-}
-const ArrowRight = () => {
-  return (
-    <Box>
-      Наступна <ArrowForwardIcon />
-    </Box>
-  )
-}
+import { useTheme } from '@mui/material'
+import { ArrowLeft } from './ArrowLeft'
+import { ArrowRight } from './ArrowRight'
 
 type PaginationCRMProps = {
   page: number
@@ -28,9 +13,11 @@ type PaginationCRMProps = {
   setPage: (page: number) => void
 }
 
-export default function PaginationCRM(props: PaginationCRMProps) {
-  const { page, pageQty, setPage } = props
-
+export default function PaginationCRM({
+  page,
+  pageQty,
+  setPage
+}: PaginationCRMProps) {
   const theme = useTheme()
 
   return (
@@ -55,11 +42,11 @@ export default function PaginationCRM(props: PaginationCRMProps) {
         )}
         sx={{
           '& .MuiPaginationItem-root': {
-            color: '#5D5FEF'
+            color: 'accent.darker'
           },
           '& .MuiPaginationItem-root.Mui-selected': {
-            backgroundColor: '#5D5FEF',
-            color: '#fff'
+            backgroundColor: 'accent.darker',
+            color: 'background.default'
           }
         }}
       />

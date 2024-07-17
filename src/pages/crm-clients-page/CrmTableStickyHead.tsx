@@ -14,7 +14,13 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
 
-import { ClientType } from './CrmClientsPage'
+type ClientType = {
+  id: number
+  role: string
+  created_at: string
+  phone: string | null
+  email: string
+}
 
 const getRoleClassName = (role: string) => {
   switch (role) {
@@ -50,7 +56,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
         className={styles.table}
         sx={{
           'minWidth': 650,
-          'color': '#64748b',
+          'color': 'illustrations.darker',
           'th, td': { color: 'inherit' }
         }}
         aria-label="simple table"

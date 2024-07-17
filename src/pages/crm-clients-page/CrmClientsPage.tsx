@@ -6,21 +6,15 @@ import PaginationCRM from './PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
-export type ClientType = {
-  id: number
-  role: string
-  created_at: string
-  phone: string | null
-  email: string
-}
-
-const CLIENT_QUANTITY = 5
+const CLIENT_QUANTITY = 20
+const CLIENT_PAGE = 1
+const CLIENT_PAGEQTY = 0
 
 const CrmClientsPage = () => {
-  const [clients, setClients] = useState<ClientType[]>([])
+  const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [pageQty, setPageQty] = useState(5)
+  const [page, setPage] = useState(CLIENT_PAGE)
+  const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
@@ -29,17 +23,12 @@ const CrmClientsPage = () => {
           `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${page}`
         )
 
-        const filteredUsers = data.users.map((user: ClientType) => {
-          const { id, role, created_at, email, phone } = user
-          return { id, role, created_at, email, phone }
-        })
-
         const totalNumberOfPages = Math.ceil(
           data.total_count_users / CLIENT_QUANTITY
         )
 
         setPageQty(totalNumberOfPages)
-        setClients(filteredUsers)
+        setClients(data.users)
       } catch (error) {
         console.error(error)
       }
@@ -49,7 +38,7 @@ const CrmClientsPage = () => {
   }, [page])
 
   return (
-    <Box p="44px 30px 34px 30px" color="#64748B">
+    <Box p="44px 30px 34px 30px" color="illustrations.darker">
       <Box
         sx={{
           display: 'flex',
@@ -63,7 +52,7 @@ const CrmClientsPage = () => {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon fontSize="large" htmlColor="#64748B" />
+                <SearchIcon fontSize="large" htmlColor="illustrations.darker" />
               </InputAdornment>
             )
           }}
@@ -75,7 +64,7 @@ const CrmClientsPage = () => {
             },
             '& input': {
               paddingLeft: '0px',
-              color: '#64748B'
+              color: 'illustrations.darker'
             }
           }}
           placeholder="Введіть ПІБ або пошту"
