@@ -1,12 +1,18 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, useState } from 'react'
 import { useSnackbar } from '../../../hooks/useSnackbar'
-import { Box, Grid, Typography } from '@mui/material'
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { currentUser } from '../../../redux/authentication/operation'
 import { getToken } from '../../../utils/cookie/token'
 import { AppDispatch } from '../../../redux/store'
 import { EmailConfirmationModal } from '../../Modal-custom-btn/ModalCustomBtnEmail'
-import { UserResponse } from '../../../types'
 import { ChangeUserSchema } from '../../auth/validation'
 import InputField from '../../auth/InputField'
 import { Button } from '../../UI/Button'
@@ -14,6 +20,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
 import { stInput } from '../style'
+import { useAuth } from '../../../hooks/use-auth'
 
 type FormData = {
   first_name: string
@@ -21,17 +28,16 @@ type FormData = {
   phone_number?: string | null
 }
 
-type ContactInfoProps = {
-  user: UserResponse
-}
-
 const accessToken = getToken()
 
-export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
-  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
+export const ContactInfo: FC = () => {
+  const { user } = useAuth()
+  const theme = useTheme()
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
-  const { is_active, first_name, last_name, email, phone_number } = user
+  const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     setIsLoadingBtn(true)
@@ -59,14 +65,18 @@ export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
     resolver: yupResolver(ChangeUserSchema)
   })
 
+  const { is_active, first_name, last_name, email, phone_number } = user || {}
+
   return (
-    <Fragment>
-      <Box>
-        <Typography variant="h3">Ваша контактна інформація</Typography>
-        <Typography variant="body2" sx={{ fontSize: 18 }}>
-          Тут ви можете змінити ваші дані
-        </Typography>
-      </Box>
+    <Container sx={{ pb: 3 }}>
+      {!isSmallScreen && (
+        <Box>
+          <Typography variant="h3">Ваша контактна інформація</Typography>
+          <Typography variant="body2" sx={{ fontSize: 18 }}>
+            Тут ви можете змінити ваші дані
+          </Typography>
+        </Box>
+      )}
       <EmailConfirmationModal is_active={is_active} email={email} />
       <Box sx={{ maxWidth: '100%', width: 800, mt: 2 }}>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,6 +144,6 @@ export const ContactInfo: FC<ContactInfoProps> = ({ user }) => {
           </Grid>
         </form>
       </Box>
-    </Fragment>
+    </Container>
   )
 }

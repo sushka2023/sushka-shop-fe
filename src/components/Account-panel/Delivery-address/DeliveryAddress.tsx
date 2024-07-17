@@ -1,6 +1,5 @@
-import { useTheme } from '@mui/material/styles'
-import { FC, Fragment, useState } from 'react'
-import { Box, Grid, IconButton, Tooltip } from '@mui/material'
+import { FC, useState } from 'react'
+import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material'
 import { Button } from '../../UI/Button'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ModalCustomFormRadius } from '../../Modal-custom-btn/ModalCustomFormRadius'
@@ -15,7 +14,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
 import { useSnackbar } from '../../../hooks/useSnackbar'
 import { stAddBtn, stCard, stDeleteBtn } from './style'
-
+import { useTheme } from '@mui/material'
 export type AddressDetailsType = {
   id: number
   address_warehouse?: string
@@ -82,11 +81,13 @@ const accessToken = getToken()
 
 export const DeliveryAddress: FC = () => {
   const theme = useTheme()
+
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
   const [openModal, setOpenModal] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const { user } = useAuth()
+
   const addressUser: (NovaPoshtaDataResponse | UkrPoshtaResponse)[] = [
     ...(user?.posts?.nova_poshta ?? []),
     ...(user?.posts?.ukr_poshta ?? [])
@@ -116,33 +117,39 @@ export const DeliveryAddress: FC = () => {
   }
 
   return (
-    <Fragment>
+    <Container sx={{ pb: 3, pt: 3 }}>
       <Box sx={{ mb: 5 }}>
         <Typography variant="h3">Ваші адреси доставки</Typography>
         <Typography variant="body2" sx={{ fontSize: 18 }}>
           Тут ви можете змінити ваші дані
         </Typography>
       </Box>
-      <Box sx={{ width: { xs: '100%', sm: '60%', md: '100%' } }}>
-        <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
+      <Box sx={{ width: { xs: '100%', sm: '95%', md: '100%' } }}>
+        <Grid
+          container
+          rowSpacing={{ xs: 3, md: 4 }}
+          columnSpacing={{ xs: 3, md: 4 }}
+        >
           {addressUser.map((elem, index) => (
             <Grid key={index} item xs={12} sm={6} md={3}>
-              <Box sx={stCard}>
-                <Tooltip
-                  title="Delete"
-                  sx={stDeleteBtn}
-                  onClick={() => handleDelCard(index)}
-                >
-                  <IconButton disabled={disabled}>
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-                <AddressDetails
-                  address={elem as AddressDetailsType}
-                  cleanedAddress={getCleanedAddress(
-                    'address_warehouse' in elem ? elem.address_warehouse : ''
-                  )}
-                />
+              <Box sx={{ display: 'grid', height: '100%' }}>
+                <Box sx={stCard(theme)}>
+                  <Tooltip
+                    title="Delete"
+                    sx={stDeleteBtn(theme)}
+                    onClick={() => handleDelCard(index)}
+                  >
+                    <IconButton disabled={disabled}>
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <AddressDetails
+                    address={elem as AddressDetailsType}
+                    cleanedAddress={getCleanedAddress(
+                      'address_warehouse' in elem ? elem.address_warehouse : ''
+                    )}
+                  />
+                </Box>
               </Box>
             </Grid>
           ))}
@@ -159,8 +166,8 @@ export const DeliveryAddress: FC = () => {
             </Button>
             {isAddButtonDisabled() && (
               <Typography variant="body1" sx={{ mt: 1 }}>
-                *Максимальна кількість адрес. Видаліть непотрібну адресу,
-                <br /> щоб додати нову
+                *Максимальна кількість адрес. <br /> Видаліть непотрібну адресу,
+                щоб додати нову
               </Typography>
             )}
           </Grid>
@@ -170,6 +177,6 @@ export const DeliveryAddress: FC = () => {
         openModal={openModal}
         setOpenModal={setOpenModal}
       />
-    </Fragment>
+    </Container>
   )
 }

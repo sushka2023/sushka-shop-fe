@@ -1,12 +1,9 @@
 export const stWavePink = {
   backgroundImage: 'url("/src/icons/accountWave.svg")',
   width: '100%',
-  height: '150px',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100%',
-  marginBottom: '200px',
-  position: 'relative',
-  bottom: 2
+  position: 'relative'
 }
 
 export const stTabsNav = {
@@ -19,6 +16,5 @@ export const stTabsNav = {
 export const stContainerTabPanel = {
   backgroundColor: 'pink.lighter',
   color: 'secondary.darker',
-  fontFamily: 'Comfortaa',
-  p: '40px 0'
+  fontFamily: 'Comfortaa'
 }
