@@ -131,9 +131,16 @@ export const ContactInfo: FC = () => {
               />
             </Grid>
 
-            <Grid item xs={12} mt={{ xs: 1, sm: 3 }}>
+            <Grid item xs={12} mt={{ xs: 2, sm: 3 }}>
               <Button
-                sx={{ width: 200, height: 50 }}
+                sx={{
+                  width: 200,
+                  height: 50,
+                  [theme.breakpoints.down('sm')]: {
+                    width: '100%',
+                    letterSpacing: 2
+                  }
+                }}
                 disabled={isLoadingBtn}
                 variant="contained"
                 type="submit"

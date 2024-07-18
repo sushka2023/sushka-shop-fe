@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosInstance from '../../../axios/settings'
-import { Box, Grid, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material'
 import { ChangePasswordSchema } from '../../auth/validation'
 import { Button } from '../../UI/Button'
 import InputField from '../../auth/InputField'
@@ -17,6 +24,8 @@ type FormData = {
 
 export const ChangePassword = () => {
   const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   const [isLoadingBtn, setIsLoadingBtn] = useState(false)
   const {
     register,
@@ -52,8 +61,10 @@ export const ChangePassword = () => {
   }
 
   return (
-    <React.Fragment>
-      <Typography variant="h3">Зміна старого паролю</Typography>
+    <Container sx={{ pb: 3 }}>
+      {!isSmallScreen && (
+        <Typography variant="h3">Зміна старого паролю</Typography>
+      )}
       <Box
         sx={{
           width: '100%',
@@ -98,9 +109,16 @@ export const ChangePassword = () => {
               />
             </Grid>
 
-            <Grid item xs={12} mt={{ xs: 1, sm: 3 }}>
+            <Grid item xs={12} mt={{ xs: 2, sm: 3 }}>
               <Button
-                sx={{ width: 200, height: 50 }}
+                sx={{
+                  width: 200,
+                  height: 50,
+                  [theme.breakpoints.down('sm')]: {
+                    width: '100%',
+                    letterSpacing: 2
+                  }
+                }}
                 disabled={isLoadingBtn}
                 variant="contained"
                 type="submit"
@@ -111,6 +129,6 @@ export const ChangePassword = () => {
           </Grid>
         </form>
       </Box>
-    </React.Fragment>
+    </Container>
   )
 }

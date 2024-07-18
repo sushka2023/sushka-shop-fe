@@ -3,7 +3,8 @@ export const stWavePink = {
   width: '100%',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100%',
-  position: 'relative'
+  position: 'relative',
+  bottom: 1
 }
 
 export const stTabsNav = {

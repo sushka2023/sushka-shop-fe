@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, Fragment, ReactNode, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import {
   Accordion,
@@ -15,13 +15,20 @@ import { OrderHistory } from '../../components/Account-panel/Order-history/Order
 import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
-import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
+import {
+  BasicModal,
+  RootState
+} from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { Button } from '../../components/UI/Button'
+import { AppDispatch } from '../../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../redux/authentication/operation'
 
 type TabPanelProps = {
-  children?: React.ReactNode
+  children?: ReactNode
   index: number
   value: number | null
 }
@@ -30,7 +37,7 @@ type CustomAccordionProps = {
   expanded: number | null
   onChange: (newIndex: number | null) => void
   summary: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 const CustomTabPanel: FC<TabPanelProps> = ({
@@ -115,18 +122,35 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
 
 export const AccountPage = () => {
   const { user } = useAuth()
+  const dispatch = useDispatch<AppDispatch>()
   const theme = useTheme()
   const [value, setValue] = useState([0, null])
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  useEffect(() => {
+    if (value[0] === null && value[1] === null) {
+      setValue([0, null])
+    }
+  }, [value])
+
+  const token = useSelector((state: RootState) => state.auth.accessToken)
+
+  const handleClickLogout = async () => {
+    try {
+      await dispatch(logout({ accessToken: token! }))
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
 
   const handleChange = (newIndex: number | null) => {
     setValue([newIndex, null])
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       {!isSmallScreen && (
-        <React.Fragment>
+        <Fragment>
           <Container sx={{ p: '40px 0' }}>
             <Tabs
               value={value[0]}
@@ -156,27 +180,43 @@ export const AccountPage = () => {
               : 'loading...'}
           </Box>
           <Box sx={{ ...stWavePink, mb: 2, bottom: 2, height: 150 }} />
-        </React.Fragment>
+        </Fragment>
       )}
 
-      {isSmallScreen && user ? (
-        <Container sx={{ p: 0, mt: 2 }}>
-          {accordions.map((accordion, index) => (
-            <CustomAccordion
-              key={index}
-              index={index}
-              expanded={value[0]}
-              onChange={handleChange}
-              summary={accordion.summary}
+      {isSmallScreen ? (
+        user ? (
+          <Container sx={{ p: 0, mt: 2 }}>
+            {accordions.map((accordion, index) => (
+              <CustomAccordion
+                key={index}
+                index={index}
+                expanded={value[0]}
+                onChange={handleChange}
+                summary={accordion.summary}
+              >
+                <Box sx={stContainerTabPanel}>{accordion.content}</Box>
+                <Box sx={{ ...stWavePink, height: 35 }} />
+              </CustomAccordion>
+            ))}
+            <Button
+              onClick={handleClickLogout}
+              sx={{
+                width: '100%',
+                justifyContent: 'flex-start',
+                fontFamily: 'Nunito',
+                fontWeight: 700,
+                fontSize: 17,
+                color: '#567343',
+                p: '9px 17px'
+              }}
             >
-              <Box sx={stContainerTabPanel}>{accordion.content}</Box>
-              <Box sx={{ ...stWavePink, height: 35 }} />
-            </CustomAccordion>
-          ))}
-        </Container>
-      ) : (
-        'loading...'
-      )}
-    </React.Fragment>
+              Вийти
+            </Button>
+          </Container>
+        ) : (
+          <Typography>Loading...</Typography>
+        )
+      ) : null}
+    </Fragment>
   )
 }

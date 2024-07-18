@@ -1,5 +1,12 @@
 import { FC, useState } from 'react'
-import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material'
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  Tooltip,
+  useMediaQuery
+} from '@mui/material'
 import { Button } from '../../UI/Button'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { ModalCustomFormRadius } from '../../Modal-custom-btn/ModalCustomFormRadius'
@@ -81,7 +88,7 @@ const accessToken = getToken()
 
 export const DeliveryAddress: FC = () => {
   const theme = useTheme()
-
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
   const [openModal, setOpenModal] = useState(false)
@@ -117,14 +124,16 @@ export const DeliveryAddress: FC = () => {
   }
 
   return (
-    <Container sx={{ pb: 3, pt: 3 }}>
-      <Box sx={{ mb: 5 }}>
-        <Typography variant="h3">Ваші адреси доставки</Typography>
-        <Typography variant="body2" sx={{ fontSize: 18 }}>
-          Тут ви можете змінити ваші дані
-        </Typography>
-      </Box>
-      <Box sx={{ width: { xs: '100%', sm: '95%', md: '100%' } }}>
+    <Container sx={{ pb: 3 }}>
+      {!isSmallScreen && (
+        <Box sx={{ mb: 5 }}>
+          <Typography variant="h3">Ваші адреси доставки</Typography>
+          <Typography variant="body2" sx={{ fontSize: 18 }}>
+            Тут ви можете змінити ваші дані
+          </Typography>
+        </Box>
+      )}
+      <Box sx={{ width: { xs: '100%', sm: '95%', md: '100%' }, mt: 3 }}>
         <Grid
           container
           rowSpacing={{ xs: 3, md: 4 }}
