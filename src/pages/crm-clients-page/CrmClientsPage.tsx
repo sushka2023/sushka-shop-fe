@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
@@ -6,15 +7,22 @@ import PaginationCRM from './PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
-const CLIENT_QUANTITY = 20
+const CLIENT_QUANTITY = 5
 const CLIENT_PAGE = 1
 const CLIENT_PAGEQTY = 0
 
 const CrmClientsPage = () => {
+  const location = useLocation()
+  console.log('CrmClientsPage  location:', location.search?.split('=')[1] || 1)
+  console.log('CrmClientsPage  location:', location)
+
   const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(CLIENT_PAGE)
+  const [page, setPage] = useState(
+    location.search?.split('=')[1] || CLIENT_PAGE
+  )
   const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
+  console.log(page)
 
   useEffect(() => {
     const fetchCrmClients = async () => {

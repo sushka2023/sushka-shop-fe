@@ -6,8 +6,8 @@
     justify-content: center;
     height: 40px;
 
-    li:first-child > button,
-    li:last-child > button {
+    li:first-child > a,
+    li:last-child > a {
       border: 1px solid #5d5fef;
       position: absolute;
       width: 174px;
@@ -21,12 +21,12 @@
       }
     }
 
-    li:first-child > button {
+    li:first-child > a {
       left: 0;
       top: 0;
     }
 
-    li:last-child > button {
+    li:last-child > a {
       right: 0;
       top: 0;
     }

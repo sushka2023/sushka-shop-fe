@@ -22,9 +22,9 @@ const HeaderListIcons = () => {
 
   const searchToken = Object.fromEntries(searchParams.entries())
 
-  useEffect(() => {
-    Object.keys(searchToken).length > 0 && setIsModalOpen(true)
-  }, [searchToken])
+  // useEffect(() => {
+  //   Object.keys(searchToken).length > 0 && setIsModalOpen(true)
+  // }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement

@@ -6,9 +6,10 @@ import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material'
 import { ArrowLeft } from './ArrowLeft'
 import { ArrowRight } from './ArrowRight'
+import { Link } from 'react-router-dom'
 
 type PaginationCRMProps = {
-  page: number
+  page: number | undefined
   pageQty: number
   setPage: (page: number) => void
 }
@@ -37,6 +38,8 @@ export default function PaginationCRM({
         renderItem={(item) => (
           <PaginationItem
             slots={{ previous: ArrowLeft, next: ArrowRight }}
+            component={Link}
+            to={`?page=${item.page}`}
             {...item}
           />
         )}
