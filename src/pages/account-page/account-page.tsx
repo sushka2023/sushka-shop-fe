@@ -103,14 +103,14 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
     }}
   >
     <AccordionSummary
-      expandIcon={<KeyboardArrowDownIcon sx={{ color: '#567343' }} />}
+      expandIcon={<KeyboardArrowDownIcon sx={{ color: 'secondary.darker' }} />}
       {...a11yProps(index)}
       sx={{
         '.MuiTypography-root': {
           fontFamily: 'Nunito',
           fontWeight: 700,
           fontSize: 17,
-          color: '#567343'
+          color: 'secondary.darker'
         }
       }}
     >
@@ -206,7 +206,7 @@ export const AccountPage = () => {
                 fontFamily: 'Nunito',
                 fontWeight: 700,
                 fontSize: 17,
-                color: '#567343',
+                color: 'secondary.darker',
                 p: '9px 17px'
               }}
             >
