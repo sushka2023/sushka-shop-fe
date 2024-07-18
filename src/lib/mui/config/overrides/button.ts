@@ -68,6 +68,9 @@ const MuiButtonContained: Components<Theme>['MuiButton'] = {
       letterSpacing: 'normal',
       color: '#fff',
       backgroundColor: theme.palette.primary.darker,
+      [theme.breakpoints.down('sm')]: {
+        borderRadius: '1.25rem'
+      },
       ['&:hover']: {
         backgroundColor: '#fff',
         border: `2px solid ${theme.palette.primary.darker}`,

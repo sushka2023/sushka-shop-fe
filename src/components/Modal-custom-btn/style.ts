@@ -6,7 +6,7 @@ export const btnEditAccount = {
   'fontWeight': 600,
   'fontStyle': '16px',
   'color': 'background.default',
-  'padding': '21px 40px',
+  'padding': '21px clamp(1.25rem, 0.355rem + 2.38vw, 2.5rem)',
   'bgcolor': 'pink.darker',
   '&.MuiButton-root:hover': {
     bgcolor: 'error.light',

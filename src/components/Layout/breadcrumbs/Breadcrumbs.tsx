@@ -4,6 +4,7 @@ import { useLocation, Link } from 'react-router-dom'
 import IconArrow from '../../../icons/arrow.svg?react'
 import styles from './breadcrumbs.module.scss'
 import { RootState } from '../../../redux/store'
+import { Container } from '@mui/material'
 
 const ukrainianNames = {
   catalog: 'Каталог',
@@ -72,7 +73,7 @@ const Breadcrumbs = () => {
   }
 
   return (
-    <div className={styles.breadBlock}>
+    <Container sx={{ mt: 5 }}>
       <ul className={styles.breadList}>
         <li className={styles.breadLine}>
           <Link className={styles.breadLink} to={'/'}>
@@ -100,7 +101,7 @@ const Breadcrumbs = () => {
           )
         })}
       </ul>
-    </div>
+    </Container>
   )
 }
 

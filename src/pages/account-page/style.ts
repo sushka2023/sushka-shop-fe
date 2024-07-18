@@ -1,12 +1,10 @@
 export const stWavePink = {
   backgroundImage: 'url("/src/icons/accountWave.svg")',
   width: '100%',
-  height: '150px',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100%',
-  marginBottom: '200px',
   position: 'relative',
-  bottom: 2
+  bottom: 1
 }
 
 export const stTabsNav = {
