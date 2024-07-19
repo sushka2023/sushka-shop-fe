@@ -27,7 +27,7 @@ export const OPTIONS = [
   { value: '', label: 'Статус' },
   { value: ProductStatus.NEW, label: 'Новий' },
   { value: ProductStatus.ACTIVATED, label: 'Активний' },
-  { value: ProductStatus.ARCHIVED, label: 'Архіований' }
+  { value: ProductStatus.ARCHIVED, label: 'Архівований' }
 ]
 
 const CrmProductsPage = () => {
