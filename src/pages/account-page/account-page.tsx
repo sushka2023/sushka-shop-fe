@@ -15,17 +15,12 @@ import { OrderHistory } from '../../components/Account-panel/Order-history/Order
 import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
-import {
-  BasicModal,
-  RootState
-} from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
+import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Button } from '../../components/UI/Button'
-import { AppDispatch } from '../../redux/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../redux/authentication/operation'
+import { btnEditAccount } from '../../components/Modal-custom-btn/style'
 
 type TabPanelProps = {
   children?: ReactNode
@@ -122,26 +117,16 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
 
 export const AccountPage = () => {
   const { user } = useAuth()
-  const dispatch = useDispatch<AppDispatch>()
   const theme = useTheme()
   const [value, setValue] = useState([0, null])
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
     if (value[0] === null && value[1] === null) {
       setValue([0, null])
     }
   }, [value])
-
-  const token = useSelector((state: RootState) => state.auth.accessToken)
-
-  const handleClickLogout = async () => {
-    try {
-      await dispatch(logout({ accessToken: token! }))
-    } catch (error) {
-      console.error('Logout error:', error)
-    }
-  }
 
   const handleChange = (newIndex: number | null) => {
     setValue([newIndex, null])
@@ -166,7 +151,9 @@ export const AccountPage = () => {
                   {...a11yProps(index)}
                 />
               ))}
-              <BasicModal />
+              <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
+                Вийти
+              </Button>
             </Tabs>
           </Container>
 
@@ -199,7 +186,7 @@ export const AccountPage = () => {
               </CustomAccordion>
             ))}
             <Button
-              onClick={handleClickLogout}
+              onClick={() => setOpenModal(true)}
               sx={{
                 width: '100%',
                 justifyContent: 'flex-start',
@@ -217,6 +204,7 @@ export const AccountPage = () => {
           <Typography>Loading...</Typography>
         )
       ) : null}
+      <BasicModal openModal={openModal} setOpenModal={setOpenModal} />
     </Fragment>
   )
 }

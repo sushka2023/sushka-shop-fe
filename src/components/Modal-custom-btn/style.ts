@@ -1,3 +1,5 @@
+import { Theme } from '@mui/material'
+
 export const btnEditAccount = {
   'marginLeft': 'auto',
   'borderRadius': '20px',
@@ -32,7 +34,7 @@ export const btnEditModWin = {
 
 export const boxModWin = {
   width: '100%',
-  maxWidth: 600,
+  maxWidth: 520,
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -44,9 +46,44 @@ export const boxModWin = {
   flexDirection: 'column',
   alignItems: 'center',
   color: 'secondary.darker',
-  padding: '30px 20px 50px 20px',
   border: 'none',
   fontFamily: 'Open Sans'
+}
+
+export const boxModForm = (theme: Theme, isClosing: boolean) => {
+  console.log('✌️isClosing --->', isClosing)
+  return {
+    'alignItems': 'start',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%',
+      position: 'fixed',
+      top: 'auto',
+      bottom: 0,
+      left: 0,
+      p: 0,
+      transform: 'none',
+      borderRadius: '20px 20px 0 0',
+      animation: isClosing
+        ? 'slideUp 0.5s ease-out forwards'
+        : 'slideDown 0.5s ease-out forwards'
+    },
+    '@keyframes slideUp': {
+      '0%': {
+        transform: 'translateY(100%)'
+      },
+      '100%': {
+        transform: 'translateY(0)'
+      }
+    },
+    '@keyframes slideDown': {
+      '0%': {
+        transform: 'translateY(0)'
+      },
+      '100%': {
+        transform: 'translateY(100%)'
+      }
+    }
+  }
 }
 
 export const emailIconLink = {

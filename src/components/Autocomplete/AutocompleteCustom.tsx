@@ -1,5 +1,10 @@
 import { FC, Fragment, ReactNode, SyntheticEvent } from 'react'
-import { Autocomplete, CircularProgress, TextField } from '@mui/material'
+import {
+  Autocomplete,
+  CircularProgress,
+  TextField,
+  useTheme
+} from '@mui/material'
 import { ListboxComponent, StyledPopper } from './VariableSizeList'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
@@ -27,6 +32,7 @@ export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
   name,
   ...props
 }) => {
+  const theme = useTheme()
   const isOptionEqualToValue = (
     option: string | null,
     value: string | null
@@ -39,7 +45,13 @@ export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
       {...props}
       {...register(name)}
       id={name}
-      sx={{ width: 400, mt: 2 }}
+      sx={{
+        width: 400,
+        mt: 2,
+        [theme.breakpoints.down('sm')]: {
+          width: '100%'
+        }
+      }}
       disableListWrap
       PopperComponent={StyledPopper}
       ListboxComponent={ListboxComponent}
