@@ -16,7 +16,7 @@ import CooperationPage from './pages/cooperation-page/CooperationPage'
 import { AppDispatch, RootState } from './redux/store'
 import { currentUser } from './redux/authentication/operation'
 import PrivateRouteAccount from './components/private-routes/PrivateRouteAccount.tsx'
-import PrivateRouteCrm from './components/private-routes/PrivateRouteCrm'
+// import PrivateRouteCrm from './components/private-routes/PrivateRouteCrm'
 import FeedbackPage from './pages/feedback-page/FeedbackPage'
 import { getToken } from './utils/cookie/token'
 import ShoppingListPage from './pages/shopping-list-page/ShoppingListPage'
@@ -68,10 +68,11 @@ function App() {
 
         <Route
           path="crm"
-          element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
+          // element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
+          element={<LayoutCRM />}
         >
           <Route
-            path="dashbord"
+            path="dashboard"
             element={
               <div style={{ marginBottom: '500px' }}>Dashboard page</div>
             }
@@ -100,7 +101,7 @@ function App() {
             element={<div style={{ marginBottom: '500px' }}>Opinions Page</div>}
           />
           <Route path="settings" element={<CrmSettingsPage />} />
-          <Route index element={<Navigate to="dashbord" replace />} />
+          <Route index element={<Navigate to="dashboard" replace />} />
         </Route>
       </Routes>
     </Fragment>

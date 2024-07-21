@@ -13,14 +13,12 @@ const CLIENT_PAGEQTY = 0
 
 const CrmClientsPage = () => {
   const location = useLocation()
-  console.log('CrmClientsPage  location:', location.search?.split('=')[1] || 1)
-  console.log('CrmClientsPage  location:', location)
+
+  const nowPage = parseInt(location.search?.split('=')[1])
 
   const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(
-    location.search?.split('=')[1] || CLIENT_PAGE
-  )
+  const [page, setPage] = useState(CLIENT_PAGE)
   const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
   console.log(page)
 
@@ -37,13 +35,14 @@ const CrmClientsPage = () => {
 
         setPageQty(totalNumberOfPages)
         setClients(data.users)
+        setPage(nowPage)
       } catch (error) {
         console.error(error)
       }
     }
 
     fetchCrmClients()
-  }, [page])
+  }, [page, location])
 
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker">
