@@ -14,7 +14,7 @@ const CLIENT_PAGEQTY = 0
 const CrmClientsPage = () => {
   const location = useLocation()
 
-  const nowPage = parseInt(location.search?.split('=')[1])
+  const nowPage = parseInt(location.search?.split('=')[1]) || CLIENT_PAGE
 
   const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
