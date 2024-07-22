@@ -9,8 +9,10 @@
    display: flex;
    justify-content: space-between;
    align-items: flex-start;
-   
+
 }
+
+
 .feedbackList {
    max-width: 840px;
 }
@@ -19,4 +21,14 @@
    font-family: Nunito;
    font-size: 48px;
    font-weight: 500;
+}
+
+@media screen and (max-width: 1440px) {
+  .feedbacksWrapper {
+    gap: 30px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
 }

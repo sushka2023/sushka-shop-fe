@@ -1,7 +1,7 @@
 @import '../../styles/base/base.scss';
 
 .feedbackList {
-width: 840px;
+  width: 840px;
 }
 .feedbackItem {
 display: flex;
@@ -48,15 +48,15 @@ gap: 25px;
     background-color: rgb(128, 128, 128);
 }
 .feedbackForm {
-    width: 400px;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     font-family: $open-sans;
-   
+
 }
 .feedbackFormInput {
-    width: 374px;
+    max-width: 374px;
     height: 44px;
     padding: 11px 16px 10px 16px;
     border: none;
@@ -115,7 +115,7 @@ color: $green-dark-200;
     align-items: center;
 }
 .formContainer {
-   min-width: 460px;
+   max-width: 460px;
    width: 460px;
    max-height: 100%;
    border-radius: 10px;
@@ -204,4 +204,52 @@ color: $green-dark-200;
     font-weight: 600;
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media screen  and (max-width: 1040px) {
+  .formContainer {
+    max-width: 344px;
+    padding: 20px 10px;
+  }
+
+
+
+  .feedbackFormInput {
+    width: 314px;
+  }
+
+  .feedbackForm {
+    width: 344px;
+  }
+
+  .feedbackFormTextarea {
+    width: 314px;
+  }
+
+  .submitWrapper {
+    flex-direction: column;
+    gap: 20px;
+    align-items: baseline;
+  }
+
+  .feedbackFormBtn {
+    width: 100%;
+  }
+
+  .subtitle {
+    font-size: 26px;
+  }
+
+  .feedbackItem {
+    max-width: 480px;
+    width: 100%;
+  }
+
+}
+
+
+@media screen and (max-width: 768px) {
+  .formContainer {
+    display: none;
+  }
 }
