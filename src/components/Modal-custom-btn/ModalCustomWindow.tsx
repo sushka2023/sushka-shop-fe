@@ -6,7 +6,7 @@ import { boxModWin } from './style'
 import { useTheme } from '@mui/material'
 
 type TModalWindow = {
-  yourStBoxModalWindow?: CSSProperties
+  sx?: CSSProperties
   children: ReactNode
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
@@ -14,7 +14,7 @@ type TModalWindow = {
 }
 
 export const ModalCustom = ({
-  yourStBoxModalWindow,
+  sx,
   children,
   openModal,
   setOpenModal
@@ -31,7 +31,7 @@ export const ModalCustom = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={{ ...boxModWin, ...yourStBoxModalWindow }}>
+      <Box sx={{ ...boxModWin(theme), ...sx }}>
         <Box
           sx={{
             position: 'absolute',

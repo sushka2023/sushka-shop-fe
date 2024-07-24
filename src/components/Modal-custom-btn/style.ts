@@ -32,56 +32,32 @@ export const btnEditModWin = {
   }
 }
 
-export const boxModWin = {
-  width: '100%',
-  maxWidth: 520,
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  borderRadius: '20px',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  color: 'secondary.darker',
-  border: 'none',
-  fontFamily: 'Open Sans'
-}
-
-export const boxModForm = (theme: Theme, isClosing: boolean) => {
-  console.log('✌️isClosing --->', isClosing)
+export const boxModWin = (theme: Theme) => {
   return {
-    'alignItems': 'start',
+    width: '100%',
+    heignt: 'auto',
+    maxWidth: 520,
+    maxHeight: '95%',
+
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    borderRadius: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: 'secondary.darker',
+    border: 'none',
+    fontFamily: 'Open Sans',
+    boxSizing: 'border-box',
+    p: '50px 20px 20px 20px',
+    overflow: 'auto',
     [theme.breakpoints.down('sm')]: {
-      maxWidth: '100%',
-      position: 'fixed',
-      top: 'auto',
-      bottom: 0,
-      left: 0,
-      p: 0,
-      transform: 'none',
-      borderRadius: '20px 20px 0 0',
-      animation: isClosing
-        ? 'slideUp 0.5s ease-out forwards'
-        : 'slideDown 0.5s ease-out forwards'
-    },
-    '@keyframes slideUp': {
-      '0%': {
-        transform: 'translateY(100%)'
-      },
-      '100%': {
-        transform: 'translateY(0)'
-      }
-    },
-    '@keyframes slideDown': {
-      '0%': {
-        transform: 'translateY(0)'
-      },
-      '100%': {
-        transform: 'translateY(100%)'
-      }
+      p: '40px 10px 15px 10px',
+      width: '95%',
+      maxHeight: 'calc(100vh - 40px)'
     }
   }
 }

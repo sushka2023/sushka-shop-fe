@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Typography, Stack } from '@mui/material'
 import axiosInstance from '../../axios/settings'
@@ -22,7 +22,7 @@ export const EmailConfirmationModal = ({
   const { showSnackbar } = useSnackbar()
 
   const requestEmail = async (email: string) => {
-    const modalTimeout = 2000
+    const modalTimeout = 2000000
     try {
       await axiosInstance.post('/api/auth/request_email', {
         email
@@ -58,8 +58,8 @@ export const EmailConfirmationModal = ({
   }
 
   return (
-    <React.Fragment>
-      {is_active ? null : (
+    <Fragment>
+      {!is_active ? null : (
         <Link
           to="/account"
           onClick={() => {
@@ -70,6 +70,7 @@ export const EmailConfirmationModal = ({
               console.error('Email is undefined')
             }
           }}
+          style={{ display: 'inline-block', marginTop: 25 }}
         >
           <IconinfoMessage />
           <Typography
@@ -123,6 +124,6 @@ export const EmailConfirmationModal = ({
           </Typography>
         </Typography>
       </ModalCustom>
-    </React.Fragment>
+    </Fragment>
   )
 }

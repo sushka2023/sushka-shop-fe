@@ -12,7 +12,6 @@ import { getToken } from '../../utils/cookie/token'
 import { AppDispatch } from '../../redux/store'
 import { AddressAddSchema } from '../auth/validation'
 import { useSnackbar } from '../../hooks/useSnackbar'
-import { boxModForm } from './style'
 
 type PropsType = {
   openModal: boolean
@@ -47,8 +46,6 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
   const { showSnackbar } = useSnackbar()
   const dispatch = useDispatch<AppDispatch>()
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
-  const [isClosing, setIisClosing] = useState<boolean>(openModal)
-  console.log('✌️openModal --->', openModal)
   const [selectedValue, setSelectedValue] =
     useState<string>('novaPoshtaBranches')
   const [AddressRetention, setAddressRetention] = useState(
@@ -66,13 +63,6 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
   } = useForm<FormValues>({
     resolver: yupResolver(AddressRetention)
   })
-
-  useEffect(() => {
-    if (openModal) {
-      setIisClosing(true)
-    }
-    setIisClosing
-  }, [openModal])
 
   useEffect(() => {
     setSelectedValue('novaPoshtaBranches')
@@ -113,6 +103,7 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
         }
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
+    console.log('✌️values --->', values)
     const endpoint = getEndpoint(selectedValue)
     const data = getData(values, selectedValue, user)
 
@@ -136,12 +127,24 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
     <ModalCustom
       openModal={openModal}
       setOpenModal={setOpenModal}
-      yourStBoxModalWindow={boxModForm(theme, isClosing)}
+      sx={{
+        [theme.breakpoints.down('sm')]: {
+          maxHeight: '100%',
+
+          maxWidth: 'none',
+          transform: 'none',
+          borderRadius: 0,
+          top: 'auto',
+          left: 0,
+          bottom: 0,
+          p: 1
+        }
+      }}
     >
       <Box
         sx={{
           [theme.breakpoints.down('sm')]: {
-            p: 2
+            width: '100%'
           }
         }}
       >
@@ -192,7 +195,7 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
                   width: '50%'
                 }
               }}
-              onClick={() => setIisClosing(false)}
+              onClick={() => setOpenModal(false)}
               variant="outlined"
             >
               Скасувати

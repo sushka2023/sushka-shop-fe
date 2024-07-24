@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode, useEffect, useState } from 'react'
+import { FC, Fragment, ReactNode, SyntheticEvent, useState } from 'react'
 import Box from '@mui/material/Box'
 import {
   Accordion,
@@ -25,7 +25,7 @@ import { btnEditAccount } from '../../components/Modal-custom-btn/style'
 type TabPanelProps = {
   children?: ReactNode
   index: number
-  value: number | null
+  value: number
 }
 type CustomAccordionProps = {
   index: number
@@ -118,18 +118,17 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
 export const AccountPage = () => {
   const { user } = useAuth()
   const theme = useTheme()
-  const [value, setValue] = useState([0, null])
+  const [tabValue, setTabValue] = useState<number>(0)
+  const [accordionValue, setAccordionValue] = useState<number | null>(null)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [openModal, setOpenModal] = useState(false)
 
-  useEffect(() => {
-    if (value[0] === null && value[1] === null) {
-      setValue([0, null])
-    }
-  }, [value])
+  const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
+    setTabValue(newValue)
+  }
 
-  const handleChange = (newIndex: number | null) => {
-    setValue([newIndex, null])
+  const handleAccordionChange = (newIndex: number | null) => {
+    setAccordionValue(newIndex)
   }
 
   return (
@@ -138,8 +137,8 @@ export const AccountPage = () => {
         <Fragment>
           <Container sx={{ p: '40px 0' }}>
             <Tabs
-              value={value[0]}
-              onChange={(_, newValue) => setValue([newValue, null])}
+              value={tabValue}
+              onChange={handleTabChange}
               aria-label="basic tabs example"
               sx={stTabsNav}
             >
@@ -160,7 +159,7 @@ export const AccountPage = () => {
           <Box sx={{ ...stContainerTabPanel, p: '40px 0' }}>
             {user
               ? accordions.map((accordion, index) => (
-                  <CustomTabPanel key={index} value={value[0]} index={index}>
+                  <CustomTabPanel key={index} value={tabValue} index={index}>
                     {accordion.content}
                   </CustomTabPanel>
                 ))
@@ -177,8 +176,8 @@ export const AccountPage = () => {
               <CustomAccordion
                 key={index}
                 index={index}
-                expanded={value[0]}
-                onChange={handleChange}
+                expanded={accordionValue}
+                onChange={handleAccordionChange}
                 summary={accordion.summary}
               >
                 <Box sx={stContainerTabPanel}>{accordion.content}</Box>

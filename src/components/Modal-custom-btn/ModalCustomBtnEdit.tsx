@@ -37,14 +37,7 @@ export const BasicModal: FC<TypeProps> = ({ openModal, setOpenModal }) => {
 
   return (
     <Fragment>
-      <ModalCustom
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        yourStBoxModalWindow={{
-          width: '85%',
-          padding: 3
-        }}
-      >
+      <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
         <Typography
           id="modal-modal-title"
           variant="body1"
