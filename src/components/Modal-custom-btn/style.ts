@@ -38,7 +38,7 @@ export const boxModWin = (theme: Theme) => {
     heignt: 'auto',
     maxWidth: 520,
     maxHeight: '95%',
-
+    textAlign: 'center',
     position: 'absolute',
     top: '50%',
     left: '50%',

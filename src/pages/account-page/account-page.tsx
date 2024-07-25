@@ -27,6 +27,7 @@ type TabPanelProps = {
   index: number
   value: number
 }
+
 type CustomAccordionProps = {
   index: number
   expanded: number | null
@@ -119,7 +120,7 @@ export const AccountPage = () => {
   const { user } = useAuth()
   const theme = useTheme()
   const [tabValue, setTabValue] = useState<number>(0)
-  const [accordionValue, setAccordionValue] = useState<number | null>(null)
+  const [accordionValue, setAccordionValue] = useState<number | null>(0)
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [openModal, setOpenModal] = useState(false)
 

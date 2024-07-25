@@ -1,8 +1,8 @@
-/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 export type NovaPoshtaDataResponse = {
+  post_code: string | undefined;
     id: number;
     address_warehouse?: string;
     city: string;

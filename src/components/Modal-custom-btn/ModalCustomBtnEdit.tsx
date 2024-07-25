@@ -51,13 +51,9 @@ export const BasicModal: FC<TypeProps> = ({ openModal, setOpenModal }) => {
           variant="body2"
           sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
         >
-          Ви точно бажаєте вийти зі свого аккаунта?
+          Ви дійсно бажаєте вийти зі свого аккаунта?
         </Typography>
-        <Stack
-          spacing={2}
-          direction="row"
-          sx={{ marginTop: '40px', width: '100%' }}
-        >
+        <Stack gap={2} direction="row" sx={{ mt: 4, width: '100%' }}>
           <Button
             variant="outlined"
             onClick={() => setOpenModal(false)}

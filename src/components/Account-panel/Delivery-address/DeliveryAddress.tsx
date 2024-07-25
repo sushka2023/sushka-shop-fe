@@ -124,11 +124,11 @@ export const DeliveryAddress: FC = () => {
             </Grid>
           </Grid>
         </Box>
-        <ModalCustomFormRadius
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
       </Container>
+      <ModalCustomFormRadius
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
       <ModalCustomDelete
         indexToDelete={indexToDelete}
         addressUser={addressUser}

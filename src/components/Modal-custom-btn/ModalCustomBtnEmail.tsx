@@ -94,10 +94,10 @@ export const EmailConfirmationModal = ({
         <Typography
           id="modal-modal-description"
           variant="body1"
-          sx={{ m: 1, maxWidth: 400, textAlign: 'center' }}
+          sx={{ m: 1, maxWidth: 340 }}
         >
           Перейдіть за посиланням в листі, який ми відправили на вашу електронну
-          пошту, <br /> щоб її підтвердити
+          пошту, щоб її підтвердити
         </Typography>
         <Stack spacing={2} direction="row" style={{ marginTop: '40px' }}>
           <Button

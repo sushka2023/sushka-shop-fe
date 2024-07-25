@@ -94,13 +94,7 @@ export const ModalCustomDelete: FC<TypeProps> = ({
 
   return (
     <Fragment>
-      <ModalCustom
-        openModal={openModalDel}
-        setOpenModal={setOpenModalDel}
-        sx={{
-          width: '95%'
-        }}
-      >
+      <ModalCustom openModal={openModalDel} setOpenModal={setOpenModalDel}>
         <Typography
           id="modal-modal-title"
           variant="body1"
@@ -114,13 +108,9 @@ export const ModalCustomDelete: FC<TypeProps> = ({
           variant="body2"
           sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
         >
-          Ви точно бажаєте видалити цю адресу?
+          Ви дійсно бажаєте видалити цю адресу?
         </Typography>
-        <Stack
-          spacing={2}
-          direction="row"
-          sx={{ marginTop: '40px', width: '100%' }}
-        >
+        <Stack gap={2} direction="row" sx={{ mt: 4, width: '100%' }}>
           <Button
             variant="outlined"
             onClick={() => setOpenModalDel(false)}
