@@ -5,12 +5,35 @@
    margin-bottom: 197px;
    padding: 0 40px;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .feedbacksWrapper {
    display: flex;
    justify-content: space-between;
    align-items: flex-start;
-
 }
+
+.button {
+  display: none;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: $yellow-200;
+  border: 2px solid $white-500;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: $white-200;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+}
+
 
 
 .feedbackList {
@@ -31,4 +54,14 @@
   .title {
     font-size: 36px;
   }
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    display: block;
+  }
+  .title {
+    font-size: 24px;
+  }
+
 }
