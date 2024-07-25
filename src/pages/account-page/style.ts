@@ -8,10 +8,21 @@ export const stWavePink = {
 }
 
 export const stTabsNav = {
+  width: '100%',
   padding: '10px',
-  border: '1px solid',
+  borderLeft: '1px solid',
+  borderTop: '1px solid',
+  borderBottom: '1px solid',
   borderColor: 'peach.darker',
-  borderRadius: '30px'
+  borderRadius: '30px 0 0 30px'
+}
+export const stTabsBottomBox = {
+  padding: '10px',
+  borderRight: '1px solid',
+  borderTop: '1px solid',
+  borderBottom: '1px solid',
+  borderColor: 'peach.darker',
+  borderRadius: ' 0  30px 30px 0'
 }
 
 export const stContainerTabPanel = {

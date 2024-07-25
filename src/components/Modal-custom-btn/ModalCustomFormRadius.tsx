@@ -103,7 +103,6 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
         }
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
-    console.log('✌️values --->', values)
     const endpoint = getEndpoint(selectedValue)
     const data = getData(values, selectedValue, user)
 
@@ -128,9 +127,9 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
       openModal={openModal}
       setOpenModal={setOpenModal}
       sx={{
+        textAlign: 'start',
         [theme.breakpoints.down('sm')]: {
           maxHeight: '100%',
-
           maxWidth: 'none',
           transform: 'none',
           borderRadius: 0,
@@ -141,13 +140,7 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
         }
       }}
     >
-      <Box
-        sx={{
-          [theme.breakpoints.down('sm')]: {
-            width: '100%'
-          }
-        }}
-      >
+      <Box width="100%">
         <Typography
           id="modal-modal-title"
           variant="h3"

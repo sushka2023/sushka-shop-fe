@@ -16,7 +16,12 @@ import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
-import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
+import {
+  stContainerTabPanel,
+  stTabsBottomBox,
+  stTabsNav,
+  stWavePink
+} from './style'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Button } from '../../components/UI/Button'
@@ -119,17 +124,16 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
 export const AccountPage = () => {
   const { user } = useAuth()
   const theme = useTheme()
-  const [tabValue, setTabValue] = useState<number>(0)
-  const [accordionValue, setAccordionValue] = useState<number | null>(0)
+  const [activeIndex, setActiveIndex] = useState<number>(0) // Unified state for tabs and accordions
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [openModal, setOpenModal] = useState(false)
 
-  const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
-    setTabValue(newValue)
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
+    setActiveIndex(newValue)
   }
 
   const handleAccordionChange = (newIndex: number | null) => {
-    setAccordionValue(newIndex)
+    setActiveIndex(newIndex ?? 0)
   }
 
   return (
@@ -137,30 +141,42 @@ export const AccountPage = () => {
       {!isSmallScreen && (
         <Fragment>
           <Container sx={{ p: '40px 0' }}>
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              aria-label="basic tabs example"
-              sx={stTabsNav}
-            >
-              {accordions.map((accordion, index) => (
-                <Tab
-                  key={index}
-                  disableRipple
-                  label={accordion.summary}
-                  {...a11yProps(index)}
-                />
-              ))}
-              <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
-                Вийти
-              </Button>
-            </Tabs>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Tabs
+                value={activeIndex}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                sx={stTabsNav}
+              >
+                {accordions.map((accordion, index) => (
+                  <Tab
+                    sx={{
+                      width: '20%',
+                      p: 0.7,
+                      textTransform: 'uppercase',
+                      [theme.breakpoints.down('md')]: {
+                        width: '25%'
+                      }
+                    }}
+                    key={index}
+                    disableRipple
+                    label={accordion.summary}
+                    {...a11yProps(index)}
+                  />
+                ))}
+              </Tabs>
+              <Box sx={stTabsBottomBox}>
+                <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
+                  Вийти
+                </Button>
+              </Box>
+            </Box>
           </Container>
 
           <Box sx={{ ...stContainerTabPanel, p: '40px 0' }}>
             {user
               ? accordions.map((accordion, index) => (
-                  <CustomTabPanel key={index} value={tabValue} index={index}>
+                  <CustomTabPanel key={index} value={activeIndex} index={index}>
                     {accordion.content}
                   </CustomTabPanel>
                 ))
@@ -177,7 +193,7 @@ export const AccountPage = () => {
               <CustomAccordion
                 key={index}
                 index={index}
-                expanded={accordionValue}
+                expanded={activeIndex}
                 onChange={handleAccordionChange}
                 summary={accordion.summary}
               >
