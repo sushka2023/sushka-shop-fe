@@ -23,7 +23,9 @@ const HeaderListIcons = () => {
   const searchToken = Object.fromEntries(searchParams.entries())
 
   useEffect(() => {
-    Object.keys(searchToken).length > 0 && setIsModalOpen(true)
+    console.log(Object.keys(searchToken))
+
+    Object.keys(searchToken)[0] === 'page' && setIsModalOpen(true)
   }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {

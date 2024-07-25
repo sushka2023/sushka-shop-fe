@@ -1,0 +1,67 @@
+.pagination {
+  width: 100%;
+
+  ul {
+    position: relative;
+    justify-content: center;
+    height: 40px;
+
+    li:first-child > button,
+    li:last-child > button {
+      border: 1px solid #5d5fef;
+      position: absolute;
+      width: 174px;
+      height: 40px;
+      color: #5d5fef;
+
+      div {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+      }
+    }
+
+    li:first-child > button {
+      left: 0;
+      top: 0;
+    }
+
+    li:last-child > button {
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+.table {
+  thead {
+    tr {
+      th {
+        font-size: 14px;
+      }
+    }
+  }
+
+  tr {
+    cursor: pointer;
+  }
+
+  th > span {
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 5px 10px;
+  }
+
+  .roleAdmin {
+    color: #e11d48;
+    background: #f6e5ef;
+  }
+  .roleModerator {
+    color: #e07706;
+    background: #fff9e3;
+  }
+  .roleUser {
+    color: #5d5fef;
+    background: #eff3ff;
+  }
+}

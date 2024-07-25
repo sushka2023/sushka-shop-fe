@@ -33,11 +33,30 @@ const userInfoSchema = yup
     phoneOtherRecipient: yup.string().when('otherRecipient', {
       is: true,
       then: (schema) => schema.required('Поле має бути заповненим')
-    }),
-    paymentType: yup.string().required(),
-    comment: yup.string(),
-    call: yup.boolean().required()
+    })
   })
   .required()
 
-export { userInfoSchema }
+const addressInfoSchema = yup
+  .object()
+  .shape({
+    address: yup.lazy((value) => {
+      if (value === null) {
+        return yup.mixed().nullable()
+      } else if (typeof value === 'object') {
+        return yup
+          .object()
+          .required('Оберіть адресу')
+          .test(
+            'is-not-empty',
+            'Оберіть адресу',
+            (obj) => obj && Object.keys(obj).length > 0
+          )
+      } else if (typeof value === 'string') {
+        return yup.string().required('Поле має бути заповненим')
+      }
+    })
+  })
+  .required()
+
+export { userInfoSchema, addressInfoSchema }

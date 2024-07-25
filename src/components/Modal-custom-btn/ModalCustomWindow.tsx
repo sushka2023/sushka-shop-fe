@@ -1,23 +1,27 @@
-import React from 'react'
+import { CSSProperties, Dispatch, ReactNode, SetStateAction } from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import { boxModWin } from './style'
+
 type TModalWindow = {
-  yourStBoxModalWindow?: React.CSSProperties
-  children: React.ReactNode
+  yourStBoxModalWindow?: CSSProperties
+  children: ReactNode
   openModal: boolean
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenModal: Dispatch<SetStateAction<boolean>>
+  callback: () => void
 }
 
 export const ModalCustom = ({
   yourStBoxModalWindow,
   children,
   openModal,
-  setOpenModal
+  setOpenModal,
+  callback
 }: TModalWindow) => {
   const handleCloseModal = () => {
     setOpenModal(false)
+    callback && callback()
   }
 
   return (

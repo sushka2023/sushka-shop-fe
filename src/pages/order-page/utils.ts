@@ -1,5 +1,9 @@
 import CryptoJS from 'crypto-js'
-import { BasketItemsResponse, ProductResponse } from '../../types'
+import {
+  BasketItemsResponse,
+  ProductResponse,
+  UserResponseForOrder
+} from '../../types'
 import { getLocalStorageData } from '../../utils/local-storage'
 import { createOrder, getBasketItems, getProductForId } from './operation'
 import { OrderDetailsType, RequestPayment } from './types'
@@ -62,15 +66,21 @@ const sendOrder = async (
   data: OrderDetailsType,
   callback: CallbackFunction<number>,
   callbackError: CallbackFunction<string>,
-  callbackLoading: CallbackFunction<boolean>
+  callbackLoading: CallbackFunction<boolean>,
+  callbackIsNotificationModal: CallbackFunction<boolean>,
+  user: UserResponseForOrder,
+  orderList: BasketItemsResponse[],
+  postType: string
 ) => {
   try {
     callbackLoading(true)
-    const orderData = await createOrder(data)
-    return callback(orderData.data.order_info.id)
+    const orderData = await createOrder(data, user, orderList, postType)
+    callback(orderData.data.order_info.id)
+    return callbackIsNotificationModal(true)
   } catch (e) {
     callbackLoading(false)
     callbackError('помилка під час відправки замовлення')
+    return callbackIsNotificationModal(true)
   } finally {
     callbackLoading(false)
   }
@@ -93,6 +103,10 @@ const pricing = (priceArray: BasketItemsResponse[]) => {
 
 const generateHash = (string: string, key: string) => {
   return CryptoJS.HmacMD5(string, key).toString(CryptoJS.enc.Hex)
+}
+
+const generateOrderReference = () => {
+  return `ORDER-${new Date().getTime()}`
 }
 
 const generateSignature = (requestData: RequestPayment) => {
@@ -130,5 +144,6 @@ export {
   loadLocalStorageItems,
   sendOrder,
   pricing,
-  generateSignature
+  generateSignature,
+  generateOrderReference
 }

@@ -2,6 +2,7 @@ import { Card, CardHeader, Avatar, CardContent } from '@mui/material'
 import { Typography } from '../../components/UI/Typography'
 import { NovaPoshtaDataResponse } from '../../types'
 import { cardCheckedStyle, cardHeaderStyle, cardStyle } from './style'
+import logoNP from '../../icons/logoNP.svg'
 
 type Props = {
   option: NovaPoshtaDataResponse
@@ -15,7 +16,7 @@ const AdressesCard: React.FC<Props> = ({ option, selectedAdressId }) => {
   return (
     <Card sx={option.id !== selectedAdressId ? cardStyle : cardCheckedStyle}>
       <CardHeader
-        avatar={<Avatar>NP</Avatar>}
+        avatar={<Avatar sx={{ backgroundColor: 'white' }} src={logoNP} />}
         title={
           <Typography color={getAddressCardColor(option.id)}>
             Нова Пошта
@@ -30,7 +31,7 @@ const AdressesCard: React.FC<Props> = ({ option, selectedAdressId }) => {
       />
       <CardContent>
         <Typography variant="body1" color={getAddressCardColor(option.id)}>
-          Відділення №{option.address_warehouse},
+          {option.address_warehouse},
         </Typography>
         <Typography variant="body1" color={getAddressCardColor(option.id)}>
           {option.city}

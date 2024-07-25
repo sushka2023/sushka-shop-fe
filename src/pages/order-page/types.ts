@@ -1,15 +1,18 @@
-import { BasketItemsResponse } from '../../types'
+import { BasketItemsResponse, NovaPoshtaDataResponse } from '../../types'
 import {
   UseFormRegister,
   Control,
   UseFormSetValue,
-  FieldErrors
+  FieldErrors,
+  UseFormClearErrors,
+  FieldValues,
+  UseFormSetError
 } from 'react-hook-form'
 
 export enum PaymentMethodTypes {
-  wayforpay = 'liqpay',
+  wayforpay = 'wayforpay',
   postpaid = 'cash_on_delivery_np',
-  byDetails = 'by_details'
+  byDetails = 'requisite'
 }
 
 export type Inputs = {
@@ -20,6 +23,7 @@ export type Inputs = {
   otherRecipient?: boolean | undefined
   fullNameOtherRecipient?: string | undefined
   phoneOtherRecipient?: string | undefined
+  address: object | string | null
   paymentType: PaymentMethodTypes
   comment: string
   call: boolean
@@ -32,15 +36,23 @@ export type OrderContextType = {
   setActiveStep: React.Dispatch<React.SetStateAction<number>>
   orderList: BasketItemsResponse[]
   setOrderList: React.Dispatch<React.SetStateAction<BasketItemsResponse[]>>
-  register: UseFormRegister<Inputs>
+  register: UseFormRegister<Inputs | FieldValues>
   control: Control<Inputs, any>
   orderDetails: OrderDetailsType
-  setValue: UseFormSetValue<Inputs>
+  setValue: UseFormSetValue<Inputs | FieldValues>
   otherRecipient: boolean
   setOtherRecipient: React.Dispatch<React.SetStateAction<boolean>>
   isLoadingBasketItems: boolean
   isLoadingOrder: boolean
   errors: FieldErrors<Inputs>
+  setError: UseFormSetError<FieldValues>
+  clearErrors: UseFormClearErrors<FieldValues>
+  address: object | string | null
+  setAddress: React.Dispatch<React.SetStateAction<NovaPoshtaDataResponse>>
+  isOpenModal: boolean
+  setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>
+  selectedValue: string
+  setSelectedValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type RequestPayment = {

@@ -58,7 +58,7 @@ export const ResetPasswordSchema = Yup.object().shape({
     .required('Поле має бути заповненим')
 })
 
-export const ChangeDataSchema = Yup.object().shape({
+export const ChangeUserSchema = Yup.object().shape({
   first_name: Yup.string()
     .min(3, 'Ім`я повинно містити щонайменше 3 символи')
     .max(150, 'Ім`я повинно бути менше 150 символів')
@@ -98,3 +98,34 @@ export const ChangePasswordSchema = Yup.object().shape({
     .required('Повторіть новий пароль')
     .oneOf([Yup.ref('new_password')], 'Паролі повинні співпадати')
 })
+
+export const AddressAddSchema = (selectedValue: string) => {
+  switch (selectedValue) {
+    case 'novaPoshtaBranches':
+      return Yup.object().shape({
+        cityBranches: Yup.string().required('Виберіть населений пункт'),
+        branches: Yup.string().required('Виберіть відділення')
+      })
+    case 'novaPoshtaPostomats':
+      return Yup.object().shape({
+        cityPostomats: Yup.string().required('Виберіть населений пункт'),
+        postomats: Yup.string().required('Виберіть відділення')
+      })
+    case 'novaPoshtaAddress':
+      return Yup.object().shape({
+        cityAddress: Yup.string().required('Виберіть населений пункт'),
+        address: Yup.string().required('Введіть вулицю'),
+        house: Yup.string()
+          .required('Введіть будинок')
+          .max(4, 'Поле будинок може містити не більше 4 символів'),
+        floor: Yup.string()
+          .notRequired()
+          .max(3, 'Поле поверх може містити не більше 3 символів'),
+        apartment: Yup.string()
+          .notRequired()
+          .max(4, 'Поле квартира може містити не більше 4 символів')
+      })
+    default:
+      return Yup.object().shape({})
+  }
+}
