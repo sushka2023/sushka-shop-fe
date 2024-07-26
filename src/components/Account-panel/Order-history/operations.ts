@@ -19,6 +19,7 @@ export const fetchOrders = async (
     })
 
     const data = response.data.orders
+    console.log('✌️data --->', data)
 
     setOrders((prevOrders) => {
       const uniqueOrders = data.filter(
