@@ -9,8 +9,8 @@ import { emailIconLink, emailLinkList } from './style'
 import { ModalCustom } from './ModalCustomWindow'
 
 type EmailConfirmationModalProps = {
-  is_active: boolean
-  email: string
+  is_active: boolean | undefined
+  email: string | undefined
   error?: unknown
 }
 
@@ -38,12 +38,16 @@ export const EmailConfirmationModal = ({
 
   const handleResendEmail = async () => {
     try {
-      await requestEmail(email)
-      setOpenModal(false)
-      showSnackbar({
-        error: false,
-        message: 'Ми відправили ще раз, перевірте пошту'
-      })
+      if (email) {
+        await requestEmail(email)
+        setOpenModal(false)
+        showSnackbar({
+          error: false,
+          message: 'Ми відправили ще раз, перевірте пошту'
+        })
+      } else {
+        console.error('Email is undefined')
+      }
     } catch (error) {
       console.error('Помилка під час відправлення листа:', error)
       showSnackbar({
@@ -55,12 +59,16 @@ export const EmailConfirmationModal = ({
 
   return (
     <React.Fragment>
-      {!is_active ? null : (
+      {is_active ? null : (
         <Link
           to="/account"
           onClick={() => {
-            setOpenModal(true)
-            requestEmail(email)
+            if (email) {
+              setOpenModal(true)
+              requestEmail(email)
+            } else {
+              console.error('Email is undefined')
+            }
           }}
         >
           <IconinfoMessage />

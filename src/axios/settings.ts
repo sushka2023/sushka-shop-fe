@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { getToken } from '../utils/cookie/token'
-
 export const BASE_URL = 'https://sushka-store-timvladislav13010.koyeb.app/'
 export const COOKIE_TOKEN_NAME = 'token'
 

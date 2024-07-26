@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
@@ -8,7 +8,7 @@ import { Button } from '../UI/Button'
 import { btnEditAccount, btnEditModWin } from './style'
 import { ModalCustom } from './ModalCustomWindow'
 
-type RootState = {
+export type RootState = {
   auth: {
     accessToken: string
   }
@@ -34,7 +34,7 @@ export const BasicModal = () => {
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
         Вийти
       </Button>
@@ -81,6 +81,6 @@ export const BasicModal = () => {
           </Button>
         </Stack>
       </ModalCustom>
-    </React.Fragment>
+    </Fragment>
   )
 }
