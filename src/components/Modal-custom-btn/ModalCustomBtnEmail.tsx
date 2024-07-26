@@ -22,7 +22,7 @@ export const EmailConfirmationModal = ({
   const { showSnackbar } = useSnackbar()
 
   const requestEmail = async (email: string) => {
-    const modalTimeout = 2000000
+    const modalTimeout = 2000
     try {
       await axiosInstance.post('/api/auth/request_email', {
         email

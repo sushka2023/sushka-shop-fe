@@ -39,7 +39,6 @@ export const DeliveryAddress: FC = () => {
   const [openModal, setOpenModal] = useState(false)
   const [openModalDel, setOpenModalDel] = useState(false)
   const [indexToDelete, setIndexToDelete] = useState<number | null>(null)
-  console.log('✌️indexToDelete --->', indexToDelete)
   const [disabled, setDisabled] = useState(false)
   const { user } = useAuth()
 
