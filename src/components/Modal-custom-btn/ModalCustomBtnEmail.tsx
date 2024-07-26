@@ -13,6 +13,7 @@ type EmailConfirmationModalProps = {
   email: string | undefined
   error?: unknown
 }
+const MODAL_TIMEOUT = 2000
 
 export const EmailConfirmationModal = ({
   is_active,
@@ -22,7 +23,6 @@ export const EmailConfirmationModal = ({
   const { showSnackbar } = useSnackbar()
 
   const requestEmail = async (email: string) => {
-    const modalTimeout = 2000
     try {
       await axiosInstance.post('/api/auth/request_email', {
         email
@@ -30,7 +30,7 @@ export const EmailConfirmationModal = ({
       setOpenModal(true)
       setTimeout(() => {
         setOpenModal(false)
-      }, modalTimeout)
+      }, MODAL_TIMEOUT)
     } catch (error) {
       console.error('Non-Axios error:', error)
     }
