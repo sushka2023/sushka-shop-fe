@@ -138,7 +138,7 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
 
       <AutocompleteCustom
         name="postomats"
-        placeholder="Оберіть відділення"
+        placeholder="Оберіть поштомат"
         register={register}
         options={optionsData.map((option) => option.label)}
         disabled={isDisabled}
