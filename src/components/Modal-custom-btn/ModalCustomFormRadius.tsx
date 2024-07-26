@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { ModalCustom } from './ModalCustomWindow'
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography, Button, useTheme } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioForm } from '../RadioForm/RadioForm'
@@ -40,6 +40,7 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
   openModal,
   setOpenModal
 }) => {
+  const theme = useTheme()
   const { user } = useAuth()
   const accessToken = getToken()
   const { showSnackbar } = useSnackbar()
@@ -125,16 +126,42 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
     <ModalCustom
       openModal={openModal}
       setOpenModal={setOpenModal}
-      yourStBoxModalWindow={{
-        alignItems: 'start'
+      sx={{
+        textAlign: 'start',
+        [theme.breakpoints.down('sm')]: {
+          maxHeight: '100%',
+          maxWidth: 'none',
+          transform: 'none',
+          borderRadius: 0,
+          top: 'auto',
+          left: 0,
+          bottom: 0,
+          p: 1
+        }
       }}
     >
-      <Box sx={{ p: '0 25px' }}>
-        <Typography id="modal-modal-title" variant="h3">
+      <Box width="100%">
+        <Typography
+          id="modal-modal-title"
+          variant="h3"
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              fontFamily: 'Nunito',
+              fontSize: 21,
+              fontWeight: 700
+            }
+          }}
+        >
           Додати нову адресу
         </Typography>
         <Typography
-          sx={{ fontSize: 18, m: '10px 0 20px 0' }}
+          sx={{
+            fontSize: 18,
+            m: '10px 0 20px 0',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: 15
+            }
+          }}
           id="modal-modal-description"
           component="p"
         >
@@ -152,16 +179,28 @@ export const ModalCustomFormRadius: FC<PropsType> = ({
             errors={errors}
             clearErrors={clearErrors}
           />
-          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+          <Box sx={{ m: '10px 0', display: 'flex', gap: 2 }}>
             <Button
-              sx={{ height: 50, width: 200 }}
+              sx={{
+                height: 50,
+                width: 200,
+                [theme.breakpoints.down('sm')]: {
+                  width: '50%'
+                }
+              }}
               onClick={() => setOpenModal(false)}
               variant="outlined"
             >
               Скасувати
             </Button>
             <Button
-              sx={{ height: 50, width: 200 }}
+              sx={{
+                height: 50,
+                width: 200,
+                [theme.breakpoints.down('sm')]: {
+                  width: '50%'
+                }
+              }}
               type="submit"
               variant="contained"
               disabled={isLoadingBtn}

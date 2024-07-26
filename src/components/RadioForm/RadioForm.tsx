@@ -1,5 +1,11 @@
 import { Dispatch, FC, Fragment } from 'react'
-import { Radio, RadioGroup, FormControlLabel, Typography } from '@mui/material'
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Typography,
+  useTheme
+} from '@mui/material'
 import { NovaPoshtaBranch } from './BranchesNP'
 import { NovaPoshtaPostomats } from './PostomatsNP'
 import { AddressNP } from './AddressNP'
@@ -33,6 +39,7 @@ export const RadioForm: FC<RadioFormProps> = ({
   selectedValue,
   setSelectedValue
 }) => {
+  const theme = useTheme()
   return (
     <Fragment>
       <RadioGroup
@@ -49,7 +56,13 @@ export const RadioForm: FC<RadioFormProps> = ({
               Нова пошта (відділення)
             </Typography>
           }
-          sx={{ pointerEvents: 'none' }}
+          sx={{
+            pointerEvents: 'none',
+            [theme.breakpoints.down('sm')]: {
+              pointerEvents: 'auto',
+              p: '5px 0'
+            }
+          }}
         />
         {selectedValue === 'novaPoshtaBranches' && (
           <NovaPoshtaBranch
@@ -70,7 +83,12 @@ export const RadioForm: FC<RadioFormProps> = ({
               Нова пошта (поштомат)
             </Typography>
           }
-          sx={{ pointerEvents: 'none' }}
+          sx={{
+            pointerEvents: 'none',
+            [theme.breakpoints.down('sm')]: {
+              pointerEvents: 'auto'
+            }
+          }}
         />
         {selectedValue === 'novaPoshtaPostomats' && (
           <NovaPoshtaPostomats
@@ -91,7 +109,13 @@ export const RadioForm: FC<RadioFormProps> = ({
               Нова пошта (адресна)
             </Typography>
           }
-          sx={{ pointerEvents: 'none' }}
+          sx={{
+            pointerEvents: 'none',
+            [theme.breakpoints.down('sm')]: {
+              pointerEvents: 'auto',
+              p: '5px 0'
+            }
+          }}
         />
         {selectedValue === 'novaPoshtaAddress' && (
           <AddressNP
@@ -110,7 +134,13 @@ export const RadioForm: FC<RadioFormProps> = ({
           label={
             <Typography sx={{ pointerEvents: 'auto' }}>Укрпошта</Typography>
           }
-          sx={{ pointerEvents: 'none' }}
+          sx={{
+            pointerEvents: 'none',
+            [theme.breakpoints.down('sm')]: {
+              pointerEvents: 'auto',
+              p: '5px 0'
+            }
+          }}
         />
         {selectedValue === 'urkPoshta' && <Typography>Urk</Typography>}
       </RadioGroup>

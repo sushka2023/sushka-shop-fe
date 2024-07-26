@@ -1,24 +1,26 @@
-import { Fragment, useState } from 'react'
+import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import { logout } from '../../redux/authentication/operation'
 import { AppDispatch } from '../../redux/store'
 import { Button } from '../UI/Button'
-import { btnEditAccount, btnEditModWin } from './style'
+import { btnEditModWin } from './style'
 import { ModalCustom } from './ModalCustomWindow'
 
+type TypeProps = {
+  openModal: boolean
+  setOpenModal: Dispatch<SetStateAction<boolean>>
+}
 export type RootState = {
   auth: {
     accessToken: string
   }
 }
 
-export const BasicModal = () => {
+export const BasicModal: FC<TypeProps> = ({ openModal, setOpenModal }) => {
   const dispatch = useDispatch<AppDispatch>()
   const [isLoadingBtn, setIsLoadingBtn] = useState<boolean>(false)
-
-  const [openModal, setOpenModal] = useState(false)
 
   const token = useSelector((state: RootState) => state.auth.accessToken)
 
@@ -35,9 +37,6 @@ export const BasicModal = () => {
 
   return (
     <Fragment>
-      <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
-        Вийти
-      </Button>
       <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
         <Typography
           id="modal-modal-title"
@@ -52,14 +51,14 @@ export const BasicModal = () => {
           variant="body2"
           sx={{ mt: 3, fontWeight: 400, fontSize: 18 }}
         >
-          Ви точно бажаєте вийти зі свого аккаунта?
+          Ви дійсно бажаєте вийти зі свого аккаунта?
         </Typography>
-        <Stack spacing={2} direction="row" sx={{ marginTop: '40px' }}>
+        <Stack gap={2} direction="row" sx={{ mt: 4, width: '100%' }}>
           <Button
             variant="outlined"
             onClick={() => setOpenModal(false)}
             sx={{
-              width: 250,
+              width: '50%',
               height: 50,
               textTransform: 'capitalize'
             }}
@@ -71,7 +70,7 @@ export const BasicModal = () => {
             onClick={handleClickLogout}
             sx={{
               ...btnEditModWin,
-              width: 250,
+              width: '50%',
               height: 50,
               textTransform: 'capitalize'
             }}
