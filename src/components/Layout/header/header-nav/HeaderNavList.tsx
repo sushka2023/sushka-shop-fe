@@ -13,13 +13,13 @@ const HeaderNavList: FC<Props> = ({ allCategories }) => {
   const location = useLocation()
   const isHomePath = location.pathname === '/'
 
-  if (!allCategories?.length) return null
+  if (!allCategories) return null
 
   return (
     <ul className={styles.listNav}>
       <li className={`${styles.listNavLine} ${styles.dropdown}`}>
         <Link
-          to={`catalog/${allCategories[0].id}`}
+          to={`catalog/${allCategories[0]?.id}`}
           className={styles.listNavLink}
         >
           Каталог
