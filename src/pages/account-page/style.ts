@@ -1,19 +1,28 @@
 export const stWavePink = {
   backgroundImage: 'url("/src/icons/accountWave.svg")',
   width: '100%',
-  height: '150px',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '100%',
-  marginBottom: '200px',
   position: 'relative',
-  bottom: 2
+  bottom: 1
 }
 
 export const stTabsNav = {
+  width: '100%',
   padding: '10px',
-  border: '1px solid',
+  borderLeft: '1px solid',
+  borderTop: '1px solid',
+  borderBottom: '1px solid',
   borderColor: 'peach.darker',
-  borderRadius: '30px'
+  borderRadius: '30px 0 0 30px'
+}
+export const stTabsBottomBox = {
+  padding: '10px',
+  borderRight: '1px solid',
+  borderTop: '1px solid',
+  borderBottom: '1px solid',
+  borderColor: 'peach.darker',
+  borderRadius: ' 0  30px 30px 0'
 }
 
 export const stContainerTabPanel = {

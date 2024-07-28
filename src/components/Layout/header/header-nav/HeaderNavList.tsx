@@ -3,22 +3,23 @@ import { Link, useLocation } from 'react-router-dom'
 import { Link as ScrollLink } from 'react-scroll'
 import styles from '../Header.module.scss'
 import DropdownList from './DropdownList'
-import { CategoriesModel } from '../../../../types/models/CategtoriesModel'
 import CrmLine from './CrmLink'
 
 type Props = {
-  allCategories: CategoriesModel[]
+  allCategories: any[]
 }
 
 const HeaderNavList: FC<Props> = ({ allCategories }) => {
   const location = useLocation()
   const isHomePath = location.pathname === '/'
 
+  if (!allCategories) return null
+
   return (
     <ul className={styles.listNav}>
       <li className={`${styles.listNavLine} ${styles.dropdown}`}>
         <Link
-          to={`catalog/${allCategories && allCategories[0].id}`}
+          to={`${allCategories.length ? `catalog/${allCategories[0]?.id}` : '#'}`}
           className={styles.listNavLink}
         >
           Каталог

@@ -3,20 +3,23 @@ import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import { boxModWin } from './style'
+import { useTheme } from '@mui/material'
 
 type TModalWindow = {
-  yourStBoxModalWindow?: CSSProperties
+  sx?: CSSProperties
   children: ReactNode
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  onAnimationEnd?: () => void
 }
 
 export const ModalCustom = ({
-  yourStBoxModalWindow,
+  sx,
   children,
   openModal,
   setOpenModal
 }: TModalWindow) => {
+  const theme = useTheme()
   const handleCloseModal = () => {
     setOpenModal(false)
   }
@@ -28,8 +31,18 @@ export const ModalCustom = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={{ ...boxModWin, ...yourStBoxModalWindow }}>
-        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+      <Box sx={{ ...boxModWin(theme), ...sx }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 20,
+            right: 20,
+            [theme.breakpoints.down('sm')]: {
+              top: 10,
+              right: 10
+            }
+          }}
+        >
           <CloseIcon
             sx={{ width: 28, height: 28, cursor: 'pointer' }}
             onClick={handleCloseModal}

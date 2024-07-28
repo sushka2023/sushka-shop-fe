@@ -24,7 +24,10 @@ const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
         borderRadius: '0.5rem',
         backgroundColor: theme.palette.grey[50],
         padding: '0.75rem 1rem',
-        color: theme.palette.secondary.darker
+        color: theme.palette.secondary.darker,
+        [theme.breakpoints.down('sm')]: {
+          borderRadius: '1.25rem'
+        }
       }
     },
     root: ({ theme }) => {
