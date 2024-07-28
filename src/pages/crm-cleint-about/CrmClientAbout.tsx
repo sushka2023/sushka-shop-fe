@@ -1,16 +1,41 @@
 import { Box, Typography } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import PersonIcon from '@mui/icons-material/Person'
+// import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import axiosInstance from '../../axios/settings'
 
 const CrmClientAbout = () => {
+  // const { params: clientId } = useParams()
+  // console.log(clientId)
+
+  useEffect(() => {
+    const fetchCrmClients = async () => {
+      try {
+        // const { data } = await axiosInstance.get<any>(`api/users/me`)
+        const { data } = await axiosInstance.get<any>(
+          `api/users/all_for_crm?limit=1&offset=1`
+        )
+
+        console.log('fetchCrmClients  data:', data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchCrmClients()
+  }, [])
+
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker">
       <Box sx={{ display: 'flex', mb: '20px' }}>
-        <Typography sx={{ opacity: '0.6', fontWeight: '600' }}>
+        <Typography variant="body2" sx={{ opacity: '0.6', fontWeight: '600' }}>
           Список клієнтів
         </Typography>
         <KeyboardArrowRightIcon />
-        <Typography sx={{ fontWeight: '600' }}>Клієнт</Typography>
+        <Typography variant="body2" sx={{ fontWeight: '600' }}>
+          Клієнт
+        </Typography>
         <KeyboardArrowRightIcon />
       </Box>
 
@@ -51,41 +76,29 @@ const CrmClientAbout = () => {
           </Box>
           {/* border="1px solid red" */}
           <Box>
-            <Box sx={{ display: 'flex' }}>
-              <Typography
-                variant="caption"
-                sx={{
-                  display: 'inline-block',
-                  width: '60px'
-                }}
-              >
+            <Box sx={{ display: 'flex', gap: '15px', mb: '10px' }}>
+              <Typography variant="body1" width="60px">
                 Ім’я:
               </Typography>
-              <Typography variant="caption">Maria Luchenko Yurivna</Typography>
+              <Typography variant="body1" color="black.darker">
+                Maria Luchenko Yurivna
+              </Typography>
             </Box>
-            <Box>
-              <Typography
-                variant="caption"
-                sx={{
-                  display: 'inline-block',
-                  width: '60px'
-                }}
-              >
+            <Box sx={{ display: 'flex', gap: '15px', mb: '10px' }}>
+              <Typography variant="body1" width="60px">
                 E-mail:
               </Typography>
-              <Typography variant="caption">maria23lunc@gmail.com</Typography>
+              <Typography variant="body1" color="black.darker">
+                maria23lunc@gmail.com
+              </Typography>
             </Box>
-            <Box>
-              <Typography
-                variant="caption"
-                sx={{
-                  display: 'inline-block',
-                  width: '60px'
-                }}
-              >
+            <Box sx={{ display: 'flex', gap: '15px', mb: '10px' }}>
+              <Typography variant="body1" width="60px">
                 Номер:
               </Typography>
-              <Typography variant="caption">+380000000000</Typography>
+              <Typography variant="body1" color="black.darker">
+                +380000000000
+              </Typography>
             </Box>
           </Box>
         </Box>

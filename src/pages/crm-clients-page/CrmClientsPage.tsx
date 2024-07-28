@@ -8,8 +8,8 @@ import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
 const CLIENT_QUANTITY = 5
-const CLIENT_PAGE = 1
 const CLIENT_PAGEQTY = 0
+const CLIENT_PAGE = 1
 
 const CrmClientsPage = () => {
   const location = useLocation()
@@ -18,9 +18,8 @@ const CrmClientsPage = () => {
 
   const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(CLIENT_PAGE)
+  const [page, setPage] = useState(nowPage)
   const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
-  console.log(page)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
