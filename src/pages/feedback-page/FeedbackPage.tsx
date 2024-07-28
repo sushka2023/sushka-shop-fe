@@ -5,6 +5,7 @@ import { fetchReviews } from '../../redux/feedbacks/operations'
 import { useDispatch } from 'react-redux'
 import FeedbackItem from '../../components/feedbacks/list/FeedbackItem'
 import { ModalCustom } from '../../components/Modal-custom-btn/ModalCustomWindow'
+import { useMediaQuery } from '@mui/material'
 
 const LIMIT = 5
 const OFFSET = 0
@@ -14,6 +15,8 @@ const FeedbackPage = () => {
   const handleOpenModal = () => {
     setOpenModal(true)
   }
+
+  const isDesktop = useMediaQuery('(min-width:768px)')
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -39,7 +42,7 @@ const FeedbackPage = () => {
           <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
             <FeedbackForm />
           </ModalCustom>
-          <FeedbackForm />
+          {isDesktop && <FeedbackForm />}
         </div>
       </div>
     </div>

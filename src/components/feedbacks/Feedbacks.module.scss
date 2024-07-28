@@ -249,9 +249,9 @@ color: $green-dark-200;
 
 
 @media screen and (max-width: 768px) {
-  .formContainer {
-    display: none;
-  }
+  //.formContainer {
+  //  display: none;
+  //}
 
   .feedbackItem {
     max-width: 100%;
@@ -261,5 +261,14 @@ color: $green-dark-200;
 @media screen and (max-width: 768px) {
   .name {
     font-size: 17px;
+  }
+  .submitWrapper {
+    display: flex;
+    align-items: center;
+  }
+  .feedbackFormBtn {
+    padding: 15px 16px;
+    width: 126px;
+    border-radius: 20px;
   }
 }
