@@ -1,12 +1,12 @@
-import { useSearchParams, useNavigate } from 'react-router-dom'
+// import { useSearchParams, useNavigate } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { CSSTransition, Transition } from 'react-transition-group'
 import IconClose from '../../icons/close.svg?react'
 import styles from './modal-portal.module.scss'
 import { FC, ReactNode, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../redux/store'
-import { resetAuth } from '../../redux/authentication/slice'
+// import { useDispatch } from 'react-redux'
+// import { AppDispatch } from '../../redux/store'
+// import { resetAuth } from '../../redux/authentication/slice'
 
 const TIMEOUT_DELAY_MS = 500
 
@@ -19,13 +19,12 @@ type Props = {
 
 const ModalPortal: FC<Props> = ({
   children,
-  isModalOpen,
-  setIsModalOpen,
-  searchToken
+  isModalOpen
+  // setIsModalOpen,
+  // searchToken
 }) => {
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const dispatch = useDispatch<AppDispatch>()
+  // const navigate = useNavigate()
+  // const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     isModalOpen
@@ -33,19 +32,19 @@ const ModalPortal: FC<Props> = ({
       : document.body.classList.remove(styles.modalOpen)
   }, [isModalOpen])
 
-  const closeModal = (e: React.MouseEvent<Element, MouseEvent>) => {
-    if (e.target !== e.currentTarget) return
+  // const closeModal = (e: React.MouseEvent<Element, MouseEvent>) => {
+  //   if (e.target !== e.currentTarget) return
 
-    dispatch(resetAuth())
-    if (searchToken) {
-      const searchKey = Object.keys(searchToken)[0]
-      searchParams.delete(searchKey)
-      navigate({ search: searchParams.toString() })
-      setIsModalOpen(false)
-      return
-    }
-    setIsModalOpen(false)
-  }
+  //   dispatch(resetAuth())
+  //   if (searchToken) {
+  //     const searchKey = Object.keys(searchToken)[0]
+  //     searchParams.delete(searchKey)
+  //     navigate({ search: searchParams.toString() })
+  //     setIsModalOpen(false)
+  //     return
+  //   }
+  //   setIsModalOpen(false)
+  // }
 
   const modalContent = (
     <CSSTransition
@@ -60,7 +59,7 @@ const ModalPortal: FC<Props> = ({
       unmountOnExit
       mountOnEnter
     >
-      <div className={styles.overlay} onClick={(e) => closeModal(e)}>
+      <div className={styles.overlay}>
         <Transition
           in={isModalOpen}
           timeout={TIMEOUT_DELAY_MS}
@@ -70,10 +69,7 @@ const ModalPortal: FC<Props> = ({
           {(state) => {
             return (
               <div className={`${styles.modal} ${styles[state]}`}>
-                <IconClose
-                  className={styles.closeIcon}
-                  onClick={(e) => closeModal(e)}
-                />
+                <IconClose className={styles.closeIcon} />
                 {children}
               </div>
             )
