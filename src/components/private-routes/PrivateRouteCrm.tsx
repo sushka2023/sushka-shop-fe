@@ -25,7 +25,8 @@
 
 // export default PrivateRouteCrm
 
-import React, { FC, ReactNode, useState, useEffect } from 'react'
+import React, { FC, ReactNode } from 'react'
+// import React, { FC, ReactNode, useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/use-auth'
 import { Role } from '../../types'
@@ -37,23 +38,29 @@ type Props = {
 
 const PrivateRouteCrm: FC<Props> = ({ component, redirectTo }) => {
   const { user } = useAuth()
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (user !== null) {
-      setIsLoading(false)
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if (user !== null) {
+  //     setIsLoading(false)
+  //   }
+  // }, [user])
 
-  if (isLoading) {
-    return <div>Loading...</div> // або ваш компонент завантаження
+  // if (isLoading) {
+  //   return <div>Loading...</div> // або ваш компонент завантаження
+  // }
+
+  if (!user) {
+    return null
   }
 
-  if (user && [Role.ADMIN, Role.MODERATOR].includes(user.role!)) {
+  if ([Role.ADMIN, Role.MODERATOR].includes(user?.role!)) {
     return <React.Fragment>{component}</React.Fragment>
+  } else {
+    return <Navigate to={redirectTo} replace />
   }
 
-  return <Navigate to={redirectTo} replace />
+  // return <Navigate to={redirectTo} replace />
 }
 
 export default PrivateRouteCrm
