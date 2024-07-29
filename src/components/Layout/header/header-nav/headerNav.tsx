@@ -27,10 +27,10 @@ const HeaderNav = () => {
   }, [isHomePath, location])
 
   useEffect(() => {
-    if (!allCategories?.length) {
+    if (!allCategories) {
       dispatch(fetchAllCategories({ operationType: 'fetchAllCategories' }))
     }
-  }, [allCategories])
+  }, [])
 
   return (
     <nav className={styles.navWrapper}>

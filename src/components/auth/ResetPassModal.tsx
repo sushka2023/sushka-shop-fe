@@ -3,7 +3,7 @@ import { Fragment } from 'react/jsx-runtime'
 import { useAuth } from '../../hooks/use-auth'
 
 type Props = {
-  searchToken: { [key: string]: string | null }
+  searchToken: string | null
 }
 
 const ResetPassModal: React.FC<Props> = ({ searchToken }) => {

@@ -19,13 +19,12 @@ const HeaderListIcons = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const [searchParams] = useSearchParams()
-
-  const searchToken = Object.fromEntries(searchParams.entries())
+  const searchToken = searchParams.get('token')
 
   useEffect(() => {
-    console.log(Object.keys(searchToken))
-
-    Object.keys(searchToken)[0] === 'page' && setIsModalOpen(true)
+    if (searchToken) {
+      setIsModalOpen(true)
+    }
   }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {
