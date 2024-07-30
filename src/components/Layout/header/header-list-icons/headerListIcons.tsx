@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
@@ -18,13 +18,14 @@ const HeaderListIcons = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
-  // const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
+  const searchToken = searchParams.get('token')
 
-  // const searchToken = Object.fromEntries(searchParams.entries())
-
-  // useEffect(() => {
-  //   Object.keys(searchToken).length > 0 && setIsModalOpen(true)
-  // }, [searchToken])
+  useEffect(() => {
+    if (searchToken) {
+      setIsModalOpen(true)
+    }
+  }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement
