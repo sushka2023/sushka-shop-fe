@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode, useEffect, useState } from 'react'
+import { FC, Fragment, ReactNode, SyntheticEvent, useState } from 'react'
 import Box from '@mui/material/Box'
 import {
   Accordion,
@@ -15,23 +15,24 @@ import { OrderHistory } from '../../components/Account-panel/Order-history/Order
 import { useAuth } from '../../hooks/use-auth'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
+import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
 import {
-  BasicModal,
-  RootState
-} from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
-import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
+  stContainerTabPanel,
+  stTabsBottomBox,
+  stTabsNav,
+  stWavePink
+} from './style'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Button } from '../../components/UI/Button'
-import { AppDispatch } from '../../redux/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../../redux/authentication/operation'
+import { btnEditAccount } from '../../components/Modal-custom-btn/style'
 
 type TabPanelProps = {
   children?: ReactNode
   index: number
-  value: number | null
+  value: number
 }
+
 type CustomAccordionProps = {
   index: number
   expanded: number | null
@@ -122,29 +123,17 @@ const CustomAccordion: FC<CustomAccordionProps> = ({
 
 export const AccountPage = () => {
   const { user } = useAuth()
-  const dispatch = useDispatch<AppDispatch>()
   const theme = useTheme()
-  const [value, setValue] = useState([0, null])
+  const [activeIndex, setActiveIndex] = useState<number>(0) // Unified state for tabs and accordions
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const [openModal, setOpenModal] = useState(false)
 
-  useEffect(() => {
-    if (value[0] === null && value[1] === null) {
-      setValue([0, null])
-    }
-  }, [value])
-
-  const token = useSelector((state: RootState) => state.auth.accessToken)
-
-  const handleClickLogout = async () => {
-    try {
-      await dispatch(logout({ accessToken: token! }))
-    } catch (error) {
-      console.error('Logout error:', error)
-    }
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
+    setActiveIndex(newValue)
   }
 
-  const handleChange = (newIndex: number | null) => {
-    setValue([newIndex, null])
+  const handleAccordionChange = (newIndex: number | null) => {
+    setActiveIndex(newIndex ?? 0)
   }
 
   return (
@@ -152,28 +141,42 @@ export const AccountPage = () => {
       {!isSmallScreen && (
         <Fragment>
           <Container sx={{ p: '40px 0' }}>
-            <Tabs
-              value={value[0]}
-              onChange={(_, newValue) => setValue([newValue, null])}
-              aria-label="basic tabs example"
-              sx={stTabsNav}
-            >
-              {accordions.map((accordion, index) => (
-                <Tab
-                  key={index}
-                  disableRipple
-                  label={accordion.summary}
-                  {...a11yProps(index)}
-                />
-              ))}
-              <BasicModal />
-            </Tabs>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Tabs
+                value={activeIndex}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                sx={stTabsNav}
+              >
+                {accordions.map((accordion, index) => (
+                  <Tab
+                    sx={{
+                      width: '20%',
+                      p: 0.7,
+                      textTransform: 'uppercase',
+                      [theme.breakpoints.down('md')]: {
+                        width: '25%'
+                      }
+                    }}
+                    key={index}
+                    disableRipple
+                    label={accordion.summary}
+                    {...a11yProps(index)}
+                  />
+                ))}
+              </Tabs>
+              <Box sx={stTabsBottomBox}>
+                <Button onClick={() => setOpenModal(true)} sx={btnEditAccount}>
+                  Вийти
+                </Button>
+              </Box>
+            </Box>
           </Container>
 
           <Box sx={{ ...stContainerTabPanel, p: '40px 0' }}>
             {user
               ? accordions.map((accordion, index) => (
-                  <CustomTabPanel key={index} value={value[0]} index={index}>
+                  <CustomTabPanel key={index} value={activeIndex} index={index}>
                     {accordion.content}
                   </CustomTabPanel>
                 ))
@@ -190,8 +193,8 @@ export const AccountPage = () => {
               <CustomAccordion
                 key={index}
                 index={index}
-                expanded={value[0]}
-                onChange={handleChange}
+                expanded={activeIndex}
+                onChange={handleAccordionChange}
                 summary={accordion.summary}
               >
                 <Box sx={stContainerTabPanel}>{accordion.content}</Box>
@@ -199,7 +202,7 @@ export const AccountPage = () => {
               </CustomAccordion>
             ))}
             <Button
-              onClick={handleClickLogout}
+              onClick={() => setOpenModal(true)}
               sx={{
                 width: '100%',
                 justifyContent: 'flex-start',
@@ -217,6 +220,7 @@ export const AccountPage = () => {
           <Typography>Loading...</Typography>
         )
       ) : null}
+      <BasicModal openModal={openModal} setOpenModal={setOpenModal} />
     </Fragment>
   )
 }

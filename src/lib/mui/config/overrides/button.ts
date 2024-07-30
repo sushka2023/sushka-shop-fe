@@ -25,6 +25,9 @@ const MuiButtonOutlined: Components<Theme>['MuiButton'] = {
         backgroundColor: theme.palette.grey[200],
         border: `2px solid ${theme.palette.grey[200]}`,
         color: '#fff'
+      },
+      [theme.breakpoints.down('sm')]: {
+        borderRadius: '1.25rem'
       }
     })
   }
@@ -68,9 +71,6 @@ const MuiButtonContained: Components<Theme>['MuiButton'] = {
       letterSpacing: 'normal',
       color: '#fff',
       backgroundColor: theme.palette.primary.darker,
-      [theme.breakpoints.down('sm')]: {
-        borderRadius: '1.25rem'
-      },
       ['&:hover']: {
         backgroundColor: '#fff',
         border: `2px solid ${theme.palette.primary.darker}`,
@@ -81,6 +81,9 @@ const MuiButtonContained: Components<Theme>['MuiButton'] = {
         border: 'none',
         backgroundColor: 'inherit',
         color: theme.palette.grey[200]
+      },
+      [theme.breakpoints.down('sm')]: {
+        borderRadius: '1.25rem'
       }
     }),
     sizeSmall: ({ theme }) => ({
