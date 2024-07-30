@@ -22,26 +22,17 @@ type ClientType = {
   email: string
 }
 
-const getRoleClassName = (role: string) => {
-  switch (role) {
-    case 'admin':
-      return styles.roleAdmin
-    case 'moderator':
-      return styles.roleModerator
-    case 'user':
-      return styles.roleUser
-    default:
-      return ''
-  }
-}
-
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
   const theme = useTheme()
   const location = useLocation()
+  console.log('BasicTable  location:', location)
   const navigate = useNavigate()
+  console.log('BasicTable  navigate:', navigate)
 
   const handleRowClick = (id: number) => {
-    navigate(`/crm/clients/${id}`, { state: { from: location.pathname } })
+    navigate(`/crm/clients/${id}`, {
+      state: { from: location.pathname + location.search }
+    })
   }
 
   return (
@@ -74,10 +65,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
           {clients.map((row) => (
             <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
               <TableCell component="th" scope="row">
-                <Typography
-                  component="span"
-                  className={getRoleClassName(row.role)}
-                >
+                <Typography component="span" className={styles[row.role]}>
                   {row.role}
                 </Typography>
               </TableCell>

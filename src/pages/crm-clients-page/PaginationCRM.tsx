@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material'
 import { ArrowLeft } from './ArrowLeft'
 import { ArrowRight } from './ArrowRight'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 type PaginationCRMProps = {
   page: number | undefined
@@ -20,6 +20,8 @@ export default function PaginationCRM({
   setPage
 }: PaginationCRMProps) {
   const theme = useTheme()
+  const location = useLocation()
+  console.log('location:', location.pathname + location.search)
 
   return (
     <Stack
@@ -41,6 +43,7 @@ export default function PaginationCRM({
             component={Link}
             to={`?page=${item.page}`}
             {...item}
+            state={{ from: location.pathname + location.search }}
           />
         )}
         sx={{

@@ -31,6 +31,7 @@ const CrmClientsPage = () => {
         const totalNumberOfPages = Math.ceil(
           data.total_count_users / CLIENT_QUANTITY
         )
+        console.log('fetchCrmClients  data:', data)
 
         setPageQty(totalNumberOfPages)
         setClients(data.users)
