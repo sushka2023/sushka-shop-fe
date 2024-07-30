@@ -8,23 +8,24 @@ export const AccountPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [openModal, setOpenModal] = useState(false)
 
-  const initialTabIndex = searchParams.get('tab')
-    ? parseInt(searchParams.get('tab') || '1', 10) - 1
-    : 0
+  const tabParam = searchParams.get('tab')
+  const activeIndex = tabParam ? parseInt(tabParam, 10) - 1 : 0
 
-  const [activeIndex, setActiveIndex] = useState(initialTabIndex)
+  const handleSetActiveIndex = (index: number) => {
+    setSearchParams({ tab: (index + 1).toString() })
+  }
 
   return (
     <Fragment>
       <TabsBigScreen
         activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        setActiveIndex={handleSetActiveIndex}
         setSearchParams={setSearchParams}
         setOpenModal={setOpenModal}
       />
       <AccordionsSmallScreen
         activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        setActiveIndex={handleSetActiveIndex}
         setOpenModal={setOpenModal}
       />
       <BasicModal openModal={openModal} setOpenModal={setOpenModal} />

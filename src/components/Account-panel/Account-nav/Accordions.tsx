@@ -10,7 +10,7 @@ import { stAccordionBtn, stContainerTabPanel, stWavePink } from '../style'
 
 type PropsType = {
   activeIndex: number
-  setActiveIndex: Dispatch<SetStateAction<number>>
+  setActiveIndex: (index: number) => void
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 

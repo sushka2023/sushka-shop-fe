@@ -33,7 +33,7 @@ import {
 type PropsType = {
   activeIndex: number
   setSearchParams: SetURLSearchParams
-  setActiveIndex: Dispatch<SetStateAction<number>>
+  setActiveIndex: (index: number) => void
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 

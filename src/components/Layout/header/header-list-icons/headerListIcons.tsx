@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
