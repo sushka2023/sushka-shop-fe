@@ -7,9 +7,9 @@ import PaginationCRM from './PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
-const CLIENT_QUANTITY = 5
+const CLIENT_QUANTITY = 35
 const CLIENT_PAGEQTY = 0
-const CLIENT_PAGE = 1
+const CLIENT_PAGE = 0
 
 const CrmClientsPage = () => {
   const location = useLocation()
@@ -24,8 +24,10 @@ const CrmClientsPage = () => {
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
+        console.log(CLIENT_QUANTITY * page)
+
         const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${page}`
+          `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${0}`
         )
 
         const totalNumberOfPages = Math.ceil(

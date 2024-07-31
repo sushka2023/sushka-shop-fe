@@ -21,7 +21,7 @@ export default function PaginationCRM({
 }: PaginationCRMProps) {
   const theme = useTheme()
   const location = useLocation()
-  console.log('location:', location.pathname + location.search)
+  // console.log('location:', location.pathname + location.search)
 
   return (
     <Stack

@@ -25,9 +25,7 @@ type ClientType = {
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
   const theme = useTheme()
   const location = useLocation()
-  console.log('BasicTable  location:', location)
   const navigate = useNavigate()
-  console.log('BasicTable  navigate:', navigate)
 
   const handleRowClick = (id: number) => {
     navigate(`/crm/clients/${id}`, {
@@ -62,11 +60,11 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.map((row) => (
+          {clients.map((row, index) => (
             <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
               <TableCell component="th" scope="row">
                 <Typography component="span" className={styles[row.role]}>
-                  {row.role}
+                  {row.role} {index}
                 </Typography>
               </TableCell>
               <TableCell align="center">
