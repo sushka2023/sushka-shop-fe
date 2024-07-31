@@ -7,7 +7,9 @@ import PaginationCRM from './PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 
-const CLIENT_QUANTITY = 35
+const BASE_URL_CLIENTS = 'api/users/all_for_crm?'
+
+const CLIENT_QUANTITY = 9
 const CLIENT_PAGEQTY = 0
 const CLIENT_PAGE = 0
 
@@ -15,6 +17,7 @@ const CrmClientsPage = () => {
   const location = useLocation()
 
   const nowPage = parseInt(location.search?.split('=')[1]) || CLIENT_PAGE
+  const offset = (nowPage - 1) * CLIENT_QUANTITY
 
   const [clients, setClients] = useState([])
   const [search, setSearch] = useState('')
@@ -24,16 +27,13 @@ const CrmClientsPage = () => {
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
-        console.log(CLIENT_QUANTITY * page)
-
         const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${0}`
+          BASE_URL_CLIENTS + `limit=${CLIENT_QUANTITY}&offset=${offset}`
         )
 
         const totalNumberOfPages = Math.ceil(
           data.total_count_users / CLIENT_QUANTITY
         )
-        console.log('fetchCrmClients  data:', data)
 
         setPageQty(totalNumberOfPages)
         setClients(data.users)
@@ -47,7 +47,7 @@ const CrmClientsPage = () => {
   }, [page, location])
 
   return (
-    <Box p="44px 30px 34px 30px" color="illustrations.darker">
+    <Box p="44px 30px 34px 30px" color="illustrations.darker" minHeight="955px">
       <Box
         sx={{
           display: 'flex',

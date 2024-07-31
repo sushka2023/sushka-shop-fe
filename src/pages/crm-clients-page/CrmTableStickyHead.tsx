@@ -37,8 +37,11 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
     <TableContainer
       component={Paper}
       sx={{
+        height: '714px',
         borderTopLeftRadius: '10px',
-        borderTopRightRadius: '10px'
+        borderTopRightRadius: '10px',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px'
       }}
     >
       <Table
@@ -60,11 +63,11 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {clients.map((row, index) => (
+          {clients.map((row) => (
             <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
               <TableCell component="th" scope="row">
                 <Typography component="span" className={styles[row.role]}>
-                  {row.role} {index}
+                  {row.role} {row.id}
                 </Typography>
               </TableCell>
               <TableCell align="center">

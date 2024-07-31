@@ -17,7 +17,9 @@ const AboutClient = () => {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <Typography variant="h3">Клієнт #999</Typography>
-          <Typography className={styles.user}>Користувач</Typography>
+          <Typography className={styles.user} fontWeight={600}>
+            Користувач
+          </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <Typography>Змінити роль</Typography>
