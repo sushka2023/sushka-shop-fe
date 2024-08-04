@@ -18,11 +18,23 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
       }}
     >
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', mb: '40px' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          gap: '40px',
+          mb: '40px'
+        }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <Typography variant="h3">Клієнт #{user.id}</Typography>
-          <Typography className={styles.user} fontWeight={600}>
+          <Typography
+            className={styles[user.role]}
+            sx={{
+              fontWeight: '600',
+              borderRadius: '10px',
+              padding: '5px 10px'
+            }}
+          >
             {user.role}
           </Typography>
         </Box>
@@ -69,7 +81,7 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
               Номер:
             </Typography>
             <Typography variant="body1" color="black.darker">
-              {user.phone_number}
+              {user.phone_number ? user.phone_number : 'номер не вказано'}
             </Typography>
           </Box>
         </Box>

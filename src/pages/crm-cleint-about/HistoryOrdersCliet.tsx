@@ -1,5 +1,6 @@
 // import styles from './crmClientAbout.module.scss'
 import { Box, Typography } from '@mui/material'
+import DataGridDemo from '../crm-clients-page/ClientAboutOrdersTable '
 
 const HistoryOrdersClient = () => {
   return (
@@ -11,6 +12,7 @@ const HistoryOrdersClient = () => {
       }}
     >
       <Typography variant="h4">Історія замовлень</Typography>
+      <DataGridDemo />
     </Box>
   )
 }

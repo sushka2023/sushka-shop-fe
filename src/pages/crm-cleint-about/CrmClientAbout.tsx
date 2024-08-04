@@ -39,7 +39,6 @@ const CrmClientAbout = () => {
         const { data } = await axiosInstance.get<any>(
           `/api/users/all_for_crm?limit=10&offset=0&user_id=${clientId}`
         )
-        console.log('fetchCrmClients  data:', data)
 
         setUser(data.users[0])
       } catch (error) {
@@ -48,9 +47,7 @@ const CrmClientAbout = () => {
     }
 
     fetchCrmClients()
-  }, [])
-
-  console.log(user)
+  }, [clientId])
 
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker">
