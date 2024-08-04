@@ -1,8 +1,13 @@
 import styles from './crmClientAbout.module.scss'
 import { Box, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
+import { User } from './CrmClientAbout'
 
-const AboutClient = () => {
+type AboutClientProps = {
+  user: User
+}
+
+const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
   return (
     <Box
       sx={{
@@ -16,9 +21,9 @@ const AboutClient = () => {
         sx={{ display: 'flex', justifyContent: 'space-between', mb: '40px' }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <Typography variant="h3">Клієнт #999</Typography>
+          <Typography variant="h3">Клієнт #{user.id}</Typography>
           <Typography className={styles.user} fontWeight={600}>
-            Користувач
+            {user.role}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -48,7 +53,7 @@ const AboutClient = () => {
               Ім’я:
             </Typography>
             <Typography variant="body1" color="black.darker">
-              Maria Luchenko Yurivna
+              {user.first_name} {user.last_name}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px', mb: '10px' }}>
@@ -56,7 +61,7 @@ const AboutClient = () => {
               E-mail:
             </Typography>
             <Typography variant="body1" color="black.darker">
-              maria23lunc@gmail.com
+              {user.email}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: '15px', mb: '10px' }}>
@@ -64,7 +69,7 @@ const AboutClient = () => {
               Номер:
             </Typography>
             <Typography variant="body1" color="black.darker">
-              +380000000000
+              {user.phone_number}
             </Typography>
           </Box>
         </Box>

@@ -1,26 +1,47 @@
 // import styles from './crmClientAbout.module.scss'
 
 import { Box } from '@mui/material'
-
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axiosInstance from '../../axios/settings'
 import AboutClient from './AboutClient'
 import HistoryOrdersClient from './HistoryOrdersCliet'
 import BackToPreviousPage from './BackToPreviousPage'
+import { useParams } from 'react-router-dom'
+
+export type User = {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+  role: string
+  created_at: string
+  is_active: boolean
+  is_blocked: boolean
+  is_deleted: boolean
+  phone_number: string
+  posts: {
+    id: number
+    user_id: number
+    ukr_poshta: any[]
+    nova_poshta: any[]
+  }
+  updated_at: string
+}
 
 const CrmClientAbout = () => {
-  // const { params: clientId } = useParams()
-  // console.log(clientId)
+  const { params: clientId } = useParams()
+
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
-        // const { data } = await axiosInstance.get<any>(`api/users/me`)
         const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=1&offset=1`
+          `/api/users/all_for_crm?limit=10&offset=0&user_id=${clientId}`
         )
-
         console.log('fetchCrmClients  data:', data)
+
+        setUser(data.users[0])
       } catch (error) {
         console.error(error)
       }
@@ -29,10 +50,12 @@ const CrmClientAbout = () => {
     fetchCrmClients()
   }, [])
 
+  console.log(user)
+
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker">
       <BackToPreviousPage />
-      <AboutClient />
+      {user ? <AboutClient user={user} /> : <p>Loading...</p>}
       <HistoryOrdersClient />
     </Box>
   )

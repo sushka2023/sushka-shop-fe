@@ -11,7 +11,7 @@ const BASE_URL_CLIENTS = 'api/users/all_for_crm?'
 
 const CLIENT_QUANTITY = 9
 const CLIENT_PAGEQTY = 0
-const CLIENT_PAGE = 0
+const CLIENT_PAGE = 1
 
 const CrmClientsPage = () => {
   const location = useLocation()

@@ -18,11 +18,12 @@ type ClientType = {
   id: number
   role: string
   created_at: string
-  phone: string | null
+  phone_number: string | null
   email: string
 }
 
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
+  console.log('BasicTable  clients:', clients)
   const theme = useTheme()
   const location = useLocation()
   const navigate = useNavigate()
@@ -75,7 +76,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
               </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">
-                {row.phone ? row.phone : 'номер не вказано'}
+                {row.phone_number ? row.phone_number : 'номер не вказано'}
               </TableCell>
               <TableCell align="center">
                 <Tooltip title="Edit">
