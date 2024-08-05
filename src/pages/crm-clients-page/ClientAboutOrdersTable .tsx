@@ -3,32 +3,29 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 
 const columns: GridColDef<(typeof rows)[number]>[] = [
   {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true
+    field: 'id',
+    headerName: 'Номер замовлення',
+    width: 150
   },
   {
     field: 'lastName',
-    headerName: 'Last name',
+    headerName: 'Дата оформлення',
     width: 150,
     editable: true
   },
   {
     field: 'age',
-    headerName: 'Age',
+    headerName: 'Статус',
     type: 'number',
     width: 110,
     editable: true
   },
   {
     field: 'fullName',
-    headerName: 'Full name',
+    headerName: 'Загальна сума',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
-    width: 160,
-    valueGetter: (params: any) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`
+    width: 160
   }
 ]
 

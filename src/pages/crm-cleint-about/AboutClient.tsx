@@ -2,6 +2,7 @@ import styles from './crmClientAbout.module.scss'
 import { Box, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
 import { User } from './CrmClientAbout'
+import ChangeRole from './ChangeRole'
 
 type AboutClientProps = {
   user: User
@@ -39,7 +40,7 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <Typography>Змінити роль</Typography>
+          <ChangeRole />
           <Typography>Зберегти</Typography>
         </Box>
       </Box>
