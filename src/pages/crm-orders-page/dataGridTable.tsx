@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton'
 import CallIcon from '../../icons/call.svg?react'
 import DeleteIcon from '../../icons/delete.svg?react'
 import EditIcon from '../../icons/edit-icon.svg?react'
-import { OrdersCRMResponse } from '../../types'
+import { OrdersCRMResponse, OrdersStatus } from '../../types'
 import { formatter } from '../../helpers/formatterTotalPrice'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { Link as RouterLink } from 'react-router-dom'
@@ -21,11 +21,9 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 160,
       sortable: false,
       renderCell: (params) => (
-        <Box>
-          <Typography fontWeight={600} color="accent.darker">
-            {`#${params.value}`}
-          </Typography>
-        </Box>
+        <Typography fontWeight={600} color="accent.darker">
+          {`#${params.value}`}
+        </Typography>
       )
     },
     {
@@ -42,19 +40,23 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       headerName: 'Статус',
       width: 140,
       sortable: false,
-      renderCell: (params) => (
-        <Box
-          sx={{
-            padding: '5px 10px',
-            borderRadius: '10px',
-            ...ORDER_STATUS[params.value].style
-          }}
-        >
-          <Typography fontWeight={600}>
-            {ORDER_STATUS[params.value].text}
-          </Typography>
-        </Box>
-      )
+      renderCell: (params) => {
+        const statusKey = params.value as OrdersStatus
+
+        return (
+          <Box
+            sx={{
+              padding: '5px 10px',
+              borderRadius: '10px',
+              ...ORDER_STATUS[statusKey].style
+            }}
+          >
+            <Typography fontWeight={600}>
+              {ORDER_STATUS[statusKey].text}
+            </Typography>
+          </Box>
+        )
+      }
     },
     {
       field: 'price_order',
@@ -62,9 +64,7 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 150,
       sortable: false,
       renderCell: (params) => (
-        <Box>
-          <Typography>{formattedTotalPrice(params.value)}</Typography>
-        </Box>
+        <Typography>{formattedTotalPrice(params.value)}</Typography>
       )
     },
     {
