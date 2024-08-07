@@ -31,7 +31,6 @@ const PAYMENT_METHODS = [
 
 const CURRENCY = 'UAH'
 const TRANSACTION_SECURE_TYPE = 'AUTO'
-
 const ERROR_NOTIFICATION_HEADER = 'Сталась помилка'
 const ERROR_NOTIFICATION_TEXT = 'Спробуйте ще раз'
 const ACCESS_NOTIFICATION_TEXT = 'Очікуйте на номер ТТН. Дякуємо за покупку!'
