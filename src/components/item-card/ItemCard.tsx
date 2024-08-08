@@ -72,7 +72,7 @@ const ItemCard: FC<Props> = ({ item }) => {
         <div className={styles.cardContent}>
           <Link to={`/catalog/${item.product_category_id}/${item.id}/details`}>
             <div className={styles.slideImage}>
-              <img src={item.images[0].image_url} alt="mandarin pastille" />
+              <img src={item?.images[0]?.image_url} alt="mandarin pastille" />
               {!isFavorite ? (
                 <IconFavorite
                   className={styles.cardFavorite}
