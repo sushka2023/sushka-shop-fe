@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-// import { CategoriesModel } from '../../../../types/models/CategtoriesModel'
 import styles from '../Header.module.scss'
 
 type Props = {
