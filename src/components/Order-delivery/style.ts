@@ -1,5 +1,6 @@
 const cardStyle = {
   width: '250px',
+  height: '200px',
   boxShadow: 'none',
   border: '1px solid #FEEEE1',
   borderRadius: '10px'
@@ -7,6 +8,7 @@ const cardStyle = {
 
 const cardCheckedStyle = {
   width: '250px',
+  height: '200px',
   color: 'white',
   backgroundColor: 'primary.darker',
   border: '1px solid #FCC812',
@@ -24,4 +26,31 @@ const cardHeaderStyle = {
   '& .MuiCardHeader-avatar': { marginRight: '10px' }
 }
 
-export { cardStyle, radioStyle, cardHeaderStyle, cardCheckedStyle }
+const newAdressBtnStyle = {
+  'marginTop': '20px',
+  'border': 'none',
+  'fontSize': '18px',
+  'lineHeight': '18.2px',
+  'letterSpacing': 'normal',
+  'textTransform': 'none',
+  'color': 'rgba(86, 115, 67, 1)',
+  'fontWeight': '400',
+  '&:hover': {
+    border: 'none',
+    backgroundColor: 'inherit',
+    color: 'rgba(86, 115, 67, 1)'
+  },
+  '&.Mui-disabled': {
+    border: 'none',
+    backgroundColor: 'inherit',
+    color: '#D9D9D9'
+  }
+}
+
+export {
+  cardStyle,
+  radioStyle,
+  cardHeaderStyle,
+  cardCheckedStyle,
+  newAdressBtnStyle
+}
