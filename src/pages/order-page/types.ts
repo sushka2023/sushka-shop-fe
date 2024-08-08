@@ -7,7 +7,7 @@ import {
 } from 'react-hook-form'
 
 export enum PaymentMethodTypes {
-  wayforpay = 'liqpay',
+  wayforpay = 'Wayforpay',
   postpaid = 'cash_on_delivery_np',
   byDetails = 'by_details'
 }
