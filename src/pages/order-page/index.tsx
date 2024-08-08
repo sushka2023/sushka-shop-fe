@@ -186,7 +186,6 @@ const OrderPage = () => {
 
   const onSubmitOrder: SubmitHandler<Inputs> = async (data) => {
     setOrderDetails(data)
-    console.log(data)
 
     if (
       activeStep === STEPS.length - 1 &&
