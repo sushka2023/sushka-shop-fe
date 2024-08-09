@@ -3,32 +3,36 @@ import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
 import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
-import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
+import { OrdersCRMResponse } from '../../types'
+import { DataGridTable } from './dataGridTable'
 
-const CLIENT_QUANTITY = 20
-const CLIENT_PAGE = 1
-const CLIENT_PAGEQTY = 0
+type OrdersResponse = {
+  orders: OrdersCRMResponse[]
+  total_count: number
+}
 
-const CrmClientsPage = () => {
-  const [clients, setClients] = useState([])
+const ORDERS_QUANTITY = 20
+const ORDERS_PAGE = 1
+const ORDERS_PAGEQTY = 0
+
+const CrmOrdersPage = () => {
+  const [orders, setOrders] = useState<OrdersCRMResponse[]>([])
   const [search, setSearch] = useState('')
-  const [page, setPage] = useState(CLIENT_PAGE)
-  const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
+  const [page, setPage] = useState(ORDERS_PAGE)
+  const [pageQty, setPageQty] = useState(ORDERS_PAGEQTY)
 
   useEffect(() => {
     const fetchCrmClients = async () => {
       try {
-        const { data } = await axiosInstance.get<any>(
-          `api/users/all_for_crm?limit=${CLIENT_QUANTITY}&offset=${page}`
+        const { data } = await axiosInstance.get<OrdersResponse>(
+          `api/orders/all_for_crm?limit=${ORDERS_QUANTITY}&offset=${page}`
         )
 
-        const totalNumberOfPages = Math.ceil(
-          data.total_count_users / CLIENT_QUANTITY
-        )
+        const totalNumberOfPages = Math.ceil(data.total_count / ORDERS_QUANTITY)
 
         setPageQty(totalNumberOfPages)
-        setClients(data.users)
+        setOrders(data.orders)
       } catch (error) {
         console.error(error)
       }
@@ -47,7 +51,7 @@ const CrmClientsPage = () => {
           mb: '34px'
         }}
       >
-        <Typography variant="h3">Клієнти </Typography>
+        <Typography variant="h3">Замовлення </Typography>
         <TextField
           InputProps={{
             startAdornment: (
@@ -72,10 +76,12 @@ const CrmClientsPage = () => {
           onChange={(event) => setSearch(event.target.value)}
         />
       </Box>
-      <StickyHeadTable clients={clients} />
-      <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} />
+      <DataGridTable rows={orders} />
+      {page > 1 && (
+        <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} />
+      )}
     </Box>
   )
 }
 
-export default CrmClientsPage
+export { CrmOrdersPage }

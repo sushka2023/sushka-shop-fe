@@ -1,11 +1,9 @@
-import styles from './crmClientsPage.module.scss'
-
 import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material'
-import { ArrowLeft } from './ArrowLeft'
-import { ArrowRight } from './ArrowRight'
+import { ArrowLeft } from '../../pages/crm-clients-page/ArrowLeft'
+import { ArrowRight } from '../../pages/crm-clients-page/ArrowRight'
 
 type PaginationCRMProps = {
   page: number
@@ -30,7 +28,6 @@ export default function PaginationCRM({
       }}
     >
       <Pagination
-        className={styles.pagination}
         count={pageQty}
         page={page}
         onChange={(_, num) => setPage(num)}
