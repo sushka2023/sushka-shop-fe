@@ -1,3 +1,30 @@
+.changeRole {
+  width: 200px;
+  border: 1px solid #5d5fef;
+  border-radius: 10px;
+
+  button {
+    color: #5d5fef;
+    font-size: 16px;
+    font-weight: 600;
+
+    &:hover {
+      color: #5d5fef;
+    }
+  }
+}
+
+.roleMenu {
+  margin-top: 15px;
+  border-radius: 10px !important;
+
+  ul {
+    width: 200px;
+    border: 1px solid #5d5fef;
+    border-radius: 10px;
+  }
+}
+
 .admin {
   color: #e11d48;
   background: #f6e5ef;

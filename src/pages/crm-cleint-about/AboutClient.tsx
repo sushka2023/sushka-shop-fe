@@ -3,12 +3,17 @@ import { Box, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
 import { User } from './CrmClientAbout'
 import ChangeRole from './ChangeRole'
+import { useAuth } from '../../hooks/use-auth'
+import { ROLE_TRANSLATIONS } from '../crm-clients-page/CrmTableStickyHead'
+// import { useState } from 'react'
 
 type AboutClientProps = {
   user: User
 }
 
 const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
+  const { user: authUser } = useAuth()
+
   return (
     <Box
       sx={{
@@ -36,13 +41,15 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
               padding: '5px 10px'
             }}
           >
-            {user.role}
+            {ROLE_TRANSLATIONS[user.role]}
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <ChangeRole />
-          <Typography>Зберегти</Typography>
-        </Box>
+        {authUser && authUser.role === 'admin' && (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <ChangeRole />
+            <Typography>Зберегти</Typography>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{

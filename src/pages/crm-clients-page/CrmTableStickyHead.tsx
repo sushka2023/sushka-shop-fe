@@ -13,14 +13,27 @@ import { useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
+import { Role } from '../../types'
 
 type ClientType = {
   id: number
-  role: string
+  role: Role
   created_at: string
   phone_number: string | null
   email: string
 }
+
+export const ROLE_TRANSLATIONS: Record<Role, string> = {
+  admin: 'Адміністратор',
+  moderator: 'Модератор',
+  user: 'Користувач'
+}
+
+// export const ROLE_TRANSLATIONS: Record<Role, string> = {
+//   [Role.ADMIN]: 'Адміністратор',
+//   [Role.MODERATOR]: 'Модератор',
+//   [Role.USER]: 'Користувач'
+// }
 
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
   console.log('BasicTable  clients:', clients)
@@ -68,7 +81,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
             <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
               <TableCell component="th" scope="row">
                 <Typography component="span" className={styles[row.role]}>
-                  {row.role} {row.id}
+                  {ROLE_TRANSLATIONS[row.role]}
                 </Typography>
               </TableCell>
               <TableCell align="center">

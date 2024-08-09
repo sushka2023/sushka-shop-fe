@@ -7,13 +7,14 @@ import AboutClient from './AboutClient'
 import HistoryOrdersClient from './HistoryOrdersCliet'
 import BackToPreviousPage from './BackToPreviousPage'
 import { useParams } from 'react-router-dom'
+import { Role } from '../../types'
 
 export type User = {
   id: number
   email: string
   first_name: string
   last_name: string
-  role: string
+  role: Role
   created_at: string
   is_active: boolean
   is_blocked: boolean
@@ -40,7 +41,7 @@ const CrmClientAbout = () => {
           `/api/users/all_for_crm?limit=10&offset=0&user_id=${clientId}`
         )
 
-        console.log(data.users[0])
+        // console.log(data.users[0])
         setUser(data.users[0])
       } catch (error) {
         console.error(error)
