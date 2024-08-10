@@ -29,12 +29,6 @@ export const ROLE_TRANSLATIONS: Record<Role, string> = {
   user: 'Користувач'
 }
 
-// export const ROLE_TRANSLATIONS: Record<Role, string> = {
-//   [Role.ADMIN]: 'Адміністратор',
-//   [Role.MODERATOR]: 'Модератор',
-//   [Role.USER]: 'Користувач'
-// }
-
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
   console.log('BasicTable  clients:', clients)
   const theme = useTheme()

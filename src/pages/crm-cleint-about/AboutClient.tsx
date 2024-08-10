@@ -1,11 +1,14 @@
 import styles from './crmClientAbout.module.scss'
+
+import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
+
 import { User } from './CrmClientAbout'
 import ChangeRole from './ChangeRole'
 import { useAuth } from '../../hooks/use-auth'
 import { ROLE_TRANSLATIONS } from '../crm-clients-page/CrmTableStickyHead'
-// import { useState } from 'react'
+import { Role } from '../../types'
 
 type AboutClientProps = {
   user: User
@@ -13,6 +16,9 @@ type AboutClientProps = {
 
 const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
   const { user: authUser } = useAuth()
+
+  const [userRole, setUserRole] = useState<Role>(user.role)
+  console.log('userRole:', userRole)
 
   return (
     <Box
@@ -34,20 +40,25 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <Typography variant="h3">Клієнт #{user.id}</Typography>
           <Typography
-            className={styles[user.role]}
+            className={styles[userRole]}
             sx={{
               fontWeight: '600',
               borderRadius: '10px',
               padding: '5px 10px'
             }}
           >
-            {ROLE_TRANSLATIONS[user.role]}
+            {ROLE_TRANSLATIONS[userRole]}
           </Typography>
         </Box>
         {authUser && authUser.role === 'admin' && (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <ChangeRole />
-            <Typography>Зберегти</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '20px'
+            }}
+          >
+            <ChangeRole user={user} setUserRole={setUserRole} />
           </Box>
         )}
       </Box>
