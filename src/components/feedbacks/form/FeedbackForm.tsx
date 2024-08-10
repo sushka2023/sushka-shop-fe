@@ -7,6 +7,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
+
 const DEFAULT_VALUE = {
   name: '',
   size: 0
@@ -79,7 +80,11 @@ const FeedbackForm = () => {
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       {isLoggedIn ? (
         <form className={styles.feedbackForm} onSubmit={handleSubmit}>
-          <input type="text" className={styles.feedbackFormInput} />
+          <input
+            type="text"
+            placeholder="Ваше ім'я"
+            className={styles.feedbackFormInput}
+          />
           <div className={styles.wrapperTextarea}>
             <CustomTextarea maxLength={MAX_LENGTH} />
             <label

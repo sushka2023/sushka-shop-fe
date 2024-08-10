@@ -1,9 +1,9 @@
 @import '../../styles/base/base.scss';
 
 .container {
-   margin-top: 30px;
-   margin-bottom: 197px;
-   padding: 0 40px;
+  margin-top: 30px;
+  margin-bottom: 197px;
+  padding: 0 40px;
 }
 
 .wrapper {
@@ -14,9 +14,10 @@
 }
 
 .feedbacksWrapper {
-   display: flex;
-   justify-content: space-between;
-   align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
 }
 
 .button {
@@ -35,15 +36,15 @@
 }
 
 
-
 .feedbackList {
-   max-width: 840px;
+  max-width: 840px;
 }
+
 .title {
-   color: #567343;
-   font-family: Nunito;
-   font-size: 48px;
-   font-weight: 500;
+  color: #567343;
+  font-family: Nunito;
+  font-size: 48px;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 1440px) {
