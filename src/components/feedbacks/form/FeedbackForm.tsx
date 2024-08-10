@@ -7,6 +7,10 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
+import { AppDispatch } from '../../../redux/store'
+import { useDispatch } from 'react-redux'
+import { submitReview } from '../../../redux/feedbacks/operations'
+
 const DEFAULT_VALUE = {
   name: '',
   size: 0
@@ -15,39 +19,36 @@ const DEFAULT_VALUE = {
 const MAX_LENGTH = 250
 
 const FeedbackForm = () => {
+  const [name, setName] = useState('')
   const [rating, setRating] = useState(0)
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
   const [fileSelected, setFileSelected] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [text, setText] = useState('')
   const { isLoggedIn } = useAuth()
 
   const [searchParams] = useSearchParams()
+
+  const dispatch: AppDispatch = useDispatch()
 
   const searchToken = Object.fromEntries(searchParams.entries())
 
   useEffect(() => {
     Object.keys(searchToken).length > 0 && setIsModalOpen(true)
   }, [searchToken])
+  // const BASE_URL = import.meta.env.VITE_API_URL
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-
-    const formData = new FormData()
-    formData.append('product_id', '0')
-    formData.append('rating', rating.toString())
-    formData.append('description', 'string')
+    const formData = {
+      file,
+      rating,
+      description: text,
+      name
+    }
 
     try {
-      const response = await fetch('/api/reviews/create', {
-        method: 'POST',
-        body: formData
-      })
-
-      if (response.ok) {
-        console.log('Review submitted successfully')
-      } else {
-        console.error('Failed to submit review')
-      }
+      dispatch(submitReview(formData))
     } catch (error) {
       console.error('Error submitting review:', error)
     }
@@ -74,14 +75,21 @@ const FeedbackForm = () => {
     setFileSelected(false)
   }
 
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => [
+    setName(e.target.value)
+  ]
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       {isLoggedIn ? (
         <form className={styles.feedbackForm} onSubmit={handleSubmit}>
-          <input type="text" className={styles.feedbackFormInput} />
+          <input
+            type="text"
+            onChange={handleNameChange}
+            className={styles.feedbackFormInput}
+          />
           <div className={styles.wrapperTextarea}>
-            <CustomTextarea maxLength={MAX_LENGTH} />
+            <CustomTextarea maxLength={MAX_LENGTH} onTextChange={setText} />
             <label
               htmlFor="fileInput"
               className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}
