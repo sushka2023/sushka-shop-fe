@@ -58,7 +58,11 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
               gap: '20px'
             }}
           >
-            <ChangeRole user={user} setUserRole={setUserRole} />
+            <ChangeRole
+              user={user}
+              userRole={userRole}
+              setUserRole={setUserRole}
+            />
           </Box>
         )}
       </Box>

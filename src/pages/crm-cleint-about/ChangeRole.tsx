@@ -11,10 +11,12 @@ import DoneIcon from '@mui/icons-material/Done'
 import { ROLE_TRANSLATIONS } from '../crm-clients-page/CrmTableStickyHead'
 import { Role } from '../../types'
 import axiosInstance from '../../axios/settings'
+import { changeRoleStyle, roleList, saveNewRole } from './style'
+import ConfirmModal from './ConfirmModal'
 
 const ROLE = ['admin', 'moderator', 'user']
 
-export default function BasicMenu({ user, setUserRole }: any) {
+export default function BasicMenu({ user, userRole, setUserRole }: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [selectedRole, setSelectedRole] = React.useState<string>(user.role)
   const open = Boolean(anchorEl)
@@ -51,31 +53,31 @@ export default function BasicMenu({ user, setUserRole }: any) {
       const userId = user.id // Замініть на ID користувача, якому хочете змінити роль
       const newRole = role // Замініть на нову роль
       const updatedAt = new Date().toISOString() // Поточний час в форматі ISO
-
       const changeNewRole = {
         id: userId,
         role: newRole,
         updated_at: updatedAt
       }
       console.log(' changeNewRole:', changeNewRole)
-
       fetchChangeRole(changeNewRole)
       setUserRole(newRole)
-      setSelectedRole('')
+      setOpenModal(false)
     }
     return
   }
 
+  const [openModal, setOpenModal] = React.useState<boolean>(false)
+
   return (
-    <Box
-      className={styles.changeRoleMain}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px'
-      }}
-    >
-      <Box className={styles.changeRole}>
+    <Box className={styles.changeRoleMain}>
+      <ConfirmModal
+        user={user}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        changeRole={changeRole}
+        selectedRole={selectedRole}
+      />
+      <Box sx={changeRoleStyle}>
         <Button
           id="basic-button"
           aria-controls={open ? 'basic-menu' : undefined}
@@ -87,7 +89,7 @@ export default function BasicMenu({ user, setUserRole }: any) {
           <KeyboardArrowDownIcon fontSize="large" />
         </Button>
         <Menu
-          className={styles.roleMenu}
+          sx={roleList}
           id="basic-menu"
           anchorEl={anchorEl}
           open={open}
@@ -98,25 +100,8 @@ export default function BasicMenu({ user, setUserRole }: any) {
         >
           {ROLE.map((item) => (
             <MenuItem onClick={() => handleMenuItemClick(item)} key={item}>
-              {selectedRole === item && (
-                <DoneIcon
-                  sx={{
-                    color: 'accent.darker',
-                    mr: '10px',
-                    position: 'absolute',
-                    left: '15px'
-                  }}
-                />
-              )}
-              <Typography
-                className={styles[item]}
-                sx={{
-                  borderRadius: '10px',
-                  fontWeight: 600,
-                  ml: '30px',
-                  padding: '5px 10px'
-                }}
-              >
+              {selectedRole === item && <DoneIcon />}
+              <Typography variant="caption" className={styles[item]}>
                 {ROLE_TRANSLATIONS[item as Role]}
               </Typography>
             </MenuItem>
@@ -124,19 +109,9 @@ export default function BasicMenu({ user, setUserRole }: any) {
         </Menu>
       </Box>
       <Button
-        onClick={() => changeRole(selectedRole)}
-        sx={{
-          'height': '40px',
-          'borderRadius': '10px',
-          'backgroundColor': 'accent.darker',
-          'color': 'background.default',
-          'fontWeight': '600',
-          'fontSize': '16px',
-          '&:hover': {
-            backgroundColor: 'accent.darker',
-            color: 'background.default'
-          }
-        }}
+        disabled={selectedRole === userRole}
+        onClick={() => setOpenModal(true)}
+        sx={saveNewRole}
       >
         Зберегти
       </Button>

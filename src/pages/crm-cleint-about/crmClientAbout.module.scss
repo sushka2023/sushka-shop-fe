@@ -1,45 +1,7 @@
-.changeRole {
-  border: 1px solid #5d5fef;
-  border-radius: 10px;
-
-  button {
-    width: 200px;
-    height: 40px;
-    color: #5d5fef;
-    padding: 0;
-
-    &:hover {
-      color: #5d5fef;
-    }
-
-    span {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0 10px 0 15px;
-    }
-  }
-}
-
-.roleMenu {
-  margin-top: 15px;
-
-  div:nth-child(3) {
-    border-radius: 10px;
-  }
-
-  ul {
-    width: 200px;
-    border: 1px solid #5d5fef;
-    border-radius: 10px;
-
-    // li {
-    //   span {
-    //     font-weight: 600;
-    //     border-radius: 10px;
-    //     padding: 5px 10px;
-    //   }
-    // }
-  }
+.changeRoleMain {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .admin {
