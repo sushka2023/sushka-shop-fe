@@ -13,63 +13,52 @@ import { Role } from '../../types'
 import axiosInstance from '../../axios/settings'
 import { changeRoleStyle, roleList, saveNewRole } from './style'
 import ConfirmModal from './ConfirmModal'
+import { User } from './CrmClientAbout'
 
-const ROLE = ['admin', 'moderator', 'user']
+const ROLES = ['admin', 'moderator', 'user']
 
-export default function BasicMenu({ user, userRole, setUserRole }: any) {
+type BasicMenuProps = {
+  user: User
+  userRole: string
+  setUserRole: (role: Role) => void
+}
+
+export default function BasicMenu({
+  user,
+  userRole,
+  setUserRole
+}: BasicMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [selectedRole, setSelectedRole] = React.useState<string>(user.role)
+  const [openModal, setOpenModal] = React.useState<boolean>(false)
+
   const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
 
-  const handleMenuItemClick = (role: string) => {
-    // setSelectedRole(ROLE_TRANSLATIONS[role as Role])
-    setSelectedRole(role)
-    console.log('Selected role:', role)
-    // handleClose()
-  }
+  const handleClose = () => setAnchorEl(null)
 
-  const fetchChangeRole = async (data: {
-    id: number
-    role: string
-    updated_at: string
-  }) => {
+  const handleMenuItemClick = (role: string) => setSelectedRole(role)
+
+  const fetchChangeRole = async (role: string) => {
     try {
-      const res = await axiosInstance.put(`/api/users/change_role`, data)
-      console.log('Роль змінено:', res)
-      // window.location.reload() // Оновлення сторінки
+      const { data } = await axiosInstance.put(`/api/users/change_role`, {
+        id: user.id,
+        role,
+        updated_at: new Date().toISOString()
+      })
+      setUserRole(data.role)
+      setOpenModal(false)
     } catch (error) {
       console.error('Помилка зміни ролі:', error)
     }
   }
 
-  const changeRole = (role: any) => {
-    if (role) {
-      const userId = user.id // Замініть на ID користувача, якому хочете змінити роль
-      const newRole = role // Замініть на нову роль
-      const updatedAt = new Date().toISOString() // Поточний час в форматі ISO
-      const changeNewRole = {
-        id: userId,
-        role: newRole,
-        updated_at: updatedAt
-      }
-      console.log(' changeNewRole:', changeNewRole)
-      fetchChangeRole(changeNewRole)
-      setUserRole(newRole)
-      setOpenModal(false)
-    }
-    return
-  }
-
-  const [openModal, setOpenModal] = React.useState<boolean>(false)
+  const changeRole = () => fetchChangeRole(selectedRole)
 
   return (
-    <Box className={styles.changeRoleMain}>
+    <Box className={styles.aboutClientBlock}>
       <ConfirmModal
         user={user}
         openModal={openModal}
@@ -98,7 +87,7 @@ export default function BasicMenu({ user, userRole, setUserRole }: any) {
             'aria-labelledby': 'basic-button'
           }}
         >
-          {ROLE.map((item) => (
+          {ROLES.map((item) => (
             <MenuItem onClick={() => handleMenuItemClick(item)} key={item}>
               {selectedRole === item && <DoneIcon />}
               <Typography variant="caption" className={styles[item]}>

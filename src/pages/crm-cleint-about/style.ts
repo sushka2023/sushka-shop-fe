@@ -1,3 +1,10 @@
+export const aboutRole = {
+  backgroundColor: 'background.default',
+  borderRadius: '10px',
+  p: '30px 20px',
+  mb: '30px'
+}
+
 export const changeRoleStyle = {
   'border': '1px solid',
   'borderColor': 'accent.darker',
@@ -59,7 +66,7 @@ export const saveNewRole = {
     color: 'background.default'
   },
   '&:disabled': {
-    backgroundColor: 'accent.darker', // Колір фону для disabled стану
-    opacity: 0.5 // Прозорість для disabled стану
+    backgroundColor: 'accent.darker',
+    opacity: 0.5
   }
 }

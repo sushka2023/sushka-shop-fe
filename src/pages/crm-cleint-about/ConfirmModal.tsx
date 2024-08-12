@@ -6,9 +6,9 @@ import { User } from './CrmClientAbout'
 type ConfirmModalProps = {
   user: User
   openModal: boolean
-  setOpenModal: (open: boolean) => void // Функція для зміни стану
-  changeRole: any
-  selectedRole: any
+  setOpenModal: (open: boolean) => void
+  changeRole: (role: string) => void
+  selectedRole: string
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -18,12 +18,9 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   changeRole,
   selectedRole
 }) => {
-  console.log(selectedRole)
-
   return (
     <ModalDialog
       open={openModal}
-      // onClose={handleClose}
       onClose={() => setOpenModal(false)}
       title="Змінити роль користувача"
       content={`Ви впевнені, що хочете змінити роль користувача ${user.email}?`}
