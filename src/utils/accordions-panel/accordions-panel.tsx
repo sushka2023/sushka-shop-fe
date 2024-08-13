@@ -8,7 +8,7 @@ import { FC, ReactNode } from 'react'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { a11yProps } from '../a11y-tabs/a11yTabs'
 
-type CustomAccordionProps = {
+type Props = {
   index: number
   expanded: number | null
   onChange: (newIndex: number | null) => void
@@ -16,7 +16,7 @@ type CustomAccordionProps = {
   children: ReactNode
 }
 
-export const CustomAccordion: FC<CustomAccordionProps> = ({
+export const CustomAccordion: FC<Props> = ({
   index,
   expanded,
   onChange,

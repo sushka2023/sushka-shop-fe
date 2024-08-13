@@ -1,4 +1,4 @@
-import { FC, Fragment, ReactNode, SyntheticEvent } from 'react'
+import { FC, Fragment, ReactNode } from 'react'
 import {
   Autocomplete,
   CircularProgress,
@@ -8,23 +8,20 @@ import {
 import { ListboxComponent, StyledPopper } from './VariableSizeList'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-interface AutocompleteCustomProps {
+type Props = {
   name: string
   register: UseFormRegister<FieldValues>
   options: string[]
-  onChange: (
-    _event: SyntheticEvent<Element, Event>,
-    value: string | null
-  ) => void
   loading: boolean
   setValueInput: (value: string) => void
   placeholder: string
   disabled?: boolean
   value?: string | null
   noOptionsText: string
+  onChange: (value: string | null) => void
 }
 
-export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
+export const AutocompleteCustom: FC<Props> = ({
   onChange,
   placeholder,
   register,
@@ -57,7 +54,7 @@ export const AutocompleteCustom: FC<AutocompleteCustomProps> = ({
       ListboxComponent={ListboxComponent}
       clearOnEscape
       onInputChange={(_, val) => setValueInput(val)}
-      onChange={onChange}
+      onChange={(_, value) => onChange(value)}
       isOptionEqualToValue={isOptionEqualToValue}
       popupIcon={<ExpandMoreIcon sx={{ color: 'secondary.darker' }} />}
       renderInput={(params) => (
