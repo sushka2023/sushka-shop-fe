@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material'
 import { ArrowLeft } from './ArrowLeft'
 import { ArrowRight } from './ArrowRight'
 import { Link, useLocation } from 'react-router-dom'
+import { paginationItems } from './style'
 
 type PaginationCRMProps = {
   page: number | undefined
@@ -21,7 +22,6 @@ export default function PaginationCRM({
 }: PaginationCRMProps) {
   const theme = useTheme()
   const location = useLocation()
-  // console.log('location:', location.pathname + location.search)
 
   return (
     <Stack
@@ -46,15 +46,7 @@ export default function PaginationCRM({
             state={{ from: location.pathname + location.search }}
           />
         )}
-        sx={{
-          '& .MuiPaginationItem-root': {
-            color: 'accent.darker'
-          },
-          '& .MuiPaginationItem-root.Mui-selected': {
-            backgroundColor: 'accent.darker',
-            color: 'background.default'
-          }
-        }}
+        sx={paginationItems}
       />
     </Stack>
   )

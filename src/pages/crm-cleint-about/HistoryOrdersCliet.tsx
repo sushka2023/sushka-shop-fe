@@ -1,6 +1,6 @@
 // import styles from './crmClientAbout.module.scss'
 import { Box, Typography } from '@mui/material'
-import DataGridDemo from '../crm-clients-page/ClientAboutOrdersTable '
+import DataGridDemo from './ClientAboutOrdersTable '
 
 const HistoryOrdersClient = () => {
   return (

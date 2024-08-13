@@ -41,7 +41,6 @@ const CrmClientAbout = () => {
           `/api/users/all_for_crm?limit=10&offset=0&user_id=${clientId}`
         )
 
-        // console.log(data.users[0])
         setUser(data.users[0])
       } catch (error) {
         console.error(error)

@@ -25,9 +25,7 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
     <Box sx={aboutRole}>
       <Box className={styles.changeRoleBlock}>
         <Box className={styles.aboutClientBlock}>
-          <Typography variant="h3" sx={{ color: 'accent.darker' }}>
-            Клієнт #{user.id}
-          </Typography>
+          <Typography variant="h3">Клієнт #{user.id}</Typography>
           <Typography variant="body1" className={styles[userRole]}>
             {ROLE_TRANSLATIONS[userRole]}
           </Typography>

@@ -14,11 +14,13 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
 import { Role } from '../../types'
+import { tableClients } from './style'
 
 type ClientType = {
   id: number
   role: Role
-  created_at: string
+  first_name: string
+  last_name: string
   phone_number: string | null
   email: string
 }
@@ -42,29 +44,12 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
   }
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        height: '714px',
-        borderTopLeftRadius: '10px',
-        borderTopRightRadius: '10px',
-        borderBottomLeftRadius: '0px',
-        borderBottomRightRadius: '0px'
-      }}
-    >
-      <Table
-        className={styles.table}
-        sx={{
-          'minWidth': 650,
-          'color': 'illustrations.darker',
-          'th, td': { color: 'inherit' }
-        }}
-        aria-label="simple table"
-      >
+    <TableContainer component={Paper} className={styles.tableBlock}>
+      <Table sx={tableClients} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ background: theme.palette.grey[50] }}>
             <TableCell>Роль користувача</TableCell>
-            <TableCell align="center">Дата оформлення</TableCell>
+            <TableCell align="center">ПІБ</TableCell>
             <TableCell align="center">Електронна пошта</TableCell>
             <TableCell align="center">Номер телефону</TableCell>
             <TableCell align="center">Змінити</TableCell>
@@ -72,14 +57,22 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
         </TableHead>
         <TableBody>
           {clients.map((row) => (
-            <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
+            <TableRow
+              key={row.id}
+              onClick={() => handleRowClick(row.id)}
+              sx={{
+                '&:hover': {
+                  background: 'rgba(0, 0, 0, 0.04)'
+                }
+              }}
+            >
               <TableCell component="th" scope="row">
                 <Typography component="span" className={styles[row.role]}>
                   {ROLE_TRANSLATIONS[row.role]}
                 </Typography>
               </TableCell>
               <TableCell align="center">
-                {row.created_at.split('T')[0]}
+                {`${row.first_name} ${row.last_name}`}
               </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">

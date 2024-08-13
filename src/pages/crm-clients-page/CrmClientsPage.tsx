@@ -1,3 +1,5 @@
+import styles from './crmClientsPage.module.scss'
+
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
@@ -6,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import PaginationCRM from './PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
+import { seacrhClient } from './style'
 
 const BASE_URL_CLIENTS = 'api/users/all_for_crm?'
 
@@ -28,7 +31,8 @@ const CrmClientsPage = () => {
     const fetchCrmClients = async () => {
       try {
         const { data } = await axiosInstance.get<any>(
-          BASE_URL_CLIENTS + `limit=${CLIENT_QUANTITY}&offset=${offset}`
+          BASE_URL_CLIENTS +
+            `limit=${CLIENT_QUANTITY}&offset=${offset}&search=${search}`
         )
 
         const totalNumberOfPages = Math.ceil(
@@ -44,18 +48,11 @@ const CrmClientsPage = () => {
     }
 
     fetchCrmClients()
-  }, [page, location])
+  }, [page, location, search])
 
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker" minHeight="955px">
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          mb: '34px'
-        }}
-      >
+      <Box className={styles.searchBlock}>
         <Typography variant="h3">Клієнти </Typography>
         <TextField
           InputProps={{
@@ -65,17 +62,7 @@ const CrmClientsPage = () => {
               </InputAdornment>
             )
           }}
-          sx={{
-            'width': '300px',
-            '& div, & input': {
-              backgroundColor: 'background.default',
-              borderRadius: '10px'
-            },
-            '& input': {
-              paddingLeft: '0px',
-              color: 'illustrations.darker'
-            }
-          }}
+          sx={seacrhClient}
           placeholder="Введіть ПІБ або пошту"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
