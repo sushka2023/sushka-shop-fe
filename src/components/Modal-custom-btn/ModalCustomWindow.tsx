@@ -10,6 +10,7 @@ type TModalWindow = {
   children: ReactNode
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
+  callback: () => void
   onAnimationEnd?: () => void
 }
 
@@ -17,11 +18,13 @@ export const ModalCustom = ({
   sx,
   children,
   openModal,
-  setOpenModal
+  setOpenModal,
+  callback
 }: TModalWindow) => {
   const theme = useTheme()
   const handleCloseModal = () => {
     setOpenModal(false)
+    callback && callback()
   }
 
   return (
