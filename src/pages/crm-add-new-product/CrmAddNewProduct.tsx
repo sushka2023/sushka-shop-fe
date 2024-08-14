@@ -13,6 +13,8 @@ import { AppDispatch, RootState } from '../../redux/store'
 import DescriptionProduct from './DescriptionProduct'
 import StatusDropdown from './StatusDropdown'
 import { newProductSchema } from '../../helpers/validateNewProduct'
+import { useParams } from 'react-router-dom'
+import axiosInstance from '../../axios/settings'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -28,6 +30,39 @@ const CrmAddNewProduct = () => {
   const formErrors = useSelector(
     (state: RootState) => state.newProduct.formErrors
   )
+
+  const { params: productIdParam } = useParams()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [product, setProduct] = useState<any>(null)
+  console.log('✌️product --->', product)
+
+  const statusMapping: { [key: string]: keyof typeof statusClasses } = {
+    new: 'Новий',
+    activated: 'Активний',
+    archived: 'Архівований'
+  }
+
+  const getProduct = async (index: string | undefined) => {
+    const parsedIndex = Number(index)
+
+    if (isNaN(parsedIndex)) return
+    setIsLoading(true)
+    try {
+      const { data } = await axiosInstance.get(`/api/product/${parsedIndex}`)
+      setProduct(data)
+
+      const translatedStatus = statusMapping[data.product_status]
+      setCurrentStatus(translatedStatus)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getProduct(productIdParam)
+  }, [productIdParam])
 
   const validateField = async (name: string, value: string) => {
     try {
@@ -104,7 +139,9 @@ const CrmAddNewProduct = () => {
     Архівований: styles.statusArchive
   }
 
-  return (
+  return isLoading ? (
+    <p>loading...</p>
+  ) : (
     <section className={styles.container}>
       <form className={styles.form}>
         <div className={styles.formWrapp}>

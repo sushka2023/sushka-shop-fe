@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import PlusIcon from '../../icons/plus.svg?react'
 import SearchIcon from '../../icons/search.svg?react'
 import styles from './crmProductsPage.module.scss'
-import { GridPaginationModel } from '@mui/x-data-grid'
+import { GridPaginationModel, GridRowParams } from '@mui/x-data-grid'
 import { SelectChangeEvent } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import {
@@ -31,6 +31,7 @@ export const OPTIONS = [
 ]
 
 const CrmProductsPage = () => {
+  const navigate = useNavigate()
   const [status, setStatus] = useState('')
   const [category, setCategory] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -61,6 +62,10 @@ const CrmProductsPage = () => {
   }
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value)
+  }
+
+  const handleIndex = (index: GridRowParams) => {
+    navigate(`./${index.id}`)
   }
 
   const handlePaginationModelChange = (
@@ -196,6 +201,7 @@ const CrmProductsPage = () => {
             disableColumnFilter
             loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
             disableColumnMenu
+            onRowClick={(index) => handleIndex(index)}
           />
         </div>
       </div>
