@@ -11,7 +11,9 @@ const HistoryOrdersClient = () => {
         p: '30px 20px'
       }}
     >
-      <Typography variant="h4">Історія замовлень</Typography>
+      <Typography variant="h4" mb="30px">
+        Історія замовлень
+      </Typography>
       <DataGridDemo />
     </Box>
   )
