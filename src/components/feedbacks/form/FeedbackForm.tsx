@@ -81,11 +81,6 @@ const FeedbackForm = () => {
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       {isLoggedIn ? (
         <form className={styles.feedbackForm} onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Ваше ім'я"
-            className={styles.feedbackFormInput}
-          />
           <TextField
             placeholder="Ваше ім'я"
             sx={{
