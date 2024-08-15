@@ -30,13 +30,15 @@ const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
             {ROLE_TRANSLATIONS[userRole]}
           </Typography>
         </Box>
-        {authUser && authUser.role === 'moderator' && (
+        {authUser && authUser.role === 'admin' && (
           <Box className={styles.aboutClientBlock}>
-            <ChangeRole
-              user={user}
-              userRole={userRole}
-              setUserRole={setUserRole}
-            />
+            {user.id != 1 && (
+              <ChangeRole
+                user={user}
+                userRole={userRole}
+                setUserRole={setUserRole}
+              />
+            )}
           </Box>
         )}
       </Box>
