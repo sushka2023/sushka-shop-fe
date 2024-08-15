@@ -7,6 +7,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
+import { TextField } from '@mui/material'
 
 const DEFAULT_VALUE = {
   name: '',
@@ -85,6 +86,26 @@ const FeedbackForm = () => {
             placeholder="Ваше ім'я"
             className={styles.feedbackFormInput}
           />
+          <TextField
+            placeholder="Ваше ім'я"
+            sx={{
+              'color': '#567343',
+              'width': '100%',
+              'height': '100%',
+              '& .MuiInputBase-root': {
+                height: '44px'
+              },
+              '& input': {
+                height: '100%',
+                backgroundColor: 'rgb(244, 244, 244)'
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+                height: '100%'
+              }
+            }}
+          />
+
           <div className={styles.wrapperTextarea}>
             <CustomTextarea maxLength={MAX_LENGTH} />
             <label
