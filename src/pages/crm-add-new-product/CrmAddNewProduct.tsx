@@ -42,6 +42,16 @@ const CrmAddNewProduct = () => {
     archived: 'Архівований'
   }
 
+  useEffect(() => {
+    if (product && nameInputRef.current) {
+      nameInputRef.current.value = product.name
+    }
+
+    if (product && descriptionRef.current) {
+      descriptionRef.current.value = product.description
+    }
+  }, [product])
+
   const getProduct = async (index: string | undefined) => {
     const parsedIndex = Number(index)
 
@@ -171,7 +181,7 @@ const CrmAddNewProduct = () => {
             handleChangeFormData={handleChangeFormData}
           />
           <div className={styles.categoriesOptionWrapp}>
-            <CrmCategoriesBlock />
+            <CrmCategoriesBlock product={product} />
           </div>
         </div>
         <CrmAddNewProductTable />

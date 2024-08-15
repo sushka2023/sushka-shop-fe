@@ -16,8 +16,11 @@ import { AppDispatch } from '../../redux/store'
 import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
 import { ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
+// import { useParams } from 'react-router-dom'
+// import axiosInstance from '../../axios/settings'
 
 const CrmAddNewProductButton = () => {
+  // const { params: productIdParam } = useParams()
   const productData = useSelector((state: RootState) => state.newProduct)
 
   const productId = useSelector(
@@ -47,6 +50,7 @@ const CrmAddNewProductButton = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
+
     try {
       await newProductSchema.validate(productData, { abortEarly: false })
       await newProductImagesSchema.validate(
@@ -56,6 +60,9 @@ const CrmAddNewProductButton = () => {
       await newProductPriceSchema.validate(productData.price, {
         abortEarly: false
       })
+      // await axiosInstance.patch(`/api/product/edit/${productIdParam}`, {
+
+      // })
 
       dispatch(setFormErrors({}))
       await dispatch(

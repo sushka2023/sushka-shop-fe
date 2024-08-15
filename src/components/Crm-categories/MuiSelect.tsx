@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addData } from '../../redux/crm-add-new-product/slice/product'
@@ -24,21 +25,26 @@ type Props = {
     categoryValue: number,
     selectedCategory: number
   ) => void
+  product?: any
 }
 
 const MuiSelect: React.FC<Props> = ({
   categoryValue,
   сategories,
   type,
-  handleClickRemoveSubCategory
+  handleClickRemoveSubCategory,
+  product
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    сategories && сategories[0].id
+  const [selectedCategory, setSelectedCategory] = useState<number | ''>(
+    categoryValue || (сategories?.[0]?.id ?? '')
   )
+
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    dispatch(addData({ type, value: selectedCategory }))
+    if (selectedCategory !== '') {
+      dispatch(addData({ type, value: selectedCategory }))
+    }
   }, [selectedCategory])
 
   const handleChange = (e: SelectChangeEvent) => {
@@ -49,9 +55,10 @@ const MuiSelect: React.FC<Props> = ({
     <FormControl>
       <InputLabel sx={labelStyle} variant="standard">
         {type === 'sub_categories'
-          ? categoryValue === 1 && 'Саб-категорія товару'
+          ? (categoryValue || product) && 'Саб-категорія товару'
           : 'Категорія товару'}
       </InputLabel>
+
       <Select
         sx={selectStyle}
         onChange={handleChange}
@@ -60,12 +67,14 @@ const MuiSelect: React.FC<Props> = ({
         MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
         IconComponent={() => <ArowIcon className={styles.iconArrow} />}
         startAdornment={
-          type === 'sub_categories' && (
+          handleClickRemoveSubCategory && (
             <InputAdornment
               position="start"
               onClick={() =>
-                handleClickRemoveSubCategory &&
-                handleClickRemoveSubCategory(categoryValue!, selectedCategory!)
+                handleClickRemoveSubCategory(
+                  categoryValue!,
+                  selectedCategory as number
+                )
               }
             >
               <DeleteIcon className={styles.iconDel} />
@@ -74,13 +83,14 @@ const MuiSelect: React.FC<Props> = ({
         }
       >
         {сategories?.map((category) => (
-          <MenuItem key={category.name} value={category.id}>
+          <MenuItem key={category.id} value={category.id}>
             {category.name}
           </MenuItem>
-        ))}
+        )) || <MenuItem value="">Немає категорій</MenuItem>}
       </Select>
     </FormControl>
   )
 }
 
 export default MuiSelect
+/* eslint-enable */
