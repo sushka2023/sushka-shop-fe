@@ -15,6 +15,8 @@ import StatusDropdown from './StatusDropdown'
 import { newProductSchema } from '../../helpers/validateNewProduct'
 import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/settings'
+import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
+import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,9 +54,8 @@ const CrmAddNewProduct = () => {
     }
   }, [product])
 
-  const getProduct = async (index: string | undefined) => {
-    const parsedIndex = Number(index)
-
+  const parsedIndex = Number(productIdParam)
+  const getProduct = async () => {
     if (isNaN(parsedIndex)) return
     setIsLoading(true)
     try {
@@ -71,7 +72,7 @@ const CrmAddNewProduct = () => {
   }
 
   useEffect(() => {
-    getProduct(productIdParam)
+    getProduct()
   }, [productIdParam])
 
   const validateField = async (name: string, value: string) => {
@@ -181,10 +182,19 @@ const CrmAddNewProduct = () => {
             handleChangeFormData={handleChangeFormData}
           />
           <div className={styles.categoriesOptionWrapp}>
-            <CrmCategoriesBlock product={product} />
+            {isNaN(parsedIndex) ? (
+              <CrmCategoriesBlock product={product} />
+            ) : (
+              <CrmCategoriesBlockView product={product} />
+            )}
           </div>
         </div>
-        <CrmAddNewProductTable />
+
+        {product ? (
+          <CrmViewProductTable prices={product.prices} />
+        ) : (
+          <CrmAddNewProductTable />
+        )}
       </form>
     </section>
   )

@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 import PlusIcon from '../../icons/plus1.svg?react'
 import styles from './CrmAddNewProduct.module.scss'
-import { AppDispatch } from '../../redux/store'
-import { ProductState } from '../../redux/crm-add-new-product/slice/product'
+import { AppDispatch, RootState } from '../../redux/store'
 import { addData } from '../../redux/crm-add-new-product/slice/product'
 import { Price } from '../../redux/crm-add-new-product/operation'
 import TableRow from './TableRow'
@@ -25,9 +24,7 @@ export type ProductItem = {
 } & Price
 
 const CrmAddNewProductTable = () => {
-  const [openRows, setOpenRows] = useState<
-    Record<string, string | number | boolean>
-  >({})
+  const [openRows, setOpenRows] = useState<Record<string, boolean>>({})
   const [data, setData] = useState<ProductItem[]>([
     {
       id: uuidv4(),
@@ -41,15 +38,15 @@ const CrmAddNewProductTable = () => {
   ])
   const dispatch = useDispatch<AppDispatch>()
   const productId = useSelector(
-    (state: ProductState) => state.newProduct.productId
+    (state: RootState) => state.newProduct.productId
   )
   const validationErrors = useSelector(
-    (state: ProductState) => state.newProduct.formErrors
+    (state: RootState) => state.newProduct.formErrors
   )
 
-  const hasError = (rowIndex: number, columnName: string) => {
+  const hasError = (rowIndex: number, columnName: string): string => {
     const errorKey = `[${rowIndex}].${columnName}`
-    return validationErrors && validationErrors[errorKey]
+    return validationErrors[errorKey] || ''
   }
 
   const handleInputChange = (
@@ -67,11 +64,11 @@ const CrmAddNewProductTable = () => {
       formattedValue = value === '' ? '' : parseFloat(value as string)
     }
 
-    setData((currentData) => {
-      return currentData.map((row) => {
-        return row.id === id ? { ...row, [columnId]: formattedValue } : row
-      })
-    })
+    setData((currentData) =>
+      currentData.map((row) =>
+        row.id === id ? { ...row, [columnId]: formattedValue } : row
+      )
+    )
   }
 
   useEffect(() => {
@@ -93,7 +90,7 @@ const CrmAddNewProductTable = () => {
   }, [data, dispatch])
 
   const addNewRow = () => {
-    const newRow = {
+    const newRow: ProductItem = {
       id: uuidv4(),
       active: false,
       weight: ARRAY_OPTION_WEIGHT[0],
@@ -102,37 +99,28 @@ const CrmAddNewProductTable = () => {
       sale: false,
       priceSale: 0
     }
-    setData((currentData) => {
-      return [...currentData, newRow]
-    })
+    setData((currentData) => [...currentData, newRow])
   }
 
   const toggleWeightList = (id: string) => {
-    setOpenRows((prevOpenRows) => {
-      return {
-        ...prevOpenRows,
-        [id]: !prevOpenRows[id]
-      }
-    })
+    setOpenRows((prevOpenRows) => ({
+      ...prevOpenRows,
+      [id]: !prevOpenRows[id]
+    }))
   }
 
   const handleDeleteRow = (id: string) => {
-    return (
-      data.length > 1 &&
-      setData(
-        data.filter((row) => {
-          return row.id !== id
-        })
-      )
-    )
+    if (data.length > 1) {
+      setData((currentData) => currentData.filter((row) => row.id !== id))
+    }
   }
 
   const handleWeightChange = (id: string, newWeight: string) => {
-    setData((currentData) => {
-      return currentData.map((row) => {
-        return row.id === id ? { ...row, weight: newWeight } : row
-      })
-    })
+    setData((currentData) =>
+      currentData.map((row) =>
+        row.id === id ? { ...row, weight: newWeight } : row
+      )
+    )
   }
 
   return (
@@ -175,22 +163,20 @@ const CrmAddNewProductTable = () => {
         </tr>
       </thead>
       <tbody className={styles.tableBody}>
-        {data.map((row, index) => {
-          return (
-            <TableRow
-              key={row.id}
-              row={row}
-              index={index}
-              openRows={openRows}
-              ARRAY_OPTION_WEIGHT={ARRAY_OPTION_WEIGHT}
-              hasError={hasError}
-              handleInputChange={handleInputChange}
-              toggleWeightList={toggleWeightList}
-              handleDeleteRow={handleDeleteRow}
-              handleWeightChange={handleWeightChange}
-            />
-          )
-        })}
+        {data.map((row, index) => (
+          <TableRow
+            key={row.id}
+            row={row}
+            index={index}
+            openRows={openRows}
+            ARRAY_OPTION_WEIGHT={ARRAY_OPTION_WEIGHT}
+            hasError={hasError}
+            handleInputChange={handleInputChange}
+            toggleWeightList={toggleWeightList}
+            handleDeleteRow={handleDeleteRow}
+            handleWeightChange={handleWeightChange}
+          />
+        ))}
         <tr>
           <td colSpan={6} className={styles.containerPlus}>
             <div
