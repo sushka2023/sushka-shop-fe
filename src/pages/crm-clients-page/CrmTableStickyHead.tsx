@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
 import { Role } from '../../types'
-import { tableClients } from './style'
+import { tableBlock, tableClients } from './style'
 
 type ClientType = {
   id: number
@@ -44,7 +44,7 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
   }
 
   return (
-    <TableContainer component={Paper} className={styles.tableBlock}>
+    <TableContainer component={Paper} sx={tableBlock}>
       <Table sx={tableClients} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ background: theme.palette.grey[50] }}>

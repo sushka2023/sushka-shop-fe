@@ -1,21 +1,12 @@
 import { Box } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
+import { baseStatusStyle, statusStyles } from './style'
 
-const statusStyles: Record<string, React.CSSProperties> = {
-  'new': {
-    background: '#EFF3FF',
-    borderRadius: '10px',
-    color: 'blue',
-    padding: '5px 10px'
-  },
-  'in processing': { color: 'orange' },
-  'shipped': { color: 'green' },
-  'delivered': { color: 'purple' },
-  'cancelled': { color: 'red' }
-}
-
-const getStatusStyle = (status: string): React.CSSProperties => {
-  return statusStyles[status] || { color: 'black' }
+const getStatusStyle = (status: string) => {
+  return {
+    ...baseStatusStyle,
+    ...statusStyles[status]
+  }
 }
 
 const ORDER_STATUS_TRANSLATIONS = {
@@ -37,7 +28,9 @@ export const columns: GridColDef<[number]>[] = [
     disableColumnMenu: true,
     sortable: false,
     renderCell: (params) => (
-      <Box sx={{ color: 'accent.darker', fontWeight: 600 }}>{params.value}</Box>
+      <Box sx={{ color: 'accent.darker', fontWeight: 600 }}>
+        #{params.value}
+      </Box>
     )
   },
   {
@@ -48,7 +41,11 @@ export const columns: GridColDef<[number]>[] = [
     disableColumnMenu: true,
     sortable: false,
     headerAlign: 'center',
-    align: 'center'
+    align: 'center',
+    renderCell: (params) => {
+      const dateValue = new Date(params.value).toLocaleDateString('uk-UA')
+      return <Box>{dateValue}</Box>
+    }
   },
   {
     flex: 1,
@@ -73,6 +70,7 @@ export const columns: GridColDef<[number]>[] = [
     disableColumnMenu: true,
     sortable: false,
     headerAlign: 'center',
-    align: 'center'
+    align: 'center',
+    renderCell: (params) => <Box>₴ {params.value}</Box>
   }
 ]

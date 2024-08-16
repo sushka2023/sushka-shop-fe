@@ -16,7 +16,6 @@
     li:first-child > a,
     li:last-child > a {
       border: 1px solid #5d5fef;
-      position: absolute;
       width: 174px;
       height: 40px;
       color: #5d5fef;
@@ -29,23 +28,13 @@
     }
 
     li:first-child > a {
-      left: 0;
-      top: 0;
+      margin-right: 25px;
     }
 
     li:last-child > a {
-      right: 0;
-      top: 0;
+      margin-left: 25px;
     }
   }
-}
-
-.tableBlock {
-  height: 714px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 }
 
 .admin {

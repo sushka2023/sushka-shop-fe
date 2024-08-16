@@ -1,116 +1,61 @@
 // import styles from './crmClientAbout.module.scss'
 import { Box, Typography } from '@mui/material'
 import DataGridDemo from '../../components/crm-grid-table-client/ClientAboutOrdersTable '
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-// import { useState } from 'react'
 import axiosInstance from '../../axios/settings'
-// import PaginationCRM from '../crm-clients-page/PaginationCRM'
+import PaginationCRM from '../crm-clients-page/PaginationCRM'
 
-const BASE_URL_ORDER_CLIENT = '/api/orders/for_crm/user'
-// const CLIENT_PAGEQTY = 2
+const BASE_URL_ORDER_CLIENT = '/api/orders/for_crm/user?'
 
-type orderHistory = {
-  id: string
+const CLIENT_QUANTITY = 5
+const CLIENT_PAGEQTY = 0
+const CLIENT_PAGE = 1
+
+type Order = {
+  id: number
   created_at: string
   status_order: string
-  price_order: string
+  price_order: number
 }
 
-// const orderHistoryList: orderHistory[] = [
-//   {
-//     id: '#1',
-//     created_at: '14.08.2024',
-//     status_order: 'new',
-//     price_order: '₴500'
-//   },
-//   {
-//     id: '#2',
-//     created_at: '15.08.2024',
-//     status_order: 'in processing',
-//     price_order: '₴300'
-//   },
-//   {
-//     id: '#3',
-//     created_at: '16.08.2024',
-//     status_order: 'shipped',
-//     price_order: '₴1200'
-//   },
-//   {
-//     id: '#4',
-//     created_at: '17.08.2024',
-//     status_order: 'delivered',
-//     price_order: '₴450'
-//   },
-//   {
-//     id: '#5',
-//     created_at: '18.08.2024',
-//     status_order: 'cancelled',
-//     price_order: '₴800'
-//   },
-//   {
-//     id: '#6',
-//     created_at: '19.08.2024',
-//     status_order: 'new',
-//     price_order: '₴200'
-//   },
-//   {
-//     id: '#7',
-//     created_at: '20.08.2024',
-//     status_order: 'in processing',
-//     price_order: '₴750'
-//   },
-//   {
-//     id: '#8',
-//     created_at: '21.08.2024',
-//     status_order: 'shipped',
-//     price_order: '₴990'
-//   },
-//   {
-//     id: '#9',
-//     created_at: '22.08.2024',
-//     status_order: 'delivered',
-//     price_order: '₴610'
-//   },
-//   {
-//     id: '#10',
-//     created_at: '23.08.2024',
-//     status_order: 'cancelled',
-//     price_order: '₴1300'
-//   }
-// ]
+type OrderHistoryResponse = {
+  orders: Order[]
+  total_cost_orders: number
+  total_count: number
+}
 
 const HistoryOrdersClient = () => {
   const { params: clientId } = useParams()
-  const [orders, setOrders] = useState<orderHistory[]>([])
-  // const [page, setPage] = useState(1)
-  // const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
+  const [orderHistory, setOrderHistory] = useState<OrderHistoryResponse | null>(
+    null
+  )
+
+  const location = useLocation()
+  const nowPage = parseInt(location.search?.split('=')[1]) || CLIENT_PAGE
+  const offset = (nowPage - 1) * CLIENT_QUANTITY
+  const [page, setPage] = useState(1)
+  const [pageQty, setPageQty] = useState(CLIENT_PAGEQTY)
+
   useEffect(() => {
     const fetchOrderClient = async () => {
       try {
         const { data } = await axiosInstance.get<any>(
-          `${BASE_URL_ORDER_CLIENT}?limit=1&offset=1&user_id=${clientId}`
+          `${BASE_URL_ORDER_CLIENT}limit=${CLIENT_QUANTITY}&offset=${offset}&user_id=${clientId}`
         )
-        console.log('fetchOrderClient  data:', data)
 
-        const transformedRows = data.orders.ordered_products.map(
-          (order: orderHistory) => ({
-            id: `#${order.id}`,
-            status_order: order.status_order,
-            created_at: new Date(order.created_at).toLocaleDateString('uk-UA'),
-            price_order: `₴${order.price_order}`
-          })
-        )
-        console.log('transformedRows  transformedRows:', transformedRows)
+        const totalNumberOfPages = Math.ceil(data.total_count / CLIENT_QUANTITY)
 
-        setOrders(transformedRows)
+        setPageQty(totalNumberOfPages)
+        setPage(nowPage)
+        setOrderHistory(data)
       } catch (error) {
         console.error(error)
       }
     }
 
     fetchOrderClient()
-  }, [])
+  }, [page])
 
   return (
     <Box
@@ -123,12 +68,28 @@ const HistoryOrdersClient = () => {
       <Typography variant="h4" mb="30px">
         Історія замовлень
       </Typography>
-      <DataGridDemo orders={orders} />
-      <Box>
-        <Typography>Загальна сума всіх замовлень</Typography>
-        <Typography>₴10 000</Typography>
+      <DataGridDemo orders={orderHistory?.orders || []} />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '20px 10.5% 20px 20px'
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{ fontSize: '18px', fontWeight: '600' }}
+        >
+          Загальна сума всіх замовлень
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: '18px', fontWeight: '600' }}
+        >
+          {orderHistory ? `₴ ${orderHistory.total_cost_orders}` : '₴0'}
+        </Typography>
       </Box>
-      {/* <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} /> */}
+      <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} />
     </Box>
   )
 }

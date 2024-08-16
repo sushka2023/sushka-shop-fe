@@ -10,6 +10,15 @@ export const seacrhClient = {
   }
 }
 
+export const tableBlock = {
+  height: '714px',
+  borderTopLeftRadius: '10px',
+  borderTopRightRadius: '10px',
+  borderBottomLeftRadius: '0px',
+  borderBottomRightRadius: '0px',
+  boxShadow: 'none'
+}
+
 export const tableClients = {
   'minWidth': 650,
   'color': 'illustrations.darker',
