@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axiosInstance from '../../axios/settings'
 
 import { ReviewsList } from './ReviewsList/ReviewsList'
-import PaginationCRM from '../crm-clients-page/PaginationCRM'
+import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 
