@@ -1,23 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { fetchReviews, submitReview } from './operations'
 
+export interface Images {
+  id: number
+  product_id: number
+  review_id: number
+  image_url: string
+  description: string
+  image_type: string
+}
+
 export type Review = {
   id: number
   user_id: number
   product_id: number
   rating: number
   description: string
-  created_at: Date
+  created_at: string
   is_deleted: boolean
   is_checked: boolean
-  images: {
+  images: Images[]
+  user: {
+    email: string
+    first_name: string
     id: number
-    product_id: number
-    review_id: number
-    image_url: string
-    description: string
-    image_type: string
-  }[]
+    last_name: string
+    role: string
+    is_active: boolean
+  }
 }
 
 type ReviewsState = {
