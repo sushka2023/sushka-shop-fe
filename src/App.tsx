@@ -24,7 +24,6 @@ import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 import { AccountPage } from './pages/account-page/account-page'
 import { OrderPage } from './pages/order-page'
 import CrmClientsPage from './pages/crm-clients-page/CrmClientsPage'
-import CrmReviewsPage from './pages/crm-reviews-page/CrmReviewsPage'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -96,7 +95,10 @@ function App() {
               <div style={{ marginBottom: '500px' }}>clients params</div>
             }
           />
-          <Route path="opinions" element={<CrmReviewsPage />} />
+          <Route
+            path="opinions"
+            element={<div style={{ marginBottom: '500px' }}>Opinions Page</div>}
+          />
           <Route path="settings" element={<CrmSettingsPage />} />
           <Route index element={<Navigate to="dashbord" replace />} />
         </Route>
