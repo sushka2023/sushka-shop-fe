@@ -5,10 +5,10 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '../../../../icons/delete.svg?react'
 import Tooltip from '@mui/material/Tooltip'
 import ChangeIcon from '../../../../icons/crm-file.svg?react'
-import { Images } from '../../../../redux/feedbacks/slice'
 import { ModalCustom } from '../../../../components/Modal-custom-btn/ModalCustomWindow'
 import { useState } from 'react'
 import axiosInstance from '../../../../axios/settings'
+import { ImageResponseReview } from '../../../../types'
 
 export interface ReviewsListItemProps {
   id: number
@@ -17,7 +17,7 @@ export interface ReviewsListItemProps {
   time: string
   description: string
   isActive: boolean
-  images: Images[]
+  images: ImageResponseReview[]
   onStatusChange: () => void
 }
 
@@ -49,12 +49,11 @@ export const ReviewsListItem = ({
     const fetchAdd = async () => {
       try {
         await axiosInstance.put('/api/reviews/archive', { id })
-
-        onStatusChange()
       } catch (err) {
         console.error(err)
       }
     }
+    onStatusChange()
     fetchAdd()
   }
 
@@ -62,12 +61,11 @@ export const ReviewsListItem = ({
     const fetchRemove = async () => {
       try {
         await axiosInstance.put('/api/reviews/unarchive', { id })
-
-        onStatusChange()
       } catch (err) {
         console.error(err)
       }
     }
+    onStatusChange()
     fetchRemove()
   }
   return (

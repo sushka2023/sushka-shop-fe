@@ -6,12 +6,14 @@ import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 
-import { Review } from '../../redux/feedbacks/slice'
+import { ReviewResponse } from '../../types'
 
 const PAGE_SIZE = 5
 
+const PAGE_QTY = 0
+
 const CrmReviewsPage = () => {
-  const [reviews, setReviews] = useState<Review[]>([])
+  const [reviews, setReviews] = useState<ReviewResponse[]>([])
   const [page, setPage] = useState(0)
 
   const fetchReviews = async () => {
@@ -43,7 +45,7 @@ const CrmReviewsPage = () => {
         <div style={{ height: '100%', width: '100%', paddingTop: '30px' }}>
           <ReviewsList items={reviews} onStatusChange={handleStatusChange} />
         </div>
-        <PaginationCRM page={page} pageQty={0} setPage={setPage} />
+        <PaginationCRM page={page} pageQty={PAGE_QTY} setPage={setPage} />
       </Box>
     </Box>
   )

@@ -26,7 +26,6 @@ export const fetchReviews = createAsyncThunk<Review[], FetchReviewsParams>(
 export const submitReview = createAsyncThunk(
   'api/reviews/create',
   async (formData, { rejectWithValue }) => {
-    console.log(formData)
     try {
       const response = await axiosInstance.post('api/reviews/create', formData)
       return response.data

@@ -29,14 +29,13 @@ const FeedbackForm = () => {
 
   const [searchParams] = useSearchParams()
 
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const searchToken = Object.fromEntries(searchParams.entries())
 
   useEffect(() => {
     Object.keys(searchToken).length > 0 && setIsModalOpen(true)
   }, [searchToken])
-  // const BASE_URL = import.meta.env.VITE_API_URL
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -75,9 +74,6 @@ const FeedbackForm = () => {
     setFileSelected(false)
   }
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => [
-    setName(e.target.value)
-  ]
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.subtitle}>Залишити відгук</h3>
@@ -85,7 +81,7 @@ const FeedbackForm = () => {
         <form className={styles.feedbackForm} onSubmit={handleSubmit}>
           <input
             type="text"
-            onChange={handleNameChange}
+            onChange={(e) => setName(e.target.value)}
             className={styles.feedbackFormInput}
           />
           <div className={styles.wrapperTextarea}>
