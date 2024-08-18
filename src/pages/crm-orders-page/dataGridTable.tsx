@@ -1,7 +1,6 @@
 import { Box, Typography, Link } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CallIcon from '../../icons/call.svg?react'
-import DeleteIcon from '../../icons/delete.svg?react'
 import EditIcon from '../../icons/edit-icon.svg?react'
 import { OrdersCRMResponse, OrdersStatus } from '../../types'
 import { formatter } from '../../helpers/formatterTotalPrice'
@@ -79,9 +78,6 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
               <CallIcon style={{ width: 24, height: 24 }} />
             </IconButton>
           </Link>
-          <IconButton sx={{ padding: '10px' }}>
-            <DeleteIcon style={{ width: 24, height: 24 }} />
-          </IconButton>
           <RouterLink to={`/crm/orders/${params.id}`}>
             <IconButton sx={{ padding: '10px' }}>
               <EditIcon style={{ width: 24, height: 24 }} />
@@ -101,7 +97,6 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       hideFooterPagination
       disableColumnFilter
       disableColumnMenu
-      autoHeight
     />
   )
 }

@@ -12,9 +12,9 @@ type OrdersResponse = {
   total_count: number
 }
 
-const ORDERS_QUANTITY = 20
-const ORDERS_PAGE = 1
-const ORDERS_PAGEQTY = 0
+const ORDERS_QUANTITY = 100
+const ORDERS_PAGE = 0
+const ORDERS_PAGEQTY = 1
 
 const CrmOrdersPage = () => {
   const [orders, setOrders] = useState<OrdersCRMResponse[]>([])
