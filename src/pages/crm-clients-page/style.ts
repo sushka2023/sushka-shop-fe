@@ -1,13 +1,8 @@
-export const seacrhClient = {
-  'width': '300px',
-  '& div, & input': {
-    backgroundColor: 'background.default',
-    borderRadius: '10px'
-  },
-  '& input': {
-    paddingLeft: '0px',
-    color: 'illustrations.darker'
-  }
+export const searchBlock = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '34px'
 }
 
 export const tableBlock = {
@@ -40,15 +35,5 @@ export const tableClients = {
       borderRadius: '10px',
       padding: '5px 10px'
     }
-  }
-}
-
-export const paginationItems = {
-  '& .MuiPaginationItem-root': {
-    color: 'accent.darker'
-  },
-  '& .MuiPaginationItem-root.Mui-selected': {
-    backgroundColor: 'accent.darker',
-    color: 'background.default'
   }
 }

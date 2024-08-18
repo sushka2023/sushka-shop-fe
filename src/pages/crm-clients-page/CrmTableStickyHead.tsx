@@ -32,7 +32,6 @@ export const ROLE_TRANSLATIONS: Record<Role, string> = {
 }
 
 export default function BasicTable({ clients }: { clients: ClientType[] }) {
-  console.log('BasicTable  clients:', clients)
   const theme = useTheme()
   const location = useLocation()
   const navigate = useNavigate()

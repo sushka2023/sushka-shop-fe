@@ -11,6 +11,7 @@ export default function DataGridDemo({ orders }: any) {
         columns={columns}
         hideFooter
         rowHeight={72}
+        localeText={{ noRowsLabel: 'Замовлень ще не зроблено' }}
         sx={tableHistoryOrder}
       />
     </Box>
