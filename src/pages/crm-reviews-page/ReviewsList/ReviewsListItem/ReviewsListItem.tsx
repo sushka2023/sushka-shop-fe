@@ -45,31 +45,25 @@ export const ReviewsListItem = ({
     year: 'numeric'
   })
 
-  const handleAddToArchive = () => {
-    const fetchAdd = async () => {
-      try {
-        await axiosInstance.put('/api/reviews/archive', { id })
-      } catch (err) {
-        console.error(err)
-      }
+  const handleAddToArchive = async () => {
+    try {
+      await axiosInstance.put('/api/reviews/archive', { id })
+      onStatusChange()
+    } catch (err) {
+      console.error(err)
     }
-    onStatusChange()
-    fetchAdd()
   }
 
-  const handleRemoveFromArchive = () => {
-    const fetchRemove = async () => {
-      try {
-        await axiosInstance.put('/api/reviews/unarchive', { id })
-      } catch (err) {
-        console.error(err)
-      }
+  const handleRemoveFromArchive = async () => {
+    try {
+      await axiosInstance.put('/api/reviews/unarchive', { id })
+      onStatusChange()
+    } catch (err) {
+      console.error(err)
     }
-    onStatusChange()
-    fetchRemove()
   }
   return (
-    <li className={styles.item}>
+    <div className={styles.item}>
       <span
         className={`${styles.span} ${isActive ? styles.spanActive : ''}`}
       ></span>
@@ -121,6 +115,6 @@ export const ReviewsListItem = ({
           </Tooltip>
         </div>
       </div>
-    </li>
+    </div>
   )
 }
