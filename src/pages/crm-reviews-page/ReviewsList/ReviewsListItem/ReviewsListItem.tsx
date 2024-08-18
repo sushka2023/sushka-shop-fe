@@ -62,6 +62,7 @@ export const ReviewsListItem = ({
       console.error(err)
     }
   }
+
   return (
     <div className={styles.item}>
       <span

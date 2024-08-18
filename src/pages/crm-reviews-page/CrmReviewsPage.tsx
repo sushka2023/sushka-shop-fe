@@ -34,16 +34,12 @@ const CrmReviewsPage = () => {
     fetchReviews()
   }, [page])
 
-  const handleStatusChange = () => {
-    fetchReviews()
-  }
-
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker">
       <Box>
         <Typography variant="h3">Відгуки </Typography>
         <div style={{ height: '100%', width: '100%', paddingTop: '30px' }}>
-          <ReviewsList items={reviews} onStatusChange={handleStatusChange} />
+          <ReviewsList items={reviews} onStatusChange={fetchReviews} />
         </div>
         <PaginationCRM page={page} pageQty={PAGE_QTY} setPage={setPage} />
       </Box>
