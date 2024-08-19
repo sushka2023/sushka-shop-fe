@@ -11,8 +11,6 @@ import { dataGridStyle } from './style'
 import { ORDER_STATUS } from './constants'
 
 const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
-  const formattedTotalPrice = (sum: number) => formatter.format(sum)
-
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: 'id',
@@ -63,7 +61,7 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 150,
       sortable: false,
       renderCell: (params) => (
-        <Typography>{formattedTotalPrice(params.value)}</Typography>
+        <Typography>{formatter.format(params.value)}</Typography>
       )
     },
     {

@@ -10,8 +10,6 @@ type DataGridTableProps = {
 }
 
 const DataGridTable = ({ rows, totalPrice }: DataGridTableProps) => {
-  const formattedTotalPrice = (sum: number) => formatter.format(sum)
-
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: 'products',
@@ -40,7 +38,7 @@ const DataGridTable = ({ rows, totalPrice }: DataGridTableProps) => {
       sortable: false,
       renderCell: (params) => (
         <Typography fontWeight={600}>
-          {formattedTotalPrice(params.value.price)}
+          {formatter.format(params.value.price)}
         </Typography>
       )
     },
@@ -62,9 +60,7 @@ const DataGridTable = ({ rows, totalPrice }: DataGridTableProps) => {
         const price = params.row.prices.price
         const quantity = params.row.quantity
         const sum = price * quantity
-        return (
-          <Typography fontWeight={600}>{formattedTotalPrice(sum)}</Typography>
-        )
+        return <Typography fontWeight={600}>{formatter.format(sum)}</Typography>
       }
     }
   ]
@@ -91,7 +87,7 @@ const DataGridTable = ({ rows, totalPrice }: DataGridTableProps) => {
               Загальна сума:
             </Typography>
             <Typography fontWeight={600} color="#64748B">
-              {formattedTotalPrice(totalPrice)}
+              {formatter.format(totalPrice)}
             </Typography>
           </Box>
         )
