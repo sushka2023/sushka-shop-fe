@@ -13,7 +13,7 @@ export const paginationItems = {
     'justifyContent': 'center',
     'height': '40px',
 
-    '& li:first-child > a, & li:last-child > a': {
+    '& li:first-of-type > a, & li:last-of-type > a': {
       'border': '1px solid ',
       'borderColor': 'accent.color',
       'width': '174px',
@@ -27,11 +27,11 @@ export const paginationItems = {
       }
     },
 
-    '& li:first-child > a': {
+    '& li:first-of-type > a': {
       marginRight: '25px'
     },
 
-    '& li:last-child > a': {
+    '& li:last-of-type > a': {
       marginLeft: '25px'
     }
   },

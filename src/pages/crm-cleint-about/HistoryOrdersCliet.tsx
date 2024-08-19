@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material'
-import DataGridDemo from '../../components/Crm-grid-table-client/ClientAboutOrdersTable '
-// import { useLocation } from 'react-router-dom'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import axiosInstance from '../../axios/settings'
 import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
+import { useParams, useSearchParams } from 'react-router-dom'
+import DataGridDemo from '../../components/crm-grid-table-client/ClientAboutOrdersTable '
+import { handleFetchSuccess } from '../../helpers/calculateTotalPages'
+import { historyOrderBlock, totalOrdersBlock } from './style'
 
 const BASE_URL_ORDER_CLIENT = '/api/orders/for_crm/user?'
 
@@ -18,27 +20,33 @@ type Order = {
   price_order: number
 }
 
-type OrderHistoryResponse = {
+export type OrderHistoryResponse = {
   orders: Order[]
   total_cost_orders: number
   total_count: number
 }
 
-const handleFetchSuccess = (data: OrderHistoryResponse) => {
-  return Math.ceil(data.total_count / CLIENT_QUANTITY)
+const formatCurrency = (
+  amount: number | null,
+  locale: string = 'uk-UA',
+  currency: string = 'UAH'
+): string => {
+  if (amount === null) return '₴0'
+  return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(
+    amount
+  )
 }
 
 const HistoryOrdersClient = () => {
-  // const theme = useTheme()
+  const theme = useTheme()
+  const [searchParams] = useSearchParams()
 
-  // const { params: clientId } = useParams()
+  const { params: clientId } = useParams()
   const [orderHistory, setOrderHistory] = useState<OrderHistoryResponse | null>(
     null
   )
 
-  // const location = useLocation()
-  // const nowPage = parseInt(location.search?.split('=')[1]) || CLIENT_PAGE
-  const nowPage = CLIENT_PAGE
+  const nowPage = parseInt(searchParams.get('page') || CLIENT_PAGE.toString())
   const offset = (nowPage - 1) * CLIENT_QUANTITY
 
   const [page, setPage] = useState(1)
@@ -50,11 +58,10 @@ const HistoryOrdersClient = () => {
     const fetchOrderClient = async () => {
       try {
         const { data } = await axiosInstance.get<any>(
-          // `${BASE_URL_ORDER_CLIENT}limit=${CLIENT_QUANTITY}&offset=${offset}&user_id=${clientId}`
-          `${BASE_URL_ORDER_CLIENT}limit=${CLIENT_QUANTITY}&offset=${offset}&user_id=1`
+          `${BASE_URL_ORDER_CLIENT}limit=${CLIENT_QUANTITY}&offset=${offset}&user_id=${clientId}`
         )
 
-        setPageQty(handleFetchSuccess(data))
+        setPageQty(handleFetchSuccess(data, CLIENT_QUANTITY))
         setPage(nowPage)
         setOrderHistory(data)
         setIsLoading(false)
@@ -66,26 +73,17 @@ const HistoryOrdersClient = () => {
     fetchOrderClient()
   }, [page])
 
+  const formattedTotalCost = formatCurrency(
+    orderHistory?.total_cost_orders ?? null
+  )
+
   return (
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        borderRadius: '10px',
-        p: '30px 20px'
-      }}
-    >
+    <Box sx={historyOrderBlock}>
       <Typography variant="h4" mb="30px">
         Історія замовлень
       </Typography>
-      <DataGridDemo orders={orderHistory?.orders || []} />
-      <Box
-        sx={{
-          // background: theme.palette.grey[50],
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '20px 10.5% 20px 20px'
-        }}
-      >
+      <DataGridDemo orders={orderHistory?.orders} />
+      <Box sx={{ ...totalOrdersBlock, background: theme.palette.grey[50] }}>
         <Typography
           variant="body1"
           sx={{ fontSize: '18px', fontWeight: '600' }}
@@ -96,7 +94,7 @@ const HistoryOrdersClient = () => {
           variant="body1"
           sx={{ fontSize: '18px', fontWeight: '600' }}
         >
-          {orderHistory ? `₴ ${orderHistory.total_cost_orders}` : '₴0'}
+          {formattedTotalCost}
         </Typography>
       </Box>
       {orderHistory && orderHistory.total_count > CLIENT_QUANTITY && (

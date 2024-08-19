@@ -70,3 +70,15 @@ export const saveNewRole = {
     opacity: 0.5
   }
 }
+
+export const historyOrderBlock = {
+  backgroundColor: 'background.default',
+  borderRadius: '10px',
+  p: '30px 20px'
+}
+
+export const totalOrdersBlock = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '20px 10.5% 20px 20px'
+}
