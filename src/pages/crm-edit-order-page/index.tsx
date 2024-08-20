@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { OrdersCRMResponse, OrdersStatus } from '../../types'
+import { OrdersCRMResponse, OrdersStatuses } from '../../types'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import PersonIcon from '@mui/icons-material/Person'
 import BagIcon from '../../icons/bag.svg?react'
@@ -30,7 +30,7 @@ import { CrmOrderDetails } from '../../components/Crm-order-details'
 import { OrderDetailsKey } from './types'
 
 const CrmEditOrderPage = () => {
-  const [status, setStatus] = useState(OrdersStatus.NEW)
+  const [status, setStatus] = useState(OrdersStatuses.NEW)
   const [order, setOrder] = useState<OrdersCRMResponse | null>(null)
   const { params } = useParams()
 
@@ -39,7 +39,7 @@ const CrmEditOrderPage = () => {
   }, [params])
 
   const handleChange = (event: SelectChangeEvent) =>
-    setStatus(event.target.value as OrdersStatus)
+    setStatus(event.target.value as OrdersStatuses)
 
   return (
     <Box p="30px">

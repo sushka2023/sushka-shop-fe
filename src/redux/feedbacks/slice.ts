@@ -66,7 +66,6 @@ export const reviewsSlice = createSlice({
     [submitReview.fulfilled](state, { payload }) {
       state.isLoading = false
       state.error = null
-      console.log(payload)
       state.items.push(payload)
     },
     [submitReview.rejected]: handleRejected

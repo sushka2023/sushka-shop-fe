@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ProductArchiveModel } from '../models/ProductArchiveModel';
+import type { ProductArchiveResponse } from '../models/ProductArchiveResponse';
 import type { ProductModel } from '../models/ProductModel';
 import type { ProductResponse } from '../models/ProductResponse';
 import type { ProductStatus } from '../models/ProductStatus';
@@ -108,7 +109,6 @@ export class ProductService {
      * :param body: ProductModel: Validate the request body
      * :param db: Session: Get the database session
      * :return: A productresponse object
-     * :doc-author: Trelent
      * @param requestBody
      * @returns ProductResponse Successful Response
      * @throws ApiError
@@ -119,6 +119,47 @@ export class ProductService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/product/create',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Edit Product
+     * Edits an existing product in the database with new data provided in the request body.
+     *
+     * This function updates a product's information based on the provided product ID and
+     * the data in the ProductModel. It handles conversion of product_id to integer,
+     * checks for product existence, updates the product, and manages subcategories and images.
+     *
+     * Args:
+     * product_id (str): The ID of the product to be edited. It should be convertible to an integer.
+     * body (ProductModel): The new product data to update.
+     * db (Session): The database session dependency.
+     *
+     * Raises:
+     * HTTPException: If product_id is not an integer.
+     * HTTPException: If the product with the given ID is not found.
+     *
+     * Returns:
+     * ProductResponse: An object containing the updated product information.
+     * @param productId
+     * @param requestBody
+     * @returns ProductResponse Successful Response
+     * @throws ApiError
+     */
+    public static editProductApiProductEditProductIdPatch(
+        productId: string,
+        requestBody: ProductModel,
+    ): CancelablePromise<ProductResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/product/edit/{product_id}',
+            path: {
+                'product_id': productId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -140,12 +181,12 @@ export class ProductService {
      * Returns:
      * A product object
      * @param requestBody
-     * @returns ProductResponse Successful Response
+     * @returns ProductArchiveResponse Successful Response
      * @throws ApiError
      */
     public static archiveProductApiProductArchivePut(
         requestBody: ProductArchiveModel,
-    ): CancelablePromise<ProductResponse> {
+    ): CancelablePromise<ProductArchiveResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/product/archive',
@@ -168,12 +209,12 @@ export class ProductService {
      * Returns:
      * A product object
      * @param requestBody
-     * @returns ProductResponse Successful Response
+     * @returns ProductArchiveResponse Successful Response
      * @throws ApiError
      */
     public static unarchiveProductApiProductUnarchivePut(
         requestBody: ProductArchiveModel,
-    ): CancelablePromise<ProductResponse> {
+    ): CancelablePromise<ProductArchiveResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/product/unarchive',
@@ -229,7 +270,7 @@ export class ProductService {
     public static searchAllProductsApiProductSearchGet(
         limit: number,
         offset: number,
-        searchQuery: (number | string),
+        searchQuery?: (number | string),
     ): CancelablePromise<ProductWithTotalResponse> {
         return __request(OpenAPI, {
             method: 'GET',

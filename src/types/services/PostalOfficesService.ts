@@ -3,40 +3,38 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { NovaPoshtaAddressDeliveryCreate } from '../models/NovaPoshtaAddressDeliveryCreate';
-import type { NovaPoshtaCreate } from '../models/NovaPoshtaCreate';
 import type { PostAddressDeliveryResponse } from '../models/PostAddressDeliveryResponse';
+import type { PostMessageResponse } from '../models/PostMessageResponse';
 import type { PostNovaPoshtaOffice } from '../models/PostNovaPoshtaOffice';
 import type { PostResponse } from '../models/PostResponse';
 import type { PostUkrPoshtaResponse } from '../models/PostUkrPoshtaResponse';
 import type { PostUkrPostalOffice } from '../models/PostUkrPostalOffice';
-import type { PostWarehouseResponse } from '../models/PostWarehouseResponse';
 import type { UkrPoshtaCreate } from '../models/UkrPoshtaCreate';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class PostalOfficesService {
     /**
-     * Create Nova Poshta Warehouse And Associate With Post
-     * The function creates novaposhta data and adds to an exists post for the current user.
+     * Add Nova Poshta Warehouse
+     * The add_nova_poshta_warehouse function adds novaposhta warehouse to an exists post for the current user.
      *
      * Args:
-     * nova_post_warehouse: NovaPoshtaCreate: Validate the request body
+     * nova_poshta_data: PostNovaPoshtaOffice: Validate the request body
      * current_user: User: Get the current user
      * db: Session: Access the database
      *
      * Returns:
      * Message about successfully adding novaposhta data
-     * A novaposhta object
      * @param requestBody
-     * @returns PostWarehouseResponse Successful Response
+     * @returns PostMessageResponse Successful Response
      * @throws ApiError
      */
-    public static createNovaPoshtaWarehouseAndAssociateWithPostApiPostsCreateNovaPoshtaWarehouseAndAssociateWithPostPost(
-        requestBody: NovaPoshtaCreate,
-    ): CancelablePromise<PostWarehouseResponse> {
+    public static addNovaPoshtaWarehouseApiPostsAddNovaPoshtaWarehousePost(
+        requestBody: PostNovaPoshtaOffice,
+    ): CancelablePromise<PostMessageResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/posts/create_nova_poshta_warehouse_and_associate_with_post',
+            url: '/api/posts/add_nova_poshta_warehouse',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

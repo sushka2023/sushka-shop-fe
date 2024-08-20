@@ -1,3 +1,4 @@
+// import styles from './reviews-list-item.module.scss'
 import styles from './reviews-list-item.module.scss'
 import IconPlus from '../../../../icons/plus.svg?react'
 import { ReviewsRating } from '../ReviewsRating/ReviewsRating'
@@ -8,37 +9,35 @@ import ChangeIcon from '../../../../icons/crm-file.svg?react'
 import { ModalCustom } from '../../../../components/Modal-custom-btn/ModalCustomWindow'
 import { useState } from 'react'
 import axiosInstance from '../../../../axios/settings'
-import { ImageResponseReview } from '../../../../types'
+import { ReviewResponse } from '../../../../types'
 
-export interface ReviewsListItemProps {
-  id: number
-  rating: number
-  name: string
-  time: string
-  description: string
-  isActive: boolean
-  images: ImageResponseReview[]
+type ReviewsListItemProps = {
+  item: ReviewResponse
   onStatusChange: () => void
 }
 
 export const ReviewsListItem = ({
-  id,
-  rating,
-  name,
-  time,
-  description,
-  isActive,
-  images,
+  item,
   onStatusChange
 }: ReviewsListItemProps) => {
+  const {
+    is_deleted,
+    id,
+    rating,
+    description,
+    images,
+    created_at,
+    user: { first_name }
+  } = item
+
   const [openModal, setOpenModal] = useState(false)
 
   const handleOpenModal = () => {
     setOpenModal(true)
   }
 
-  const isDeleteDisabled = !isActive
-  const date = new Date(time)
+  const isDeleteDisabled = !is_deleted
+  const date = new Date(created_at)
   const formattedDate = date.toLocaleDateString('uk-UA', {
     day: '2-digit',
     month: '2-digit',
@@ -66,11 +65,11 @@ export const ReviewsListItem = ({
   return (
     <div className={styles.item}>
       <span
-        className={`${styles.span} ${isActive ? styles.spanActive : ''}`}
+        className={`${styles.span} ${is_deleted ? styles.spanActive : ''}`}
       ></span>
       <div className={styles.wrapper}>
         <div className={styles.infoWrapper}>
-          <p className={styles.name}>{name}</p>
+          <p className={styles.name}>{first_name}</p>
           <ReviewsRating rating={rating} />
           <p className={styles.date}>{formattedDate}</p>
         </div>
