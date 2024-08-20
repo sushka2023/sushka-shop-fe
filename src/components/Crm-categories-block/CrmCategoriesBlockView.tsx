@@ -32,7 +32,7 @@ export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
           mt: 1
         }}
       >
-        Фріпси
+        {product?.product_category?.name}
       </Box>
       <Typography
         pt={4}
