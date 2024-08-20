@@ -7,6 +7,7 @@ type Props = {
   formErrors: Record<string, string>
   nameInputRef: Ref<HTMLInputElement>
   descriptionRef: Ref<HTMLTextAreaElement>
+  product: any
   handleChangeFormData: (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -18,7 +19,8 @@ const DescriptionProduct: FC<Props> = ({
   formErrors,
   nameInputRef,
   descriptionRef,
-  handleChangeFormData
+  handleChangeFormData,
+  product
 }) => {
   return (
     <div className={styles.inputsWrapp}>
@@ -32,6 +34,7 @@ const DescriptionProduct: FC<Props> = ({
           formErrors={formErrors}
           ref={nameInputRef}
           handleChangeFormData={handleChangeFormData}
+          disabled={!!product}
         />
         <DescriptionField
           id="description"
@@ -43,6 +46,7 @@ const DescriptionProduct: FC<Props> = ({
           ref={descriptionRef}
           handleChangeFormData={handleChangeFormData}
           className={'descriptionTextaria'}
+          disabled={!!product}
         />
       </div>
       <CrmImages />

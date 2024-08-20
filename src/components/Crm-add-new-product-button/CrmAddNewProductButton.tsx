@@ -16,11 +16,12 @@ import { AppDispatch } from '../../redux/store'
 import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
 import { ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 // import axiosInstance from '../../axios/settings'
 
 const CrmAddNewProductButton = () => {
-  // const { params: productIdParam } = useParams()
+  const { params: productIdParam } = useParams()
+  const parsedIndex = Number(productIdParam)
   const productData = useSelector((state: RootState) => state.newProduct)
 
   const productId = useSelector(
@@ -41,6 +42,10 @@ const CrmAddNewProductButton = () => {
   }
 
   useEffect(() => {
+    dispatch(setFormErrors({}))
+  }, [parsedIndex])
+
+  useEffect(() => {
     if (productId) {
       sendPricesSequentially(productId)
     }
@@ -52,30 +57,33 @@ const CrmAddNewProductButton = () => {
     e.preventDefault()
 
     try {
-      await newProductSchema.validate(productData, { abortEarly: false })
-      await newProductImagesSchema.validate(
-        { images: productData.images },
-        { abortEarly: false }
-      )
-      await newProductPriceSchema.validate(productData.price, {
-        abortEarly: false
-      })
-      // await axiosInstance.patch(`/api/product/edit/${productIdParam}`, {
-
-      // })
-
-      dispatch(setFormErrors({}))
-      await dispatch(
-        createNewProduct({
-          description: productData.description!,
-          main_category: +productData.main_category!,
-          name: productData.name!,
-          product_status: productData.product_status as ProductStatus,
-          sub_categories: productData.sub_categories
-            ? productData.sub_categories
-            : []
+      if (isNaN(parsedIndex)) {
+        console.log('✌️parsedIndex --->', parsedIndex)
+        await newProductSchema.validate(productData, { abortEarly: false })
+        await newProductImagesSchema.validate(
+          { images: productData.images },
+          { abortEarly: false }
+        )
+        await newProductPriceSchema.validate(productData.price, {
+          abortEarly: false
         })
-      ).unwrap()
+        // await axiosInstance.patch(`/api/product/edit/${productIdParam}`, {
+
+        // })
+
+        dispatch(setFormErrors({}))
+        await dispatch(
+          createNewProduct({
+            description: productData.description!,
+            main_category: +productData.main_category!,
+            name: productData.name!,
+            product_status: productData.product_status as ProductStatus,
+            sub_categories: productData.sub_categories
+              ? productData.sub_categories
+              : []
+          })
+        ).unwrap()
+      }
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const newErrors = {} as Record<string, string>

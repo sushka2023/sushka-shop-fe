@@ -176,6 +176,7 @@ const CrmAddNewProduct = () => {
             </div>
           </div>
           <DescriptionProduct
+            product={product}
             formErrors={formErrors}
             nameInputRef={nameInputRef}
             descriptionRef={descriptionRef}
