@@ -20,6 +20,7 @@
 }
 
 .fileLabel {
+  width: 180px;
   display: flex;
   align-items: center;
   gap: 9px;
@@ -66,6 +67,7 @@
 }
 
 .fileLineWrrap {
+  width: 275px;
   display: flex;
   height: 30px;
   padding: 5px 10px;
@@ -80,7 +82,7 @@
 }
 
 .fileContentWrrap {
-  width: 100%;
+  width: 240px;
   display: flex;
   align-items: center;
   gap: 13px;
@@ -90,7 +92,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 80%;
+  width: 100%;
   display: inline-block;
   vertical-align: middle;
 }

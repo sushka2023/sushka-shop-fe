@@ -1,17 +1,21 @@
-import React, { Dispatch, FC, RefObject, SetStateAction, useState } from 'react'
+import {
+  Dispatch,
+  FC,
+  Fragment,
+  RefObject,
+  SetStateAction,
+  useState
+} from 'react'
 import styles from '../Crm-images/crmImages.module.scss'
+import { RootState } from '../../redux/store/index'
+import { useSelector } from 'react-redux'
 import { FileItem } from './FileItem'
 import { FilePreview } from './FilePreview'
-
-type ProductImage = {
-  id: number
-  name: string
-  description: string
-  image_url: string
-}
+import { UploadPhoto } from '../UploadPhoto/UploadPhoto'
+import { ProductResponse, ImageResponse } from '../../types'
 
 type Props = {
-  product: any
+  product?: ProductResponse
   filesArr: File[]
   filePreviews: Record<string, string>
   activeFile: string | null
@@ -21,6 +25,8 @@ type Props = {
   setFilePreviews: Dispatch<SetStateAction<Record<string, string>>>
   setFilesArr: Dispatch<SetStateAction<File[]>>
 }
+
+export type FileType = File | ImageResponse
 
 export const FileList: FC<Props> = ({
   product,
@@ -33,37 +39,39 @@ export const FileList: FC<Props> = ({
   setFilePreviews,
   setFilesArr
 }) => {
-  const [fileIsOpen, setFileIsOpen] = useState('')
+  const [fileIsOpen, setFileIsOpen] = useState<string>('')
+  const formErrors = useSelector(
+    (state: RootState) => state.newProduct.formErrors
+  )
 
   const arrayToUse = product ? product.images : filesArr
 
-  const handleClickDelete = (file: string) => {
-    const delletedFiles = filesArr.filter(
-      (item: { name: string }) => item.name !== file
-    )
+  const isFile = (item: FileType): item is File =>
+    'name' in item && 'lastModified' in item
+
+  const handleClickDelete = (fileName: string) => {
+    const deletedFiles = filesArr.filter((item) => item.name !== fileName)
     const newFilePreviews = { ...filePreviews }
-    URL.revokeObjectURL(newFilePreviews[file])
+    URL.revokeObjectURL(newFilePreviews[fileName])
 
     if (fileInputRef.current) {
       cleaningInput()
     }
 
-    if (
-      !delletedFiles.some((file: { name: string }) => file.name === activeFile)
-    ) {
-      setActiveFile('')
+    if (!deletedFiles.some((item) => item.name === activeFile)) {
+      setActiveFile(null)
     }
-    delete newFilePreviews[file]
+    delete newFilePreviews[fileName]
     setFilePreviews(newFilePreviews)
-    setFilesArr(delletedFiles)
+    setFilesArr(deletedFiles)
   }
 
-  const toggleActiveStar = (file: string) => {
-    setActiveFile(activeFile === file ? null : file)
+  const toggleActiveStar = (fileName: string) => {
+    setActiveFile(activeFile === fileName ? null : fileName)
   }
 
-  const handleMouseDown = (file: string) => {
-    setFileIsOpen(file)
+  const handleMouseDown = (fileName: string) => {
+    setFileIsOpen(fileName)
   }
 
   const handleMouseUp = () => {
@@ -71,27 +79,37 @@ export const FileList: FC<Props> = ({
   }
 
   return (
-    <ul className={styles.fileList}>
-      {arrayToUse.map((file: ProductImage) => {
-        const imageUrl = !product ? filePreviews[file.name] : file.image_url
+    <Fragment>
+      <ul className={styles.fileList}>
+        {arrayToUse.map((file: FileType) => {
+          const fileName = isFile(file) ? file.name : file.id.toString()
+          const imageUrl = isFile(file)
+            ? filePreviews[file.name]
+            : file.image_url
 
-        return (
-          <React.Fragment key={file.id}>
-            <FileItem
-              file={file}
-              isActive={activeFile === file.name}
-              onStarClick={toggleActiveStar}
-              onDeleteClick={handleClickDelete}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              isProduct={!!product}
-            />
-            {fileIsOpen === file.name && (
-              <FilePreview imageUrl={imageUrl} fileName={file.name} />
-            )}
-          </React.Fragment>
-        )
-      })}
-    </ul>
+          return (
+            <li key={fileName}>
+              <FileItem
+                file={file}
+                isActive={activeFile === fileName}
+                onStarClick={toggleActiveStar}
+                onDeleteClick={handleClickDelete}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                isProduct={!!product}
+              />
+              {fileIsOpen === fileName && (
+                <FilePreview imageUrl={imageUrl} fileName={fileName} />
+              )}
+            </li>
+          )
+        })}
+      </ul>
+      <UploadPhoto
+        product={product}
+        formErrors={formErrors}
+        filesArr={filesArr}
+      />
+    </Fragment>
   )
 }

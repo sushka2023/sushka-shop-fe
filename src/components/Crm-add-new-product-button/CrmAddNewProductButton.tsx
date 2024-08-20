@@ -23,6 +23,7 @@ const CrmAddNewProductButton = () => {
   const { params: productIdParam } = useParams()
   const parsedIndex = Number(productIdParam)
   const productData = useSelector((state: RootState) => state.newProduct)
+  console.log('✌️productData --->', productData)
 
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
@@ -58,7 +59,6 @@ const CrmAddNewProductButton = () => {
 
     try {
       if (isNaN(parsedIndex)) {
-        console.log('✌️parsedIndex --->', parsedIndex)
         await newProductSchema.validate(productData, { abortEarly: false })
         await newProductImagesSchema.validate(
           { images: productData.images },

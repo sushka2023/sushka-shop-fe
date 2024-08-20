@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import styles from '../Crm-images/crmImages.module.scss'
 
 type FilePreviewProps = {
@@ -6,9 +6,6 @@ type FilePreviewProps = {
   fileName: string
 }
 
-export const FilePreview: React.FC<FilePreviewProps> = ({
-  imageUrl,
-  fileName
-}) => {
+export const FilePreview: FC<FilePreviewProps> = ({ imageUrl, fileName }) => {
   return <img src={imageUrl} alt={fileName} className={styles.filePreview} />
 }

@@ -2,7 +2,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import { FC, Fragment } from 'react'
 
 type Props = {
-  product: any
+  product: ProductResponse
 }
 export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
   return (

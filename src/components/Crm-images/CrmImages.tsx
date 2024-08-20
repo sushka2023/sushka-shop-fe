@@ -15,12 +15,13 @@ import { addImages } from '../../redux/crm-add-new-product/operation'
 import { AppDispatch } from '../../redux/store'
 import { RootState } from '../../redux/store/index'
 import { FileList } from '../FileList/FileList'
+import { ProductResponse } from '../../types'
 
 type Props = {
-  product: any
+  product: ProductResponse | undefined
 }
 
-const CrmImages: FC<Props> = ({ product }) => {
+export const CrmImages: FC<Props> = ({ product }) => {
   const [activeFile, setActiveFile] = useState<string | null>(null)
   const [filePreviews, setFilePreviews] = useState<Record<string, string>>({})
   const [filesArr, setFilesArr] = useState<File[]>([])
@@ -166,5 +167,3 @@ const CrmImages: FC<Props> = ({ product }) => {
     </div>
   )
 }
-
-export default CrmImages

@@ -1,11 +1,12 @@
 import { FC, Fragment } from 'react'
 import styles from '../Crm-images/crmImages.module.scss'
 import PlusIcon from '../../icons/plus.svg?react'
+import { ProductResponse } from '../../types'
 
 type Props = {
-  product: any
-  formErrors: any
-  filesArr: any
+  product: ProductResponse | undefined
+  formErrors: Record<string, string>
+  filesArr: File[]
 }
 
 export const UploadPhoto: FC<Props> = ({ product, formErrors, filesArr }) => {

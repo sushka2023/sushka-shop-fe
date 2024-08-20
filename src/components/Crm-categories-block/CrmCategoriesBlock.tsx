@@ -9,9 +9,10 @@ import {
 } from '../../redux/crm-add-new-product/operation'
 import MuiSelect from '../Crm-categories/MuiSelect'
 import { addData } from '../../redux/crm-add-new-product/slice/product'
+import { ProductResponse } from '../../types'
 
 type Props = {
-  product: any
+  product: ProductResponse | undefined
 }
 
 const CrmCategoriesBlock: FC<Props> = ({ product }) => {
@@ -32,7 +33,9 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     if (product && product.sub_categories) {
-      setSubCategoriesList(product.sub_categories.map((cat: any) => cat.id))
+      setSubCategoriesList(
+        product.sub_categories.map((cat: { id: number }) => cat.id)
+      )
     } else if (subCategories && subCategories.length > 0) {
       setSubCategoriesList([subCategories[0].id])
     }

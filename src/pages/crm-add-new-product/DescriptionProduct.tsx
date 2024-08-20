@@ -1,17 +1,16 @@
-import { FC, Ref } from 'react'
-import CrmImages from '../../components/Crm-images'
+import { ChangeEvent, FC, Ref } from 'react'
 import DescriptionField from './DescriptionField'
 import styles from './crmAddNewProduct.module.scss'
+import { ProductResponse } from '../../types'
+import { CrmImages } from '../../components/Crm-images/CrmImages'
 
 type Props = {
   formErrors: Record<string, string>
   nameInputRef: Ref<HTMLInputElement>
   descriptionRef: Ref<HTMLTextAreaElement>
-  product: any
+  product: ProductResponse | undefined
   handleChangeFormData: (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void
 }
 
