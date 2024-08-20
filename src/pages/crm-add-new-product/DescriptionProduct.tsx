@@ -49,7 +49,7 @@ const DescriptionProduct: FC<Props> = ({
           disabled={!!product}
         />
       </div>
-      <CrmImages />
+      <CrmImages product={product} />
     </div>
   )
 }

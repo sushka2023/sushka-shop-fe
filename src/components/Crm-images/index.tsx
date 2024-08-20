@@ -1,10 +1,7 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as yup from 'yup'
-import PlusIcon from '../../icons/plus.svg?react'
-import DeleteIcon from '../../icons/delete.svg?react'
-import FileIcon from '../../icons/file.svg?react'
-import StarIcon from '../../icons/star.svg?react'
+
 import Notiflix from 'notiflix'
 import styles from './crmImages.module.scss'
 import {
@@ -17,12 +14,16 @@ import { newProductImagesSchema } from '../../helpers/validateNewProduct'
 import { addImages } from '../../redux/crm-add-new-product/operation'
 import { AppDispatch } from '../../redux/store'
 import { RootState } from '../../redux/store/index'
+import { FileList } from '../FileList/FileList'
 
-const CrmImages = () => {
+type Props = {
+  product: any
+}
+
+const CrmImages: FC<Props> = ({ product }) => {
   const [activeFile, setActiveFile] = useState<string | null>(null)
   const [filePreviews, setFilePreviews] = useState<Record<string, string>>({})
   const [filesArr, setFilesArr] = useState<File[]>([])
-  const [fileIsOpen, setFileIsOpen] = useState('')
   const [attemptedUpload, setAttemptedUpload] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch<AppDispatch>()
@@ -120,54 +121,15 @@ const CrmImages = () => {
     const newFilePreviews: { [key: string]: string } = {}
 
     files.forEach((file) => {
-      if (
-        !filesArr.some((f) => {
-          return f.name === file.name
-        })
-      ) {
+      if (!filesArr.some((f) => f.name === file.name)) {
         newFilePreviews[file.name] = URL.createObjectURL(file)
-        setFilesArr((prev) => {
-          return [...prev, file]
-        })
+        setFilesArr((prev) => [...prev, file])
       } else {
         return Notiflix.Notify.warning('Файл з такою назвою вже завантажений')
       }
     })
 
-    setFilePreviews((prev) => {
-      return { ...prev, ...newFilePreviews }
-    })
-  }
-
-  const handleClickDelete = (file: string) => {
-    const delletedFiles = filesArr.filter((item) => {
-      return item.name !== file
-    })
-    const newFilePreviews = { ...filePreviews }
-    URL.revokeObjectURL(newFilePreviews[file])
-
-    if (fileInputRef.current) {
-      cleaningInput()
-    }
-
-    !delletedFiles.some((file) => {
-      return file.name === activeFile
-    }) && setActiveFile('')
-    delete newFilePreviews[file]
-    setFilePreviews(newFilePreviews)
-    setFilesArr(delletedFiles)
-  }
-
-  const toggleActiveStar = (file: string) => {
-    setActiveFile(activeFile === file ? null : file)
-  }
-
-  const handleMouseDown = (file: string) => {
-    setFileIsOpen(file)
-  }
-
-  const handleMouseUp = () => {
-    setFileIsOpen('')
+    setFilePreviews((prev) => ({ ...prev, ...newFilePreviews }))
   }
 
   return (
@@ -185,66 +147,22 @@ const CrmImages = () => {
       <div>
         <h3 className={styles.fileTitle}>
           Завантажені фото
-          <span className={styles.fileMax}> (макс 4 по 10 МВ)</span>
+          {!product && (
+            <span className={styles.fileMax}> (макс 4 по 10 МВ)</span>
+          )}
         </h3>
-        <ul className={styles.fileList}>
-          {filesArr.map((file) => {
-            return (
-              <li key={file.name} className={styles.fileLine}>
-                <StarIcon
-                  className={`${styles.starIcon} ${
-                    activeFile === file.name && styles.starIconActive
-                  }`}
-                  onClick={() => {
-                    toggleActiveStar(file.name)
-                  }}
-                />
-                <div className={styles.fileLineWrrap}>
-                  <div
-                    className={styles.fileContentWrrap}
-                    onMouseDown={() => {
-                      handleMouseDown(file.name)
-                    }}
-                    onMouseUp={handleMouseUp}
-                  >
-                    <FileIcon className={styles.fileIcon} />
-                    <span className={styles.fileName}>{file.name}</span>
-                  </div>
-                  <DeleteIcon
-                    className={styles.deleteIcon}
-                    onClick={() => {
-                      handleClickDelete(file.name)
-                    }}
-                  />
-                </div>
-                {fileIsOpen === file.name && (
-                  <img
-                    src={filePreviews[file.name]}
-                    alt={file.name}
-                    className={styles.filePreview}
-                  />
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-      <label
-        htmlFor="file"
-        className={`${styles.fileLabel} ${
-          filesArr.length >= 4 && styles.fileLabelDisabled
-        }`}
-      >
-        Завантажити фото
-        <PlusIcon
-          className={`${styles.plusIcon} ${
-            filesArr.length >= 4 && styles.plusIconDisabled
-          }`}
+        <FileList
+          product={product}
+          filesArr={filesArr}
+          filePreviews={filePreviews}
+          activeFile={activeFile}
+          setActiveFile={setActiveFile}
+          fileInputRef={fileInputRef}
+          cleaningInput={cleaningInput}
+          setFilePreviews={setFilePreviews}
+          setFilesArr={setFilesArr}
         />
-      </label>
-      {formErrors.images && (
-        <p className={styles.imagesError}>{formErrors.images}</p>
-      )}
+      </div>
     </div>
   )
 }

@@ -67,7 +67,6 @@
 
 .fileLineWrrap {
   display: flex;
-  width: 100%;
   height: 30px;
   padding: 5px 10px;
   justify-content: space-between;
@@ -80,18 +79,21 @@
   line-height: 130%;
 }
 
-.fileLine {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-}
-
 .fileContentWrrap {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 13px;
 }
 
+.fileName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
+  display: inline-block;
+  vertical-align: middle;
+}
 .fileName:hover {
     color: #5D5FEF;
     cursor: pointer;

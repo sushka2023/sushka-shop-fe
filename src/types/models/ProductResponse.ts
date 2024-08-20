@@ -4,13 +4,14 @@
 /* eslint-disable */
 import type { ImageResponse } from './ImageResponse';
 import type { PriceResponse } from './PriceResponse';
+import { ProductCategory } from './ProductCategory';
 import type { ProductStatus } from './ProductStatus';
 import type { ProductSubCategoryResponse } from './ProductSubCategoryResponse';
 export type ProductResponse = {
     id: number;
     name: string;
     description: string;
-    product_category_id: number;
+  product_category_id: ProductCategory;
     new_product: boolean;
     is_popular: boolean;
     is_favorite: boolean;

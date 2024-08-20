@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/settings'
 import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
 import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
+import { ProductResponse } from '../../types'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,8 +36,7 @@ const CrmAddNewProduct = () => {
 
   const { params: productIdParam } = useParams()
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [product, setProduct] = useState<any>(null)
-  console.log('✌️product --->', product)
+  const [product, setProduct] = useState<ProductResponse>()
 
   const statusMapping: { [key: string]: keyof typeof statusClasses } = {
     new: 'Новий',
