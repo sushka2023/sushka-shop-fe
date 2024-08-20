@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 
+import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 import CrmGlobalSearch from '../../components/Crm-Global-Search/CrmGlobalSeacrh'
 import { searchBlock } from './style'
-import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
 
 const SEARCH_PLACEHOLDER = 'Введіть ПІБ або пошту'
 
@@ -36,10 +36,6 @@ const CrmClientsPage = () => {
           BASE_URL_CLIENTS +
             `limit=${CLIENT_QUANTITY}&offset=${offset}&search=${search}`
         )
-        console.log('data:', data)
-
-        const test = data.users.length
-        console.log(' test:', test)
 
         const totalQuantityPages = Math.ceil(
           data.total_count_users / CLIENT_QUANTITY
@@ -49,8 +45,6 @@ const CrmClientsPage = () => {
         setClients(data.users)
         setPage(nowPage)
         setIsLoading(false)
-
-        // if( nowPage < )
       } catch (error) {
         console.error(error)
       }

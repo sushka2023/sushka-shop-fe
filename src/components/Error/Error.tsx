@@ -13,7 +13,6 @@ export const ErrorMessage: FC<{ error: ErrorType; styles?: CSSProperties }> = ({
 }) => {
   if (!error) return null
 
-  // Check if error.message exists
   const message = (error as FieldError).message || 'An error occurred'
 
   return (

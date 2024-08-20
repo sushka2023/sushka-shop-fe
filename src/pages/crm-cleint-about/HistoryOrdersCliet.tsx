@@ -2,10 +2,11 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 
-import DataGridDemo from '../../components/Crm-grid-table-client/ClientAboutOrdersTable'
+import DataGridDemo from '../../components/crm-grid-table-client/ClientAboutOrdersTable'
 import axiosInstance from '../../axios/settings'
-import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
+
 import { formatCurrency } from '../../helpers/totalCurrencyOrders'
+import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
 import { OrderHistoryResponse } from '../../types/models/OrderHistoryResponse'
 import { historyOrderBlock, totalOrdersBlock } from './style'
 

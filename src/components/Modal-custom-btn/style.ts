@@ -1,3 +1,5 @@
+import { Theme } from '@mui/material'
+
 export const btnEditAccount = {
   'marginLeft': 'auto',
   'borderRadius': '20px',
@@ -6,7 +8,7 @@ export const btnEditAccount = {
   'fontWeight': 600,
   'fontStyle': '16px',
   'color': 'background.default',
-  'padding': '21px 40px',
+  'padding': '21px clamp(1.25rem, 0.355rem + 2.38vw, 2.5rem)',
   'bgcolor': 'pink.darker',
   '&.MuiButton-root:hover': {
     bgcolor: 'error.light',
@@ -30,23 +32,34 @@ export const btnEditModWin = {
   }
 }
 
-export const boxModWin = {
-  width: '100%',
-  maxWidth: 600,
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  borderRadius: '20px',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  color: 'secondary.darker',
-  padding: '30px 20px 50px 20px',
-  border: 'none',
-  fontFamily: 'Open Sans'
+export const boxModWin = (theme: Theme) => {
+  return {
+    width: '100%',
+    heignt: 'auto',
+    maxWidth: 520,
+    maxHeight: '95%',
+    textAlign: 'center',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    borderRadius: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    color: 'secondary.darker',
+    border: 'none',
+    fontFamily: 'Open Sans',
+    boxSizing: 'border-box',
+    p: '50px 20px 20px 20px',
+    overflow: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      p: '40px 10px 15px 10px',
+      width: '95%',
+      maxHeight: 'calc(100vh - 40px)'
+    }
+  }
 }
 
 export const emailIconLink = {

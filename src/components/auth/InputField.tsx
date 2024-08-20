@@ -1,9 +1,9 @@
-import { Grid, InputLabel, OutlinedInput } from '@mui/material'
+import { InputLabel, OutlinedInput } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
 import { ErrorMessage } from '../Error/Error'
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 
-interface InputFieldProps {
+type InputFieldProps = {
   type: string
   id?: string
   label?: string
@@ -28,7 +28,7 @@ const InputField: FC<InputFieldProps> = ({
   sxInput,
   sxLabel
 }) => (
-  <Grid item xs={12} md={6}>
+  <Fragment>
     <InputLabel sx={sxLabel}>{label}</InputLabel>
     <OutlinedInput
       id={id}
@@ -42,7 +42,7 @@ const InputField: FC<InputFieldProps> = ({
       sx={sxInput}
     />
     <ErrorMessage error={error} />
-  </Grid>
+  </Fragment>
 )
 
 export default InputField

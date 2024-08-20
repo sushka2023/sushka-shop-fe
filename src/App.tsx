@@ -25,6 +25,8 @@ import { AccountPage } from './pages/account-page/account-page'
 import { OrderPage } from './pages/order-page'
 import CrmClientsPage from './pages/crm-clients-page/CrmClientsPage'
 import CrmClientAbout from './pages/crm-cleint-about/CrmClientAbout'
+import CrmEditOrderPage from './pages/crm-edit-order-page'
+import { CrmOrdersPage } from './pages/crm-orders-page'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -77,17 +79,12 @@ function App() {
               <div style={{ marginBottom: '500px' }}>Dashboard page</div>
             }
           />
-          <Route
-            path="orders"
-            element={<div style={{ marginBottom: '500px' }}>Order page</div>}
-          />
-          <Route
-            path="orders/:params"
-            element={<div style={{ marginBottom: '500px' }}>orders params</div>}
-          />
           <Route path="products" element={<CrmProductsPage />} />
 
           <Route path="products/:params" element={<CrmAddNewProduct />} />
+
+          <Route path="orders" element={<CrmOrdersPage />} />
+          <Route path="orders/:params" element={<CrmEditOrderPage />} />
 
           <Route path="clients" element={<CrmClientsPage />} />
           <Route path="clients/:params" element={<CrmClientAbout />} />

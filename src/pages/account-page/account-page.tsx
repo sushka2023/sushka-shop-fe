@@ -1,84 +1,34 @@
-import React, { useState } from 'react'
-import Box from '@mui/material/Box'
-import { Container, Tab, Tabs } from '@mui/material'
-import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
-import { useAuth } from '../../hooks/use-auth'
-import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
-import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
+import { Fragment, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { BasicModal } from '../../components/Modal-custom-btn/ModalCustomBtnEdit'
-import { stContainerTabPanel, stTabsNav, stWavePink } from './style'
-import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
-
-type TabPanelProps = {
-  children?: React.ReactNode
-  index: number
-  value: number
-}
-
-function CustomTabPanel({ children, value, index, ...other }: TabPanelProps) {
-  return (
-    <Box
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box>{children}</Box>}
-    </Box>
-  )
-}
-
-function a11yProps(index: number) {
-  return {
-    'id': `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
-  }
-}
+import { AccordionsSmallScreen } from '../../components/Account-panel/Account-nav/Accordions'
+import { TabsBigScreen } from '../../components/Account-panel/Account-nav/Tabs'
 
 export const AccountPage = () => {
-  const { user } = useAuth()
-  const [value, setValue] = useState(0)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [openModal, setOpenModal] = useState(false)
+
+  const tabParam = searchParams.get('tab')
+  const activeIndex = tabParam ? parseInt(tabParam, 10) - 1 : 0
+
+  const handleSetActiveIndex = (index: number) => {
+    setSearchParams({ tab: (index + 1).toString() })
+  }
 
   return (
-    <React.Fragment>
-      <Container>
-        <Box sx={{ p: '40px 0' }}>
-          <Tabs
-            value={value}
-            onChange={(_, newValue) => setValue(newValue)}
-            aria-label="basic tabs example"
-            sx={stTabsNav}
-          >
-            <Tab disableRipple label="Контактна інформація" {...a11yProps(0)} />
-            <Tab disableRipple label="Ваші адреси доставки" {...a11yProps(1)} />
-            <Tab disableRipple label="Історія замовлень" {...a11yProps(2)} />
-            <Tab disableRipple label="Змінити пароль" {...a11yProps(3)} />
-            <BasicModal />
-          </Tabs>
-        </Box>
-      </Container>
-      <Box sx={stContainerTabPanel}>
-        {user ? (
-          <Container sx={{ p: '40px 0' }}>
-            <CustomTabPanel value={value} index={0}>
-              <ContactInfo user={user} />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-              <DeliveryAddress />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-              <OrderHistory />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-              <ChangePassword />
-            </CustomTabPanel>
-          </Container>
-        ) : (
-          'loading...'
-        )}
-      </Box>
-      <Box sx={stWavePink} />
-    </React.Fragment>
+    <Fragment>
+      <TabsBigScreen
+        activeIndex={activeIndex}
+        setActiveIndex={handleSetActiveIndex}
+        setSearchParams={setSearchParams}
+        setOpenModal={setOpenModal}
+      />
+      <AccordionsSmallScreen
+        activeIndex={activeIndex}
+        setActiveIndex={handleSetActiveIndex}
+        setOpenModal={setOpenModal}
+      />
+      <BasicModal openModal={openModal} setOpenModal={setOpenModal} />
+    </Fragment>
   )
 }
