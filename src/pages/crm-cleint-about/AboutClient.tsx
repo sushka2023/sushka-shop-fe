@@ -4,16 +4,15 @@ import { useState } from 'react'
 import { Box, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
 
-import { User } from './CrmClientAbout'
 import ChangeRole from './ChangeRole'
 import { useAuth } from '../../hooks/use-auth'
 import { ROLE_TRANSLATIONS } from '../crm-clients-page/CrmTableStickyHead'
-import { Role } from '../../types'
+import { Role, UserResponseForCRM } from '../../types'
 import { aboutRole } from './style'
 import InfoClient from './InfoClient'
 
 type AboutClientProps = {
-  user: User
+  user: UserResponseForCRM
 }
 
 const AboutClient: React.FC<AboutClientProps> = ({ user }) => {

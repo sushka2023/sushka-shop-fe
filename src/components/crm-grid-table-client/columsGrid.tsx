@@ -1,5 +1,6 @@
 import { Box } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
+
 import { baseStatusStyle, statusStyles } from './style'
 
 const getStatusStyle = (status: string) => {

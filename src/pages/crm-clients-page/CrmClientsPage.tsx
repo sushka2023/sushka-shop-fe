@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 
 import StickyHeadTable from './CrmTableStickyHead'
@@ -17,9 +17,9 @@ const CLIENT_PAGEQTY = 0
 const CLIENT_PAGE = 1
 
 const CrmClientsPage = () => {
-  const location = useLocation()
+  const [searchParams] = useSearchParams()
 
-  const nowPage = parseInt(location.search?.split('=')[1]) || CLIENT_PAGE
+  const nowPage = parseInt(searchParams.get('page') || CLIENT_PAGE.toString())
   const offset = (nowPage - 1) * CLIENT_QUANTITY
 
   const [clients, setClients] = useState([])
@@ -36,22 +36,28 @@ const CrmClientsPage = () => {
           BASE_URL_CLIENTS +
             `limit=${CLIENT_QUANTITY}&offset=${offset}&search=${search}`
         )
+        console.log('data:', data)
 
-        const totalNumberOfPages = Math.ceil(
+        const test = data.users.length
+        console.log(' test:', test)
+
+        const totalQuantityPages = Math.ceil(
           data.total_count_users / CLIENT_QUANTITY
         )
 
-        setPageQty(totalNumberOfPages)
+        setPageQty(totalQuantityPages)
         setClients(data.users)
         setPage(nowPage)
         setIsLoading(false)
+
+        // if( nowPage < )
       } catch (error) {
         console.error(error)
       }
     }
 
     fetchCrmClients()
-  }, [page, location, search])
+  }, [page, search])
 
   return (
     <Box p="44px 30px 34px 30px" color="illustrations.darker" minHeight="955px">

@@ -1,38 +1,17 @@
-// import styles from './crmClientAbout.module.scss'
-
 import { Box } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import axiosInstance from '../../axios/settings'
 import AboutClient from './AboutClient'
 import HistoryOrdersClient from './HistoryOrdersCliet'
 import BackToPreviousPage from './BackToPreviousPage'
-import { useParams } from 'react-router-dom'
-import { Role } from '../../types'
-
-export type User = {
-  id: number
-  email: string
-  first_name: string
-  last_name: string
-  role: Role
-  created_at: string
-  is_active: boolean
-  is_blocked: boolean
-  is_deleted: boolean
-  phone_number: string
-  posts: {
-    id: number
-    user_id: number
-    ukr_poshta: any[]
-    nova_poshta: any[]
-  }
-  updated_at: string
-}
+import { UserResponseForCRM } from '../../types'
 
 const CrmClientAbout = () => {
   const { params: clientId } = useParams()
 
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<UserResponseForCRM | null>(null)
 
   useEffect(() => {
     const fetchCrmClients = async () => {

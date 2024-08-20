@@ -9,16 +9,15 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import DoneIcon from '@mui/icons-material/Done'
 
 import { ROLE_TRANSLATIONS } from '../crm-clients-page/CrmTableStickyHead'
-import { Role } from '../../types'
+import { Role, UserResponseForCRM } from '../../types'
 import axiosInstance from '../../axios/settings'
-import { changeRoleStyle, roleList, saveNewRole } from './style'
 import ConfirmModal from './ConfirmModal'
-import { User } from './CrmClientAbout'
+import { changeRoleStyle, roleList, saveNewRole } from './style'
 
 const ROLES = ['admin', 'moderator', 'user']
 
 type BasicMenuProps = {
-  user: User
+  user: UserResponseForCRM
   userRole: string
   setUserRole: (role: Role) => void
 }

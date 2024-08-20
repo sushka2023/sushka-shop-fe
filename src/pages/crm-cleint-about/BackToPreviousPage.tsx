@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { Link, useLocation } from 'react-router-dom'
+import { backToPageStyle } from './style'
 
 const BACK_TO_PREV = '/crm/clients/'
 
@@ -12,19 +13,7 @@ const BackToPreviousPage = () => {
   return (
     <Box sx={{ display: 'flex', mb: '20px' }}>
       <Link to={backToPage}>
-        <Typography
-          variant="body2"
-          sx={{
-            'opacity': '0.6',
-            'fontWeight': '600',
-            '&:hover': {
-              opacity: '0.8'
-            },
-            '&:active': {
-              opacity: '1'
-            }
-          }}
-        >
+        <Typography variant="body2" sx={backToPageStyle}>
           Список клієнтів
         </Typography>
       </Link>

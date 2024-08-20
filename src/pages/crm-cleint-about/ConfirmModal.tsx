@@ -1,10 +1,10 @@
 import React from 'react'
 import ModalDialog from '../../components/Crm-Modal-Confirmation/ModalDialog'
 import { Button } from '../../components/UI/Button'
-import { User } from './CrmClientAbout'
+import { UserResponseForCRM } from '../../types'
 
 type ConfirmModalProps = {
-  user: User
+  user: UserResponseForCRM
   openModal: boolean
   setOpenModal: (open: boolean) => void
   changeRole: (role: string) => void

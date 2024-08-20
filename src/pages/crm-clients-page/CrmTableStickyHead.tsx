@@ -13,17 +13,9 @@ import { useTheme } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
-import { Role } from '../../types'
-import { tableBlock, tableClients } from './style'
 
-type ClientType = {
-  id: number
-  role: Role
-  first_name: string
-  last_name: string
-  phone_number: string | null
-  email: string
-}
+import { Role, UserReviewResponse } from '../../types'
+import { tableBlock, tableClients } from './style'
 
 export const ROLE_TRANSLATIONS: Record<Role, string> = {
   admin: 'Адміністратор',
@@ -31,7 +23,11 @@ export const ROLE_TRANSLATIONS: Record<Role, string> = {
   user: 'Користувач'
 }
 
-export default function BasicTable({ clients }: { clients: ClientType[] }) {
+export default function BasicTable({
+  clients
+}: {
+  clients: UserReviewResponse[]
+}) {
   const theme = useTheme()
   const location = useLocation()
   const navigate = useNavigate()

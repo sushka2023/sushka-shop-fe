@@ -1,10 +1,12 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
+
+import DataGridDemo from '../../components/Crm-grid-table-client/ClientAboutOrdersTable'
 import axiosInstance from '../../axios/settings'
 import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
-import { useParams, useSearchParams } from 'react-router-dom'
-import DataGridDemo from '../../components/crm-grid-table-client/ClientAboutOrdersTable '
-import { handleFetchSuccess } from '../../helpers/calculateTotalPages'
+import { formatCurrency } from '../../helpers/totalCurrencyOrders'
+import { OrderHistoryResponse } from '../../types/models/OrderHistoryResponse'
 import { historyOrderBlock, totalOrdersBlock } from './style'
 
 const BASE_URL_ORDER_CLIENT = '/api/orders/for_crm/user?'
@@ -12,30 +14,6 @@ const BASE_URL_ORDER_CLIENT = '/api/orders/for_crm/user?'
 const CLIENT_QUANTITY = 5
 const CLIENT_PAGEQTY = 0
 const CLIENT_PAGE = 1
-
-type Order = {
-  id: number
-  created_at: string
-  status_order: string
-  price_order: number
-}
-
-export type OrderHistoryResponse = {
-  orders: Order[]
-  total_cost_orders: number
-  total_count: number
-}
-
-const formatCurrency = (
-  amount: number | null,
-  locale: string = 'uk-UA',
-  currency: string = 'UAH'
-): string => {
-  if (amount === null) return '₴0'
-  return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(
-    amount
-  )
-}
 
 const HistoryOrdersClient = () => {
   const theme = useTheme()
@@ -61,7 +39,9 @@ const HistoryOrdersClient = () => {
           `${BASE_URL_ORDER_CLIENT}limit=${CLIENT_QUANTITY}&offset=${offset}&user_id=${clientId}`
         )
 
-        setPageQty(handleFetchSuccess(data, CLIENT_QUANTITY))
+        const totalQuantityPages = Math.ceil(data.total_count / CLIENT_QUANTITY)
+
+        setPageQty(totalQuantityPages)
         setPage(nowPage)
         setOrderHistory(data)
         setIsLoading(false)

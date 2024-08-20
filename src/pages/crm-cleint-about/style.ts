@@ -1,3 +1,14 @@
+export const backToPageStyle = {
+  'opacity': '0.6',
+  'fontWeight': '600',
+  '&:hover': {
+    opacity: '0.8'
+  },
+  '&:active': {
+    opacity: '1'
+  }
+}
+
 export const aboutRole = {
   backgroundColor: 'background.default',
   borderRadius: '10px',
