@@ -16,12 +16,10 @@ type FileItemProps = {
   isProduct: boolean
 }
 
-// Окрема функція для отримання ідентифікатора файлу
 const getFileIdentifier = (file: FileType, isProduct: boolean) => {
   return isProduct ? (file as ImageResponse).id.toString() : (file as File).name
 }
 
-// Окрема функція для отримання назви файлу
 const getFileName = (file: FileType, isProduct: boolean) => {
   return isProduct ? (file as ImageResponse).description : (file as File).name
 }
