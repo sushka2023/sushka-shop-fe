@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 
-import { PaginationCRM } from '../../components/Crm-pagination/PaginationCRM'
+import { PaginationCRM } from '../../components/Crm-pagination/pagination-crm'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 import CrmGlobalSearch from '../../components/Crm-Global-Search/CrmGlobalSeacrh'
