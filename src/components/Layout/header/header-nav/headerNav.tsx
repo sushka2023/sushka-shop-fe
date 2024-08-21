@@ -13,7 +13,7 @@ const HeaderNav = () => {
   const allCategories = useSelector(
     (state: RootState) => state.items.allCategories
   )
-
+  console.log(allCategories)
   const location = useLocation()
   const isHomePath = location.pathname === '/'
 
