@@ -14,7 +14,7 @@ type PaginationCRMProps = {
   isLoading: boolean
 }
 
-export default function PaginationCRM({
+export function PaginationCRM({
   page,
   pageQty,
   setPage,

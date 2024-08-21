@@ -6,7 +6,7 @@ import DataGridDemo from '../../components/crm-grid-table-client/ClientAboutOrde
 import axiosInstance from '../../axios/settings'
 
 import { formatCurrency } from '../../helpers/totalCurrencyOrders'
-import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
+import { PaginationCRM } from '../../components/Crm-pagination/PaginationCRM'
 import { OrderHistoryResponse } from '../../types/models/OrderHistoryResponse'
 import { historyOrderBlock, totalOrdersBlock } from './style'
 

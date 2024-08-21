@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 
 import { ReviewResponse } from '../../types'
-import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
+import { PaginationCRM } from '../../components/Crm-pagination/PaginationCRM'
 
 const PAGE_SIZE = 5
 
