@@ -1,10 +1,10 @@
 import { FC, Fragment } from 'react'
-import { InputBase, MenuItem, SelectChangeEvent } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import SortIcon from '../../icons/sort.svg?react'
 import ExpandMoreIcon from '../../icons/ExpandMoreIcon.svg?react'
 import styles from './crmProductsPage.module.scss'
 import { OPTIONS } from './CrmProductsPage'
-import { CustomSelect } from './CrmCustomPaginationStyles'
+import { StyledSelector } from './CrmCustomPaginationStyles'
 
 type SelectProductStatusProps = {
   status: string
@@ -20,13 +20,12 @@ const SelectProductStatus: FC<SelectProductStatusProps> = ({
   }
 
   return (
-    <CustomSelect
+    <Select
       value={status}
       onChange={handleChange}
       displayEmpty
-      input={<InputBase />}
-      className={styles.statusSelector}
       IconComponent={ExpandMoreIcon}
+      sx={StyledSelector}
       renderValue={(selected) => (
         <Fragment>
           <SortIcon style={{ marginRight: '8px' }} />
@@ -40,7 +39,7 @@ const SelectProductStatus: FC<SelectProductStatusProps> = ({
       <MenuItem value="new">Новий</MenuItem>
       <MenuItem value="activated">Активний</MenuItem>
       <MenuItem value="archived">Архівований</MenuItem>
-    </CustomSelect>
+    </Select>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Box, Button, Select, Typography, styled } from '@mui/material'
+import { Box, Button, Typography, styled } from '@mui/material'
 
 export const StyledButton = styled(Button)({
   borderRadius: 10,
@@ -47,19 +47,27 @@ export const StyledCustomNoRowsOverlayTypography = styled(Typography)({
   marginTop: '40px'
 })
 
-export const CustomSelect = styled(Select)(({ theme }) => ({
-  'display': 'flex',
-  'alignItems': 'center',
-  'paddingLeft': theme.spacing(2),
-  'height': 50,
-  '& .MuiSelect-select': {
-    fontSize: 16,
+export const StyledSelector = {
+  'width': 220,
+  'border': 'none',
+  'fontSize': 16,
+  'fontWeight': 400,
+  '.MuiSelect-icon': {
+    color: '#64748b',
+    right: '10px'
+  },
+  '.MuiSelect-select': {
+    paddingLeft: '10px',
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: 0
+    color: '#64748b',
+    bgcolor: '#ffff',
+    borderRadius: '10px'
   },
-  '& .MuiSelect-icon': {
-    right: theme.spacing(2),
-    cursor: 'pointer'
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
   }
-}))
+}

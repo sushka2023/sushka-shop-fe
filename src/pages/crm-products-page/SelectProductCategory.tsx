@@ -1,10 +1,10 @@
-import { InputBase, MenuItem, SelectChangeEvent } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import SortIcon from '../../icons/sort.svg?react'
 import styles from './crmProductsPage.module.scss'
 import ExpandMoreIcon from '../../icons/ExpandMoreIcon.svg?react'
 import { ProductCategoryResponse } from '../../types'
-import { CustomSelect } from './CrmCustomPaginationStyles'
 import { Fragment } from 'react/jsx-runtime'
+import { StyledSelector } from './CrmCustomPaginationStyles'
 
 type SelectProductCategoryProps = {
   category: string
@@ -21,11 +21,11 @@ const SelectProductCategory = ({
   }
 
   return (
-    <CustomSelect
+    <Select
       value={category}
       onChange={handleChange}
       displayEmpty
-      input={<InputBase />}
+      sx={StyledSelector}
       className={styles.statusSelector}
       IconComponent={ExpandMoreIcon}
       renderValue={(selected) => (
@@ -44,7 +44,7 @@ const SelectProductCategory = ({
           {category.name}
         </MenuItem>
       ))}
-    </CustomSelect>
+    </Select>
   )
 }
 
