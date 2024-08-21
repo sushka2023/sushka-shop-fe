@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ProductArchiveModel } from '../models/ProductArchiveModel';
+import type { ProductChangeStatusResponse } from '../models/ProductChangeStatusResponse';
 import type { ProductModel } from '../models/ProductModel';
 import type { ProductResponse } from '../models/ProductResponse';
 import type { ProductStatus } from '../models/ProductStatus';
@@ -26,6 +26,7 @@ export class ProductService {
      * :param pr_category_id: int: Filter the products by category
      * :param sort: str: Sort the list of products by price or date
      * :param db: Session: Pass the database session to the function
+     *
      * :return: A list of products
      * @param limit
      * @param offset
@@ -67,6 +68,7 @@ export class ProductService {
      * :param pr_category_id: int: Filter the products by category
      * :param search_query: product search criterion (by name or id of the product)
      * :param db: Session: Pass the database connection to the function
+     *
      * :return: A list of products
      * @param limit
      * @param offset
@@ -107,8 +109,8 @@ export class ProductService {
      *
      * :param body: ProductModel: Validate the request body
      * :param db: Session: Get the database session
+     *
      * :return: A productresponse object
-     * :doc-author: Trelent
      * @param requestBody
      * @returns ProductResponse Successful Response
      * @throws ApiError
@@ -127,56 +129,39 @@ export class ProductService {
         });
     }
     /**
-     * Archive Product
-     * The archive_product function is used to archive a product.
-     * The function takes in the id of the product to be archived and returns an object containing information about that product.
-     * If no such id exists, it raises a 404 error.
+     * Edit Product
+     * Edits an existing product in the database with new data provided in the request body.
      *
+     * This function updates a product's information based on the provided product ID and
+     * the data in the ProductModel. It handles conversion of product_id to integer,
+     * checks for product existence, updates the product, and manages subcategories and images.
      *
      * Args:
-     * body: ProductArchiveModel: Get the id of the product to be archived
-     * db: Session: Get the database session
+     * product_id (str): The ID of the product to be edited. It should be convertible to an integer.
+     * body (ProductModel): The new product data to update.
+     * db (Session): The database session dependency.
+     *
+     * Raises:
+     * HTTPException: If product_id is not an integer.
+     * HTTPException: If the product with the given ID is not found.
      *
      * Returns:
-     * A product object
+     * ProductResponse: An object containing the updated product information.
+     * @param productId
      * @param requestBody
      * @returns ProductResponse Successful Response
      * @throws ApiError
      */
-    public static archiveProductApiProductArchivePut(
-        requestBody: ProductArchiveModel,
+    public static editProductApiProductEditProductIdPatch(
+        productId: string,
+        requestBody: ProductModel,
     ): CancelablePromise<ProductResponse> {
         return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/product/archive',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
+            method: 'PATCH',
+            url: '/api/product/edit/{product_id}',
+            path: {
+                'product_id': productId,
             },
-        });
-    }
-    /**
-     * Unarchive Product
-     * The archive_product function is used to unarchive a product.
-     * The function takes in the id of the product and returns an object containing information about that product.
-     *
-     * Args:
-     * body: ProductArchiveModel: Get the id of the product to be archived
-     * db: Session: Get the database session
-     *
-     * Returns:
-     * A product object
-     * @param requestBody
-     * @returns ProductResponse Successful Response
-     * @throws ApiError
-     */
-    public static unarchiveProductApiProductUnarchivePut(
-        requestBody: ProductArchiveModel,
-    ): CancelablePromise<ProductResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/product/unarchive',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -190,6 +175,7 @@ export class ProductService {
      *
      * :param product_id: int: Specify the product id
      * :param db: Session: Pass the database session to the function
+     *
      * :return: A product by id
      * :doc-author: Trelent
      * @param productId
@@ -204,6 +190,44 @@ export class ProductService {
             url: '/api/product/{product_id}',
             path: {
                 'product_id': productId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Change Product Status
+     * The change_product_status function is used to change a product status.
+     * The function takes in the id of the product to change it status
+     * and returns an object containing information about that product.
+     * If no such id exists, it raises a 404 error.
+     *
+     * Args:
+     * product_id: int: Get the id of the product to change it status
+     * pr_status: ProductStatus: the product status to be changed
+     * (permitted: "new", "activated", "archived")
+     * db: Session: Get the database session
+     *
+     * Returns:
+     * A product object
+     * @param productId
+     * @param prStatus
+     * @returns ProductChangeStatusResponse Successful Response
+     * @throws ApiError
+     */
+    public static changeProductStatusApiProductProductIdChangeStatusPut(
+        productId: number,
+        prStatus?: ProductStatus,
+    ): CancelablePromise<ProductChangeStatusResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/product/{product_id}/change_status',
+            path: {
+                'product_id': productId,
+            },
+            query: {
+                'pr_status': prStatus,
             },
             errors: {
                 422: `Validation Error`,
@@ -229,7 +253,7 @@ export class ProductService {
     public static searchAllProductsApiProductSearchGet(
         limit: number,
         offset: number,
-        searchQuery: (number | string),
+        searchQuery?: (number | string),
     ): CancelablePromise<ProductWithTotalResponse> {
         return __request(OpenAPI, {
             method: 'GET',

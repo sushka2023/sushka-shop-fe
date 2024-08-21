@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
-import PaginationCRM from './PaginationCRM'
+import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
 import StickyHeadTable from './CrmTableStickyHead'
 import axiosInstance from '../../axios/settings'
 

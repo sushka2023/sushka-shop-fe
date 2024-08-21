@@ -11,6 +11,7 @@ import type { UserMessageResponse } from '../models/UserMessageResponse';
 import type { UserResponse } from '../models/UserResponse';
 import type { UserResponseAfterUpdate } from '../models/UserResponseAfterUpdate';
 import type { UserResponseForCRM } from '../models/UserResponseForCRM';
+import type { UserResponseForCrmWithTotalCount } from '../models/UserResponseForCrmWithTotalCount';
 import type { UserUpdateData } from '../models/UserUpdateData';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -18,30 +19,41 @@ import { request as __request } from '../core/request';
 export class UsersService {
     /**
      * Get All Users For Crm
-     * The function returns a list of all users in the database.
+     * Retrieves a paginated list of users for CRM purposes along with the total user count.
+     *
+     * This function fetches a specified number of users based on the provided limit and offset
+     * from the database, and also retrieves the total count of users.
      *
      * Args:
-     * limit: int: Limit the number of users returned
-     * offset: int: Specify the offset of the first user to be returned
-     * db: Session: Access the database
+     * limit (int): The maximum number of users to return.
+     * offset (int): The number of users to skip before starting to collect the result set.
+     * db (Session): The database session dependency.
+     * search (str): The search string to filter users by first name, last name, or email.
+     * user_id: Optional[int]: An id to filter users by their id.
      *
      * Returns:
-     * A list of users
+     * UserResponseForCrmWithTotalCount: An object containing the list of users and the total count of users.
      * @param limit
      * @param offset
-     * @returns UserResponseForCRM Successful Response
+     * @param search
+     * @param userId
+     * @returns UserResponseForCrmWithTotalCount Successful Response
      * @throws ApiError
      */
     public static getAllUsersForCrmApiUsersAllForCrmGet(
         limit: number,
         offset: number,
-    ): CancelablePromise<Array<UserResponseForCRM>> {
+        search?: string,
+        userId?: number,
+    ): CancelablePromise<UserResponseForCrmWithTotalCount> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/users/all_for_crm',
             query: {
                 'limit': limit,
                 'offset': offset,
+                'search': search,
+                'user_id': userId,
             },
             errors: {
                 422: `Validation Error`,

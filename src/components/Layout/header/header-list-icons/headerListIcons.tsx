@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
@@ -19,11 +18,12 @@ const HeaderListIcons = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const [searchParams] = useSearchParams()
-
-  const searchToken = Object.fromEntries(searchParams.entries())
+  const searchToken = searchParams.get('token')
 
   useEffect(() => {
-    Object.keys(searchToken).length > 0 && setIsModalOpen(true)
+    if (searchToken) {
+      setIsModalOpen(true)
+    }
   }, [searchToken])
 
   const handleClick = (event: MouseEvent) => {
@@ -101,12 +101,8 @@ const HeaderListIcons = () => {
           </Link>
         </li>
       </ul>
-      <ModalPortal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        searchToken={searchToken}
-      >
-        <Auth searchToken={searchToken} setIsModalOpen={setIsModalOpen} />
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <Auth setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
     </Fragment>
   )

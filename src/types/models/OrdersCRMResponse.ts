@@ -4,9 +4,9 @@
 /* eslint-disable */
 import type { NovaPoshtaDataResponse } from './NovaPoshtaDataResponse';
 import type { OrderedProductResponse } from './OrderedProductResponse';
-import type { OrdersStatus } from './OrdersStatus';
-import type { PaymentsTypes } from './PaymentsTypes';
-import type { PostType } from './PostType';
+import type { OrdersStatuses } from './OrdersStatuses';
+import type { PaymentsType } from './PaymentsType';
+import type { PostsType } from './PostsType';
 import type { UkrPoshtaResponse } from './UkrPoshtaResponse';
 import type { UserResponseForOrder } from './UserResponseForOrder';
 export type OrdersCRMResponse = {
@@ -22,7 +22,7 @@ export type OrdersCRMResponse = {
     is_another_recipient?: boolean;
     full_name_another_recipient?: string;
     phone_number_another_recipient?: string;
-    post_type: PostType;
+    post_type: PostsType;
     country?: string;
     city?: string;
     address_warehouse?: string;
@@ -33,13 +33,13 @@ export type OrdersCRMResponse = {
     apartment_number?: string;
     floor?: number;
     post_code?: string;
-    payment_type: PaymentsTypes;
+    payment_type: PaymentsType;
     created_at: string;
     confirmation_manager: boolean;
     confirmation_pay: boolean;
     call_manager: boolean;
     is_authenticated: boolean;
-    status_order: OrdersStatus;
+    status_order: OrdersStatuses;
     selected_nova_poshta_id?: number;
     selected_nova_poshta?: NovaPoshtaDataResponse;
     selected_ukr_poshta_id?: number;

@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview",
     "prepare": "husky install",
-    "generate": "openapi -i https://www.test-store.shop/openapi.json -o src/types"
+    "generate": "openapi -i https://sushka-store-timvladislav13010.koyeb.app/openapi.json -o src/types"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -22,6 +22,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.5.0",
     "clsx": "^2.1.0",
+    "crypto-js": "^4.2.0",
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
     "modern-normalize": "^2.0.0",
@@ -44,6 +45,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.5",
     "@types/node": "^20.11.13",
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
