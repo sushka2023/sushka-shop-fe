@@ -6,12 +6,46 @@ import type { ReviewArchiveModel } from '../models/ReviewArchiveModel';
 import type { ReviewCheckModel } from '../models/ReviewCheckModel';
 import type { ReviewModel } from '../models/ReviewModel';
 import type { ReviewResponse } from '../models/ReviewResponse';
+import type { ReviewStoreModel } from '../models/ReviewStoreModel';
+import type { ReviewStoreResponse } from '../models/ReviewStoreResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class ReviewsService {
     /**
-     * Get Reviews
+     * Get Store Reviews
+     * The function returns a list of all reviews in the database which were checked by an admin or a moderator.
+     *
+     * Args:
+     * limit: int: Limit the number of reviews returned
+     * offset: int: Specify the offset of the first review to be returned
+     * db: Session: Access the database
+     *
+     * Returns:
+     * A list of reviews
+     * @param limit
+     * @param offset
+     * @returns ReviewStoreResponse Successful Response
+     * @throws ApiError
+     */
+    public static getStoreReviewsApiReviewsGet(
+        limit: number,
+        offset: number,
+    ): CancelablePromise<Array<ReviewStoreResponse>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/reviews/',
+            query: {
+                'limit': limit,
+                'offset': offset,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Product Reviews
      * The function returns a list of all reviews in the database which were checked by an admin or a moderator.
      *
      * Args:
@@ -26,13 +60,13 @@ export class ReviewsService {
      * @returns ReviewResponse Successful Response
      * @throws ApiError
      */
-    public static getReviewsApiReviewsGet(
+    public static getProductReviewsApiReviewsProductsGet(
         limit: number,
         offset: number,
     ): CancelablePromise<Array<ReviewResponse>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/reviews/',
+            url: '/api/reviews/products',
             query: {
                 'limit': limit,
                 'offset': offset,
@@ -49,18 +83,21 @@ export class ReviewsService {
      * Args:
      * limit: int: Limit the number of reviews returned
      * offset: int: Specify the offset of the first review to be returned
+     * filter_by_product_id: bool: Filter reviews by the presence or absence of product_id
      * db: Session: Access the database
      *
      * Returns:
      * A list of reviews
      * @param limit
      * @param offset
+     * @param filterByProductId
      * @returns ReviewResponse Successful Response
      * @throws ApiError
      */
     public static getReviewsForCrmApiReviewsAllForCrmGet(
         limit: number,
         offset: number,
+        filterByProductId?: boolean,
     ): CancelablePromise<Array<ReviewResponse>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -68,6 +105,7 @@ export class ReviewsService {
             query: {
                 'limit': limit,
                 'offset': offset,
+                'filter_by_product_id': filterByProductId,
             },
             errors: {
                 422: `Validation Error`,
@@ -75,7 +113,35 @@ export class ReviewsService {
         });
     }
     /**
-     * Create Review
+     * Create Store Review
+     * The create_store_review function creates a new review to the shop in the database.
+     *
+     * Args:
+     * review: ReviewStoreModel: Validate the request body
+     * db: Session: Pass the database session to the repository layer
+     * current_user (User): the current user attempting to create the review
+     *
+     * Returns:
+     * A review object
+     * @param requestBody
+     * @returns ReviewStoreResponse Successful Response
+     * @throws ApiError
+     */
+    public static createStoreReviewApiReviewsCreatePost(
+        requestBody: ReviewStoreModel,
+    ): CancelablePromise<ReviewStoreResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/reviews/create',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Create Product Review
      * The create_review function creates a new review to product in the database.
      *
      * Args:
@@ -89,12 +155,12 @@ export class ReviewsService {
      * @returns ReviewResponse Successful Response
      * @throws ApiError
      */
-    public static createReviewApiReviewsCreatePost(
+    public static createProductReviewApiReviewsCreateForProductPost(
         requestBody: ReviewModel,
     ): CancelablePromise<ReviewResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/reviews/create',
+            url: '/api/reviews/create_for_product',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

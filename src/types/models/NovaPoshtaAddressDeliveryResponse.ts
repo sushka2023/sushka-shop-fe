@@ -8,8 +8,7 @@ export type NovaPoshtaAddressDeliveryResponse = {
     apartment_number?: string;
     floor?: number;
     city: string;
-    region?: string;
-    area?: string;
+    is_delivery: boolean;
     id: number;
 };
 
