@@ -68,11 +68,9 @@ export const fetchAllCategories = createAsyncThunk<
 >('api/allCategories', async ({ operationType }, thunkAPI) => {
   try {
     const response = await axiosInstance.get('/api/product_category/all')
-    console.log(response.data)
     return { data: response.data, operationType }
   } catch (e) {
     const error = e as AxiosError
-
     return thunkAPI.rejectWithValue(error?.response?.status)
   }
 })
