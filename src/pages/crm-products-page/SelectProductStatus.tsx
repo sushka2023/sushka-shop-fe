@@ -1,46 +1,46 @@
-import {
-  InputAdornment,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { FC, Fragment } from 'react'
+import { InputBase, MenuItem, SelectChangeEvent } from '@mui/material'
 import SortIcon from '../../icons/sort.svg?react'
-import styles from './crmProductsPage.module.scss'
 import ExpandMoreIcon from '../../icons/ExpandMoreIcon.svg?react'
+import styles from './crmProductsPage.module.scss'
 import { OPTIONS } from './CrmProductsPage'
+import { CustomSelect } from './CrmCustomPaginationStyles'
 
 type SelectProductStatusProps = {
   status: string
-  handleStatusChange: (event: SelectChangeEvent) => void
+  handleStatusChange: (event: SelectChangeEvent<string>) => void
 }
-const SelectProductStatus = ({
+
+const SelectProductStatus: FC<SelectProductStatusProps> = ({
   status,
   handleStatusChange
-}: SelectProductStatusProps) => {
+}) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
+    handleStatusChange(event as SelectChangeEvent<string>)
+  }
+
   return (
-    <Select
-      startAdornment={
-        <InputAdornment position="start">
-          <SortIcon />
-        </InputAdornment>
-      }
-      displayEmpty
+    <CustomSelect
       value={status}
-      onChange={handleStatusChange}
+      onChange={handleChange}
+      displayEmpty
+      input={<InputBase />}
       className={styles.statusSelector}
-      IconComponent={() => (
-        <ExpandMoreIcon className={styles.statusSelectorIcon} />
+      IconComponent={ExpandMoreIcon}
+      renderValue={(selected) => (
+        <Fragment>
+          <SortIcon style={{ marginRight: '8px' }} />
+          {OPTIONS.find((option) => option.value === selected)?.label ||
+            'Усі статуси'}
+        </Fragment>
       )}
       MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
-      renderValue={(selected) =>
-        OPTIONS.find((option) => option.value === selected)?.label
-      }
     >
       <MenuItem value="">Усі статуси</MenuItem>
       <MenuItem value="new">Новий</MenuItem>
       <MenuItem value="activated">Активний</MenuItem>
       <MenuItem value="archived">Архівований</MenuItem>
-    </Select>
+    </CustomSelect>
   )
 }
 

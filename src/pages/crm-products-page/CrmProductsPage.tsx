@@ -179,31 +179,29 @@ const CrmProductsPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <StyledDataGrid
-            autoHeight
-            rows={searchQuery ? searchProductForCrm : productsForCrm}
-            columns={columns(mainCategories)}
-            paginationModel={paginationModel}
-            slots={{
-              pagination: CustomPagination,
-              noRowsOverlay: CustomNoRowsOverlay
-            }}
-            onPaginationModelChange={handlePaginationModelChange}
-            pageSizeOptions={[PAGE_SIZE]}
-            paginationMode="server"
-            rowCount={
-              searchQuery
-                ? searchProductsForCrmTotalCount
-                : productsForCrmTotalCount
-            }
-            disableRowSelectionOnClick
-            disableColumnFilter
-            loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
-            disableColumnMenu
-            onRowClick={(index) => handleIndex(index)}
-          />
-        </div>
+        <StyledDataGrid
+          autoHeight
+          rows={searchQuery ? searchProductForCrm : productsForCrm}
+          columns={columns(mainCategories)}
+          paginationModel={paginationModel}
+          slots={{
+            pagination: CustomPagination,
+            noRowsOverlay: CustomNoRowsOverlay
+          }}
+          onPaginationModelChange={handlePaginationModelChange}
+          pageSizeOptions={[PAGE_SIZE]}
+          paginationMode="server"
+          rowCount={
+            searchQuery
+              ? searchProductsForCrmTotalCount
+              : productsForCrmTotalCount
+          }
+          disableRowSelectionOnClick
+          disableColumnFilter
+          loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
+          disableColumnMenu
+          onRowClick={(index) => handleIndex(index)}
+        />
       </div>
     </section>
   )

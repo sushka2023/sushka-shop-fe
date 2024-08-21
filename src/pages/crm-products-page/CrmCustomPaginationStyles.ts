@@ -1,4 +1,4 @@
-import { Box, Button, Typography, styled } from '@mui/material'
+import { Box, Button, Select, Typography, styled } from '@mui/material'
 
 export const StyledButton = styled(Button)({
   borderRadius: 10,
@@ -46,3 +46,20 @@ export const StyledCustomNoRowsOverlayTypography = styled(Typography)({
   color: '#64748B',
   marginTop: '40px'
 })
+
+export const CustomSelect = styled(Select)(({ theme }) => ({
+  'display': 'flex',
+  'alignItems': 'center',
+  'paddingLeft': theme.spacing(2),
+  'height': 50,
+  '& .MuiSelect-select': {
+    fontSize: 16,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 0
+  },
+  '& .MuiSelect-icon': {
+    right: theme.spacing(2),
+    cursor: 'pointer'
+  }
+}))
