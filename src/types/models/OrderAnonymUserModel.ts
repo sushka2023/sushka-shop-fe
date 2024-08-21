@@ -3,8 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { OrderedProductModel } from './OrderedProductModel';
-import type { PaymentsTypes } from './PaymentsTypes';
-import type { PostType } from './PostType';
+import type { PaymentsType } from './PaymentsType';
+import type { PostsType } from './PostsType';
 export type OrderAnonymUserModel = {
     first_name_anon_user: string;
     last_name_anon_user: string;
@@ -13,10 +13,10 @@ export type OrderAnonymUserModel = {
     is_another_recipient?: boolean;
     full_name_another_recipient?: string;
     phone_number_another_recipient?: string;
-    post_type: PostType;
+    post_type: PostsType;
+    selected_nova_poshta_id?: number;
     country?: string;
-    city: string;
-    address_warehouse?: string;
+    city?: string;
     area?: string;
     region?: string;
     street?: string;
@@ -24,7 +24,7 @@ export type OrderAnonymUserModel = {
     apartment_number?: string;
     floor?: number;
     post_code?: string;
-    payment_type: PaymentsTypes;
+    payment_type: PaymentsType;
     call_manager: boolean;
     ordered_products: Array<OrderedProductModel>;
     comment?: string;
