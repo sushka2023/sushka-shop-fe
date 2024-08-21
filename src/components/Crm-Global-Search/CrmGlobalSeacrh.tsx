@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react'
 
 const CLEAR_TIMER_SEARCH = 2000
 
-type CrmGlobalSearchProps = {
+type Props = {
   search: string
   setSearch: (value: string) => void
   placeholder?: string
 }
 
-const CrmGlobalSearch: React.FC<CrmGlobalSearchProps> = ({
+const CrmGlobalSearch: React.FC<Props> = ({
   placeholder,
   search,
   setSearch

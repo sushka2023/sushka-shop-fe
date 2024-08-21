@@ -44,9 +44,10 @@ const CrmClientsPage = () => {
         setPageQty(totalQuantityPages)
         setClients(data.users)
         setPage(nowPage)
-        setIsLoading(false)
       } catch (error) {
         console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -64,12 +65,14 @@ const CrmClientsPage = () => {
         />
       </Box>
       <StickyHeadTable clients={clients} />
-      <PaginationCRM
-        page={page}
-        pageQty={pageQty}
-        setPage={setPage}
-        isLoading={isLoading}
-      />
+      {clients && pageQty > CLIENT_PAGE && (
+        <PaginationCRM
+          page={page}
+          pageQty={pageQty}
+          setPage={setPage}
+          isLoading={isLoading}
+        />
+      )}
     </Box>
   )
 }

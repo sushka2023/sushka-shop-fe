@@ -11,15 +11,15 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import { modalDialog, infoIcon, closeIcon, actionsBtn } from './style'
 
-type ModalDialogProps = {
+type Props = {
   open: boolean
   onClose: () => void
   title: string
   content: string
-  actions?: React.ReactNode // Робимо actions необов'язковим
+  actions?: React.ReactNode
 }
 
-const ModalDialog: React.FC<ModalDialogProps> = ({
+const ModalDialog: React.FC<Props> = ({
   open,
   onClose,
   title,

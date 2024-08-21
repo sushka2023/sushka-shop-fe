@@ -45,9 +45,10 @@ const HistoryOrdersClient = () => {
         setPageQty(totalQuantityPages)
         setPage(nowPage)
         setOrderHistory(data)
-        setIsLoading(false)
       } catch (error) {
         console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -78,7 +79,8 @@ const HistoryOrdersClient = () => {
           {formattedTotalCost}
         </Typography>
       </Box>
-      {orderHistory && orderHistory.total_count > CLIENT_QUANTITY && (
+
+      {orderHistory && pageQty > CLIENT_PAGE && (
         <PaginationCRM
           page={page}
           pageQty={pageQty}

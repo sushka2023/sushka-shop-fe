@@ -1,24 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 
-import { baseStatusStyle, statusStyles } from './style'
-
-const getStatusStyle = (status: string) => {
-  return {
-    ...baseStatusStyle,
-    ...statusStyles[status]
-  }
-}
-
-const ORDER_STATUS_TRANSLATIONS = {
-  'new': 'Новий',
-  'in processing': 'В обробці',
-  'shipped': 'Відправлено',
-  'delivered': 'Доставлено',
-  'cancelled': 'Скасовано'
-} as const
-
-type OrderStatus = keyof typeof ORDER_STATUS_TRANSLATIONS
+import { OrdersStatus } from '../../types'
+import { ORDER_STATUS } from '../../pages/crm-orders-page/constants'
 
 export const columns: GridColDef<[number]>[] = [
   {
@@ -57,11 +41,23 @@ export const columns: GridColDef<[number]>[] = [
     sortable: false,
     headerAlign: 'center',
     align: 'center',
-    renderCell: (params) => (
-      <Box sx={getStatusStyle(params.value as OrderStatus)}>
-        {ORDER_STATUS_TRANSLATIONS[params.value as OrderStatus]}
-      </Box>
-    )
+    renderCell: (params) => {
+      const statusKey = params.value as OrdersStatus
+
+      return (
+        <Box
+          sx={{
+            padding: '5px 10px',
+            borderRadius: '10px',
+            ...ORDER_STATUS[statusKey].style
+          }}
+        >
+          <Typography fontWeight={600}>
+            {ORDER_STATUS[statusKey].text}
+          </Typography>
+        </Box>
+      )
+    }
   },
   {
     flex: 1,

@@ -35,10 +35,10 @@ const CrmOrdersPage = () => {
 
         setPageQty(totalNumberOfPages)
         setOrders(data.orders)
-        // setOrders(data.orders)
-        setIsLoading(false)
       } catch (error) {
         console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
