@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ProductArchiveModel } from '../models/ProductArchiveModel';
-import type { ProductArchiveResponse } from '../models/ProductArchiveResponse';
+import type { ProductChangeStatusResponse } from '../models/ProductChangeStatusResponse';
 import type { ProductModel } from '../models/ProductModel';
 import type { ProductResponse } from '../models/ProductResponse';
 import type { ProductStatus } from '../models/ProductStatus';
@@ -27,6 +26,7 @@ export class ProductService {
      * :param pr_category_id: int: Filter the products by category
      * :param sort: str: Sort the list of products by price or date
      * :param db: Session: Pass the database session to the function
+     *
      * :return: A list of products
      * @param limit
      * @param offset
@@ -68,6 +68,7 @@ export class ProductService {
      * :param pr_category_id: int: Filter the products by category
      * :param search_query: product search criterion (by name or id of the product)
      * :param db: Session: Pass the database connection to the function
+     *
      * :return: A list of products
      * @param limit
      * @param offset
@@ -108,6 +109,7 @@ export class ProductService {
      *
      * :param body: ProductModel: Validate the request body
      * :param db: Session: Get the database session
+     *
      * :return: A productresponse object
      * @param requestBody
      * @returns ProductResponse Successful Response
@@ -168,69 +170,12 @@ export class ProductService {
         });
     }
     /**
-     * Archive Product
-     * The archive_product function is used to archive a product.
-     * The function takes in the id of the product to be archived and returns an object containing information about that product.
-     * If no such id exists, it raises a 404 error.
-     *
-     *
-     * Args:
-     * body: ProductArchiveModel: Get the id of the product to be archived
-     * db: Session: Get the database session
-     *
-     * Returns:
-     * A product object
-     * @param requestBody
-     * @returns ProductArchiveResponse Successful Response
-     * @throws ApiError
-     */
-    public static archiveProductApiProductArchivePut(
-        requestBody: ProductArchiveModel,
-    ): CancelablePromise<ProductArchiveResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/product/archive',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * Unarchive Product
-     * The archive_product function is used to unarchive a product.
-     * The function takes in the id of the product and returns an object containing information about that product.
-     *
-     * Args:
-     * body: ProductArchiveModel: Get the id of the product to be archived
-     * db: Session: Get the database session
-     *
-     * Returns:
-     * A product object
-     * @param requestBody
-     * @returns ProductArchiveResponse Successful Response
-     * @throws ApiError
-     */
-    public static unarchiveProductApiProductUnarchivePut(
-        requestBody: ProductArchiveModel,
-    ): CancelablePromise<ProductArchiveResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/product/unarchive',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
      * Get One Product
      * The get_one_product function returns a single product from the database.
      *
      * :param product_id: int: Specify the product id
      * :param db: Session: Pass the database session to the function
+     *
      * :return: A product by id
      * :doc-author: Trelent
      * @param productId
@@ -245,6 +190,44 @@ export class ProductService {
             url: '/api/product/{product_id}',
             path: {
                 'product_id': productId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Change Product Status
+     * The change_product_status function is used to change a product status.
+     * The function takes in the id of the product to change it status
+     * and returns an object containing information about that product.
+     * If no such id exists, it raises a 404 error.
+     *
+     * Args:
+     * product_id: int: Get the id of the product to change it status
+     * pr_status: ProductStatus: the product status to be changed
+     * (permitted: "new", "activated", "archived")
+     * db: Session: Get the database session
+     *
+     * Returns:
+     * A product object
+     * @param productId
+     * @param prStatus
+     * @returns ProductChangeStatusResponse Successful Response
+     * @throws ApiError
+     */
+    public static changeProductStatusApiProductProductIdChangeStatusPut(
+        productId: number,
+        prStatus?: ProductStatus,
+    ): CancelablePromise<ProductChangeStatusResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/product/{product_id}/change_status',
+            path: {
+                'product_id': productId,
+            },
+            query: {
+                'pr_status': prStatus,
             },
             errors: {
                 422: `Validation Error`,

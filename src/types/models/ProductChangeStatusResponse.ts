@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ProductStatus } from './ProductStatus';
-export type ProductArchiveResponse = {
+export type ProductChangeStatusResponse = {
     id: number;
     is_deleted: boolean;
     product_status: ProductStatus;
