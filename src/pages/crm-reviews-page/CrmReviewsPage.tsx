@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import axiosInstance from '../../axios/settings'
 
 import { ReviewsList } from './ReviewsList/ReviewsList'
-import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 
 import { ReviewResponse } from '../../types'
+import PaginationCRM from '../../components/Crm-pagination/PaginationCRM'
 
 const PAGE_SIZE = 5
 
@@ -15,8 +15,10 @@ const PAGE_QTY = 0
 const CrmReviewsPage = () => {
   const [reviews, setReviews] = useState<ReviewResponse[]>([])
   const [page, setPage] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchReviews = async () => {
+    setIsLoading(true)
     try {
       const offset = page * PAGE_SIZE
       const { data } = await axiosInstance.get(
@@ -27,6 +29,8 @@ const CrmReviewsPage = () => {
       if (err instanceof Error) {
         console.error(err.message)
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -41,7 +45,12 @@ const CrmReviewsPage = () => {
         <div style={{ height: '100%', width: '100%', paddingTop: '30px' }}>
           <ReviewsList items={reviews} onStatusChange={fetchReviews} />
         </div>
-        <PaginationCRM page={page} pageQty={PAGE_QTY} setPage={setPage} />
+        <PaginationCRM
+          page={page}
+          pageQty={PAGE_QTY}
+          setPage={setPage}
+          isLoading={isLoading}
+        />
       </Box>
     </Box>
   )
