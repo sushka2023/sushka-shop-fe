@@ -1,8 +1,6 @@
 import { BasketItemsResponse } from '../types'
 
 const calculateTotal = (items: BasketItemsResponse[]) => {
-  console.log('items', items)
-
   items?.reduce(
     (total, order) => total + order.quantity * order.product.prices[0]?.price,
     0

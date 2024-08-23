@@ -16,17 +16,13 @@ import { changeRoleStyle, roleList, saveNewRole } from './style'
 
 const ROLES = ['admin', 'moderator', 'user']
 
-type BasicMenuProps = {
+type Props = {
   user: UserResponseForCRM
   userRole: string
   setUserRole: (role: Role) => void
 }
 
-export default function BasicMenu({
-  user,
-  userRole,
-  setUserRole
-}: BasicMenuProps) {
+export default function BasicMenu({ user, userRole, setUserRole }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [selectedRole, setSelectedRole] = React.useState<string>(user.role)
   const [openModal, setOpenModal] = React.useState<boolean>(false)
@@ -54,15 +50,13 @@ export default function BasicMenu({
     }
   }
 
-  const changeRole = () => fetchChangeRole(selectedRole)
-
   return (
     <Box className={styles.aboutClientBlock}>
       <ConfirmModal
         user={user}
         openModal={openModal}
         setOpenModal={setOpenModal}
-        changeRole={changeRole}
+        changeRole={fetchChangeRole}
         selectedRole={selectedRole}
       />
       <Box sx={changeRoleStyle}>

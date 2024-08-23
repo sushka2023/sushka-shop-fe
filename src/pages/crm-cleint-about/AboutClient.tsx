@@ -11,11 +11,11 @@ import { Role, UserResponseForCRM } from '../../types'
 import { aboutRole } from './style'
 import InfoClient from './InfoClient'
 
-type AboutClientProps = {
+type Props = {
   user: UserResponseForCRM
 }
 
-const AboutClient: React.FC<AboutClientProps> = ({ user }) => {
+const AboutClient: React.FC<Props> = ({ user }) => {
   const { user: authUser } = useAuth()
 
   const [userRole, setUserRole] = useState<Role>(user.role)
