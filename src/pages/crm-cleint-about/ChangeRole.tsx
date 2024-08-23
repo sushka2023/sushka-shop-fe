@@ -60,13 +60,7 @@ export default function BasicMenu({ user, userRole, setUserRole }: Props) {
         selectedRole={selectedRole}
       />
       <Box sx={changeRoleStyle}>
-        <Button
-          id="basic-button"
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-        >
+        <Button id="basic-button" onClick={handleClick}>
           <Typography variant="caption">Змінити роль</Typography>
           <KeyboardArrowDownIcon fontSize="large" />
         </Button>
