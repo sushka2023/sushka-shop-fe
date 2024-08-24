@@ -13,9 +13,22 @@ import { uk } from 'date-fns/locale'
 import { Typography } from '../../UI/Typography'
 import { Status, StepCustom } from '../../Step/Step'
 import { useTheme } from '@mui/material/styles'
+import {
+  NovaPoshtaAnonUserResponse,
+  OrderedProductResponse,
+  PostsType
+} from '../../../types'
+import { Details } from './Order-history'
+
+export type User = {
+  phone_number: string
+}
 
 export type OrdersType = {
-  ordered_products: any[]
+  post_type: PostsType
+  user: User
+  selected_nova_poshta: NovaPoshtaAnonUserResponse
+  ordered_products: OrderedProductResponse[]
   created_at: string
   status_order: Status
   price_order: number
@@ -34,7 +47,8 @@ type OrdersListProps = {
   hasMore: boolean
   setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
   setPage: Dispatch<SetStateAction<number>>
-  setSelectedOrderProducts: Dispatch<SetStateAction<any[]>>
+  setSelectedOrderProducts: Dispatch<SetStateAction<OrderedProductResponse[]>>
+  setSelectedOrderDetails: Dispatch<SetStateAction<Details | null>>
 }
 
 const formatDate = (dateString: string) => {
@@ -50,6 +64,7 @@ export const getProductLabel = (count: number) => {
 export const OrdersList: FC<OrdersListProps> = ({
   orders,
   setSelectedOrderProducts,
+  setSelectedOrderDetails,
   selectedOrderId,
   setSelectedOrderId,
   loading,
@@ -78,8 +93,15 @@ export const OrdersList: FC<OrdersListProps> = ({
     const selectedOrder = orders.find(
       (order) => order.id === selectedOrderId?.id
     )
+    console.log('✌️selectedOrder --->', selectedOrder)
     if (selectedOrder) {
       setSelectedOrderProducts(selectedOrder.ordered_products)
+      setSelectedOrderDetails({
+        price_order: selectedOrder.price_order,
+        selected_nova_poshta: selectedOrder.selected_nova_poshta,
+        phone_number: selectedOrder.user.phone_number,
+        post_type: selectedOrder.post_type
+      })
     }
   }, [selectedOrderId])
 

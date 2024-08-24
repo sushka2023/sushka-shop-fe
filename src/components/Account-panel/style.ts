@@ -1,4 +1,5 @@
 import { Theme } from '@mui/material'
+import { NUNITO } from '../../lib/mui/config/fonts/config'
 
 export const stInput = {
   '& input': {
@@ -59,4 +60,30 @@ export const stContainerTabPanel = {
   backgroundColor: 'pink.lighter',
   color: 'secondary.darker',
   fontFamily: 'Comfortaa'
+}
+
+export const stP2 = { fontSize: 18, fontWeight: 400, mb: 1, color: '#9AAB8E' }
+
+export const stP1 = { fontSize: 22, fontWeight: 600, mb: 3 }
+
+export const stP1des = {
+  fontSize: 18,
+  fontWeight: 600,
+  mb: 2,
+  textAlign: 'end'
+}
+export const stSpan = {
+  fontSize: 20,
+  fontFamily: NUNITO
+}
+
+export const stP1address = {
+  fontSize: 18,
+  fontWeight: 600,
+  mb: 2,
+  textAlign: 'end',
+  display: 'inline-block',
+  maxWidth: '550px',
+  whiteSpace: 'normal',
+  wordWrap: 'break-word'
 }

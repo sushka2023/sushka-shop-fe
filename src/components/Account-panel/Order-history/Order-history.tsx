@@ -1,30 +1,45 @@
 import { Fragment, useEffect, useState } from 'react'
 import { OrdersList, OrdersType, SelectedOrder } from './OrdersList'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Container, Typography } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import { OrderProducts } from './OrderProducts'
 import { fetchOrders } from './operations'
 import { Link as RouterLink } from 'react-router-dom'
+import {
+  NovaPoshtaDataResponse,
+  OrderedProductResponse,
+  PostsType
+} from '../../../types'
+
+export type Details = {
+  price_order: number
+  selected_nova_poshta: NovaPoshtaDataResponse
+  phone_number: string
+  post_type: PostsType
+}
 
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(true)
-  console.log('✌️orders --->', orders)
 
   const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
     null
   )
 
-  const [selectedOrderProducts, setSelectedOrderProducts] = useState<any[]>([])
+  const [selectedOrderProducts, setSelectedOrderProducts] = useState<
+    OrderedProductResponse[]
+  >([])
+  const [selectedOrderDetails, setSelectedOrderDetails] =
+    useState<Details | null>(null)
 
   useEffect(() => {
     fetchOrders(page, setOrders, setLoading, setHasMore, setSelectedOrderId)
   }, [page])
 
   return (
-    <Fragment>
+    <Container>
       <Box
         sx={{
           display: 'flex',
@@ -103,6 +118,7 @@ export const OrderHistory = () => {
               <OrdersList
                 orders={orders}
                 setSelectedOrderProducts={setSelectedOrderProducts}
+                setSelectedOrderDetails={setSelectedOrderDetails}
                 selectedOrderId={selectedOrderId}
                 setSelectedOrderId={setSelectedOrderId}
                 loading={loading}
@@ -112,11 +128,12 @@ export const OrderHistory = () => {
               <OrderProducts
                 orderId={selectedOrderId}
                 products={selectedOrderProducts}
+                details={selectedOrderDetails}
               />
             </Box>
           )}
         </Fragment>
       )}
-    </Fragment>
+    </Container>
   )
 }

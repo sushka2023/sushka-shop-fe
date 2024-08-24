@@ -3,10 +3,14 @@ import { FC } from 'react'
 import { Avatar, Box, Typography, Divider } from '@mui/material'
 import { getProductLabel, SelectedOrder } from './OrdersList'
 import { Link } from 'react-router-dom'
+import { OrderDetails } from './OrderDetails'
+import { Details } from './Order-history'
+import { OrderedProductResponse } from '../../../types'
 
 type OrderProductsProps = {
-  products: any[]
+  products: OrderedProductResponse[]
   orderId: SelectedOrder | null
+  details: Details | null
 }
 
 export const getProductGrams = (count: number) => {
@@ -17,13 +21,12 @@ export const getProductGrams = (count: number) => {
 
 export const OrderProducts: FC<OrderProductsProps> = ({
   products,
-  orderId
+  orderId,
+  details
 }) => {
   if (!orderId) {
     return null
   }
-
-  console.log('✌️products --->', products)
 
   return (
     <Box
@@ -88,11 +91,11 @@ export const OrderProducts: FC<OrderProductsProps> = ({
             </Box>
           </Box>
           {products.map((product, index) => {
-            const indexColon = product.products.description.indexOf(':')
-            const descriptionToShow =
+            const indexColon = product.products.name.indexOf(':')
+            const nameToShow =
               indexColon !== -1
-                ? product.products.description.substring(0, indexColon + 1)
-                : product.products.description
+                ? product.products.name.substring(0, indexColon + 1)
+                : product.products.name
 
             const firstImage =
               product.products.images && product.products.images.length > 0
@@ -133,7 +136,7 @@ export const OrderProducts: FC<OrderProductsProps> = ({
                         fontSize={22}
                         fontWeight={600}
                       >
-                        {descriptionToShow}
+                        {nameToShow}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -176,7 +179,7 @@ export const OrderProducts: FC<OrderProductsProps> = ({
           })}
         </Box>
       </Box>
-      <Box sx={{}}>xs=4</Box>
+      <OrderDetails details={details} />
     </Box>
   )
 }
