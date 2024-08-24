@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type NovaPoshtaCreate = {
-    city: string;
-    address_warehouse: string;
+export type ImageDeletedModel = {
+    image_id: number;
 };
 

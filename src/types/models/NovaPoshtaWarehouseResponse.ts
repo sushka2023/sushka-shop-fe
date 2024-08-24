@@ -2,9 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type NovaPoshtaResponse = {
-    city: string;
-    address_warehouse: string;
+export type NovaPoshtaWarehouseResponse = {
     id: number;
+    address_warehouse: string;
 };
 

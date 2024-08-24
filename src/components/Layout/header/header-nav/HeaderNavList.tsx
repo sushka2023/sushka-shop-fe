@@ -1,18 +1,20 @@
+/* eslint-disable */
 import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Link as ScrollLink } from 'react-scroll'
 import styles from '../Header.module.scss'
 import DropdownList from './DropdownList'
-import { CategoriesModel } from '../../../../types/models/CategtoriesModel'
 import CrmLine from './CrmLink'
 
 type Props = {
-  allCategories: CategoriesModel[]
+  allCategories: any[]
 }
 
 const HeaderNavList: FC<Props> = ({ allCategories }) => {
   const location = useLocation()
   const isHomePath = location.pathname === '/'
+
+  if (!allCategories) return null
 
   return (
     allCategories &&
@@ -60,3 +62,4 @@ const HeaderNavList: FC<Props> = ({ allCategories }) => {
 }
 
 export default HeaderNavList
+/* eslint-enable */

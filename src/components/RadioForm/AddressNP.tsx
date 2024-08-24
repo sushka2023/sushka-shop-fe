@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
-import { Box, OutlinedInput } from '@mui/material'
+import { Box, OutlinedInput, useTheme } from '@mui/material'
 import { FormProps } from './RadioForm'
 import { ErrorMessage, ErrorType } from '../Error/Error'
 import { fetchNovaPoshtaaddress } from './operations'
@@ -31,6 +31,7 @@ export const AddressNP: FC<FormProps> = ({
   setValue,
   clearErrors
 }) => {
+  const theme = useTheme()
   const [settleRef, setSettleRef] = useState<string | null>(null)
   const [novaPoshtaAddress, setNovaPoshtaAddress] = useState<AddressNP[]>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -172,7 +173,17 @@ export const AddressNP: FC<FormProps> = ({
           noOptionsText={messageOptionAddress}
           disabled={!valInputCity}
         />
-        <Box sx={{ display: 'flex', gap: 2, width: 400, m: '15px 0' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            width: 400,
+            m: '15px 0',
+            [theme.breakpoints.down('sm')]: {
+              width: '100%'
+            }
+          }}
+        >
           <OutlinedInput
             id="1"
             {...register('house')}
