@@ -7,23 +7,27 @@ import {
   newProductPriceSchema
 } from '../../helpers/validateNewProduct'
 import styles from './crmAddNewProductButton.module.scss'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import {
   addPrice,
   createNewProduct
 } from '../../redux/crm-add-new-product/operation'
 import { AppDispatch } from '../../redux/store'
 import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
-import { ProductStatus } from '../../types'
+import { ProductResponse, ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
-import { useParams } from 'react-router-dom'
-// import axiosInstance from '../../axios/settings'
+import { useNavigate, useParams } from 'react-router-dom'
+import axiosInstance from '../../axios/settings'
 
-const CrmAddNewProductButton = () => {
+type Props = {
+  product: ProductResponse | undefined
+}
+
+const CrmAddNewProductButton: FC<Props> = () => {
+  const navigate = useNavigate()
   const { params: productIdParam } = useParams()
   const parsedIndex = Number(productIdParam)
   const productData = useSelector((state: RootState) => state.newProduct)
-  console.log('✌️productData --->', productData)
 
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
@@ -67,9 +71,6 @@ const CrmAddNewProductButton = () => {
         await newProductPriceSchema.validate(productData.price, {
           abortEarly: false
         })
-        // await axiosInstance.patch(`/api/product/edit/${productIdParam}`, {
-
-        // })
 
         dispatch(setFormErrors({}))
         await dispatch(
@@ -83,6 +84,20 @@ const CrmAddNewProductButton = () => {
               : []
           })
         ).unwrap()
+      } else {
+        // const values = {
+        //   product_id: product?.id,
+        //   pr_status: productData.product_status
+        // }
+
+        console.log('✌️productIdParam --->', productIdParam)
+        const product_id = parsedIndex
+
+        await axiosInstance.put(
+          `api/product/${product_id}/change_status?pr_status=${productData.product_status}`
+        )
+        // console.log('✌️values --->', values)
+        navigate(-1)
       }
     } catch (error) {
       if (error instanceof yup.ValidationError) {

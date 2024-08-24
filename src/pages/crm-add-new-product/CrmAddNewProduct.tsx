@@ -172,7 +172,7 @@ const CrmAddNewProduct = () => {
                 handleChangeStatus={handleChangeStatus}
                 currentStatus={currentStatus}
               />
-              <CrmAddNewProductButton />
+              <CrmAddNewProductButton product={product} />
             </div>
           </div>
           <DescriptionProduct

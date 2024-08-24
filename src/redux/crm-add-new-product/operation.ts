@@ -190,7 +190,6 @@ export const addImages = createAsyncThunk<
         }
       }
     )
-    console.log('✌️response --->', response)
 
     return response.data
   } catch (e) {
