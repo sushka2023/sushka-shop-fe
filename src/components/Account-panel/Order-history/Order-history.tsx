@@ -20,6 +20,7 @@ export type Details = {
 
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
+  console.log('✌️orders --->', orders)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(true)

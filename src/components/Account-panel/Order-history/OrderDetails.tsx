@@ -11,12 +11,11 @@ type Props = {
 }
 
 export const OrderDetails: FC<Props> = ({ details }) => {
-  if (!details) {
-    return <Typography variant="body2">Дані відсутні</Typography>
-  }
+  if (!details) return null
 
   const { post_type, selected_nova_poshta, price_order, phone_number } = details
 
+  const price = price_order.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   return (
     <Box
       sx={{
@@ -63,9 +62,13 @@ export const OrderDetails: FC<Props> = ({ details }) => {
           <Typography variant="body2" sx={stP1}>
             Сума
           </Typography>
-          <Typography variant="body2" sx={stP1} display="flex">
-            {price_order}
-            <Typography variant="body2" sx={stSpan}>
+          <Typography
+            variant="body2"
+            sx={{ ...stP1, alignItems: 'end' }}
+            display="flex"
+          >
+            {price}
+            <Typography component="span" sx={stSpan}>
               ₴
             </Typography>
           </Typography>

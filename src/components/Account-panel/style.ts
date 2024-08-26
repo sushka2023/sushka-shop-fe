@@ -87,3 +87,54 @@ export const stP1address = {
   whiteSpace: 'normal',
   wordWrap: 'break-word'
 }
+
+export const stAvatar = {
+  mr: 2,
+  width: 126,
+  height: 96,
+  img: {
+    objectFit: 'cover'
+  }
+}
+
+export const stContainer = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexGrow: 1
+}
+
+export const stColumnBox = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-around'
+}
+
+export const stName = {
+  variant: 'body1',
+  fontSize: 22,
+  fontWeight: 600
+}
+
+export const stGrams = {
+  variant: 'body2',
+  fontSize: 18,
+  fontWeight: 600,
+  color: '#9AAB8E'
+}
+
+export const stQuantity = {
+  variant: 'body1'
+}
+
+export const stPrice = {
+  variant: 'body2',
+  mt: 0.5,
+  fontSize: 22,
+  fontWeight: 600
+}
+
+export const stCurrency = {
+  fontFamily: 'Comfortaa',
+  fontWeight: 600,
+  fontSize: 18
+}
