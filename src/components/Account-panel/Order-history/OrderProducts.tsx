@@ -1,12 +1,13 @@
 import { FC } from 'react'
 import { Box, Typography } from '@mui/material'
-import { getProductLabel, SelectedOrder } from './OrdersList'
+import { SelectedOrder } from './OrdersList'
 import { Link } from 'react-router-dom'
 import { OrderDetails } from './OrderDetails'
 import { Details } from './Order-history'
 import { OrderedProductResponse } from '../../../types'
 
 import { ProductMap } from './ProductMap'
+import { getProductLabel } from '../../../utils/product-label/getProductLabel'
 
 type OrderProductsProps = {
   products: OrderedProductResponse[]

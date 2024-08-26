@@ -7,20 +7,16 @@ import {
   useEffect,
   useRef
 } from 'react'
-import { Box, Divider } from '@mui/material'
-import { format } from 'date-fns'
-import { uk } from 'date-fns/locale'
+import { Box, useTheme } from '@mui/material'
+import { OrderItem } from './OrderItem'
 import { Typography } from '../../UI/Typography'
-import { Status, StepCustom } from '../../Step/Step'
-import { useTheme } from '@mui/material/styles'
+import { Details } from './Order-history'
+import { Status } from '../../Step/Step'
 import {
   NovaPoshtaAnonUserResponse,
   OrderedProductResponse,
   PostsType
 } from '../../../types'
-import { Details } from './Order-history'
-import { formatPrice } from '../../../utils/format-price/formatPrice'
-import { NUNITO } from '../../../lib/mui/config/fonts/config'
 
 export type User = {
   phone_number: string
@@ -53,16 +49,6 @@ type OrdersListProps = {
   setSelectedOrderDetails: Dispatch<SetStateAction<Details | null>>
 }
 
-const formatDate = (dateString: string) => {
-  return format(new Date(dateString), 'd MMM yyyy', { locale: uk })
-}
-
-export const getProductLabel = (count: number) => {
-  if (count === 1) return 'товар'
-  if (count >= 2 && count <= 4) return 'товари'
-  return 'товарів'
-}
-
 export const OrdersList: FC<OrdersListProps> = ({
   orders,
   setSelectedOrderProducts,
@@ -77,7 +63,7 @@ export const OrdersList: FC<OrdersListProps> = ({
   const observer = useRef<IntersectionObserver>()
 
   const lastOrderElementRef = useCallback(
-    (node: Element | null) => {
+    (node: HTMLDivElement | null) => {
       if (loading) return
       if (observer.current) observer.current.disconnect()
       observer.current = new IntersectionObserver((entries) => {
@@ -120,89 +106,6 @@ export const OrdersList: FC<OrdersListProps> = ({
     }
   }, [selectedOrderId])
 
-  const renderOrder = (
-    order: OrdersType,
-    index: number,
-    ref?: (node: Element | null) => void
-  ) => {
-    const isSelected = selectedOrderId?.id === order.id
-    return (
-      <Fragment key={order.id}>
-        {index > 0 && (
-          <Divider
-            sx={{ border: '1px solid #FEEEE1', width: '90%', margin: '0 auto' }}
-          />
-        )}
-        <Box
-          ref={ref}
-          onClick={() => handleOrderClick(order.id)}
-          sx={{
-            position: 'relative',
-            height: 100,
-            padding: '25px 20px',
-            cursor: 'pointer',
-            backgroundColor: '#FFFFFF',
-            [theme.breakpoints.up('sm')]: {
-              '&:hover': {
-                backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
-              },
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                left: 0,
-                width: 5,
-                height: '70%',
-                backgroundColor: 'primary.darker',
-                borderRadius: 10,
-                display: isSelected ? 'block' : 'none'
-              }
-            },
-            [theme.breakpoints.down('sm')]: {
-              height: 'auto',
-              backgroundColor: '#FFFFFF',
-              borderRadius: 3,
-              m: '10px 3px',
-              padding: '8px 0 8px 14px'
-            }
-          }}
-        >
-          <Typography variant="body2" fontWeight={400} fontSize={18} mb={2}>
-            <span style={{ fontWeight: 600, fontSize: 22 }}>#{order.id} </span>
-            <span style={{ display: 'inline-block' }}>
-              ({formatDate(order.created_at)})
-            </span>{' '}
-          </Typography>
-          <Box display="flex" justifyContent="space-between">
-            <Box
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-around"
-            >
-              <Typography variant="body2" fontSize={18} fontWeight={600}>
-                {formatPrice(order.price_order)}
-                <span
-                  style={{
-                    fontFamily: NUNITO,
-                    fontWeight: 500,
-                    fontSize: 16
-                  }}
-                >
-                  ₴
-                </span>
-              </Typography>
-
-              <Typography variant="body1" mt={1}>
-                {order.ordered_products.length}{' '}
-                {getProductLabel(order.ordered_products.length)}
-              </Typography>
-            </Box>
-            <StepCustom status={order.status_order} />
-          </Box>
-        </Box>
-      </Fragment>
-    )
-  }
-
   return (
     <Box
       sx={{
@@ -218,11 +121,26 @@ export const OrdersList: FC<OrdersListProps> = ({
       }}
     >
       <Box sx={{ maxHeight: '100%', overflowY: 'auto' }}>
-        {orders.map((order, index) =>
-          orders.length === index + 1
-            ? renderOrder(order, index, lastOrderElementRef)
-            : renderOrder(order, index)
-        )}
+        {orders.map((order, index) => (
+          <Fragment key={order.id}>
+            {orders.length === index + 1 ? (
+              <OrderItem
+                order={order}
+                selectedOrderId={selectedOrderId}
+                handleOrderClick={handleOrderClick}
+                ref={lastOrderElementRef}
+                index={index}
+              />
+            ) : (
+              <OrderItem
+                order={order}
+                selectedOrderId={selectedOrderId}
+                handleOrderClick={handleOrderClick}
+                index={index}
+              />
+            )}
+          </Fragment>
+        ))}
         {loading && (
           <Box sx={{ textAlign: 'center', p: 2 }}>
             <Typography variant="body2">Завантаження...</Typography>

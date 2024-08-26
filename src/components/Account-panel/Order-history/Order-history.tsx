@@ -18,6 +18,7 @@ export const OrderHistory = () => {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [orders, setOrders] = useState<OrdersType[]>([])
+  console.log('✌️orders --->', orders)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(true)
