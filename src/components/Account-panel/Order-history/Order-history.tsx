@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Container, useMediaQuery, useTheme } from '@mui/material'
-import { OrdersType, SelectedOrder } from './OrdersList'
+import { OrdersType, SelectedOrder } from './Order/OrdersList'
 import { fetchOrders } from './operations'
-import { OrderHistoryHeader } from './OrderHistoryHeader'
+import { HistoryHeader } from './HistoryHeader'
 import { LoadingScreen } from './LoadingScreen'
-import { EmptyOrdersScreen } from './EmptyOrdersScreen'
+import { NoOrdersMessage } from './NoOrdersMessage'
 import { NovaPoshtaDataResponse, PostsType } from '../../../types'
-import { OrderHistoryContent } from './OrderHistoryContent'
+import { HistoryContent } from './HistoryContent'
 
 export type Details = {
   price_order: number
@@ -18,7 +18,6 @@ export const OrderHistory = () => {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [orders, setOrders] = useState<OrdersType[]>([])
-  console.log('✌️orders --->', orders)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [loading, setLoading] = useState(true)
@@ -42,29 +41,23 @@ export const OrderHistory = () => {
 
   return (
     <Container>
-      <OrderHistoryHeader />
-      {loading && !orders.length ? (
-        <LoadingScreen />
-      ) : (
-        <Fragment>
-          {!orders.length ? (
-            <EmptyOrdersScreen />
-          ) : (
-            <OrderHistoryContent
-              orders={orders}
-              selectedOrderId={selectedOrderId}
-              setSelectedOrderId={setSelectedOrderId}
-              selectedOrderProducts={selectedOrderProducts}
-              setSelectedOrderProducts={setSelectedOrderProducts}
-              selectedOrderDetails={selectedOrderDetails}
-              setSelectedOrderDetails={setSelectedOrderDetails}
-              loading={loading}
-              hasMore={hasMore}
-              setPage={setPage}
-            />
-          )}
-        </Fragment>
-      )}
+      <HistoryHeader />
+      <LoadingScreen isLoading={loading} orders={orders} />
+      <Fragment>
+        <NoOrdersMessage orders={orders} />
+        <HistoryContent
+          orders={orders}
+          selectedOrderId={selectedOrderId}
+          setSelectedOrderId={setSelectedOrderId}
+          selectedOrderProducts={selectedOrderProducts}
+          setSelectedOrderProducts={setSelectedOrderProducts}
+          selectedOrderDetails={selectedOrderDetails}
+          setSelectedOrderDetails={setSelectedOrderDetails}
+          loading={loading}
+          hasMore={hasMore}
+          setPage={setPage}
+        />
+      </Fragment>
     </Container>
   )
 }

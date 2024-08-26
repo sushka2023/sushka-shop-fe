@@ -1,7 +1,7 @@
 import { FC, Fragment } from 'react'
 import { Divider } from '@mui/material'
 import { ProductItem } from './ProductItem'
-import { OrderedProductResponse } from '../../../types'
+import { OrderedProductResponse } from '../../../../types'
 
 type Props = {
   products: OrderedProductResponse[]

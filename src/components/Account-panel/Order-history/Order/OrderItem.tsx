@@ -1,11 +1,11 @@
 import { forwardRef, Fragment } from 'react'
 import { Box, Divider, useTheme } from '@mui/material'
-import { Typography } from '../../UI/Typography'
-import { formatDate } from '../../../utils/format-date/formatDate'
-import { formatPrice } from '../../../utils/format-price/formatPrice'
-import { NUNITO } from '../../../lib/mui/config/fonts/config'
-import { getProductLabel } from '../../../utils/product-label/getProductLabel'
-import { StepCustom } from '../../Step/Step'
+import { Typography } from '../../../UI/Typography'
+import { formatDate } from '../../../../utils/format-date/formatDate'
+import { formatPrice } from '../../../../utils/format-price/formatPrice'
+import { NUNITO } from '../../../../lib/mui/config/fonts/config'
+import { getProductLabel } from '../../../../utils/product-label/getProductLabel'
+import { StepCustom } from '../../../Step/Step'
 import { OrdersType, SelectedOrder } from './OrdersList'
 
 type OrderItemProps = {

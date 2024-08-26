@@ -1,17 +1,17 @@
 import { Box } from '@mui/material'
-import { Typography } from '../../UI/Typography'
+import { Typography } from '../../../UI/Typography'
 import { FC } from 'react'
-import { Details } from './Order-history'
-import { translatePostType } from '../../../utils/order-history/translate-post'
-import { renderAddress } from '../../../utils/order-history/render-address'
-import { stP1, stP1des, stP2, stSpan } from '../style'
-import { formatPrice } from '../../../utils/format-price/formatPrice'
+import { Details } from '../Order-history'
+import { translatePostType } from '../../../../utils/order-history/translate-post'
+import { renderAddress } from '../../../../utils/order-history/render-address'
+import { stP1, stP1des, stP2, stSpan } from '../../style'
+import { formatPrice } from '../../../../utils/format-price/formatPrice'
 
 type Props = {
   details: Details | null
 }
 
-export const OrderDetails: FC<Props> = ({ details }) => {
+export const DetailsPaper: FC<Props> = ({ details }) => {
   if (!details) return null
 
   const { post_type, selected_nova_poshta, price_order, phone_number } = details

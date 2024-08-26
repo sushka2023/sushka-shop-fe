@@ -1,11 +1,12 @@
 import { Box, useTheme, useMediaQuery } from '@mui/material'
-import { OrdersList, OrdersType, SelectedOrder } from './OrdersList'
-import { OrderProducts } from './OrderProducts'
+import { OrdersList, OrdersType, SelectedOrder } from './Order/OrdersList'
+import { ProductsPaper } from './Products'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Details } from './Order-history'
 import { OrderedProductResponse } from '../../../types'
+import { DetailsPaper } from './Details/Details'
 
-type OrderHistoryContentProps = {
+type Props = {
   orders: OrdersType[]
   selectedOrderId: SelectedOrder | null
   setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
@@ -18,7 +19,7 @@ type OrderHistoryContentProps = {
   setPage: Dispatch<SetStateAction<number>>
 }
 
-export const OrderHistoryContent: FC<OrderHistoryContentProps> = ({
+export const HistoryContent: FC<Props> = ({
   orders,
   selectedOrderId,
   setSelectedOrderId,
@@ -34,37 +35,44 @@ export const OrderHistoryContent: FC<OrderHistoryContentProps> = ({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
-    <Box
-      sx={{
-        mt: 7,
-        gap: 3,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        [theme.breakpoints.down('sm')]: {
-          mt: 3,
-          pb: 4
-        }
-      }}
-    >
-      {(!selectedOrderId || !isSmallScreen) && (
+    orders.length && (
+      <Box
+        sx={{
+          mt: 7,
+          gap: 3,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
+          [theme.breakpoints.down('sm')]: {
+            mt: 3,
+            pb: 4
+          }
+        }}
+      >
         <OrdersList
           orders={orders}
           setSelectedOrderProducts={setSelectedOrderProducts}
           setSelectedOrderDetails={setSelectedOrderDetails}
           selectedOrderId={selectedOrderId}
           setSelectedOrderId={setSelectedOrderId}
+          isSmallScreen={isSmallScreen}
           loading={loading}
           hasMore={hasMore}
           setPage={setPage}
         />
-      )}
-      {selectedOrderId && (
-        <OrderProducts
-          orderId={selectedOrderId}
-          products={selectedOrderProducts}
-          details={selectedOrderDetails}
-        />
-      )}
-    </Box>
+        {selectedOrderId && (
+          <Box
+            sx={{
+              gridColumn: { xs: 'span 12', md: 'span 8' }
+            }}
+          >
+            <ProductsPaper
+              orderId={selectedOrderId}
+              products={selectedOrderProducts}
+            />
+            <DetailsPaper details={selectedOrderDetails} />
+          </Box>
+        )}
+      </Box>
+    )
   )
 }

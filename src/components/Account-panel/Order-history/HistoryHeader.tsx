@@ -1,7 +1,7 @@
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 
-export const OrderHistoryHeader = () => {
+export const HistoryHeader = () => {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 

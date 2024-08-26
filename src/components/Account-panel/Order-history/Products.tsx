@@ -1,18 +1,15 @@
-import { FC } from 'react'
-import { Box, Typography } from '@mui/material'
-import { SelectedOrder } from './OrdersList'
+import { FC, Fragment } from 'react'
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { SelectedOrder } from './Order/OrdersList'
 import { Link } from 'react-router-dom'
-import { OrderDetails } from './OrderDetails'
-import { Details } from './Order-history'
 import { OrderedProductResponse } from '../../../types'
 
-import { ProductMap } from './ProductMap'
 import { getProductLabel } from '../../../utils/product-label/getProductLabel'
+import { ProductMap } from './Product/ProductMap'
 
-type OrderProductsProps = {
+type Props = {
   products: OrderedProductResponse[]
   orderId: SelectedOrder | null
-  details: Details | null
 }
 
 export const getProductGrams = (count: number) => {
@@ -21,21 +18,16 @@ export const getProductGrams = (count: number) => {
   return 'штук'
 }
 
-export const OrderProducts: FC<OrderProductsProps> = ({
-  products,
-  orderId,
-  details
-}) => {
+export const ProductsPaper: FC<Props> = ({ products, orderId }) => {
+  const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
   if (!orderId) {
     return null
   }
 
   return (
-    <Box
-      sx={{
-        gridColumn: { xs: 'span 12', md: 'span 8' }
-      }}
-    >
+    <Fragment>
       <Box
         sx={{
           mb: 3,
@@ -53,28 +45,32 @@ export const OrderProducts: FC<OrderProductsProps> = ({
           }}
         >
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="flex-end"
-            p={3}
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              p: 3,
+              [theme.breakpoints.down('sm')]: {
+                p: 2
+              }
+            }}
           >
             <Box>
               <Typography variant="body1" fontWeight={600} fontSize={22}>
-                Замовлення #{orderId.id}{' '}
+                {!isSmallScreen && 'Замовлення'}#{orderId.id}{' '}
                 <span style={{ fontWeight: 400, fontSize: 16 }}>
                   ({orderId.ordered_products}{' '}
                   {getProductLabel(orderId.ordered_products)})
                 </span>
               </Typography>
             </Box>
-            <Box>
+            {!isSmallScreen && (
               <Link
                 to={'/review'}
                 style={{
                   fontFamily: 'Open Sans',
                   fontSize: 18,
-                  position: 'relative',
-                  marginRight: 10
+                  position: 'relative'
                 }}
               >
                 Залишити відгук
@@ -89,12 +85,11 @@ export const OrderProducts: FC<OrderProductsProps> = ({
                   }}
                 />
               </Link>
-            </Box>
+            )}
           </Box>
           <ProductMap products={products} />
         </Box>
       </Box>
-      <OrderDetails details={details} />
-    </Box>
+    </Fragment>
   )
 }

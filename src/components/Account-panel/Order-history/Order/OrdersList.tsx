@@ -9,14 +9,14 @@ import {
 } from 'react'
 import { Box, useTheme } from '@mui/material'
 import { OrderItem } from './OrderItem'
-import { Typography } from '../../UI/Typography'
-import { Details } from './Order-history'
-import { Status } from '../../Step/Step'
+import { Details } from '../Order-history'
+import { Status } from '../../../Step/Step'
 import {
   NovaPoshtaAnonUserResponse,
   OrderedProductResponse,
   PostsType
-} from '../../../types'
+} from '../../../../types'
+import { LoadingOrder } from './LoadingOrder'
 
 export type User = {
   phone_number: string
@@ -43,6 +43,7 @@ type OrdersListProps = {
   selectedOrderId: SelectedOrder | null
   loading: boolean
   hasMore: boolean
+  isSmallScreen: boolean
   setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
   setPage: Dispatch<SetStateAction<number>>
   setSelectedOrderProducts: Dispatch<SetStateAction<OrderedProductResponse[]>>
@@ -57,7 +58,8 @@ export const OrdersList: FC<OrdersListProps> = ({
   setSelectedOrderId,
   loading,
   hasMore,
-  setPage
+  setPage,
+  isSmallScreen
 }) => {
   const theme = useTheme()
   const observer = useRef<IntersectionObserver>()
@@ -107,46 +109,44 @@ export const OrdersList: FC<OrdersListProps> = ({
   }, [selectedOrderId])
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 2,
-        gridColumn: { xs: 'span 12', md: 'span 4' },
-        maxHeight: 453,
-        minHeight: 453,
-        overflow: 'hidden',
-        [theme.breakpoints.down('sm')]: {
-          backgroundColor: '#FEECEE'
-        }
-      }}
-    >
-      <Box sx={{ maxHeight: '100%', overflowY: 'auto' }}>
-        {orders.map((order, index) => (
-          <Fragment key={order.id}>
-            {orders.length === index + 1 ? (
-              <OrderItem
-                order={order}
-                selectedOrderId={selectedOrderId}
-                handleOrderClick={handleOrderClick}
-                ref={lastOrderElementRef}
-                index={index}
-              />
-            ) : (
-              <OrderItem
-                order={order}
-                selectedOrderId={selectedOrderId}
-                handleOrderClick={handleOrderClick}
-                index={index}
-              />
-            )}
-          </Fragment>
-        ))}
-        {loading && (
-          <Box sx={{ textAlign: 'center', p: 2 }}>
-            <Typography variant="body2">Завантаження...</Typography>
-          </Box>
-        )}
+    (!selectedOrderId || !isSmallScreen) && (
+      <Box
+        sx={{
+          backgroundColor: '#FFFFFF',
+          borderRadius: 2,
+          gridColumn: { xs: 'span 12', md: 'span 4' },
+          maxHeight: 453,
+          minHeight: 453,
+          overflow: 'hidden',
+          [theme.breakpoints.down('sm')]: {
+            backgroundColor: '#FEECEE'
+          }
+        }}
+      >
+        <Box sx={{ maxHeight: '100%', overflowY: 'auto' }}>
+          {orders.map((order, index) => (
+            <Fragment key={order.id}>
+              {orders.length === index + 1 ? (
+                <OrderItem
+                  order={order}
+                  selectedOrderId={selectedOrderId}
+                  handleOrderClick={handleOrderClick}
+                  ref={lastOrderElementRef}
+                  index={index}
+                />
+              ) : (
+                <OrderItem
+                  order={order}
+                  selectedOrderId={selectedOrderId}
+                  handleOrderClick={handleOrderClick}
+                  index={index}
+                />
+              )}
+            </Fragment>
+          ))}
+          <LoadingOrder loading={loading} />
+        </Box>
       </Box>
-    </Box>
+    )
   )
 }

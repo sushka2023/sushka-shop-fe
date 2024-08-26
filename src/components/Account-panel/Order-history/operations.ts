@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import { OrdersType, SelectedOrder } from './OrdersList'
+import { OrdersType, SelectedOrder } from './Order/OrdersList'
 import axiosInstance from '../../../axios/settings'
 
 export const fetchOrders = async (

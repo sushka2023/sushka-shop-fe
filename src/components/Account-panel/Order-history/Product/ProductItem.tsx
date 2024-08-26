@@ -1,10 +1,10 @@
 import { Avatar, Box } from '@mui/material'
 import { FC } from 'react'
 
-import { Typography } from '../../UI/Typography'
-import { getProductGrams } from './OrderProducts'
-import { OrderedProductResponse } from '../../../types'
-import { formatProductName } from '../../../utils/format-product-name/formatProductName'
+import { Typography } from '../../../UI/Typography'
+import { getProductGrams } from '../Products'
+import { OrderedProductResponse } from '../../../../types'
+import { formatProductName } from '../../../../utils/format-product-name/formatProductName'
 
 import {
   stAvatar,
@@ -15,7 +15,7 @@ import {
   stName,
   stPrice,
   stQuantity
-} from '../style'
+} from '../../style'
 
 export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   product
