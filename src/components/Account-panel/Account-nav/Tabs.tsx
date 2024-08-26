@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  FC,
-  Fragment,
-  SetStateAction,
-  SyntheticEvent,
-  useEffect
-} from 'react'
+import { Dispatch, FC, Fragment, SetStateAction, useEffect } from 'react'
 import {
   Box,
   Container,
@@ -20,7 +13,7 @@ import { Button } from '../../UI/Button'
 import { btnEditAccount } from '../../Modal-custom-btn/style'
 import { SetURLSearchParams } from 'react-router-dom'
 import { a11yProps } from '../../../utils/a11y-tabs/a11yTabs'
-import { accordions } from '../../../constants/account/accordions'
+import { ACCORDIONS } from '../../../constants/account/accordions'
 import { CustomTabPanel } from '../../../utils/tab-panel/tab-panel'
 import {
   stTab,
@@ -30,14 +23,14 @@ import {
   stWavePink
 } from '../style'
 
-type PropsType = {
+type Props = {
   activeIndex: number
   setSearchParams: SetURLSearchParams
   setActiveIndex: (index: number) => void
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-export const TabsBigScreen: FC<PropsType> = ({
+export const TabsBigScreen: FC<Props> = ({
   activeIndex,
   setActiveIndex,
   setOpenModal,
@@ -51,9 +44,10 @@ export const TabsBigScreen: FC<PropsType> = ({
     setSearchParams({ tab: (activeIndex + 1).toString() })
   }, [activeIndex])
 
-  const handleChange = (_event: SyntheticEvent, newValue: number) => {
-    setActiveIndex(newValue)
+  const handleChange = (index: number) => {
+    setActiveIndex(index)
   }
+
   return (
     !isSmallScreen && (
       <Fragment>
@@ -61,11 +55,11 @@ export const TabsBigScreen: FC<PropsType> = ({
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Tabs
               value={activeIndex}
-              onChange={handleChange}
+              onChange={(_, index) => handleChange(index)}
               aria-label="basic tabs example"
               sx={stTabsNav}
             >
-              {accordions.map((accordion, index) => (
+              {ACCORDIONS.map((accordion, index) => (
                 <Tab
                   sx={stTab(theme)}
                   key={index}
@@ -85,7 +79,7 @@ export const TabsBigScreen: FC<PropsType> = ({
 
         <Box sx={{ ...stContainerTabPanel, p: '40px 0' }}>
           {user
-            ? accordions.map((accordion, index) => (
+            ? ACCORDIONS.map((accordion, index) => (
                 <CustomTabPanel key={index} value={activeIndex} index={index}>
                   {accordion.content}
                 </CustomTabPanel>

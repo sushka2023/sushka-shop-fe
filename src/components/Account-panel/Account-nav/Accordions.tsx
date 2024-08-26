@@ -4,17 +4,17 @@ import { Button } from '../../UI/Button'
 import { Typography } from '../../UI/Typography'
 
 import { useAuth } from '../../../hooks/use-auth'
-import { accordions } from '../../../constants/account/accordions'
+import { ACCORDIONS } from '../../../constants/account/accordions'
 import { CustomAccordion } from '../../../utils/accordions-panel/accordions-panel'
 import { stAccordionBtn, stContainerTabPanel, stWavePink } from '../style'
 
-type PropsType = {
+type Props = {
   activeIndex: number
   setActiveIndex: (index: number) => void
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-export const AccordionsSmallScreen: FC<PropsType> = ({
+export const AccordionsSmallScreen: FC<Props> = ({
   activeIndex,
   setActiveIndex,
   setOpenModal
@@ -32,7 +32,7 @@ export const AccordionsSmallScreen: FC<PropsType> = ({
       {isSmallScreen ? (
         user ? (
           <Container sx={{ p: 0, mt: 2 }}>
-            {accordions.map((accordion, index) => (
+            {ACCORDIONS.map((accordion, index) => (
               <CustomAccordion
                 key={index}
                 index={index}

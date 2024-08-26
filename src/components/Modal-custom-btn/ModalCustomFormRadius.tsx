@@ -13,7 +13,7 @@ import { AppDispatch } from '../../redux/store'
 import { AddressAddSchema } from '../auth/validation'
 import { useSnackbar } from '../../hooks/useSnackbar'
 
-type PropsType = {
+type Props = {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
@@ -36,7 +36,7 @@ export type FormValues = {
   apartment?: string
 }
 
-export const ModalCustomFormRadius: FC<PropsType> = ({
+export const ModalCustomFormRadius: FC<Props> = ({
   openModal,
   setOpenModal
 }) => {
