@@ -2,10 +2,8 @@ import { useState, useEffect, createContext, Fragment } from 'react'
 import { Box, Grid } from '@mui/material'
 import {
   ADDRESS_POST_TYPE,
-  CURRENCY,
   ORDER_FORM_DEFAULT_VALUES,
   STEPS,
-  TRANSACTION_SECURE_TYPE,
   WAREHOUSE_POST_TYPE
 } from './constants'
 import { containerStyle } from './style'
@@ -14,8 +12,7 @@ import StapperButtons from '../../components/Stapper-buttons'
 import OrderContacts from '../../components/Order-contacts'
 import OrderCard from '../../components/Order-card'
 import {
-  generateOrderReference,
-  generateSignature,
+  convertToKopecks,
   loadBasketItems,
   loadLocalStorageItems,
   sendOrder
@@ -29,8 +26,7 @@ import {
   Inputs,
   OrderDetailsType,
   OrderContextType,
-  PaymentMethodTypes,
-  RequestPayment
+  PaymentMethodTypes
 } from './types'
 import { OrderPayment } from '../../components/Order-payment/OrderPayment'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -39,6 +35,9 @@ import { calculateTotal } from '../../helpers/formatterTotalPrice'
 import { ModalCustomFormRadius } from '../../components/Modal-custom-btn/ModalCustomFormRadius'
 import { AddressAddSchema } from '../../components/auth/validation'
 import { OrderNotification } from '../../components/Order-notification'
+import axios from 'axios'
+
+const ORDER_HISTORY_PATH = '/account?tab=3'
 
 const OrderContext = createContext<OrderContextType>({} as OrderContextType)
 
@@ -55,6 +54,7 @@ const OrderPage = () => {
   const [orderNumber, setOrderNumber] = useState<number | null>(null)
   const [address, setAddress] = useState<NovaPoshtaDataResponse | object>({})
   const [selectedValue, setSelectedValue] = useState('novaPoshtaBranches')
+
   const postType =
     selectedValue === 'novaPoshtaAddress'
       ? ADDRESS_POST_TYPE
@@ -123,34 +123,8 @@ const OrderPage = () => {
   ]
 
   const handlePayment = async () => {
-    const merchantAccount = import.meta.env.VITE_API_MERCHANT_ACCOUNT
-    const merchantDomainName = import.meta.env.VITE_API_DOMAIN_NAME
-    const orderReference = generateOrderReference()
-    const productName = orderList.map((item) => item.product.name)
-    const productCount = orderList.map((item) => item.quantity)
-    const productPrice = orderList.map((item) => item.product.prices[0].price)
-    const orderDate = Math.floor(Date.now() / 1000).toString()
-    const amount = calculateTotal(orderList)
-
-    const requestData: RequestPayment = {
-      merchantAccount,
-      merchantDomainName,
-      orderReference,
-      orderDate,
-      amount,
-      productName,
-      productCount,
-      productPrice,
-      merchantTransactionSecureType: TRANSACTION_SECURE_TYPE,
-      currency: CURRENCY
-    }
-
-    requestData.merchantSignature = generateSignature(requestData)
-
-    const wayforpay = new Wayforpay()
-
-    wayforpay.run(requestData, function onApproved() {
-      return sendOrder(
+    try {
+      const sendOrderResponse = await sendOrder(
         orderDetails,
         setOrderNumber,
         setIsError,
@@ -160,20 +134,34 @@ const OrderPage = () => {
         orderList,
         postType
       )
-    })
-  }
 
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://secure.wayforpay.com/server/pay-widget.js'
-    script.id = 'widget-wfp-script'
-    script.async = true
-    document.body.appendChild(script)
+      if (sendOrderResponse) {
+        const BASE_API_MONO = import.meta.env.VITE_URL_MONO
+        const X_TOKEN = import.meta.env.VITE_X_TOKEN
+        const ORDER_HISTORY_URL =
+          import.meta.env.VITE_API_DOMAIN_NAME + ORDER_HISTORY_PATH
 
-    return () => {
-      document.body.removeChild(script)
+        const response = await axios.post(
+          BASE_API_MONO,
+          {
+            amount: convertToKopecks(calculateTotal(orderList)),
+            redirectUrl: ORDER_HISTORY_URL
+          },
+          {
+            headers: {
+              'X-Token': X_TOKEN,
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+
+        window.location.href = response.data.pageUrl
+      }
+    } catch (e) {
+      setIsNotificationModal(true)
+      setIsError(e.message)
     }
-  }, [])
+  }
 
   useEffect(() => {
     if (user) {

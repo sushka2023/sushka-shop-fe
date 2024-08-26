@@ -24,7 +24,10 @@ const ORDER_FORM_DEFAULT_VALUES = {
 }
 
 const PAYMENT_METHODS = [
-  { method: PaymentMethodTypes.wayforpay, label: 'Wayforpay (оплата карткою)' },
+  {
+    method: PaymentMethodTypes.wayforpay,
+    label: 'Plata by mono (оплата картою, ApplePay, GooglePay)'
+  },
   { method: PaymentMethodTypes.postpaid, label: 'Післяплата (при отриманні)' },
   { method: PaymentMethodTypes.byDetails, label: 'Оплата за реквізитами' }
 ]
