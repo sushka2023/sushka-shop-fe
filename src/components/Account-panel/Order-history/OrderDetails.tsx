@@ -5,6 +5,7 @@ import { Details } from './Order-history'
 import { translatePostType } from '../../../utils/order-history/translate-post'
 import { renderAddress } from '../../../utils/order-history/render-address'
 import { stP1, stP1des, stP2, stSpan } from '../style'
+import { formatPrice } from '../../../utils/format-price/formatPrice'
 
 type Props = {
   details: Details | null
@@ -15,7 +16,6 @@ export const OrderDetails: FC<Props> = ({ details }) => {
 
   const { post_type, selected_nova_poshta, price_order, phone_number } = details
 
-  const price = price_order.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   return (
     <Box
       sx={{
@@ -67,7 +67,7 @@ export const OrderDetails: FC<Props> = ({ details }) => {
             sx={{ ...stP1, alignItems: 'end' }}
             display="flex"
           >
-            {price}
+            {formatPrice(price_order)}
             <Typography component="span" sx={stSpan}>
               ₴
             </Typography>

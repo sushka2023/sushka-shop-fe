@@ -7,7 +7,8 @@ export const fetchOrders = async (
   setOrders: Dispatch<SetStateAction<OrdersType[]>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setHasMore: Dispatch<SetStateAction<boolean>>,
-  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
+  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>,
+  isSmallScreen: boolean
 ) => {
   try {
     setLoading(true)
@@ -27,8 +28,9 @@ export const fetchOrders = async (
       )
       return [...prevOrders, ...uniqueOrders]
     })
+    // if (!isSmallScreen && data.length > 0 && page === 1) {
 
-    if (data.length > 0 && page === 1) {
+    if (!isSmallScreen && data.length > 0 && page === 1) {
       setSelectedOrderId({
         id: data[0].id,
         ordered_products: data[0].ordered_products.length

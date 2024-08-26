@@ -19,6 +19,8 @@ import {
   PostsType
 } from '../../../types'
 import { Details } from './Order-history'
+import { formatPrice } from '../../../utils/format-price/formatPrice'
+import { NUNITO } from '../../../lib/mui/config/fonts/config'
 
 export type User = {
   phone_number: string
@@ -72,7 +74,6 @@ export const OrdersList: FC<OrdersListProps> = ({
   setPage
 }) => {
   const theme = useTheme()
-
   const observer = useRef<IntersectionObserver>()
 
   const lastOrderElementRef = useCallback(
@@ -89,21 +90,15 @@ export const OrdersList: FC<OrdersListProps> = ({
     [loading, hasMore]
   )
 
-  useEffect(() => {
-    const selectedOrder = orders.find(
-      (order) => order.id === selectedOrderId?.id
-    )
-    console.log('✌️selectedOrder --->', selectedOrder)
-    if (selectedOrder) {
-      setSelectedOrderProducts(selectedOrder.ordered_products)
-      setSelectedOrderDetails({
-        price_order: selectedOrder.price_order,
-        selected_nova_poshta: selectedOrder.selected_nova_poshta,
-        phone_number: selectedOrder.user.phone_number,
-        post_type: selectedOrder.post_type
-      })
-    }
-  }, [selectedOrderId])
+  const setOrderDetails = (order: OrdersType) => {
+    setSelectedOrderProducts(order.ordered_products)
+    setSelectedOrderDetails({
+      price_order: order.price_order,
+      selected_nova_poshta: order.selected_nova_poshta,
+      phone_number: order.user.phone_number,
+      post_type: order.post_type
+    })
+  }
 
   const handleOrderClick = (orderId: number) => {
     const selectedOrder = orders.find((order) => order.id === orderId)
@@ -112,9 +107,18 @@ export const OrdersList: FC<OrdersListProps> = ({
         id: orderId,
         ordered_products: selectedOrder.ordered_products.length
       })
-      setSelectedOrderProducts(selectedOrder.ordered_products)
+      setOrderDetails(selectedOrder)
     }
   }
+
+  useEffect(() => {
+    const selectedOrder = orders.find(
+      (order) => order.id === selectedOrderId?.id
+    )
+    if (selectedOrder) {
+      setOrderDetails(selectedOrder)
+    }
+  }, [selectedOrderId])
 
   const renderOrder = (
     order: OrdersType,
@@ -133,59 +137,67 @@ export const OrdersList: FC<OrdersListProps> = ({
           ref={ref}
           onClick={() => handleOrderClick(order.id)}
           sx={{
-            'position': 'relative',
-            'height': 100,
-            'padding': '25px 20px',
-            'display': 'flex',
-            'justifyContent': 'space-between',
-            'cursor': 'pointer',
-            '&:hover': {
-              backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
+            position: 'relative',
+            height: 100,
+            padding: '25px 20px',
+            cursor: 'pointer',
+            backgroundColor: '#FFFFFF',
+            [theme.breakpoints.up('sm')]: {
+              '&:hover': {
+                backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
+              },
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                left: 0,
+                width: 5,
+                height: '70%',
+                backgroundColor: 'primary.darker',
+                borderRadius: 10,
+                display: isSelected ? 'block' : 'none'
+              }
             },
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              left: 0,
-              width: 5,
-              height: '70%',
-              backgroundColor: 'primary.darker',
-              borderRadius: 10,
-              display: isSelected ? 'block' : 'none'
+            [theme.breakpoints.down('sm')]: {
+              height: 'auto',
+              backgroundColor: '#FFFFFF',
+              borderRadius: 3,
+              m: '10px 3px',
+              padding: '8px 0 8px 14px'
             }
           }}
         >
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-around"
-          >
-            <Typography variant="body2" fontWeight={400} fontSize={18}>
-              <span style={{ fontWeight: 600, fontSize: 22 }}>
-                #{order.id}{' '}
-              </span>
-              <span style={{ display: 'inline-block' }}>
-                ({formatDate(order.created_at)})
-              </span>{' '}
-            </Typography>
-            <Typography variant="body2" fontSize={18} fontWeight={600}>
-              {order.price_order}{' '}
-              <span
-                style={{
-                  fontFamily: 'Comfortaa',
-                  fontWeight: 500,
-                  fontSize: 14
-                }}
-              >
-                ₴
-              </span>
-            </Typography>
+          <Typography variant="body2" fontWeight={400} fontSize={18} mb={2}>
+            <span style={{ fontWeight: 600, fontSize: 22 }}>#{order.id} </span>
+            <span style={{ display: 'inline-block' }}>
+              ({formatDate(order.created_at)})
+            </span>{' '}
+          </Typography>
+          <Box display="flex" justifyContent="space-between">
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-around"
+            >
+              <Typography variant="body2" fontSize={18} fontWeight={600}>
+                {formatPrice(order.price_order)}
+                <span
+                  style={{
+                    fontFamily: NUNITO,
+                    fontWeight: 500,
+                    fontSize: 16
+                  }}
+                >
+                  ₴
+                </span>
+              </Typography>
 
-            <Typography variant="body1">
-              {order.ordered_products.length}{' '}
-              {getProductLabel(order.ordered_products.length)}
-            </Typography>
+              <Typography variant="body1" mt={1}>
+                {order.ordered_products.length}{' '}
+                {getProductLabel(order.ordered_products.length)}
+              </Typography>
+            </Box>
+            <StepCustom status={order.status_order} />
           </Box>
-          <StepCustom status={order.status_order} />
         </Box>
       </Fragment>
     )
@@ -199,7 +211,10 @@ export const OrdersList: FC<OrdersListProps> = ({
         gridColumn: { xs: 'span 12', md: 'span 4' },
         maxHeight: 453,
         minHeight: 453,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        [theme.breakpoints.down('sm')]: {
+          backgroundColor: '#FEECEE'
+        }
       }}
     >
       <Box sx={{ maxHeight: '100%', overflowY: 'auto' }}>
