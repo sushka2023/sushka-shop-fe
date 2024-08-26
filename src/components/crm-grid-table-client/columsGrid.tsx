@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 
-import { OrdersStatus } from '../../types'
+import { OrdersStatuses } from '../../types'
 import { ORDER_STATUS } from '../../pages/crm-orders-page/constants'
 
 export const columns: GridColDef<[number]>[] = [
@@ -42,7 +42,7 @@ export const columns: GridColDef<[number]>[] = [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params) => {
-      const statusKey = params.value as OrdersStatus
+      const statusKey = params.value as OrdersStatuses
 
       return (
         <Box
