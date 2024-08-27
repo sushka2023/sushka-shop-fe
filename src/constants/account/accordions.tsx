@@ -1,7 +1,7 @@
 import { ChangePassword } from '../../components/Account-panel/Change-password/Change-password'
 import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact-info'
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
-import { OrderHistory } from '../../components/Account-panel/Order-history/Order-history'
+import { OrderHistory } from '../../components/Account-panel/Order-history/Title/HistoryPage'
 
 export const accordions = [
   {

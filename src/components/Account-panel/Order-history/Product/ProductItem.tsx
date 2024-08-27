@@ -2,7 +2,7 @@ import { Avatar, Box } from '@mui/material'
 import { FC } from 'react'
 
 import { Typography } from '../../../UI/Typography'
-import { getProductGrams } from '../Products'
+import { getProductGrams } from './Products'
 import { OrderedProductResponse } from '../../../../types'
 import { formatProductName } from '../../../../utils/format-product-name/formatProductName'
 

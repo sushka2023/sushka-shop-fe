@@ -1,18 +1,20 @@
 import { Box } from '@mui/material'
 import { Typography } from '../../../UI/Typography'
 import { FC } from 'react'
-import { Details } from '../Order-history'
+import { Details } from '../Title/HistoryPage'
 import { translatePostType } from '../../../../utils/order-history/translate-post'
 import { renderAddress } from '../../../../utils/order-history/render-address'
 import { stP1, stP1des, stP2, stSpan } from '../../style'
 import { formatPrice } from '../../../../utils/format-price/formatPrice'
+import { SelectedOrder } from '../Order/Orders'
 
 type Props = {
   details: Details | null
+  orderId: SelectedOrder | null
 }
 
-export const DetailsPaper: FC<Props> = ({ details }) => {
-  if (!details) return null
+export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
+  if (!orderId || !details) return null
 
   const { post_type, selected_nova_poshta, price_order, phone_number } = details
 

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
-import { OrdersType } from './Order/OrdersList'
+import { OrdersType } from '../Order/Orders'
 
 interface LoadingScreenProps {
   isLoading: boolean

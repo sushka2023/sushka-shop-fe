@@ -1,13 +1,14 @@
 import { Box, Button, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { OrdersType } from './Order/OrdersList'
+import { OrdersType } from '../Order/Orders'
 
 type Props = {
   orders: OrdersType[]
 }
+
 export const NoOrdersMessage: FC<Props> = ({ orders }) => {
-  if (orders.length) return null
+  if (orders) return null
 
   return (
     <Box
