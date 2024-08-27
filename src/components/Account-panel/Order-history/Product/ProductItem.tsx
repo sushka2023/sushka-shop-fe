@@ -1,4 +1,4 @@
-import { Avatar, Box } from '@mui/material'
+import { Avatar, Box, useTheme } from '@mui/material'
 import { FC } from 'react'
 
 import { Typography } from '../../../UI/Typography'
@@ -13,13 +13,13 @@ import {
   stCurrency,
   stGrams,
   stName,
-  stPrice,
-  stQuantity
+  stPrice
 } from '../../style'
 
 export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   product
 }) => {
+  const theme = useTheme()
   const nameToShow = formatProductName(product.products.name)
   const firstImage =
     product.products.images && product.products.images.length > 0
@@ -29,26 +29,46 @@ export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   const sumProductGrams = product.prices.quantity * product.quantity
 
   return (
-    <Box m={2}>
-      <Box display="flex" justifyContent="flex-start" pb={2}>
+    <Box
+      sx={{
+        m: 2,
+        [theme.breakpoints.down('sm')]: {
+          m: 1
+        }
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          pb: 2,
+          [theme.breakpoints.down('sm')]: {
+            pb: 1
+          }
+        }}
+      >
         {firstImage && (
           <Avatar
             variant="rounded"
             src={firstImage}
             alt={`Image of ${product.products.name}`}
-            sx={stAvatar}
+            sx={stAvatar(theme)}
           />
         )}
         <Box sx={stContainer}>
           <Box sx={stColumnBox}>
-            <Typography sx={stName}>{nameToShow}</Typography>
-            <Typography sx={stGrams}>{sumProductGrams} г</Typography>
-            <Typography sx={stQuantity}>
+            <Typography variant="h3" sx={stName}>
+              {nameToShow}
+            </Typography>
+            <Typography variant="body2" sx={stGrams}>
+              {sumProductGrams} г
+            </Typography>
+            <Typography variant="body1">
               {product.quantity} {getProductGrams(product.quantity)}
             </Typography>
           </Box>
-          <Box>
-            <Typography sx={stPrice}>
+          <Box position="relative">
+            <Typography variant="h3" sx={stPrice(theme)}>
               {sumProductPrice}
               <span style={stCurrency}>₴</span>
             </Typography>

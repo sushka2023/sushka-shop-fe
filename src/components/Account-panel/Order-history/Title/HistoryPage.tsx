@@ -15,8 +15,11 @@ export type Details = {
   price_order: number
   selected_nova_poshta: NovaPoshtaDataResponse
   phone_number: string
+  status_order: string
+  created_at: string
   post_type: PostsType
 }
+
 export const OrderHistory = () => {
   const [orders, setOrders] = useState<OrdersType[]>([])
   const [loading, setLoading] = useState(false)
@@ -26,6 +29,7 @@ export const OrderHistory = () => {
   >([])
   const [selectedOrderDetails, setSelectedOrderDetails] =
     useState<Details | null>(null)
+  console.log('✌️selectedOrderDetails --->', selectedOrderDetails)
 
   return (
     <Container>

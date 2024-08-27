@@ -61,12 +61,15 @@ export const OrdersPaper: FC<OrdersListProps> = ({
       price_order: order.price_order,
       selected_nova_poshta: order.selected_nova_poshta,
       phone_number: order.user.phone_number,
-      post_type: order.post_type
+      post_type: order.post_type,
+      status_order: order.status_order,
+      created_at: order.created_at
     })
   }
 
   useEffect(() => {
     const selectedOrder = orders.find((order) => order.id === orderId?.id)
+    console.log('✌️selectedOrder --->', selectedOrder)
     if (selectedOrder) {
       setOrderDetails(selectedOrder)
     }

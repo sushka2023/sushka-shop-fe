@@ -1,5 +1,5 @@
 import { Theme } from '@mui/material'
-import { NUNITO } from '../../lib/mui/config/fonts/config'
+import { COMFORTAA, NUNITO } from '../../lib/mui/config/fonts/config'
 
 export const stInput = {
   '& input': {
@@ -87,12 +87,21 @@ export const stP1address = {
   wordWrap: 'break-word'
 }
 
-export const stAvatar = {
-  mr: 2,
-  width: 126,
-  height: 96,
-  img: {
-    objectFit: 'cover'
+export const stAvatar = (theme: Theme) => {
+  return {
+    mr: 2,
+    width: 126,
+    height: 96,
+    img: {
+      objectFit: 'cover'
+    },
+    [theme.breakpoints.down('sm')]: {
+      img: {
+        width: '85%',
+        height: '85%'
+      },
+      mr: 0
+    }
   }
 }
 
@@ -109,31 +118,34 @@ export const stColumnBox = {
 }
 
 export const stName = {
-  variant: 'body1',
   fontSize: 22,
-  fontWeight: 600
+  fontWeight: 600,
+  lineHeight: 1.1,
+  fontFamily: NUNITO
 }
 
 export const stGrams = {
-  variant: 'body2',
   fontSize: 18,
   fontWeight: 600,
   color: '#9AAB8E'
 }
 
-export const stQuantity = {
-  variant: 'body1'
-}
-
-export const stPrice = {
-  variant: 'body2',
-  mt: 0.5,
-  fontSize: 22,
-  fontWeight: 600
+export const stPrice = (theme: Theme) => {
+  return {
+    mt: 0.5,
+    fontSize: 22,
+    fontWeight: 600,
+    fontFamily: NUNITO,
+    [theme.breakpoints.down('sm')]: {
+      position: 'absolute',
+      bottom: 0,
+      right: 0
+    }
+  }
 }
 
 export const stCurrency = {
-  fontFamily: 'Comfortaa',
+  fontFamily: COMFORTAA,
   fontWeight: 600,
   fontSize: 18
 }

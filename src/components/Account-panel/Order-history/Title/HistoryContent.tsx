@@ -83,6 +83,7 @@ export const HistoryContent: FC<Props> = ({
         <ProductsPaper
           orderId={selectedOrderId}
           products={selectedOrderProducts}
+          details={selectedOrderDetails}
         />
         <DetailsPaper
           orderId={selectedOrderId}

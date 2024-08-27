@@ -1,4 +1,4 @@
-import { forwardRef, Fragment } from 'react'
+import { forwardRef, Fragment, RefObject } from 'react'
 import { Box, Divider, useTheme } from '@mui/material'
 import { Typography } from '../../../UI/Typography'
 import { formatDate } from '../../../../utils/format-date/formatDate'
@@ -10,8 +10,8 @@ import { OrdersType, SelectedOrder } from './Orders'
 
 type OrderItemProps = {
   order: OrdersType
-  handleOrderClick: (orderId: number) => void
-  selectedOrderId: SelectedOrder | null
+  handleOrderClick?: (orderId: number) => void
+  selectedOrderId?: SelectedOrder | null
   index: number
 }
 
@@ -19,6 +19,12 @@ const OrderItem = forwardRef<HTMLDivElement, OrderItemProps>(
   ({ order, handleOrderClick, selectedOrderId, index }, ref) => {
     const theme = useTheme()
     const isSelected = selectedOrderId?.id === order.id
+
+    const handleClick = () => {
+      if (handleOrderClick) {
+        handleOrderClick(order.id)
+      }
+    }
 
     return (
       <Fragment>
@@ -28,8 +34,8 @@ const OrderItem = forwardRef<HTMLDivElement, OrderItemProps>(
           />
         )}
         <Box
-          ref={ref}
-          onClick={() => handleOrderClick(order.id)}
+          ref={ref as RefObject<HTMLDivElement>}
+          onClick={handleClick}
           sx={{
             position: 'relative',
             height: 100,

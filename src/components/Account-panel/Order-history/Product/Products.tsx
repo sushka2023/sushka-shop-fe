@@ -1,15 +1,17 @@
 import { FC } from 'react'
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { SelectedOrder } from '../Order/Orders'
-import { Link } from 'react-router-dom'
 import { OrderedProductResponse } from '../../../../types'
-
-import { getProductLabel } from '../../../../utils/product-label/getProductLabel'
 import { ProductMap } from './ProductMap'
+import { Details } from '../Title/HistoryPage'
+import { LinkLeaveReview } from './LinkLeaveReview'
+import { Button } from '../../../UI/Button'
+import { ProductHeader } from './ProductHeader'
 
 type Props = {
   products: OrderedProductResponse[]
   orderId: SelectedOrder | null
+  details: Details | null
 }
 
 export const getProductGrams = (count: number) => {
@@ -18,27 +20,37 @@ export const getProductGrams = (count: number) => {
   return 'штук'
 }
 
-export const ProductsPaper: FC<Props> = ({ products, orderId }) => {
+export const ProductsPaper: FC<Props> = ({ products, orderId, details }) => {
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   if (!orderId) return null
 
+  // Combine both conditions into one
+  const isLeaveReviewLink = details?.status_order === 'delivered'
+
   return (
     <Box
       sx={{
+        display: 'flex',
+        flexDirection: 'column',
         mb: 3,
         bgcolor: 'background.default',
         borderRadius: 2,
         maxHeight: 612,
         minHeight: 612,
-        overflow: 'hidden'
+        [theme.breakpoints.down('sm')]: {
+          maxHeight: 652,
+          minHeight: 652
+        }
       }}
     >
       <Box
         sx={{
-          overflow: 'auto',
-          maxHeight: 612
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1
         }}
       >
         <Box
@@ -48,43 +60,57 @@ export const ProductsPaper: FC<Props> = ({ products, orderId }) => {
             alignItems: 'flex-end',
             p: 3,
             [theme.breakpoints.down('sm')]: {
-              p: 2
+              p: 0
             }
           }}
         >
-          <Box>
-            <Typography variant="body1" fontWeight={600} fontSize={22}>
-              {!isSmallScreen && 'Замовлення'}#{orderId.id}{' '}
-              <span style={{ fontWeight: 400, fontSize: 16 }}>
-                ({orderId.ordered_products}{' '}
-                {getProductLabel(orderId.ordered_products)})
-              </span>
-            </Typography>
+          <Box
+            sx={{
+              [theme.breakpoints.down('sm')]: {
+                width: '100%'
+              }
+            }}
+          >
+            <ProductHeader
+              orderId={orderId}
+              completeOrderInfo={{
+                ...details,
+                ordered_products: products,
+                id: orderId.id
+              }}
+            />
           </Box>
-          {!isSmallScreen && (
-            <Link
-              to={'/review'}
-              style={{
-                fontFamily: 'Open Sans',
-                fontSize: 18,
-                position: 'relative'
+          <LinkLeaveReview
+            isLeaveReviewLink={!isSmallScreen && isLeaveReviewLink}
+          />
+        </Box>
+        <ProductMap products={products} />
+        {isSmallScreen && (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              flexGrow: 1,
+              p: '16px'
+            }}
+          >
+            <Button
+              variant="outlined"
+              disabled={!isLeaveReviewLink}
+              sx={{
+                'p': '10px',
+                '&:disabled': {
+                  bgcolor: '#fff',
+                  color: '#E1E1E1',
+                  borderColor: '#E1E1E1'
+                }
               }}
             >
               Залишити відгук
-              <span
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: '1px',
-                  backgroundColor: 'currentColor'
-                }}
-              />
-            </Link>
-          )}
-        </Box>
-        <ProductMap products={products} />
+            </Button>
+          </Box>
+        )}
       </Box>
     </Box>
   )
