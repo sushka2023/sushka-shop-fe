@@ -13,7 +13,7 @@ type StatusData = {
   step: number
 }
 
-export const steps = ['', '', '']
+export const steps = [1, 2, 3]
 
 export const statusOrders: Record<OrdersStatuses, StatusData> = {
   'new': {

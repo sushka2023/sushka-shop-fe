@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { OrdersType, SelectedOrder } from './Order/Orders'
 import axiosInstance from '../../../axios/settings'
 
+const LIMIT = 5
 export const fetchOrders = async (
   page: number,
   setOrders: Dispatch<SetStateAction<OrdersType[]>>,
@@ -12,11 +13,10 @@ export const fetchOrders = async (
 ) => {
   try {
     setLoading(true)
-    const limit = 5
-    const offset = (page - 1) * limit
+    const offset = (page - 1) * LIMIT
 
     const response = await axiosInstance.get('/api/orders/for_current_user', {
-      params: { limit, offset }
+      params: { limit: LIMIT, offset }
     })
 
     const data = response.data.orders
@@ -28,7 +28,6 @@ export const fetchOrders = async (
       )
       return [...prevOrders, ...uniqueOrders]
     })
-    // if (!isSmallScreen && data.length > 0 && page === 1) {
 
     if (!isSmallScreen && data.length > 0 && page === 1) {
       setSelectedOrderId({

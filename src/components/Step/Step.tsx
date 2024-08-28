@@ -47,15 +47,13 @@ export const StepCustom: FC<StepCustomProps> = ({ status }) => {
           activeStep={statusInfo.step}
           connector={<QontoConnector ownerState={{ status }} />}
         >
-          {steps.map((label, index) => (
+          {steps.map((index) => (
             <Step key={index}>
               <StepLabel
                 StepIconComponent={(props) => (
                   <QontoStepIcon {...props} status={status} />
                 )}
-              >
-                {label}
-              </StepLabel>
+              ></StepLabel>
             </Step>
           ))}
         </Stepper>
