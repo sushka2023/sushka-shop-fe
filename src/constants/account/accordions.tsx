@@ -3,7 +3,7 @@ import { ContactInfo } from '../../components/Account-panel/Contact-info/Contact
 import { DeliveryAddress } from '../../components/Account-panel/Delivery-address/DeliveryAddress'
 import { OrderHistory } from '../../components/Account-panel/Order-history/Title/HistoryPage'
 
-export const accordions = [
+export const ACCORDIONS = [
   {
     summary: 'Контактна інформація',
     content: <ContactInfo />
