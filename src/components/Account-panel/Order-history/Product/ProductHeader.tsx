@@ -17,9 +17,9 @@ export const ProductHeader: FC<Props> = ({ orderId, completeOrderInfo }) => {
   return !isSmallScreen ? (
     <Typography variant="body1" fontWeight={600} fontSize={22}>
       {!isSmallScreen && 'Замовлення'}#{orderId.id}{' '}
-      <span style={{ fontWeight: 400, fontSize: 16 }}>
+      <Typography variant="subtitle1" component="span" fontWeight={400}>
         ({orderId.ordered_products} {getProductLabel(orderId.ordered_products)})
-      </span>
+      </Typography>
     </Typography>
   ) : (
     <OrderItem index={0} order={completeOrderInfo} />

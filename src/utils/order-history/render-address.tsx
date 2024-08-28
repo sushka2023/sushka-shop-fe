@@ -1,7 +1,7 @@
 import { NovaPoshtaDataResponse, PostsType } from '../../types'
 import { Typography } from '../../components/UI/Typography'
 import {} from '../../pages/crm-edit-order-page/types'
-import { stP1address } from '../../components/Account-panel/style'
+import { stP1address } from '../../components/Account-panel/Order-history/style'
 
 export function renderAddress(
   post_type: PostsType,

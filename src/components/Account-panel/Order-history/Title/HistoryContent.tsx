@@ -6,6 +6,7 @@ import { Details } from './HistoryPage'
 import { OrderedProductResponse } from '../../../../types'
 import { DetailsPaper } from '../Details/Details'
 import { fetchOrders } from '../operations'
+import { stContantBox } from '../style'
 
 type Props = {
   orders: OrdersType[]
@@ -52,18 +53,7 @@ export const HistoryContent: FC<Props> = ({
   if (!orders) return null
 
   return (
-    <Box
-      sx={{
-        mt: 7,
-        gap: 3,
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        [theme.breakpoints.down('sm')]: {
-          mt: 3,
-          pb: 4
-        }
-      }}
-    >
+    <Box sx={stContantBox(theme)}>
       <OrdersPaper
         orders={orders}
         setSelectedOrderProducts={setSelectedOrderProducts}
@@ -75,11 +65,7 @@ export const HistoryContent: FC<Props> = ({
         hasMore={hasMore}
         setPage={setPage}
       />
-      <Box
-        sx={{
-          gridColumn: { xs: 'span 12', md: 'span 8' }
-        }}
-      >
+      <Box gridColumn={{ xs: 'span 12', md: 'span 8' }}>
         <ProductsPaper
           orderId={selectedOrderId}
           products={selectedOrderProducts}

@@ -32,7 +32,6 @@ export const OrderHistory = () => {
   const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
     null
   )
-  console.log('✌️selectedOrderId --->', selectedOrderId)
 
   return (
     <Container>

@@ -2,6 +2,7 @@ import { Box, Button, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { OrdersType } from '../Order/Orders'
+import { stContainerFlex } from '../style'
 
 type Props = {
   orders: OrdersType[]
@@ -11,15 +12,7 @@ export const NoOrdersMessage: FC<Props> = ({ orders }) => {
   if (orders) return null
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 350
-      }}
-    >
+    <Box sx={stContainerFlex}>
       <Typography variant="h3" m={3}>
         Зробіть своє перше замовлення!
       </Typography>

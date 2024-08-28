@@ -7,17 +7,19 @@ import { Details } from '../Title/HistoryPage'
 import { LinkLeaveReview } from './LinkLeaveReview'
 import { Button } from '../../../UI/Button'
 import { ProductHeader } from './ProductHeader'
+import {
+  stBoxLeaveReviewLink,
+  stLeaveReviewLinkDisable,
+  stProductBox,
+  stProductBoxPaper,
+  stProductContainer,
+  stProductContainerHeader
+} from '../style'
 
 type Props = {
   products: OrderedProductResponse[]
   orderId: SelectedOrder | null
   details: Details | null
-}
-
-export const getProductGrams = (count: number) => {
-  if (count === 1) return 'штука'
-  if (count >= 2 && count <= 4) return 'штукі'
-  return 'штук'
 }
 
 export const ProductsPaper: FC<Props> = ({ products, orderId, details }) => {
@@ -26,58 +28,22 @@ export const ProductsPaper: FC<Props> = ({ products, orderId, details }) => {
 
   if (!orderId) return null
 
-  // Combine both conditions into one
   const isLeaveReviewLink = details?.status_order === 'delivered'
 
+  const completeOrderInfo = {
+    ...details,
+    ordered_products: products,
+    id: orderId.id
+  }
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        mb: 3,
-        bgcolor: 'background.default',
-        borderRadius: 2,
-        maxHeight: 612,
-        minHeight: 612,
-        [theme.breakpoints.down('sm')]: {
-          maxHeight: 652,
-          minHeight: 652
-        }
-      }}
-    >
-      <Box
-        sx={{
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          flexGrow: 1
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end',
-            p: 3,
-            [theme.breakpoints.down('sm')]: {
-              p: 0
-            }
-          }}
-        >
-          <Box
-            sx={{
-              [theme.breakpoints.down('sm')]: {
-                width: '100%'
-              }
-            }}
-          >
+    <Box sx={stProductBoxPaper(theme)}>
+      <Box sx={stProductBox}>
+        <Box sx={stProductContainer(theme)}>
+          <Box sx={stProductContainerHeader(theme)}>
             <ProductHeader
               orderId={orderId}
-              completeOrderInfo={{
-                ...details,
-                ordered_products: products,
-                id: orderId.id
-              }}
+              completeOrderInfo={completeOrderInfo}
             />
           </Box>
           <LinkLeaveReview
@@ -86,26 +52,11 @@ export const ProductsPaper: FC<Props> = ({ products, orderId, details }) => {
         </Box>
         <ProductMap products={products} />
         {isSmallScreen && (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              flexGrow: 1,
-              p: '16px'
-            }}
-          >
+          <Box sx={stBoxLeaveReviewLink}>
             <Button
               variant="outlined"
               disabled={!isLeaveReviewLink}
-              sx={{
-                'p': '10px',
-                '&:disabled': {
-                  bgcolor: '#fff',
-                  color: '#E1E1E1',
-                  borderColor: '#E1E1E1'
-                }
-              }}
+              sx={stLeaveReviewLinkDisable}
             >
               Залишити відгук
             </Button>

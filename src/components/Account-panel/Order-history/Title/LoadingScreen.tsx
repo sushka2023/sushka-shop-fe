@@ -1,30 +1,18 @@
 import { Box, Typography } from '@mui/material'
 import { FC } from 'react'
 import { OrdersType } from '../Order/Orders'
+import { stContainerFlex } from '../style'
 
-interface LoadingScreenProps {
+type Props = {
   isLoading: boolean
   orders: OrdersType[]
 }
 
-export const LoadingScreen: FC<LoadingScreenProps> = ({
-  isLoading,
-  orders
-}) => {
-  if (!isLoading || orders.length > 0) {
-    return null
-  }
-
-  const loadingScreenStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '350px'
-  }
+export const LoadingScreen: FC<Props> = ({ isLoading, orders }) => {
+  if (!isLoading || orders.length > 0) return null
 
   return (
-    <Box sx={loadingScreenStyle} aria-live="polite">
+    <Box sx={stContainerFlex} aria-live="polite">
       <Typography variant="h3" m={3} component="h2">
         Завантаження...
       </Typography>

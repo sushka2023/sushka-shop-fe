@@ -4,9 +4,9 @@ import { FC } from 'react'
 import { Details } from '../Title/HistoryPage'
 import { translatePostType } from '../../../../utils/order-history/translate-post'
 import { renderAddress } from '../../../../utils/order-history/render-address'
-import { stP1, stP1des, stP2, stSpan } from '../../style'
 import { formatPrice } from '../../../../utils/format-price/formatPrice'
 import { SelectedOrder } from '../Order/Orders'
+import { stP1, stP1des, stP2, stSpan } from '../style'
 
 type Props = {
   details: Details | null

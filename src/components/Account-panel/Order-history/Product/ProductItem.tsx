@@ -2,7 +2,6 @@ import { Avatar, Box, useTheme } from '@mui/material'
 import { FC } from 'react'
 
 import { Typography } from '../../../UI/Typography'
-import { getProductGrams } from './Products'
 import { OrderedProductResponse } from '../../../../types'
 import { formatProductName } from '../../../../utils/format-product-name/formatProductName'
 
@@ -14,7 +13,8 @@ import {
   stGrams,
   stName,
   stPrice
-} from '../../style'
+} from '../style'
+import { getProductGrams } from '../../../../utils/product-grams/getProductGrams'
 
 export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   product
