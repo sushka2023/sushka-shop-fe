@@ -1,7 +1,7 @@
 import { Box, useTheme, useMediaQuery } from '@mui/material'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { OrdersPaper, OrdersType, SelectedOrder } from '../Order/Orders'
 import { ProductsPaper } from '../Product/Products'
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { Details } from './HistoryPage'
 import { OrderedProductResponse } from '../../../../types'
 import { DetailsPaper } from '../Details/Details'
@@ -10,7 +10,7 @@ import { stContantBox } from '../style'
 
 type Props = {
   orders: OrdersType[]
-  selectedOrderProducts: any[]
+  selectedOrderProducts: OrderedProductResponse[]
   setSelectedOrderProducts: Dispatch<SetStateAction<OrderedProductResponse[]>>
   selectedOrderDetails: Details | null
   setSelectedOrderDetails: Dispatch<SetStateAction<Details | null>>

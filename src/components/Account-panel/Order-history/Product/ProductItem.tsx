@@ -1,10 +1,9 @@
-import { Avatar, Box, useTheme } from '@mui/material'
 import { FC } from 'react'
-
+import { Avatar, Box, useTheme } from '@mui/material'
 import { Typography } from '../../../UI/Typography'
 import { OrderedProductResponse } from '../../../../types'
 import { formatProductName } from '../../../../utils/format-product-name/formatProductName'
-
+import { getProductGrams } from '../../../../utils/product-grams/getProductGrams'
 import {
   stAvatar,
   stColumnBox,
@@ -12,9 +11,10 @@ import {
   stCurrency,
   stGrams,
   stName,
-  stPrice
+  stPrice,
+  stProductItemBox,
+  stProductItemContainer
 } from '../style'
-import { getProductGrams } from '../../../../utils/product-grams/getProductGrams'
 
 export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   product
@@ -29,24 +29,8 @@ export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   const sumProductGrams = product.prices.quantity * product.quantity
 
   return (
-    <Box
-      sx={{
-        m: 2,
-        [theme.breakpoints.down('sm')]: {
-          m: 1
-        }
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-start',
-          pb: 2,
-          [theme.breakpoints.down('sm')]: {
-            pb: 1
-          }
-        }}
-      >
+    <Box sx={stProductItemBox(theme)}>
+      <Box sx={stProductItemContainer(theme)}>
         {firstImage && (
           <Avatar
             variant="rounded"

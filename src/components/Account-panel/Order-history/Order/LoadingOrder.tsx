@@ -10,7 +10,7 @@ export const LoadingOrder: FC<Props> = ({ loading }) => {
   if (!loading) return null
 
   return (
-    <Box sx={{ textAlign: 'center', p: 2 }}>
+    <Box textAlign="center" p={2}>
       <Typography variant="body2" fontWeight={600}>
         Завантаження...
       </Typography>

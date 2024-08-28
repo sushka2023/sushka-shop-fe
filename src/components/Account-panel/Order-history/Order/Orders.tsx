@@ -1,14 +1,15 @@
 import { Dispatch, FC, SetStateAction, useEffect } from 'react'
 import { Box, useTheme } from '@mui/material'
 import { Details } from '../Title/HistoryPage'
-import { Status } from '../../../Step/Step'
 import {
   NovaPoshtaAnonUserResponse,
   OrderedProductResponse,
+  OrdersStatuses,
   PostsType
 } from '../../../../types'
 import { LoadingOrder } from './LoadingOrder'
 import { OrderMap } from './OrderMap'
+import { stOrderPaper } from '../style'
 
 export type User = {
   phone_number: string
@@ -20,7 +21,7 @@ export type OrdersType = {
   selected_nova_poshta: NovaPoshtaAnonUserResponse
   ordered_products: OrderedProductResponse[]
   created_at: string
-  status_order: Status
+  status_order: OrdersStatuses
   price_order: number
   id: number
 }
@@ -69,7 +70,6 @@ export const OrdersPaper: FC<OrdersListProps> = ({
 
   useEffect(() => {
     const selectedOrder = orders.find((order) => order.id === orderId?.id)
-    console.log('✌️selectedOrder --->', selectedOrder)
     if (selectedOrder) {
       setOrderDetails(selectedOrder)
     }
@@ -78,20 +78,8 @@ export const OrdersPaper: FC<OrdersListProps> = ({
   if ((!orderId && !isSmallScreen) || (orderId && isSmallScreen)) return null
 
   return (
-    <Box
-      sx={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 2,
-        gridColumn: { xs: 'span 12', md: 'span 4' },
-        maxHeight: 453,
-        minHeight: 453,
-        overflow: 'hidden',
-        [theme.breakpoints.down('sm')]: {
-          backgroundColor: '#FEECEE'
-        }
-      }}
-    >
-      <Box sx={{ maxHeight: '100%', overflowY: 'auto' }}>
+    <Box component="section" sx={stOrderPaper(theme)}>
+      <Box maxHeight="100%" overflow="auto">
         <OrderMap
           orders={orders}
           orderId={orderId}

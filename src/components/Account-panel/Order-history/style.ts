@@ -1,6 +1,15 @@
-import { Theme } from '@mui/material'
+/* eslint-disable */
+import {
+  StepConnector,
+  stepConnectorClasses,
+  styled,
+  Theme
+} from '@mui/material'
 import { COMFORTAA, NUNITO } from '../../../lib/mui/config/fonts/config'
 import { SelectedOrder } from './Order/Orders'
+import { CSSProperties } from 'react'
+import { OrdersStatuses } from '../../../types'
+import { statusOrders } from '../../../constants/status-orders/status-orders'
 
 export const stP2 = { fontSize: 18, fontWeight: 400, mb: 1, color: '#9AAB8E' }
 
@@ -213,3 +222,198 @@ export const stLeaveReviewLinkDisable = {
     borderColor: 'grey.300'
   }
 }
+
+export const stProductDividerItems = (theme: Theme) => {
+  return {
+    border: '1px solid',
+    borderColor: 'peach.darker',
+    width: '96%',
+    m: '0 auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '93%'
+    }
+  }
+}
+
+export const stLinkLeaveReview: CSSProperties | undefined = {
+  fontFamily: 'Open Sans',
+  fontSize: 18,
+  position: 'relative'
+}
+
+export const stLinkSpan = {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: '1px',
+  backgroundColor: 'currentColor'
+}
+
+export const stOrderPaper = (theme: Theme) => {
+  return {
+    backgroundColor: 'background.default',
+    borderRadius: 2,
+    gridColumn: { xs: 'span 12', md: 'span 4' },
+    maxHeight: 453,
+    minHeight: 453,
+    overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: 'pink.lighter'
+    }
+  }
+}
+
+export const stOrderDriverItems = {
+  border: '1px solid',
+  borderColor: 'peach.darker',
+  width: '90%',
+  margin: '0 auto'
+}
+
+export const stOrderBoxItens = (isSelected: boolean, theme: Theme) => {
+  return {
+    position: 'relative',
+    height: 100,
+    padding: '25px 20px',
+    cursor: 'pointer',
+    backgroundColor: 'background.default',
+    [theme.breakpoints.up('sm')]: {
+      '&:hover': {
+        backgroundColor: !isSelected ? theme.palette.grey[50] : 'none'
+      },
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: 0,
+        width: 5,
+        height: '70%',
+        backgroundColor: 'primary.darker',
+        borderRadius: 10,
+        display: isSelected ? 'block' : 'none'
+      }
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto',
+      backgroundColor: 'background.default',
+      borderRadius: 3,
+      m: '10px 3px',
+      padding: '8px 0 8px 14px'
+    }
+  }
+}
+
+export const stStepBox = {
+  width: '170px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  cursor: 'pointer',
+  gap: 0.5
+}
+
+export const stStepContainer = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 1
+}
+
+export const QontoConnector = styled(StepConnector)<{
+  ownerState: { status: OrdersStatuses }
+}>(({ theme, ownerState }) => ({
+  [`&.${stepConnectorClasses.alternativeLabel}`]: {
+    top: 10,
+    left: 'calc(-50% + -13px)',
+    right: 'calc(50% + -13px)'
+  },
+  [`&.${stepConnectorClasses.active}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: statusOrders[ownerState.status].color
+    }
+  },
+  [`&.${stepConnectorClasses.completed}`]: {
+    [`& .${stepConnectorClasses.line}`]: {
+      borderColor: statusOrders[ownerState.status].color
+    }
+  },
+  [`& .${stepConnectorClasses.line}`]: {
+    borderColor:
+      theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+    borderTopWidth: 2,
+    borderRadius: 3,
+    width: '49px',
+    cursor: 'pointer'
+  }
+}))
+
+export const QontoStepIconRoot = styled('div')<{
+  ownerState: { active?: boolean; status: OrdersStatuses }
+}>(({ theme, ownerState }) => ({
+  'color':
+    theme.palette.mode === 'dark'
+      ? theme.palette.grey[200]
+      : theme.palette.grey[100],
+  'display': 'flex',
+  'height': 22,
+  'cursor': 'pointer',
+  'alignItems': 'center',
+  ...(ownerState.active && {
+    color: statusOrders[ownerState.status].color
+  }),
+  '& .QontoStepIcon-completedIcon': {
+    color: statusOrders[ownerState.status].color,
+    zIndex: 1,
+    fontSize: 12
+  },
+  '& .QontoStepIcon-circle': {
+    width: 10,
+    height: 10,
+    borderRadius: '50%',
+    backgroundColor: 'currentColor'
+  }
+}))
+
+export const stProductItemBox = (theme: Theme) => {
+  return {
+    m: 2,
+    [theme.breakpoints.down('sm')]: {
+      m: 1
+    }
+  }
+}
+
+export const stProductItemContainer = (theme: Theme) => {
+  return {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    pb: 2,
+    [theme.breakpoints.down('sm')]: {
+      pb: 1
+    }
+  }
+}
+
+export const stDetailsBox = {
+  mb: 3,
+  bgcolor: 'background.default',
+  borderRadius: 2,
+  height: '100%',
+  p: 3
+}
+
+export const stDetailsContainer = {
+  borderBottom: '1.5px solid',
+  borderColor: 'peach.darker',
+  mb: 2,
+  pb: 5
+}
+
+export const stDetailsPrice = { ...stP1, alignItems: 'end', display: 'flex' }
+
+export const stOrderItemContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-around'
+}
+
+/* eslint-enable */

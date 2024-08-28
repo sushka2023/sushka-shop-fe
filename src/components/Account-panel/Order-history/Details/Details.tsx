@@ -6,7 +6,15 @@ import { translatePostType } from '../../../../utils/order-history/translate-pos
 import { renderAddress } from '../../../../utils/order-history/render-address'
 import { formatPrice } from '../../../../utils/format-price/formatPrice'
 import { SelectedOrder } from '../Order/Orders'
-import { stP1, stP1des, stP2, stSpan } from '../style'
+import {
+  stDetailsBox,
+  stDetailsContainer,
+  stDetailsPrice,
+  stP1,
+  stP1des,
+  stP2,
+  stSpan
+} from '../style'
 
 type Props = {
   details: Details | null
@@ -19,21 +27,9 @@ export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
   const { post_type, selected_nova_poshta, price_order, phone_number } = details
 
   return (
-    <Box
-      sx={{
-        gridColumn: { xs: 'span 12', md: 'span 8' }
-      }}
-    >
-      <Box
-        sx={{
-          mb: 3,
-          bgcolor: 'background.default',
-          borderRadius: 2,
-          height: '100%',
-          p: 3
-        }}
-      >
-        <Box borderBottom="1.5px solid #FEEEE1" mb={2} pb={5}>
+    <Box gridColumn={{ xs: 'span 12', md: 'span 8' }}>
+      <Box sx={stDetailsBox}>
+        <Box sx={stDetailsContainer}>
           <Typography variant="body1" sx={stP1}>
             Деталі замовлення
           </Typography>
@@ -64,11 +60,7 @@ export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
           <Typography variant="body2" sx={stP1}>
             Сума
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{ ...stP1, alignItems: 'end' }}
-            display="flex"
-          >
+          <Typography variant="body2" sx={stDetailsPrice}>
             {formatPrice(price_order)}
             <Typography component="span" sx={stSpan}>
               ₴
