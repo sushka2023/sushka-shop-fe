@@ -11,10 +11,7 @@ import {
   stStepContainer
 } from '../Account-panel/Order-history/style'
 import { OrdersStatuses } from '../../types'
-import {
-  statusOrders,
-  steps
-} from '../../constants/status-orders/status-orders'
+import { statusOrders } from '../../constants/status-orders/status-orders'
 import { QontoStepIcon } from '../../utils/step-icon/stepIcon'
 
 type StepCustomProps = {
@@ -47,7 +44,7 @@ export const StepCustom: FC<StepCustomProps> = ({ status }) => {
           activeStep={statusInfo.step}
           connector={<QontoConnector ownerState={{ status }} />}
         >
-          {steps.map((index) => (
+          {Array.from({ length: 3 }, (_, index) => (
             <Step key={index}>
               <StepLabel
                 StepIconComponent={(props) => (

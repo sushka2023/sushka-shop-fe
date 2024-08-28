@@ -13,8 +13,6 @@ type StatusData = {
   step: number
 }
 
-export const steps = [1, 2, 3]
-
 export const statusOrders: Record<OrdersStatuses, StatusData> = {
   'new': {
     color: '#5D5FEF',
