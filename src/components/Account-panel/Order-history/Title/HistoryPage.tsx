@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Container } from '@mui/material'
-import { OrdersType } from '../Order/Orders'
+import { OrdersType, SelectedOrder } from '../Order/Orders'
 import { HistoryHeader } from './HistoryHeader'
 import { LoadingScreen } from './LoadingScreen'
 import { NoOrdersMessage } from '../NoOrders/NoOrdersMessage'
@@ -29,11 +29,17 @@ export const OrderHistory = () => {
   >([])
   const [selectedOrderDetails, setSelectedOrderDetails] =
     useState<Details | null>(null)
-  console.log('✌️selectedOrderDetails --->', selectedOrderDetails)
+  const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
+    null
+  )
+  console.log('✌️selectedOrderId --->', selectedOrderId)
 
   return (
     <Container>
-      <HistoryHeader />
+      <HistoryHeader
+        orderId={selectedOrderId}
+        setSelectedOrderId={setSelectedOrderId}
+      />
       <LoadingScreen isLoading={loading} orders={orders} />
       <Fragment>
         <NoOrdersMessage orders={orders} />
@@ -43,6 +49,8 @@ export const OrderHistory = () => {
           setSelectedOrderProducts={setSelectedOrderProducts}
           selectedOrderDetails={selectedOrderDetails}
           setSelectedOrderDetails={setSelectedOrderDetails}
+          selectedOrderId={selectedOrderId}
+          setSelectedOrderId={setSelectedOrderId}
           loading={loading}
           setOrders={setOrders}
           setLoading={setLoading}

@@ -37,7 +37,7 @@ export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
           <Typography variant="body1" sx={stP1}>
             Деталі замовлення
           </Typography>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" gap={1}>
             <Typography variant="body2" sx={stP2}>
               Номер телефону
             </Typography>
@@ -45,7 +45,7 @@ export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
               {phone_number}
             </Typography>
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" gap={1}>
             <Typography variant="body2" sx={stP2}>
               Спосіб доставки
             </Typography>
@@ -53,7 +53,7 @@ export const DetailsPaper: FC<Props> = ({ details, orderId }) => {
               {translatePostType(post_type)}
             </Typography>
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between" gap={1}>
             <Typography variant="body2" sx={stP2}>
               Адреса доставки
             </Typography>

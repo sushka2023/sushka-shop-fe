@@ -16,6 +16,8 @@ type Props = {
   loading: boolean
   setOrders: Dispatch<SetStateAction<OrdersType[]>>
   setLoading: Dispatch<SetStateAction<boolean>>
+  selectedOrderId: SelectedOrder | null
+  setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
 }
 
 export const HistoryContent: FC<Props> = ({
@@ -24,6 +26,8 @@ export const HistoryContent: FC<Props> = ({
   setSelectedOrderProducts,
   selectedOrderDetails,
   setSelectedOrderDetails,
+  selectedOrderId,
+  setSelectedOrderId,
   loading,
   setOrders,
   setLoading
@@ -33,10 +37,6 @@ export const HistoryContent: FC<Props> = ({
 
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-
-  const [selectedOrderId, setSelectedOrderId] = useState<SelectedOrder | null>(
-    null
-  )
 
   useEffect(() => {
     fetchOrders(

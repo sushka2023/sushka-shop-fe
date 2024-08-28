@@ -117,11 +117,16 @@ export const stColumnBox = {
   justifyContent: 'space-around'
 }
 
-export const stName = {
-  fontSize: 22,
-  fontWeight: 600,
-  lineHeight: 1.1,
-  fontFamily: NUNITO
+export const stName = (theme: Theme) => {
+  return {
+    fontSize: 22,
+    fontWeight: 600,
+    lineHeight: 1.1,
+    fontFamily: NUNITO,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 20
+    }
+  }
 }
 
 export const stGrams = {
@@ -137,6 +142,7 @@ export const stPrice = (theme: Theme) => {
     fontWeight: 600,
     fontFamily: NUNITO,
     [theme.breakpoints.down('sm')]: {
+      fontSize: 17,
       position: 'absolute',
       bottom: 0,
       right: 0
@@ -144,8 +150,13 @@ export const stPrice = (theme: Theme) => {
   }
 }
 
-export const stCurrency = {
-  fontFamily: COMFORTAA,
-  fontWeight: 600,
-  fontSize: 18
+export const stCurrency = (theme: Theme) => {
+  return {
+    fontFamily: COMFORTAA,
+    fontWeight: 600,
+    fontSize: 18,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 14
+    }
+  }
 }

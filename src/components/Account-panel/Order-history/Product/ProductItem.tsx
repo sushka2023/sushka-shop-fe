@@ -57,7 +57,7 @@ export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
         )}
         <Box sx={stContainer}>
           <Box sx={stColumnBox}>
-            <Typography variant="h3" sx={stName}>
+            <Typography variant="h3" sx={stName(theme)}>
               {nameToShow}
             </Typography>
             <Typography variant="body2" sx={stGrams}>
@@ -68,9 +68,11 @@ export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
             </Typography>
           </Box>
           <Box position="relative">
-            <Typography variant="h3" sx={stPrice(theme)}>
+            <Typography variant="h3" sx={stPrice}>
               {sumProductPrice}
-              <span style={stCurrency}>₴</span>
+              <Typography component="span" sx={stCurrency(theme)}>
+                ₴
+              </Typography>
             </Typography>
           </Box>
         </Box>
