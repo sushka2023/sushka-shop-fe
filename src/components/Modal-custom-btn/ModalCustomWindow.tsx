@@ -10,7 +10,7 @@ type TModalWindow = {
   children: ReactNode
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
-  callback: () => void
+  callback?: () => void
   onAnimationEnd?: () => void
 }
 
