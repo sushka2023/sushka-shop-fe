@@ -1,15 +1,8 @@
 /* eslint-disable */
-import {
-  StepConnector,
-  stepConnectorClasses,
-  styled,
-  Theme
-} from '@mui/material'
+import { Theme } from '@mui/material'
 import { COMFORTAA, NUNITO } from '../../../lib/mui/config/fonts/config'
 import { SelectedOrder } from './Order/Orders'
 import { CSSProperties } from 'react'
-import { OrdersStatuses } from '../../../types'
-import { statusOrders } from '../../../constants/status-orders/status-orders'
 
 export const stP2 = { fontSize: 18, fontWeight: 400, mb: 1, color: '#9AAB8E' }
 
@@ -317,61 +310,6 @@ export const stStepContainer = {
   alignItems: 'center',
   gap: 1
 }
-
-export const QontoConnector = styled(StepConnector)<{
-  ownerState: { status: OrdersStatuses }
-}>(({ theme, ownerState }) => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 10,
-    left: 'calc(-50% + -13px)',
-    right: 'calc(50% + -13px)'
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: statusOrders[ownerState.status].color
-    }
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: statusOrders[ownerState.status].color
-    }
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    borderColor:
-      theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-    borderTopWidth: 2,
-    borderRadius: 3,
-    width: '49px',
-    cursor: 'pointer'
-  }
-}))
-
-export const QontoStepIconRoot = styled('div')<{
-  ownerState: { active?: boolean; status: OrdersStatuses }
-}>(({ theme, ownerState }) => ({
-  'color':
-    theme.palette.mode === 'dark'
-      ? theme.palette.grey[200]
-      : theme.palette.grey[100],
-  'display': 'flex',
-  'height': 22,
-  'cursor': 'pointer',
-  'alignItems': 'center',
-  ...(ownerState.active && {
-    color: statusOrders[ownerState.status].color
-  }),
-  '& .QontoStepIcon-completedIcon': {
-    color: statusOrders[ownerState.status].color,
-    zIndex: 1,
-    fontSize: 12
-  },
-  '& .QontoStepIcon-circle': {
-    width: 10,
-    height: 10,
-    borderRadius: '50%',
-    backgroundColor: 'currentColor'
-  }
-}))
 
 export const stProductItemBox = (theme: Theme) => {
   return {

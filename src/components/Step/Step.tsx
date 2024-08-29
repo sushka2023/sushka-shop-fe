@@ -6,19 +6,19 @@ import StepLabel from '@mui/material/StepLabel'
 import { Box } from '@mui/material'
 import { Typography } from '../UI/Typography'
 import {
-  QontoConnector,
   stStepBox,
   stStepContainer
 } from '../Account-panel/Order-history/style'
 import { OrdersStatuses } from '../../types'
 import { statusOrders } from '../../constants/status-orders/status-orders'
+import { QontoConnector } from './QontoConnector'
 import { QontoStepIcon } from '../../utils/step-icon/stepIcon'
 
-type StepCustomProps = {
+type Props = {
   status: OrdersStatuses
 }
 
-export const StepCustom: FC<StepCustomProps> = ({ status }) => {
+export const StepCustom: FC<Props> = ({ status }) => {
   const statusInfo = statusOrders[status]
   const IconComponent = statusInfo.icon
 
@@ -42,7 +42,7 @@ export const StepCustom: FC<StepCustomProps> = ({ status }) => {
         <Stepper
           alternativeLabel
           activeStep={statusInfo.step}
-          connector={<QontoConnector ownerState={{ status }} />}
+          connector={<QontoConnector status={status} />}
         >
           {Array.from({ length: 3 }, (_, index) => (
             <Step key={index}>

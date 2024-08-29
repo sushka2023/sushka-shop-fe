@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useMediaQuery, useTheme } from '@mui/material'
 import { Typography } from '../../../UI/Typography'
-import { getProductLabel } from '../../../../utils/product-label/getProductLabel'
+import { getProductLabel } from '../../../../helpers/getProductLabel'
 import { SelectedOrder } from '../Order/Orders'
 import { OrderItem } from '../Order/OrderItem'
 import {

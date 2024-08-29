@@ -1,9 +1,7 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { Avatar, Box, useTheme } from '@mui/material'
 import { Typography } from '../../../UI/Typography'
 import { OrderedProductResponse } from '../../../../types'
-import { formatProductName } from '../../../../utils/format-product-name/formatProductName'
-import { getProductGrams } from '../../../../utils/product-grams/getProductGrams'
 import {
   stAvatar,
   stColumnBox,
@@ -15,18 +13,35 @@ import {
   stProductItemBox,
   stProductItemContainer
 } from '../style'
+import {
+  getNameToShow,
+  getFirstImage,
+  getSumProductPrice,
+  getSumProductGrams,
+  getProductQuantityText
+} from '../../../../utils/format-product-order-info/productOrderInfo'
 
 export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
   product
 }) => {
   const theme = useTheme()
-  const nameToShow = formatProductName(product.products.name)
-  const firstImage =
-    product.products.images && product.products.images.length > 0
-      ? product.products.images[0].image_url
-      : null
-  const sumProductPrice = product.prices.price * product.quantity
-  const sumProductGrams = product.prices.quantity * product.quantity
+
+  const nameToShow = useMemo(
+    () => getNameToShow(product.products.name),
+    [product.products.name]
+  )
+  const firstImage = useMemo(
+    () => getFirstImage(product.products.images),
+    [product.products.images]
+  )
+  const sumProductPrice = useMemo(
+    () => getSumProductPrice(product.prices.price, product.quantity),
+    [product.prices.price, product.quantity]
+  )
+  const sumProductGrams = useMemo(
+    () => getSumProductGrams(product.prices.quantity, product.quantity),
+    [product.prices.quantity, product.quantity]
+  )
 
   return (
     <Box sx={stProductItemBox(theme)}>
@@ -48,7 +63,7 @@ export const ProductItem: FC<{ product: OrderedProductResponse }> = ({
               {sumProductGrams} г
             </Typography>
             <Typography variant="body1">
-              {product.quantity} {getProductGrams(product.quantity)}
+              {getProductQuantityText(product.quantity)}
             </Typography>
           </Box>
           <Box position="relative">

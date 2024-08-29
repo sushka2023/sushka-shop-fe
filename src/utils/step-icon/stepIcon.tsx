@@ -1,20 +1,34 @@
-import { StepIconProps } from '@mui/material'
-import { QontoStepIconRoot } from '../../components/Account-panel/Order-history/style'
+import { Box, StepIconProps } from '@mui/material'
 import { OrdersStatuses } from '../../types'
 import CircleIcon from '@mui/icons-material/Circle'
+import { QontoStepIconRoot } from '../../components/Step/QontoStepIconRoot'
+import { statusOrders } from '../../constants/status-orders/status-orders'
+import { FC } from 'react'
 
-interface QontoStepIconProps extends StepIconProps {
+interface Props extends StepIconProps {
   status: OrdersStatuses
 }
 
-export function QontoStepIcon(props: QontoStepIconProps) {
-  const { active, completed, className, status } = props
+export const QontoStepIcon: FC<Props> = ({ active, completed, status }) => {
   return (
-    <QontoStepIconRoot ownerState={{ active, status }} className={className}>
+    <QontoStepIconRoot active={active} status={status}>
       {completed ? (
-        <CircleIcon className="QontoStepIcon-completedIcon" />
+        <CircleIcon
+          sx={{
+            color: statusOrders[status].color,
+            zIndex: 1,
+            fontSize: 12
+          }}
+        />
       ) : (
-        <div className="QontoStepIcon-circle" />
+        <Box
+          sx={{
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            backgroundColor: 'currentColor'
+          }}
+        />
       )}
     </QontoStepIconRoot>
   )

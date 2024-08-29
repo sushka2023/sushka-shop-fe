@@ -21,6 +21,8 @@ type Props = {
   setSelectedOrderId: Dispatch<SetStateAction<SelectedOrder | null>>
 }
 
+const DEFAULT_PAGE = 1
+
 export const HistoryContent: FC<Props> = ({
   orders,
   selectedOrderProducts,
@@ -36,7 +38,7 @@ export const HistoryContent: FC<Props> = ({
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(DEFAULT_PAGE)
   const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
