@@ -51,7 +51,6 @@ const getCityRef = (
 
     return selectedCity ? selectedCity.Ref : null
   } else {
-    console.log('No match found')
     return null
   }
 }

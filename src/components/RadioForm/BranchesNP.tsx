@@ -88,7 +88,6 @@ export const NovaPoshtaBranch: FC<FormProps> = ({
       setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
       clearErrors('cityBranches')
     } else if (value) {
-      console.log('good')
       setSettleRef(getCityRef(value, novaPoshtaCity))
     } else {
       setSettleRef(null)
