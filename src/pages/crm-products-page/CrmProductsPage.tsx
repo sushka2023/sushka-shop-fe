@@ -9,7 +9,7 @@ import {
   fetchMainCategories,
   fetchProductsForCrm,
   searchProductsForCrm
-} from '../../redux/crm-add-new-product/operation'
+} from '../../redux/crm-product/operation'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../redux/store'
 import { ProductStatus } from '../../types'

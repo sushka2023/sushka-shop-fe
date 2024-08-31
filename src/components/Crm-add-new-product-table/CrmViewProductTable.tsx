@@ -5,46 +5,79 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { FC } from 'react'
-import { Checkbox, createTheme, ThemeProvider } from '@mui/material'
+import { FC, useState, useEffect } from 'react'
+import { Checkbox } from '@mui/material'
+import { cell, checkBox, input, table } from './style'
+import { OutlinedInput } from '../UI/Field'
+import { useDispatch } from 'react-redux'
+import {
+  clearProductData,
+  setProductStatus,
+  updateProductData
+} from '../../redux/crm-product/editSlice/editPrice'
+import { useLocation } from 'react-router-dom'
 
 type Props = {
-  prices: any
+  prices: any[]
 }
-
-const tableStyles = {
-  backgroundColor: '#ffffff',
-  color: '#ffffff'
-}
-
-const cellStyles = {
-  color: '#64748B'
-}
-
-const theme = createTheme({
-  components: {
-    MuiCheckbox: {
-      styleOverrides: {
-        root: {
-          'color': '#5D5FEF',
-          '&.Mui-checked': {
-            color: '#5D5FEF'
-          }
-        }
-      }
-    }
-  }
-})
 
 export const CrmViewProductTable: FC<Props> = ({ prices }) => {
+  const dispatch = useDispatch()
+  const location = useLocation() // Access the current location
+
+  const [checkedState, setCheckedState] = useState(
+    prices.map((item) => item.is_active)
+  )
+  const [quantities, setQuantities] = useState(
+    prices.map((item) => item.quantity)
+  )
+
   const sortedPrices = [...prices].sort(
     (a, b) => (b.is_active ? 1 : 0) - (a.is_active ? 1 : 0)
   )
 
+  const handleCheckboxChange = (index: number) => {
+    const newCheckedState = [...checkedState]
+    newCheckedState[index] = !newCheckedState[index]
+    setCheckedState(newCheckedState)
+    sendUpdatedInfo(index, newCheckedState[index], quantities[index])
+  }
+
+  const handleQuantityChange =
+    (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newQuantities = [...quantities]
+      newQuantities[index] = parseInt(event.target.value, 10) || 0
+      setQuantities(newQuantities)
+      sendUpdatedInfo(index, checkedState[index], newQuantities[index])
+    }
+
+  const sendUpdatedInfo = (
+    index: number,
+    isActive: boolean,
+    quantity: number
+  ) => {
+    const updatedInfo = {
+      id: prices[index].id,
+      is_active: isActive,
+      quantity: quantity,
+      product_id: prices[index].product_id
+    }
+    dispatch(updateProductData(updatedInfo))
+  }
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearProductData())
+      dispatch(setProductStatus(''))
+    }
+  }, [location.pathname, dispatch])
+
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
+
   return (
     <TableContainer component={Paper} sx={{ mt: 5, boxShadow: 'none' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead sx={{ ...tableStyles }}>
+        <TableHead sx={{ ...table }}>
           <TableRow>
             {[
               'Активна',
@@ -54,7 +87,7 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
               'Акція',
               'Ціна (акційна)'
             ].map((text, index) => (
-              <TableCell key={index} sx={cellStyles} align={'center'}>
+              <TableCell key={index} sx={cell} align={'center'}>
                 {text}
               </TableCell>
             ))}
@@ -62,27 +95,35 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
         </TableHead>
         <TableBody>
           {sortedPrices.map((elem, index) => (
-            <TableRow key={index} sx={{ ...tableStyles }}>
-              <TableCell sx={cellStyles} align="center">
-                <ThemeProvider theme={theme}>
-                  <Checkbox disabled checked={elem.is_active} />
-                </ThemeProvider>
+            <TableRow key={index} sx={{ ...table }}>
+              <TableCell sx={cell} align="center">
+                <Checkbox
+                  name="checkbox"
+                  sx={checkBox}
+                  {...label}
+                  checked={checkedState[index]}
+                  onChange={() => handleCheckboxChange(index)}
+                />
               </TableCell>
-              <TableCell sx={cellStyles} align="center">
+              <TableCell sx={cell} align="center">
                 {elem.weight}
               </TableCell>
-              <TableCell sx={cellStyles} align="center">
-                {elem.quantity}
+              <TableCell sx={cell} align="center">
+                <OutlinedInput
+                  name="quantity"
+                  sx={input}
+                  value={quantities[index]}
+                  onChange={handleQuantityChange(index)}
+                />
               </TableCell>
-              <TableCell sx={cellStyles} align="center">
+
+              <TableCell sx={{ ...cell, fontWeight: 600 }} align="center">
                 {elem.price}
               </TableCell>
-              <TableCell sx={cellStyles} align="center">
-                <ThemeProvider theme={theme}>
-                  <Checkbox disabled checked={elem.promotional} />
-                </ThemeProvider>
+              <TableCell sx={cell} align="center">
+                <Checkbox sx={checkBox} disabled checked={elem.promotional} />
               </TableCell>
-              <TableCell sx={cellStyles} align="center">
+              <TableCell sx={cell} align="center">
                 {elem.old_price}
               </TableCell>
             </TableRow>

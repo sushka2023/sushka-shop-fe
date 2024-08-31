@@ -8,7 +8,7 @@ import styles from './crmAddNewProduct.module.scss'
 import {
   addData,
   setFormErrors
-} from '../../redux/crm-add-new-product/slice/product'
+} from '../../redux/crm-product/createSlice/product'
 import { AppDispatch, RootState } from '../../redux/store'
 import DescriptionProduct from './DescriptionProduct'
 import StatusDropdown from './StatusDropdown'
@@ -18,11 +18,14 @@ import axiosInstance from '../../axios/settings'
 import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
 import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
 import { ProductResponse } from '../../types'
+import { setProductStatus } from '../../redux/crm-product/editSlice/editPrice'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentStatus, setCurrentStatus] =
     useState<keyof typeof statusClasses>('Новий')
+  const [initialStatus, setInitialStatus] = useState<string | null>(null)
+
   const containerRef = useRef<HTMLButtonElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
   const descriptionRef = useRef<HTMLTextAreaElement>(null)
@@ -63,6 +66,7 @@ const CrmAddNewProduct = () => {
       setProduct(data)
 
       const translatedStatus = statusMapping[data.product_status]
+      setInitialStatus(translatedStatus)
       setCurrentStatus(translatedStatus)
     } catch (error) {
       console.error(error)
@@ -90,7 +94,14 @@ const CrmAddNewProduct = () => {
     newStatusName: keyof typeof statusClasses
   ) => {
     setCurrentStatus(newStatusName)
+
     dispatch(addData({ type, value: newStatusValue }))
+
+    if (initialStatus === newStatusName) {
+      dispatch(setProductStatus(''))
+    } else if (initialStatus !== newStatusName) {
+      dispatch(setProductStatus(newStatusName))
+    }
   }
 
   const handleChangeFormData = (

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addData } from '../../redux/crm-add-new-product/slice/product'
+import { addData } from '../../redux/crm-product/createSlice/product'
 import {
   MenuItem,
   Select,

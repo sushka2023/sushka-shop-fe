@@ -9,9 +9,9 @@ import {
   incrementImagesUploadCount,
   resetImagesUploadCount,
   setFormErrors
-} from '../../redux/crm-add-new-product/slice/product'
+} from '../../redux/crm-product/createSlice/product'
 import { newProductImagesSchema } from '../../helpers/validateNewProduct'
-import { addImages } from '../../redux/crm-add-new-product/operation'
+import { addImages } from '../../redux/crm-product/operation'
 import { AppDispatch } from '../../redux/store'
 import { RootState } from '../../redux/store/index'
 import { FileList } from '../FileList/FileList'

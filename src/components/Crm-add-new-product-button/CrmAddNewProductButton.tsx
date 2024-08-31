@@ -7,13 +7,10 @@ import {
   newProductPriceSchema
 } from '../../helpers/validateNewProduct'
 import styles from './crmAddNewProductButton.module.scss'
-import { FC, useEffect } from 'react'
-import {
-  addPrice,
-  createNewProduct
-} from '../../redux/crm-add-new-product/operation'
+import { FC, useEffect, useState } from 'react'
+import { addPrice, createNewProduct } from '../../redux/crm-product/operation'
 import { AppDispatch } from '../../redux/store'
-import { setFormErrors } from '../../redux/crm-add-new-product/slice/product'
+import { setFormErrors } from '../../redux/crm-product/createSlice/product'
 import { ProductResponse, ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -24,10 +21,29 @@ type Props = {
 }
 
 const CrmAddNewProductButton: FC<Props> = () => {
+  const statusProduct = useSelector(
+    (state: RootState) => state.editProduct.status
+  )
+
+  const statusMapping: { [key: string]: string } = {
+    Новий: 'new',
+    Активний: 'activated',
+    Архівований: 'archived'
+  }
+
+  const internalStatus = statusMapping[statusProduct]
+  console.log('✌️internalStatus --->', internalStatus)
+
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
   const { params: productIdParam } = useParams()
   const parsedIndex = Number(productIdParam)
   const productData = useSelector((state: RootState) => state.newProduct)
+
+  const pricesData = useSelector(
+    (state: RootState) => state.editProduct.products
+  )
+  console.log('✌️pricesData --->', pricesData)
 
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
@@ -56,12 +72,36 @@ const CrmAddNewProductButton: FC<Props> = () => {
     }
   }, [productId])
 
+  const updateProductStatus = async (
+    product_id: number,
+    internalStatus: string
+  ) => {
+    if (internalStatus) {
+      await axiosInstance.put(
+        `api/product/${product_id}/change_status?pr_status=${internalStatus}`
+      )
+    }
+  }
+
+  const updatePrices = async (pricesData: any[]) => {
+    if (pricesData) {
+      await Promise.all(
+        pricesData.map((price) =>
+          axiosInstance.put(
+            `/api/price/change_status?price_id=${price.id}&is_active=${price.is_active}&quantity=${price.quantity}`
+          )
+        )
+      )
+    }
+  }
+
   const handleClickSaveProduct = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
 
     try {
+      setIsLoading(true)
       if (isNaN(parsedIndex)) {
         await newProductSchema.validate(productData, { abortEarly: false })
         await newProductImagesSchema.validate(
@@ -85,21 +125,13 @@ const CrmAddNewProductButton: FC<Props> = () => {
           })
         ).unwrap()
       } else {
-        // const values = {
-        //   product_id: product?.id,
-        //   pr_status: productData.product_status
-        // }
-
-        console.log('✌️productIdParam --->', productIdParam)
         const product_id = parsedIndex
-
-        await axiosInstance.put(
-          `api/product/${product_id}/change_status?pr_status=${productData.product_status}`
-        )
-        // console.log('✌️values --->', values)
+        await updateProductStatus(product_id, internalStatus)
+        await updatePrices(pricesData)
         navigate(-1)
       }
     } catch (error) {
+      console.log('✌️error --->', error)
       if (error instanceof yup.ValidationError) {
         const newErrors = {} as Record<string, string>
         error.inner.forEach((err) => {
@@ -107,6 +139,8 @@ const CrmAddNewProductButton: FC<Props> = () => {
         })
         dispatch(setFormErrors(newErrors))
       }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -115,16 +149,16 @@ const CrmAddNewProductButton: FC<Props> = () => {
       <button
         className={styles.saveBtns}
         onClick={handleClickSaveProduct}
-        disabled={!!productData.isLoading}
+        disabled={isLoading}
       >
-        {(productData.isLoading || 0) > 0 && (
+        {isLoading && (
           <span>
             <ClipLoader size={15} color={'#FFFFFF'} />
           </span>
         )}
         Зберегти
       </button>
-      {(productData.isLoading || 0) > 0 && (
+      {isLoading && (
         <p className={styles.isLoadingText}>
           Збереження! Не закривайте сторінку.
         </p>

@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import PlusIcon from '../../icons/plus1.svg?react'
 import styles from './CrmAddNewProduct.module.scss'
 import { AppDispatch, RootState } from '../../redux/store'
-import { addData } from '../../redux/crm-add-new-product/slice/product'
-import { Price } from '../../redux/crm-add-new-product/operation'
+import { addData } from '../../redux/crm-product/createSlice/product'
+import { Price } from '../../redux/crm-product/operation'
 import TableRow from './TableRow'
 
 const ARRAY_OPTION_WEIGHT = [

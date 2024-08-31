@@ -6,9 +6,9 @@ import { AppDispatch, RootState } from '../../redux/store'
 import {
   fetchMainCategories,
   fetchSubCategories
-} from '../../redux/crm-add-new-product/operation'
+} from '../../redux/crm-product/operation'
 import MuiSelect from '../Crm-categories/MuiSelect'
-import { addData } from '../../redux/crm-add-new-product/slice/product'
+import { addData } from '../../redux/crm-product/createSlice/product'
 import { ProductResponse } from '../../types'
 
 type Props = {
