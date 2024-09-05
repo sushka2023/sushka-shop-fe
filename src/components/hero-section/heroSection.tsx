@@ -1,10 +1,6 @@
 import styles from './heroSection.module.scss'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import HeroPic from '../../images/hero-pic.png'
-import HeroMobilePic from '../../images/HeroMobile-pic.png'
-import { RootState } from '../../redux/store'
-import { Button } from '../UI/Button'
 import {
   Box,
   Container,
@@ -12,6 +8,11 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material'
+
+import HeroPic from '../../images/hero-pic.png'
+import HeroMobilePic from '../../images/HeroMobile-pic.png'
+import { RootState } from '../../redux/store'
+import { Button } from '../UI/Button'
 
 const HeroSection = () => {
   const allCategories = useSelector(

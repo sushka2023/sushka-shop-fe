@@ -1,3 +1,14 @@
+.borderTop {
+  position: relative;
+  top: 2px;
+  width: 100%;
+  height: clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-image: url('/src/icons/wave.svg');
+  margin-top: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
 .accordionSection {
   h2 {
     font-size: clamp(1.063rem, -0.321rem + 3.69vw, 3rem);
