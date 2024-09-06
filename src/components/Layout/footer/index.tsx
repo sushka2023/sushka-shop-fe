@@ -1,5 +1,5 @@
-import styles from '../footer/Footer.module.scss'
 import { Link as ScrollLink } from 'react-scroll'
+import { Fragment } from 'react'
 
 import IconLogoFooter from '../../../icons/logofooter.svg?react'
 import IconMastercard from '../../../icons/mastercard.svg?react'
@@ -10,45 +10,67 @@ import FooterNavList from './footer-nav-list/footerNavList'
 import FooterLegalList from './footer-legal-list/footerLegalList'
 import FooterContactList from './footer-contact-list/footerContactList'
 import { Box, Container, List, ListItem, Typography } from '@mui/material'
+import {
+  borderTopStyle,
+  footerBorderStyle,
+  footerLegalBlockStyle,
+  footerWrapperStyle
+} from './style'
 
 const paymentIcons = [IconMastercard, IconVisa, IconLiqpay]
 
 const Footer = () => {
   return (
-    <Box component="footer" className={styles.footer}>
-      <Box className={styles.border}>
-        <Strawberry className={styles.iconStrawberry} />
+    <Fragment>
+      <Box sx={borderTopStyle}>
+        <Strawberry />
       </Box>
-      <Container className={styles.footerContainer}>
-        <Box className={styles.footerWrapper}>
-          <ScrollLink
-            to="nav"
-            smooth={true}
-            duration={500}
-            className={styles.footerLogo}
-          >
-            <IconLogoFooter />
-          </ScrollLink>
-          <FooterNavList />
-          <FooterLegalList />
-          <FooterContactList />
-        </Box>
-      </Container>
-      <Box className={styles.footerBorder}></Box>
-      <Box className={styles.footerLegalBlock}>
-        <Box>
-          <Typography variant="subtitle2">&copy; 2023, Sushka</Typography>
-          <Typography variant="subtitle2">Усі права захищені</Typography>
-        </Box>
-        <List sx={{ display: 'flex', gap: '10px' }}>
-          {paymentIcons.map((IconComponent, index) => (
-            <ListItem key={index} sx={{ padding: 0 }}>
-              <IconComponent />
-            </ListItem>
-          ))}
-        </List>
+      <Box component="footer" sx={{ backgroundColor: 'peach.darker' }}>
+        <Container>
+          <Box sx={footerWrapperStyle}>
+            {/* 1 блок */}
+            <Box sx={{ gridArea: 'block1' }}>
+              <ScrollLink
+                to="nav"
+                smooth={true}
+                duration={500}
+                style={{ height: '60px', cursor: 'pointer' }}
+              >
+                <IconLogoFooter />
+              </ScrollLink>
+            </Box>
+
+            <Box sx={{ gridArea: 'block2' }}>
+              <FooterNavList />
+            </Box>
+
+            {/* 3 блок */}
+            <Box sx={{ gridArea: 'block3' }}>
+              <FooterLegalList />
+            </Box>
+
+            {/* 4 блок */}
+            <Box sx={{ gridArea: 'block4' }}>
+              <FooterContactList />
+            </Box>
+          </Box>
+        </Container>
+        <Box sx={footerBorderStyle}></Box>
+        <Container sx={footerLegalBlockStyle}>
+          <Box sx={{ minWidth: '50%' }}>
+            <Typography variant="subtitle2">&copy; 2023, Sushka</Typography>
+            <Typography variant="subtitle2">Усі права захищені</Typography>
+          </Box>
+          <List sx={{ display: 'flex', gap: '5px' }}>
+            {paymentIcons.map((IconComponent, index) => (
+              <ListItem key={index} sx={{ padding: 0 }}>
+                <IconComponent />
+              </ListItem>
+            ))}
+          </List>
+        </Container>
       </Box>
-    </Box>
+    </Fragment>
   )
 }
 
