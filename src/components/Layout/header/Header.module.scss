@@ -236,3 +236,10 @@ input[type='search']::-webkit-search-cancel-button {
 .dropdawnListLink {
   padding: 0px 14px;
 }
+
+@media (max-width: 1024px) {
+  .headerWrapper {
+    border: 1px solid red;
+    flex-direction: column;
+  }
+}

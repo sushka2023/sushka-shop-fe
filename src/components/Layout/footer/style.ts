@@ -19,18 +19,18 @@ export const borderTopStyle = {
 
 export const footerWrapperStyle = {
   'display': 'grid',
-  'gridTemplateColumns': 'repeat(4, 1fr)', // Чотири колонки для великих екранів
-  'gap': '15px',
+  'gridTemplateColumns': 'repeat(4, 1fr)',
+  'gap': '20px',
   'gridTemplateAreas': `
     "block1 block2 block3 block4"
-  `, // Розташування блоків на великих екранах
+  `,
   '@media (max-width: 768px)': {
-    gridTemplateColumns: '1.5fr 0.5fr', // Дві колонки на маленьких екранах
+    gridTemplateColumns: '1.5fr 0.5fr',
     gridTemplateAreas: `
       "block1 block1"
       "block2 block4"
       "block3 block3"
-    ` // Сітка для маленьких екранів
+    `
   }
 }
 

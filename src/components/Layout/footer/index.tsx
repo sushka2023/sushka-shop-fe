@@ -28,7 +28,6 @@ const Footer = () => {
       <Box component="footer" sx={{ backgroundColor: 'peach.darker' }}>
         <Container>
           <Box sx={footerWrapperStyle}>
-            {/* 1 блок */}
             <Box sx={{ gridArea: 'block1' }}>
               <ScrollLink
                 to="nav"
@@ -39,17 +38,12 @@ const Footer = () => {
                 <IconLogoFooter />
               </ScrollLink>
             </Box>
-
             <Box sx={{ gridArea: 'block2' }}>
               <FooterNavList />
             </Box>
-
-            {/* 3 блок */}
             <Box sx={{ gridArea: 'block3' }}>
               <FooterLegalList />
             </Box>
-
-            {/* 4 блок */}
             <Box sx={{ gridArea: 'block4' }}>
               <FooterContactList />
             </Box>
