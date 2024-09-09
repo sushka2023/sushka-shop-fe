@@ -1,19 +1,43 @@
-// import styles from './reviews-list-item.module.scss'
 import styles from './reviews-list-item.module.scss'
-import IconPlus from '../../../../icons/plus.svg?react'
 import { ReviewsRating } from '../ReviewsRating/ReviewsRating'
 import IconButton from '@mui/material/IconButton'
-import DeleteIcon from '../../../../icons/delete.svg?react'
 import Tooltip from '@mui/material/Tooltip'
 import ChangeIcon from '../../../../icons/crm-file.svg?react'
 import { ModalCustom } from '../../../../components/Modal-custom-btn/ModalCustomWindow'
 import { useState } from 'react'
 import axiosInstance from '../../../../axios/settings'
 import { ReviewResponse } from '../../../../types'
+import ArchiveButton from '../ArchiveButton/ArchiveButton'
+import UnArchiveButton from '../UnArchiveButton/UnArchiveButton'
 
 type ReviewsListItemProps = {
   item: ReviewResponse
   onStatusChange: () => void
+}
+
+const handleRemoveFromArchive = async (
+  id: number,
+  is_checked: boolean,
+  onStatusChange: () => void
+) => {
+  try {
+    await axiosInstance.put('/api/reviews/unarchive', { id })
+    if (!is_checked) {
+      await axiosInstance.put('/api/reviews/check_review', { id })
+    }
+    onStatusChange()
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const handleAddToArchive = async (id: number, onStatusChange: () => void) => {
+  try {
+    await axiosInstance.put('/api/reviews/archive', { id })
+    onStatusChange()
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const ReviewsListItem = ({
@@ -27,6 +51,7 @@ export const ReviewsListItem = ({
     description,
     images,
     created_at,
+    is_checked,
     user: { first_name }
   } = item
 
@@ -44,28 +69,10 @@ export const ReviewsListItem = ({
     year: 'numeric'
   })
 
-  const handleAddToArchive = async () => {
-    try {
-      await axiosInstance.put('/api/reviews/archive', { id })
-      onStatusChange()
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const handleRemoveFromArchive = async () => {
-    try {
-      await axiosInstance.put('/api/reviews/unarchive', { id })
-      onStatusChange()
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
   return (
     <div className={styles.item}>
       <span
-        className={`${styles.span} ${is_deleted ? styles.spanActive : ''}`}
+        className={`${styles.span} ${!is_deleted ? styles.spanActive : ''}`}
       ></span>
       <div className={styles.wrapper}>
         <div className={styles.infoWrapper}>
@@ -74,45 +81,36 @@ export const ReviewsListItem = ({
           <p className={styles.date}>{formattedDate}</p>
         </div>
         <p className={styles.description}>{description}</p>
-        <IconPlus className={styles.icon} />
 
         <div className={styles.buttonsWrapper}>
-          {images.length > 0 && (
-            <Tooltip title="File">
-              <IconButton onClick={handleOpenModal}>
-                <ChangeIcon className={styles.iconFile} />
-              </IconButton>
-            </Tooltip>
-          )}
-          <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
+          {images && images.length > 0 && images[0]?.image_url && (
             <div>
-              <img
-                style={{ width: '100%', height: '100%' }}
-                src={images[0].image_url}
-                alt=""
-              />
+              <Tooltip title="File">
+                <IconButton onClick={handleOpenModal}>
+                  <ChangeIcon className={styles.iconFile} />
+                </IconButton>
+              </Tooltip>
+              <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
+                <div>
+                  <img
+                    style={{ width: '100%', height: '100%' }}
+                    src={images[0].image_url}
+                    alt=""
+                  />
+                </div>
+              </ModalCustom>
             </div>
-          </ModalCustom>
-          <Tooltip title="Delete">
-            <IconButton
-              disabled={isDeleteDisabled}
-              onClick={handleRemoveFromArchive}
-            >
-              <DeleteIcon
-                className={`${isDeleteDisabled ? styles.iconDisabled : styles.iconDelete}`}
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Edit">
-            <IconButton
-              disabled={!isDeleteDisabled}
-              onClick={handleAddToArchive}
-            >
-              <IconPlus
-                className={`${!isDeleteDisabled ? styles.iconDisabled : styles.iconChange}`}
-              />
-            </IconButton>
-          </Tooltip>
+          )}
+          <ArchiveButton
+            isDeleted={isDeleteDisabled}
+            onAdd={() => handleAddToArchive(id, onStatusChange)}
+          />
+          <UnArchiveButton
+            isDeleted={isDeleteDisabled}
+            onRemove={() =>
+              handleRemoveFromArchive(id, is_checked, onStatusChange)
+            }
+          />
         </div>
       </div>
     </div>

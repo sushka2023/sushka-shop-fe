@@ -6,13 +6,6 @@
   padding: 0 40px;
 }
 
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .feedbacksWrapper {
   display: flex;
   justify-content: space-between;
@@ -37,6 +30,7 @@
 
 
 .feedbackList {
+  width: 100%;
   max-width: 840px;
 }
 
@@ -45,6 +39,14 @@
   font-family: Nunito;
   font-size: 48px;
   font-weight: 500;
+}
+
+
+.wrapperTitleButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 @media screen and (max-width: 1440px) {
@@ -64,5 +66,4 @@
   .title {
     font-size: 24px;
   }
-
 }

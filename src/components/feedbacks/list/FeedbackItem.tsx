@@ -1,14 +1,28 @@
 import styles from '../Feedbacks.module.scss'
 import { FC } from 'react'
 import { Rating } from './Rating'
+import { Review } from '../../../redux/feedbacks/slice'
 
 type Props = {
-  reviews: []
+  review: Review
 }
 
-// TODO: remove this comment
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FeedbackItem: FC<Props> = ({ reviews }) => {
+const FeedbackItem: FC<Props> = ({ review }) => {
+  const {
+    description,
+    created_at,
+    rating,
+    images,
+    user: { first_name }
+  } = review
+
+  const date = new Date(created_at)
+  const formattedDate = date.toLocaleDateString('uk-UA', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  })
+
   return (
     <li className={styles.feedbackItem}>
       <div
@@ -19,18 +33,13 @@ const FeedbackItem: FC<Props> = ({ reviews }) => {
         }}
       >
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <h3 className={styles.name}>Ольга</h3>
-          <Rating rating={4} />
+          <h3 className={styles.name}>{first_name}</h3>
+          <Rating rating={rating} />
         </div>
-        <span className={styles.date}>30.07.2023</span>
+        <span className={styles.date}>{formattedDate}</span>
       </div>
-      <p className={styles.review}>
-        Треба було брати більше пастили та йогутових цукерок, дуже смачно!!!!
-        Дууууже! Дууууже! Дууууже! Треба було брати більше пастили та йогутових
-        цукерок, дуже смачно!!!! Дууууже! Треба було брати більше пастили та
-        йогутових цукерок, дуже смачно!!!! Дуу
-      </p>
-      <div className={styles.feedbackPhoto} />
+      <p className={styles.review}>{description}</p>
+      <img className={styles.feedbackPhoto} src={images[0]?.image_url} alt="" />
     </li>
   )
 }

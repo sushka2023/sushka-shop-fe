@@ -18,6 +18,8 @@ export type ProductResponse = {
     is_favorite: boolean;
     is_deleted: boolean;
     product_status: ProductStatus;
+    created_at: string;
+    updated_at: string;
     sub_categories?: Array<ProductSubCategoryResponse>;
     images: Array<ImageResponse>;
     prices: Array<PriceResponse>;

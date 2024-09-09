@@ -11,6 +11,8 @@ import { TextField } from '@mui/material'
 import { AppDispatch } from '../../../redux/store'
 import { useDispatch } from 'react-redux'
 import { submitReview } from '../../../redux/feedbacks/operations'
+import { ModalCustom } from '../../Modal-custom-btn/ModalCustomWindow'
+import { FeedbackDoneModal } from './FeedbackDoneModal'
 
 const DEFAULT_VALUE = {
   name: '',
@@ -19,7 +21,11 @@ const DEFAULT_VALUE = {
 
 const MAX_LENGTH = 250
 
-const FeedbackForm = () => {
+const FeedbackForm = ({
+  onSubmitSuccess
+}: {
+  onSubmitSuccess?: () => void
+}) => {
   const [name, setName] = useState('')
   const [rating, setRating] = useState(0)
   const [file, setFile] = useState<typeof DEFAULT_VALUE>(DEFAULT_VALUE)
@@ -27,6 +33,7 @@ const FeedbackForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [text, setText] = useState('')
   const { isLoggedIn } = useAuth()
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   const [searchParams] = useSearchParams()
 
@@ -46,12 +53,13 @@ const FeedbackForm = () => {
       description: text,
       name
     }
-
     try {
       dispatch(submitReview(formData))
+      if (onSubmitSuccess) onSubmitSuccess()
     } catch (error) {
       console.error('Error submitting review:', error)
     }
+    setOpenModal(true)
   }
 
   const handleRatingChange = (value: number) => {
@@ -74,15 +82,17 @@ const FeedbackForm = () => {
     setFile(DEFAULT_VALUE)
     setFileSelected(false)
   }
-
   return (
     <div className={styles.formContainer}>
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       {isLoggedIn ? (
         <form className={styles.feedbackForm} onSubmit={handleSubmit}>
+          <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
+            <FeedbackDoneModal />
+          </ModalCustom>
           <TextField
             placeholder="Ваше ім'я"
-            onClick={(e) => setName(e.target)}
+            onClick={(e) => setName(e.target.value)}
             sx={{
               'color': '#567343',
               'width': '100%',
