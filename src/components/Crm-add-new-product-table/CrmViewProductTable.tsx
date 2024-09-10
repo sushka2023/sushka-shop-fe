@@ -23,7 +23,7 @@ type Props = {
 
 export const CrmViewProductTable: FC<Props> = ({ prices }) => {
   const dispatch = useDispatch()
-  const location = useLocation() // Access the current location
+  const location = useLocation()
 
   const [checkedState, setCheckedState] = useState(
     prices.map((item) => item.is_active)

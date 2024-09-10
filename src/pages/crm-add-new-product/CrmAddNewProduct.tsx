@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect, useRef } from 'react'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,13 +19,25 @@ import axiosInstance from '../../axios/settings'
 import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
 import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
 import { ProductResponse } from '../../types'
-import { setProductStatus } from '../../redux/crm-product/editSlice/editPrice'
+import {
+  setPopularData,
+  setProductStatus
+} from '../../redux/crm-product/editSlice/editPrice'
+import { Checkbox } from '../../components/UI/Checkbox'
+import {
+  body1Label,
+  boxCheckbox,
+  checkBox
+} from '../../components/Crm-add-new-product-table/style'
+import { Typography } from '../../components/UI/Typography'
+import { Box } from '@mui/material'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentStatus, setCurrentStatus] =
     useState<keyof typeof statusClasses>('Новий')
   const [initialStatus, setInitialStatus] = useState<string | null>(null)
+  const [isPopular, setIsPopular] = useState<boolean>(false)
 
   const containerRef = useRef<HTMLButtonElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
@@ -55,19 +68,21 @@ const CrmAddNewProduct = () => {
     if (product && descriptionRef.current) {
       descriptionRef.current.value = product.description
     }
+
+    if (product) {
+      setInitialStatus(statusMapping[product.product_status])
+      setIsPopular(product.is_popular)
+    }
   }, [product])
 
   const parsedIndex = Number(productIdParam)
+
   const getProduct = async () => {
     if (isNaN(parsedIndex)) return
     setIsLoading(true)
     try {
       const { data } = await axiosInstance.get(`/api/product/${parsedIndex}`)
       setProduct(data)
-
-      const translatedStatus = statusMapping[data.product_status]
-      setInitialStatus(translatedStatus)
-      setCurrentStatus(translatedStatus)
     } catch (error) {
       console.error(error)
     } finally {
@@ -135,6 +150,16 @@ const CrmAddNewProduct = () => {
     })
   }
 
+  const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = event.target.checked
+    setIsPopular(isChecked)
+    if (isChecked === product?.is_popular) {
+      dispatch(setPopularData(false))
+    } else {
+      dispatch(setPopularData(true))
+    }
+  }
+
   useEffect(() => {
     if (productId) {
       if (nameInputRef.current) {
@@ -160,6 +185,8 @@ const CrmAddNewProduct = () => {
     Активний: styles.statusActive,
     Архівований: styles.statusArchive
   }
+
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
 
   return isLoading ? (
     <p>loading...</p>
@@ -197,7 +224,21 @@ const CrmAddNewProduct = () => {
             {isNaN(parsedIndex) ? (
               <CrmCategoriesBlock product={product} />
             ) : (
-              <CrmCategoriesBlockView product={product} />
+              <>
+                <CrmCategoriesBlockView product={product} />
+                <Box sx={boxCheckbox}>
+                  <Checkbox
+                    name="checkbox"
+                    checked={isPopular}
+                    onChange={handleChecked}
+                    sx={checkBox}
+                    {...label}
+                  />
+                  <Typography variant="body1" component="span" sx={body1Label}>
+                    Обрати, як популярний товар
+                  </Typography>
+                </Box>
+              </>
             )}
           </div>
         </div>
@@ -213,3 +254,4 @@ const CrmAddNewProduct = () => {
 }
 
 export default CrmAddNewProduct
+/* eslint-enable */

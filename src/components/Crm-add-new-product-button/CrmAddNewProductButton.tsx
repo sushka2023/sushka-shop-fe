@@ -32,7 +32,6 @@ const CrmAddNewProductButton: FC<Props> = () => {
   }
 
   const internalStatus = statusMapping[statusProduct]
-  console.log('✌️internalStatus --->', internalStatus)
 
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -43,11 +42,13 @@ const CrmAddNewProductButton: FC<Props> = () => {
   const pricesData = useSelector(
     (state: RootState) => state.editProduct.products
   )
-  console.log('✌️pricesData --->', pricesData)
 
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
   )
+
+  const popular = useSelector((state: RootState) => state.editProduct.popular)
+  console.log('✌️popular --->', popular)
   const dispatch = useDispatch<AppDispatch>()
 
   const sendPricesSequentially = async (productId: string) => {
@@ -83,14 +84,22 @@ const CrmAddNewProductButton: FC<Props> = () => {
     }
   }
 
-  const updatePrices = async (pricesData: any[]) => {
+  const changePrices = async (pricesData: any[]) => {
     if (pricesData) {
       await Promise.all(
         pricesData.map((price) =>
-          axiosInstance.put(
+          axiosInstance.patch(
             `/api/price/change_status?price_id=${price.id}&is_active=${price.is_active}&quantity=${price.quantity}`
           )
         )
+      )
+    }
+  }
+
+  const changePopular = async (product_id: number) => {
+    if (popular) {
+      await axiosInstance.put(
+        `api/product/select_popular?product_id=${product_id}`
       )
     }
   }
@@ -126,8 +135,10 @@ const CrmAddNewProductButton: FC<Props> = () => {
         ).unwrap()
       } else {
         const product_id = parsedIndex
+        await changePrices(pricesData)
         await updateProductStatus(product_id, internalStatus)
-        await updatePrices(pricesData)
+        await changePopular(product_id)
+
         navigate(-1)
       }
     } catch (error) {

@@ -36,3 +36,16 @@ export const input = {
     textAlign: 'center'
   }
 }
+
+export const body1Label = {
+  color: '#64748b',
+  fontSize: 14,
+  fontWeight: 500
+}
+export const boxCheckbox = {
+  display: 'flex',
+  alignItems: 'center',
+  mt: 2,
+  position: 'relative',
+  right: 10
+}
