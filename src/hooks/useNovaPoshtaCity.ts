@@ -33,16 +33,26 @@ const getCityRef = (
   value: string,
   novaPoshtaCity: CityData[]
 ): string | null => {
-  const [descriptionPart, areaPart] = value.split(' (')
-  const mainDescription = descriptionPart.replace(/^(м\.|с\.)\s/, '')
-  const area = areaPart.replace(' обл.', '').replace(')', '')
+  const mainDescription = value
+    .replace(/^(смт|м\.|с\.)\s*/, '')
+    .replace(/\([^)]*\)$/, '')
+    .trim()
 
-  const selectedCity = novaPoshtaCity[0]?.Addresses.find(
-    (address) =>
-      address.MainDescription === mainDescription && address.Area === area
-  )
+  const match: RegExpMatchArray | null = value.match(/\(([^)]+)\)$/)
 
-  return selectedCity ? selectedCity.Ref : null
+  if (match) {
+    const extractedText = match[1]
+    const area = extractedText.replace('обл.', '').trim()
+
+    const selectedCity = novaPoshtaCity[0]?.Addresses.find(
+      (address) =>
+        address.MainDescription === mainDescription && address.Area === area
+    )
+
+    return selectedCity ? selectedCity.Ref : null
+  } else {
+    return null
+  }
 }
 
 const getDefaultCityRef = (
