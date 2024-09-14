@@ -225,12 +225,12 @@ const CrmAddNewProduct = () => {
                     {...label}
                   />
                   <Typography variant="body1" component="span" sx={body1Label}>
-                    Обрати, як популярний товар
+                    Mark as popular product
                   </Typography>
                 </Box>
               </Fragment>
             ) : (
-              <CrmCategoriesBlock />
+              <CrmCategoriesBlock product={product} />
             )}
           </div>
         </div>
