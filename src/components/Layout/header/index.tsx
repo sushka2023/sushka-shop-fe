@@ -1,22 +1,54 @@
+import styles from './Header.module.scss'
+import styles2 from './header-nav/Test.module.scss'
+
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Box, Container } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+
 import IconLogo from '../../../icons/logo.svg?react'
 import HeaderNav from './header-nav/headerNav'
 import HeaderListIcons from './header-list-icons/headerListIcons'
-import styles from './Header.module.scss'
+import BurgerMenu from './header-nav/BurgerMenu'
 
 const Header = () => {
+  const [openMenu, setOpenMenu] = useState(false)
+
+  const closeVisible = () => {
+    setOpenMenu(false)
+    document.body.style.overflow = 'visible'
+  }
+
+  const openVisible = () => {
+    setOpenMenu(true)
+    document.body.style.overflow = 'hidden'
+  }
+
   return (
-    <header className={styles.containerHeader} id="nav">
-      <div className={styles.headerWrapper}>
+    <Container component="header" id="nav">
+      <Box className={styles.headerWrapper}>
         <Link to="/" className={styles.logoLink}>
           <IconLogo />
         </Link>
-        <div className={styles.navBlock}>
+        <Box width="100%" sx={{ display: 'flex' }}>
           <HeaderNav />
           <HeaderListIcons />
-        </div>
-      </div>
-    </header>
+        </Box>
+        <Tooltip title="Меню">
+          <IconButton>
+            <MenuIcon
+              onClick={() => openVisible()}
+              className={styles2.burger}
+            />
+          </IconButton>
+        </Tooltip>
+        <BurgerMenu closeVisible={closeVisible} openMenu={openMenu} />
+        {/* <Box className={styles.navBlock}>
+        </Box> */}
+      </Box>
+    </Container>
   )
 }
 
