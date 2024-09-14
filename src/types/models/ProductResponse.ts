@@ -11,7 +11,7 @@ export type ProductResponse = {
     id: number;
     name: string;
     description: string;
-  product_category_id: ProductCategory;
+  product_category: ProductCategory;
     new_product: boolean;
     is_popular: boolean;
     is_favorite: boolean;

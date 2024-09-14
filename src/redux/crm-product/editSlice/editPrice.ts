@@ -6,13 +6,13 @@ type PriceEditResponse = Pick<PriceResponse, 'id' | 'is_active' | 'quantity'>
 type InitialStateType = {
   products: PriceEditResponse[]
   status: string
-  popular: boolean | null
+  popular: boolean
 }
 
 const initialState: InitialStateType = {
   products: [],
   status: '',
-  popular: null
+  popular: false
 }
 
 export const pricesSlice = createSlice({

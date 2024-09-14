@@ -25,15 +25,13 @@ type Props = {
     categoryValue: number,
     selectedCategory: number
   ) => void
-  product?: any
 }
 
 const MuiSelect: React.FC<Props> = ({
   categoryValue,
   сategories,
   type,
-  handleClickRemoveSubCategory,
-  product
+  handleClickRemoveSubCategory
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<number | ''>(
     categoryValue || (сategories?.[0]?.id ?? '')
@@ -55,7 +53,7 @@ const MuiSelect: React.FC<Props> = ({
     <FormControl>
       <InputLabel sx={labelStyle} variant="standard">
         {type === 'sub_categories'
-          ? (categoryValue || product) && 'Саб-категорія товару'
+          ? categoryValue && 'Саб-категорія товару'
           : 'Категорія товару'}
       </InputLabel>
 

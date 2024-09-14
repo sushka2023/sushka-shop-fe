@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PlusIcon from '../../icons/plus1.svg?react'
 import styles from './CrmCategoriesBlock.module.scss'
@@ -9,13 +9,8 @@ import {
 } from '../../redux/crm-product/operation'
 import MuiSelect from '../Crm-categories/MuiSelect'
 import { addData } from '../../redux/crm-product/createSlice/product'
-import { ProductResponse } from '../../types'
 
-type Props = {
-  product: ProductResponse | undefined
-}
-
-const CrmCategoriesBlock: FC<Props> = ({ product }) => {
+const CrmCategoriesBlock = () => {
   const [subCategoriesList, setSubCategoriesList] = useState<number[]>([])
 
   const mainCategories = useSelector(
@@ -30,16 +25,6 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
     dispatch(fetchMainCategories({ operationType: 'fetch-main-categories' }))
     dispatch(fetchSubCategories({ operationType: 'fetch-sub-categories' }))
   }, [dispatch])
-
-  useEffect(() => {
-    if (product && product.sub_categories) {
-      setSubCategoriesList(
-        product.sub_categories.map((cat: { id: number }) => cat.id)
-      )
-    } else if (subCategories && subCategories.length > 0) {
-      setSubCategoriesList([subCategories[0].id])
-    }
-  }, [product, subCategories])
 
   const handleClickNewSubCategory = () => {
     if (subCategories && subCategories.length > 0) {
@@ -64,11 +49,10 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
         {subCategoriesList.map((categoryValue) => (
           <MuiSelect
             key={categoryValue}
-            сategories={subCategories || []}
+            сategories={subCategories}
             type="sub_categories"
             categoryValue={categoryValue}
             handleClickRemoveSubCategory={handleClickRemoveSubCategory}
-            product={product}
           />
         ))}
         <div className={`${styles.iconWrapp}`}>

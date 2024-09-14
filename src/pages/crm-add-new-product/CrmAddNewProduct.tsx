@@ -1,36 +1,39 @@
-/* eslint-disable */
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { Box } from '@mui/material'
+
 import CrmCategoriesBlock from '../../components/Crm-categories-block/CrmCategoriesBlock'
 import CrmAddNewProductTable from '../../components/Crm-add-new-product-table/CrmAddNewProductTable'
 import CrmAddNewProductButton from '../../components/Crm-add-new-product-button/CrmAddNewProductButton'
+import DescriptionProduct from './DescriptionProduct'
+import StatusDropdown from './StatusDropdown'
+import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
+import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
+import { Checkbox } from '../../components/UI/Checkbox'
+import { Typography } from '../../components/UI/Typography'
+
 import styles from './crmAddNewProduct.module.scss'
+import { AppDispatch, RootState } from '../../redux/store'
 import {
   addData,
   setFormErrors
 } from '../../redux/crm-product/createSlice/product'
-import { AppDispatch, RootState } from '../../redux/store'
-import DescriptionProduct from './DescriptionProduct'
-import StatusDropdown from './StatusDropdown'
-import { newProductSchema } from '../../helpers/validateNewProduct'
-import { useParams } from 'react-router-dom'
-import axiosInstance from '../../axios/settings'
-import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
-import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
-import { ProductResponse } from '../../types'
 import {
   setPopularData,
   setProductStatus
 } from '../../redux/crm-product/editSlice/editPrice'
-import { Checkbox } from '../../components/UI/Checkbox'
+
+import axiosInstance from '../../axios/settings'
+import { newProductSchema } from '../../helpers/validateNewProduct'
+import { ProductResponse } from '../../types'
 import {
   body1Label,
   boxCheckbox,
   checkBox
 } from '../../components/Crm-add-new-product-table/style'
-import { Typography } from '../../components/UI/Typography'
-import { Box } from '@mui/material'
+import { label } from '../../helpers/labelCheckbox'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,10 +41,13 @@ const CrmAddNewProduct = () => {
     useState<keyof typeof statusClasses>('Новий')
   const [initialStatus, setInitialStatus] = useState<string | null>(null)
   const [isPopular, setIsPopular] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [product, setProduct] = useState<ProductResponse>()
 
   const containerRef = useRef<HTMLButtonElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
   const descriptionRef = useRef<HTMLTextAreaElement>(null)
+
   const dispatch = useDispatch<AppDispatch>()
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
@@ -49,10 +55,8 @@ const CrmAddNewProduct = () => {
   const formErrors = useSelector(
     (state: RootState) => state.newProduct.formErrors
   )
-
   const { params: productIdParam } = useParams()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [product, setProduct] = useState<ProductResponse>()
+  const parsedIndex = Number(productIdParam)
 
   const statusMapping: { [key: string]: keyof typeof statusClasses } = {
     new: 'Новий',
@@ -60,22 +64,26 @@ const CrmAddNewProduct = () => {
     archived: 'Архівований'
   }
 
+  const statusClasses = {
+    Новий: styles.statusNew,
+    Активний: styles.statusActive,
+    Архівований: styles.statusArchive
+  }
+
   useEffect(() => {
-    if (product && nameInputRef.current) {
-      nameInputRef.current.value = product.name
-    }
-
-    if (product && descriptionRef.current) {
-      descriptionRef.current.value = product.description
-    }
-
     if (product) {
+      if (nameInputRef.current) nameInputRef.current.value = product.name
+      if (descriptionRef.current) {
+        descriptionRef.current.value = product.description
+      }
       setInitialStatus(statusMapping[product.product_status])
       setIsPopular(product.is_popular)
     }
   }, [product])
 
-  const parsedIndex = Number(productIdParam)
+  useEffect(() => {
+    dispatch(setPopularData(false))
+  }, [parsedIndex])
 
   const getProduct = async () => {
     if (isNaN(parsedIndex)) return
@@ -126,18 +134,11 @@ const CrmAddNewProduct = () => {
   ) => {
     const { value, name } = e.target
     validateField(name, value)
-    dispatch(
-      addData({
-        type: name as any,
-        value
-      })
-    )
+    dispatch(addData({ type: name as any, value }))
   }
 
   const applyDropDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if ((e.target as HTMLElement).nodeName === 'BUTTON') {
-      return
-    }
+    if ((e.target as HTMLElement).nodeName === 'BUTTON') return
     e.stopPropagation()
   }
 
@@ -151,9 +152,10 @@ const CrmAddNewProduct = () => {
   }
 
   const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const prod = product?.is_popular
     const isChecked = event.target.checked
     setIsPopular(isChecked)
-    if (isChecked === product?.is_popular) {
+    if (isChecked === prod) {
       dispatch(setPopularData(false))
     } else {
       dispatch(setPopularData(true))
@@ -162,31 +164,19 @@ const CrmAddNewProduct = () => {
 
   useEffect(() => {
     if (productId) {
-      if (nameInputRef.current) {
-        nameInputRef.current.value = ''
-      }
-
-      if (descriptionRef.current) {
-        descriptionRef.current.value = ''
-      }
+      if (nameInputRef.current) nameInputRef.current.value = ''
+      if (descriptionRef.current) descriptionRef.current.value = ''
     }
   }, [productId])
 
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick)
-
     return () => {
       document.removeEventListener('click', handleDocumentClick)
     }
   }, [])
 
-  const statusClasses = {
-    Новий: styles.statusNew,
-    Активний: styles.statusActive,
-    Архівований: styles.statusArchive
-  }
-
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
+  console.log(!isNaN(parsedIndex))
 
   return isLoading ? (
     <p>loading...</p>
@@ -213,6 +203,7 @@ const CrmAddNewProduct = () => {
               <CrmAddNewProductButton product={product} />
             </div>
           </div>
+
           <DescriptionProduct
             product={product}
             formErrors={formErrors}
@@ -220,11 +211,10 @@ const CrmAddNewProduct = () => {
             descriptionRef={descriptionRef}
             handleChangeFormData={handleChangeFormData}
           />
+
           <div className={styles.categoriesOptionWrapp}>
-            {isNaN(parsedIndex) ? (
-              <CrmCategoriesBlock product={product} />
-            ) : (
-              <>
+            {!isNaN(parsedIndex) && product ? (
+              <Fragment>
                 <CrmCategoriesBlockView product={product} />
                 <Box sx={boxCheckbox}>
                   <Checkbox
@@ -238,7 +228,9 @@ const CrmAddNewProduct = () => {
                     Обрати, як популярний товар
                   </Typography>
                 </Box>
-              </>
+              </Fragment>
+            ) : (
+              <CrmCategoriesBlock />
             )}
           </div>
         </div>
@@ -254,4 +246,3 @@ const CrmAddNewProduct = () => {
 }
 
 export default CrmAddNewProduct
-/* eslint-enable */

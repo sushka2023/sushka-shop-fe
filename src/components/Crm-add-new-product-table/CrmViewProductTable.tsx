@@ -16,6 +16,7 @@ import {
   updateProductData
 } from '../../redux/crm-product/editSlice/editPrice'
 import { useLocation } from 'react-router-dom'
+import { label } from '../../helpers/labelCheckbox'
 
 type Props = {
   prices: any[]
@@ -71,8 +72,6 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
       dispatch(setProductStatus(''))
     }
   }, [location.pathname, dispatch])
-
-  const label = { inputProps: { 'aria-label': 'Checkbox demo' } }
 
   return (
     <TableContainer component={Paper} sx={{ mt: 5, boxShadow: 'none' }}>
