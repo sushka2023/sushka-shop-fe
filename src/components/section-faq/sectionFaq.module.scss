@@ -1,12 +1,30 @@
-.borderTop {
+.borderCommon {
   position: relative;
-  top: 2px;
   width: 100%;
   height: clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem);
   background-repeat: no-repeat;
   background-size: 100%;
+}
+
+.borderTop {
+  @extend .borderCommon;
+  top: 2px;
   background-image: url('/src/icons/wave.svg');
   margin-top: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
+.borderBottom {
+  // @extend .borderCommon;
+  width: 100%;
+  height: 105px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: absolute;
+  bottom: clamp(-10px, calc(50vw - 20px), -105px);
+  border: 1px solid red;
+  // background-image: url('/src/icons/wave.svg');
+  transform: rotate(180deg);
+  // margin-bottom: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
 }
 
 .accordionSection {

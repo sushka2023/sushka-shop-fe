@@ -5,8 +5,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Box, Container } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import IconButton from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
+import CloseIcon from '@mui/icons-material/Close'
 
 import IconLogo from '../../../icons/logo.svg?react'
 import HeaderNav from './header-nav/headerNav'
@@ -36,14 +35,28 @@ const Header = () => {
           <HeaderNav />
           <HeaderListIcons />
         </Box>
-        <Tooltip title="Меню">
-          <IconButton>
-            <MenuIcon
-              onClick={() => openVisible()}
-              className={styles2.burger}
-            />
-          </IconButton>
-        </Tooltip>
+
+        {openMenu ? (
+          <CloseIcon
+            onClick={closeVisible}
+            sx={{
+              fontSize: '30px',
+              color: 'secondary.darker',
+              cursor: 'pointer'
+            }}
+          />
+        ) : (
+          <MenuIcon
+            onClick={() => openVisible()}
+            className={styles2.burger}
+            sx={{
+              fontSize: '30px',
+              color: 'secondary.darker',
+              cursor: 'pointer'
+            }}
+          />
+        )}
+
         <BurgerMenu closeVisible={closeVisible} openMenu={openMenu} />
         {/* <Box className={styles.navBlock}>
         </Box> */}

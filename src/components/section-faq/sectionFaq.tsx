@@ -67,7 +67,8 @@ const SectionFaq = () => {
         sx={{
           backgroundColor: 'turquoise.darker',
           color: 'background.default',
-          pb: 'clamp(8.75rem, 6.964rem + 4.76vw, 11.25rem)'
+          pb: 'clamp(8.75rem, 6.964rem + 4.76vw, 11.25rem)',
+          position: 'relative'
         }}
       >
         <Container maxWidth="lg" className={styles.accordionSection}>
@@ -100,6 +101,10 @@ const SectionFaq = () => {
             </Accordion>
           ))}
         </Container>
+        <Box
+          sx={{ backgroundColor: 'turquoise.darker' }}
+          className={styles.borderBottom}
+        ></Box>
       </Box>
     </Fragment>
   )

@@ -1,5 +1,4 @@
 export const borderTopStyle = {
-  backgroundColor: 'turquoise.darker',
   position: 'relative',
   top: '0px',
   width: '100%',
