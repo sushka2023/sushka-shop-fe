@@ -1,12 +1,4 @@
-import {
-  FC,
-  useEffect,
-  useCallback,
-  useMemo,
-  useState,
-  Fragment,
-  SyntheticEvent
-} from 'react'
+import { FC, useEffect, useMemo, useState, Fragment } from 'react'
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaLocations } from '../../hooks/useNovaPoshtaLocations'
@@ -85,27 +77,24 @@ export const NovaPoshtaBranch: FC<FormProps> = ({
     return generateOptionsData(warehouses)
   }, [warehouses])
 
-  const onChangeCity = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
-      setValue('cityBranches', value)
-      setValInputCity(value ?? '')
-      clearErrors('cityBranches')
-      if (CITY_DEFAULT.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
-        clearErrors('cityBranches')
-      } else if (value && novaPoshtaCity.length > 0) {
-        setSettleRef(getCityRef(value, novaPoshtaCity))
-      } else {
-        setSettleRef(null)
-      }
-    },
-    []
-  )
+  const onChangeCity = (value: string | null) => {
+    setValue('cityBranches', value)
 
-  const onChangeWarehouse = (
-    _event: SyntheticEvent<Element, Event>,
-    value: string | null
-  ) => {
+    setValInputCity(value ?? '')
+
+    clearErrors('cityBranches')
+
+    if (CITY_DEFAULT.some((city) => city.name === value)) {
+      setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+      clearErrors('cityBranches')
+    } else if (value) {
+      setSettleRef(getCityRef(value, novaPoshtaCity))
+    } else {
+      setSettleRef(null)
+    }
+  }
+
+  const onChangeWarehouse = (value: string | null) => {
     const selectedWarehouse = optionsData.find(
       (option) => option.label === value
     )

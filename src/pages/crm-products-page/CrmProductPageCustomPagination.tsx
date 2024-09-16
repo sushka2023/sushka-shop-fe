@@ -22,7 +22,7 @@ type CustomPaginationProps = {
   page: number
 }
 
-const CustomPagination: React.FC<CustomPaginationProps> = ({
+export const CustomPagination: React.FC<CustomPaginationProps> = ({
   page,
   count,
   onPageChange

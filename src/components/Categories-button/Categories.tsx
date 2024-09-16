@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { setOffset, setOperation } from '../../redux/products/slice'
 import { RootState, AppDispatch } from '../../redux/store/index'
 import { ProductCategoryModel } from '../../types/index'
-import { UrlParamsModel } from '../../types/models/UrlParamsModel'
 import styles from './Categories.module.scss'
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 
 const CategoriesButtons: React.FC<Props> = ({ setPage }) => {
   const navigate = useNavigate()
-  const { category } = useParams<UrlParamsModel>() as UrlParamsModel
+  const { category } = useParams()
   const categoryParams = parseInt(category || '')
   const [activeButton, setActiveButton] = useState(categoryParams || 'all')
   const allCategories = useSelector(
@@ -42,18 +41,17 @@ const CategoriesButtons: React.FC<Props> = ({ setPage }) => {
 
   return (
     <ul className={`${styles.list}`}>
-      {allCategories &&
-        allCategories.map((category: ProductCategoryModel) => (
-          <li key={category.id}>
-            <button
-              type="button"
-              className={`${styles.listButton} ${activeButton === category.id ? styles.active : ''}`}
-              onClick={() => handleClickButton(category.id)}
-            >
-              {category.name}
-            </button>
-          </li>
-        ))}
+      {allCategories?.map((category: ProductCategoryModel) => (
+        <li key={category.id}>
+          <button
+            type="button"
+            className={`${styles.listButton} ${activeButton === category.id ? styles.active : ''}`}
+            onClick={() => handleClickButton(category.id)}
+          >
+            {category.name}
+          </button>
+        </li>
+      ))}
       <li>
         <button
           type="button"

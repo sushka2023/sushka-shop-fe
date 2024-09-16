@@ -2,9 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductCategory = {
-  id: number
-  is_deleted: boolean
-  name: string
+export type PostMessageResponse = {
+    message: string;
 };
 

@@ -1,22 +1,68 @@
 @import '../../styles/base/base.scss';
 
 .container {
-   margin-top: 30px;
-   margin-bottom: 197px;
-   padding: 0 40px;
+  margin-top: 30px;
+  margin-bottom: 197px;
+  padding: 0 40px;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .feedbacksWrapper {
-   display: flex;
-   justify-content: space-between;
-   align-items: flex-start;
-   
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
 }
+
+.button {
+  display: none;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: $yellow-200;
+  border: 2px solid $white-500;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: $white-200;
+  font-family: $open-sans;
+  font-size: 16px;
+  font-weight: $font-weight-600;
+  line-height: 130%;
+}
+
+
 .feedbackList {
-   max-width: 840px;
+  max-width: 840px;
 }
+
 .title {
-   color: #567343;
-   font-family: Nunito;
-   font-size: 48px;
-   font-weight: 500;
+  color: #567343;
+  font-family: Nunito;
+  font-size: 48px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1440px) {
+  .feedbacksWrapper {
+    gap: 30px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .button {
+    display: block;
+  }
+  .title {
+    font-size: 24px;
+  }
+
 }

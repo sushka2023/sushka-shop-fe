@@ -1,0 +1,106 @@
+@import 'src/styles/base/base.scss';
+
+.list {
+  font-family: $open-sans;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item {
+  position: relative;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.wrapper {
+  padding: 21px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+}
+
+.infoWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.description {
+  width: 700px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--CRM-grey);
+}
+
+.date {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--CRM-grey);
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.iconChange {
+  padding: 13px;
+  width: 24px;
+  height: 24px;
+  background-color: $white-200;
+  border: 2px solid $green-200;
+  border-radius: 50%;
+  fill: $green-200;
+}
+
+.iconFile {
+  padding: 13px;
+  width: 30px;
+  height: 30px;
+  fill: $dark-blue;
+}
+
+.iconDelete {
+  padding: 13px;
+  width: 24px;
+  height: 24px;
+  background-color: $white-200;
+  border: 2px solid $red;
+  border-radius: 50%;
+  fill: $red;
+}
+
+
+.iconDisabled {
+  padding: 13px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid $CRM-grey;
+  border-radius: 50%;
+  fill: $CRM-grey;
+}
+
+.span {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 80px;
+  border-radius: 10px;
+  background-color: $red;
+
+}
+
+.spanActive {
+  background-color: $green-200;
+
+}

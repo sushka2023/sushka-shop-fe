@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { OrdersStatus } from './OrdersStatus';
+import type { OrdersStatuses } from './OrdersStatuses';
 export type UpdateOrderStatus = {
-    new_status: OrdersStatus;
+    new_status: OrdersStatuses;
 };
 

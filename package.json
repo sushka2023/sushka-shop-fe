@@ -10,7 +10,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview",
     "prepare": "husky install",
-    "generate": "openapi -i https://www.test-store.shop/openapi.json -o src/types"
+    "generate": "openapi -i https://sushka-store-timvladislav13010.koyeb.app/openapi.json -o src/types"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

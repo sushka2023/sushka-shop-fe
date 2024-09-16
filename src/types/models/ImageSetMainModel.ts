@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductArchiveModel = {
-    id: number;
+export type ImageSetMainModel = {
+    image_id: number;
+    product_id: number;
 };
 
