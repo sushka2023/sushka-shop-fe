@@ -10,6 +10,7 @@ import {
 import MuiSelect from '../Crm-categories/MuiSelect'
 import { addData } from '../../redux/crm-product/createSlice/product'
 import { ProductResponse } from '../../types'
+import { Box } from '@mui/material'
 
 type Props = {
   product: ProductResponse | undefined
@@ -58,9 +59,9 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
   }
 
   return (
-    <div className={styles.categoriesOptionWrapp}>
+    <Box mt={6} className={styles.categoriesOptionWrapp}>
       <MuiSelect сategories={mainCategories} type="main_category" />
-      <div className={styles.subCategoriesWrapp}>
+      <Box className={styles.subCategoriesWrapp}>
         {subCategoriesList.map((categoryValue) => (
           <MuiSelect
             key={categoryValue}
@@ -71,14 +72,14 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
             product={product}
           />
         ))}
-        <div className={`${styles.iconWrapp}`}>
+        <Box className={`${styles.iconWrapp}`}>
           <PlusIcon
             className={`${styles.iconPlus}`}
             onClick={handleClickNewSubCategory}
           />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

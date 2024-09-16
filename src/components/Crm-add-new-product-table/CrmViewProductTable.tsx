@@ -17,9 +17,10 @@ import {
 } from '../../redux/crm-product/editSlice/editPrice'
 import { useLocation } from 'react-router-dom'
 import { label } from '../../helpers/labelCheckbox'
+import { PriceResponse } from '../../types'
 
 type Props = {
-  prices: any[]
+  prices: PriceResponse[]
 }
 
 export const CrmViewProductTable: FC<Props> = ({ prices }) => {
@@ -116,7 +117,7 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
                 />
               </TableCell>
 
-              <TableCell sx={{ ...cell, fontWeight: 600 }} align="center">
+              <TableCell sx={{ ...cell }} align="center">
                 {elem.price}
               </TableCell>
               <TableCell sx={cell} align="center">

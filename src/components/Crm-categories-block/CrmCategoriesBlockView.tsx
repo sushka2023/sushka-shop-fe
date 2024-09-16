@@ -1,46 +1,26 @@
 import { Box, Grid, Typography } from '@mui/material'
 import { FC, Fragment } from 'react'
 import { ProductResponse } from '../../types'
+import styles from './CrmCategoriesBlock.module.scss'
 
 type Props = {
-  product: ProductResponse
+  product: ProductResponse | undefined
 }
 
 export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
   if (!product) return null
   return (
     <Fragment>
-      <Typography
-        variant="body1"
-        sx={{
-          color: '#64748b',
-          fontSize: 14,
-          fontWeight: 500,
-          mt: 2
-        }}
-      >
+      <Typography variant="body1" fontSize={14} className={styles.body1View}>
         Категорія товару
       </Typography>
-      <Box
-        sx={{
-          maxWidth: 170,
-          bgcolor: '#f7f7f7',
-          color: '#567343',
-          borderRadius: '0.5rem',
-          padding: '0.75rem 1rem',
-          fontFamily: 'Open Sans',
-          fontWeight: 400,
-          border: '1px solid',
-          borderColor: 'rgba(100, 116, 139, 0.2)',
-          mt: 1
-        }}
-      >
+      <Box mt={1.3} className={styles.boxCategoryNameView}>
         {product.product_category.name}
       </Box>
       <Typography
-        pt={4}
         variant="body1"
-        sx={{ color: '#64748b', fontSize: 14, fontWeight: 500 }}
+        fontSize={14}
+        className={styles.body1SabCategoryView}
       >
         Саб-категорія товару
       </Typography>
@@ -54,21 +34,7 @@ export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
         {product.sub_categories!.map(
           (elem: { name: string }, index: number) => (
             <Grid item sm={4} md={3} key={index}>
-              <Box
-                sx={{
-                  maxWidth: 170,
-                  bgcolor: '#f7f7f7',
-                  color: '#567343',
-                  borderRadius: '0.5rem',
-                  padding: '0.75rem 1rem',
-                  fontFamily: 'Open Sans',
-                  fontWeight: 400,
-                  border: '1px solid',
-                  borderColor: 'rgba(100, 116, 139, 0.2)'
-                }}
-              >
-                {elem.name}
-              </Box>
+              <Box className={styles.boxCategoryNameView}>{elem.name}</Box>
             </Grid>
           )
         )}

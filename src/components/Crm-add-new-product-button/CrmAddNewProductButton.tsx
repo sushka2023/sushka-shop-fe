@@ -15,6 +15,8 @@ import { ProductResponse, ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/settings'
+import { Report } from 'notiflix/build/notiflix-report-aio'
+import { AxiosError } from 'axios'
 
 type Props = {
   product: ProductResponse | undefined
@@ -48,7 +50,6 @@ const CrmAddNewProductButton: FC<Props> = () => {
   )
 
   const popular = useSelector((state: RootState) => state.editProduct.popular)
-  console.log('✌️popular --->', popular)
   const dispatch = useDispatch<AppDispatch>()
 
   const sendPricesSequentially = async (productId: string) => {
@@ -139,17 +140,21 @@ const CrmAddNewProductButton: FC<Props> = () => {
         await updateProductStatus(product_id, internalStatus)
         await changePopular(product_id)
 
+        Report.success('Товар успішно відредаговано', '', 'Добре')
         navigate(-1)
       }
-    } catch (error) {
-      console.log('✌️error --->', error)
-      if (error instanceof yup.ValidationError) {
+    } catch (e) {
+      console.log('✌️error --->', e)
+      if (e instanceof yup.ValidationError) {
         const newErrors = {} as Record<string, string>
-        error.inner.forEach((err) => {
+        e.inner.forEach((err) => {
           return !newErrors[err.path!] && (newErrors[err.path!] = err.message)
         })
         dispatch(setFormErrors(newErrors))
       }
+      const error = e as AxiosError
+
+      Report.failure('Упс... сталася помилка', `${error.message}`, 'Добре')
     } finally {
       setIsLoading(false)
     }

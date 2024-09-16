@@ -1,18 +1,13 @@
-import { useState, useEffect, useRef, Fragment } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Box } from '@mui/material'
 
-import CrmCategoriesBlock from '../../components/Crm-categories-block/CrmCategoriesBlock'
 import CrmAddNewProductTable from '../../components/Crm-add-new-product-table/CrmAddNewProductTable'
 import CrmAddNewProductButton from '../../components/Crm-add-new-product-button/CrmAddNewProductButton'
 import DescriptionProduct from './DescriptionProduct'
 import StatusDropdown from './StatusDropdown'
 import { CrmViewProductTable } from '../../components/Crm-add-new-product-table/CrmViewProductTable'
-import { CrmCategoriesBlockView } from '../../components/Crm-categories-block/CrmCategoriesBlockView'
-import { Checkbox } from '../../components/UI/Checkbox'
-import { Typography } from '../../components/UI/Typography'
 
 import styles from './crmAddNewProduct.module.scss'
 import { AppDispatch, RootState } from '../../redux/store'
@@ -28,12 +23,7 @@ import {
 import axiosInstance from '../../axios/settings'
 import { newProductSchema } from '../../helpers/validateNewProduct'
 import { ProductResponse } from '../../types'
-import {
-  body1Label,
-  boxCheckbox,
-  checkBox
-} from '../../components/Crm-add-new-product-table/style'
-import { label } from '../../helpers/labelCheckbox'
+import { CrmCategoriesToggle } from '../../components/Crm-categories-block/CrmCategoriesToggle'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -91,6 +81,10 @@ const CrmAddNewProduct = () => {
     try {
       const { data } = await axiosInstance.get(`/api/product/${parsedIndex}`)
       setProduct(data)
+
+      const translatedStatus = statusMapping[data.product_status]
+      setInitialStatus(translatedStatus)
+      setCurrentStatus(translatedStatus)
     } catch (error) {
       console.error(error)
     } finally {
@@ -151,17 +145,6 @@ const CrmAddNewProduct = () => {
     })
   }
 
-  const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const prod = product?.is_popular
-    const isChecked = event.target.checked
-    setIsPopular(isChecked)
-    if (isChecked === prod) {
-      dispatch(setPopularData(false))
-    } else {
-      dispatch(setPopularData(true))
-    }
-  }
-
   useEffect(() => {
     if (productId) {
       if (nameInputRef.current) nameInputRef.current.value = ''
@@ -175,8 +158,6 @@ const CrmAddNewProduct = () => {
       document.removeEventListener('click', handleDocumentClick)
     }
   }, [])
-
-  console.log(!isNaN(parsedIndex))
 
   return isLoading ? (
     <p>loading...</p>
@@ -211,28 +192,12 @@ const CrmAddNewProduct = () => {
             descriptionRef={descriptionRef}
             handleChangeFormData={handleChangeFormData}
           />
-
-          <div className={styles.categoriesOptionWrapp}>
-            {!isNaN(parsedIndex) && product ? (
-              <Fragment>
-                <CrmCategoriesBlockView product={product} />
-                <Box sx={boxCheckbox}>
-                  <Checkbox
-                    name="checkbox"
-                    checked={isPopular}
-                    onChange={handleChecked}
-                    sx={checkBox}
-                    {...label}
-                  />
-                  <Typography variant="body1" component="span" sx={body1Label}>
-                    Mark as popular product
-                  </Typography>
-                </Box>
-              </Fragment>
-            ) : (
-              <CrmCategoriesBlock product={product} />
-            )}
-          </div>
+          <CrmCategoriesToggle
+            parsedIndex={parsedIndex}
+            product={product}
+            isPopular={isPopular}
+            setIsPopular={setIsPopular}
+          />
         </div>
 
         {product ? (

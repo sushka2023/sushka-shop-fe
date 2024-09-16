@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addData } from '../../redux/crm-product/createSlice/product'
@@ -45,18 +44,53 @@ const MuiSelect: React.FC<Props> = ({
     if (selectedCategory !== '') {
       dispatch(addData({ type, value: selectedCategory }))
     }
-  }, [selectedCategory])
+  }, [selectedCategory, dispatch, type])
 
   const handleChange = (e: SelectChangeEvent) => {
     setSelectedCategory(Number(e.target.value))
   }
 
+  const renderInputAdornment = () => {
+    if (!handleClickRemoveSubCategory) return null
+
+    return (
+      <InputAdornment
+        position="start"
+        onClick={() =>
+          handleClickRemoveSubCategory(
+            categoryValue!,
+            selectedCategory as number
+          )
+        }
+      >
+        <DeleteIcon className={styles.iconDel} />
+      </InputAdornment>
+    )
+  }
+
+  const renderMenuItems = () => {
+    if (!сategories?.length) {
+      return <MenuItem value="">Немає категорій</MenuItem>
+    }
+
+    return сategories.map((category) => (
+      <MenuItem key={category.id} value={category.id}>
+        {category.name}
+      </MenuItem>
+    ))
+  }
+
+  const getLabelText = () => {
+    if (type === 'sub_categories') {
+      return categoryValue || product ? 'Саб-категорія товару' : ''
+    }
+    return 'Категорія товару'
+  }
+
   return (
     <FormControl>
       <InputLabel sx={labelStyle} variant="standard">
-        {type === 'sub_categories'
-          ? (categoryValue || product) && 'Саб-категорія товару'
-          : 'Категорія товару'}
+        {getLabelText()}
       </InputLabel>
 
       <Select
@@ -66,31 +100,12 @@ const MuiSelect: React.FC<Props> = ({
         value={String(selectedCategory)}
         MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
         IconComponent={() => <ArowIcon className={styles.iconArrow} />}
-        startAdornment={
-          handleClickRemoveSubCategory && (
-            <InputAdornment
-              position="start"
-              onClick={() =>
-                handleClickRemoveSubCategory(
-                  categoryValue!,
-                  selectedCategory as number
-                )
-              }
-            >
-              <DeleteIcon className={styles.iconDel} />
-            </InputAdornment>
-          )
-        }
+        startAdornment={renderInputAdornment()}
       >
-        {сategories?.map((category) => (
-          <MenuItem key={category.id} value={category.id}>
-            {category.name}
-          </MenuItem>
-        )) || <MenuItem value="">Немає категорій</MenuItem>}
+        {renderMenuItems()}
       </Select>
     </FormControl>
   )
 }
 
 export default MuiSelect
-/* eslint-enable */
