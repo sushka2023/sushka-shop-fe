@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { PriceResponse } from '../../../types'
 
-type PriceEditResponse = Pick<PriceResponse, 'id' | 'is_active' | 'quantity'>
+export type PriceEditResponse = Pick<
+  PriceResponse,
+  'id' | 'is_active' | 'quantity'
+>
 
 type InitialStateType = {
   products: PriceEditResponse[]

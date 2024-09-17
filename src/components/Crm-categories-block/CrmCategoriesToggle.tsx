@@ -9,7 +9,6 @@ import {
   boxCheckbox,
   checkBox
 } from '../../components/Crm-add-new-product-table/style'
-import { label } from '../../helpers/labelCheckbox'
 import styles from './CrmCategoriesBlock.module.scss'
 import { AppDispatch } from '../../redux/store'
 import { useDispatch } from 'react-redux'
@@ -53,7 +52,6 @@ export const CrmCategoriesToggle: FC<Props> = ({
               checked={isPopular}
               onChange={handleChecked}
               sx={checkBox}
-              {...label}
             />
             <Typography variant="body1" component="span" sx={body1Label}>
               Обрати, як популярний товар

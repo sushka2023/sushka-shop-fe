@@ -7,33 +7,26 @@ import {
   newProductPriceSchema
 } from '../../helpers/validateNewProduct'
 import styles from './crmAddNewProductButton.module.scss'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { addPrice, createNewProduct } from '../../redux/crm-product/operation'
 import { AppDispatch } from '../../redux/store'
 import { setFormErrors } from '../../redux/crm-product/createSlice/product'
-import { ProductResponse, ProductStatus } from '../../types'
+import { ProductStatus } from '../../types'
 import { RootState } from '../../redux/store/index'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosInstance from '../../axios/settings'
 import { Report } from 'notiflix/build/notiflix-report-aio'
 import { AxiosError } from 'axios'
+import { PriceEditResponse } from '../../redux/crm-product/editSlice/editPrice'
+import { statusMappingEn } from '../../helpers/statusMapping'
 
-type Props = {
-  product: ProductResponse | undefined
-}
-
-const CrmAddNewProductButton: FC<Props> = () => {
+const CrmAddNewProductButton = () => {
   const statusProduct = useSelector(
     (state: RootState) => state.editProduct.status
   )
 
-  const statusMapping: { [key: string]: string } = {
-    Новий: 'new',
-    Активний: 'activated',
-    Архівований: 'archived'
-  }
-
-  const internalStatus = statusMapping[statusProduct]
+  const internalStatus =
+    statusMappingEn[statusProduct as keyof typeof statusMappingEn]
 
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -85,7 +78,7 @@ const CrmAddNewProductButton: FC<Props> = () => {
     }
   }
 
-  const changePrices = async (pricesData: any[]) => {
+  const changePrices = async (pricesData: PriceEditResponse[]) => {
     if (pricesData) {
       await Promise.all(
         pricesData.map((price) =>
@@ -141,10 +134,9 @@ const CrmAddNewProductButton: FC<Props> = () => {
         await changePopular(product_id)
 
         Report.success('Товар успішно відредаговано', '', 'Добре')
-        navigate(-1)
+        navigate('/crm/products')
       }
     } catch (e) {
-      console.log('✌️error --->', e)
       if (e instanceof yup.ValidationError) {
         const newErrors = {} as Record<string, string>
         e.inner.forEach((err) => {

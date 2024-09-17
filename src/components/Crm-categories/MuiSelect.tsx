@@ -14,7 +14,7 @@ import ArowIcon from '../../icons/arrow.svg?react'
 import DeleteIcon from '../../icons/delete.svg?react'
 import styles from './crmCategories.module.scss'
 import { labelStyle, selectStyle } from './style'
-import { ProductCategoryModel } from '../../types'
+import { ProductCategoryModel, ProductResponse } from '../../types'
 
 type Props = {
   сategories: ProductCategoryModel[] | null
@@ -24,7 +24,7 @@ type Props = {
     categoryValue: number,
     selectedCategory: number
   ) => void
-  product?: any
+  product?: ProductResponse
 }
 
 const MuiSelect: React.FC<Props> = ({
@@ -44,7 +44,7 @@ const MuiSelect: React.FC<Props> = ({
     if (selectedCategory !== '') {
       dispatch(addData({ type, value: selectedCategory }))
     }
-  }, [selectedCategory, dispatch, type])
+  }, [selectedCategory, type])
 
   const handleChange = (e: SelectChangeEvent) => {
     setSelectedCategory(Number(e.target.value))

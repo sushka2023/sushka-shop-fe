@@ -16,7 +16,6 @@ import {
   updateProductData
 } from '../../redux/crm-product/editSlice/editPrice'
 import { useLocation } from 'react-router-dom'
-import { label } from '../../helpers/labelCheckbox'
 import { PriceResponse } from '../../types'
 
 type Props = {
@@ -100,7 +99,6 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
                 <Checkbox
                   name="checkbox"
                   sx={checkBox}
-                  {...label}
                   checked={checkedState[index]}
                   onChange={() => handleCheckboxChange(index)}
                 />

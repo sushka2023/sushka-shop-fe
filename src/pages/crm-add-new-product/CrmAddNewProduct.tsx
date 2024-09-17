@@ -22,13 +22,19 @@ import {
 
 import axiosInstance from '../../axios/settings'
 import { newProductSchema } from '../../helpers/validateNewProduct'
-import { ProductResponse } from '../../types'
+import {
+  ProductResponse,
+  ProductStatus,
+  ProductStatusDropDown
+} from '../../types'
 import { CrmCategoriesToggle } from '../../components/Crm-categories-block/CrmCategoriesToggle'
+import { statusMappingEn, statusMappingUa } from '../../helpers/statusMapping'
 
 const CrmAddNewProduct = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentStatus, setCurrentStatus] =
-    useState<keyof typeof statusClasses>('Новий')
+    useState<ProductStatusDropDown>('Новий')
+
   const [initialStatus, setInitialStatus] = useState<string | null>(null)
   const [isPopular, setIsPopular] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -48,25 +54,13 @@ const CrmAddNewProduct = () => {
   const { params: productIdParam } = useParams()
   const parsedIndex = Number(productIdParam)
 
-  const statusMapping: { [key: string]: keyof typeof statusClasses } = {
-    new: 'Новий',
-    activated: 'Активний',
-    archived: 'Архівований'
-  }
-
-  const statusClasses = {
-    Новий: styles.statusNew,
-    Активний: styles.statusActive,
-    Архівований: styles.statusArchive
-  }
-
   useEffect(() => {
     if (product) {
       if (nameInputRef.current) nameInputRef.current.value = product.name
       if (descriptionRef.current) {
         descriptionRef.current.value = product.description
       }
-      setInitialStatus(statusMapping[product.product_status])
+      setInitialStatus(statusMappingUa[product.product_status])
       setIsPopular(product.is_popular)
     }
   }, [product])
@@ -82,9 +76,11 @@ const CrmAddNewProduct = () => {
       const { data } = await axiosInstance.get(`/api/product/${parsedIndex}`)
       setProduct(data)
 
-      const translatedStatus = statusMapping[data.product_status]
-      setInitialStatus(translatedStatus)
-      setCurrentStatus(translatedStatus)
+      const statusKey = data.product_status as ProductStatus
+      const translatedStatus = statusMappingUa[statusKey]
+
+      setInitialStatus(translatedStatus as ProductStatusDropDown)
+      setCurrentStatus(translatedStatus as ProductStatusDropDown)
     } catch (error) {
       console.error(error)
     } finally {
@@ -108,7 +104,7 @@ const CrmAddNewProduct = () => {
   const handleChangeStatus = (
     type: any,
     newStatusValue: string,
-    newStatusName: keyof typeof statusClasses
+    newStatusName: keyof typeof statusMappingEn
   ) => {
     setCurrentStatus(newStatusName)
 
@@ -168,7 +164,7 @@ const CrmAddNewProduct = () => {
           <div className={styles.titleWrapper}>
             <div className={styles.title}>
               <span
-                className={`${styles.status} ${statusClasses[currentStatus]}`}
+                className={`${styles.status} ${statusMappingEn[currentStatus]}`}
               >
                 {currentStatus}
               </span>
@@ -181,7 +177,7 @@ const CrmAddNewProduct = () => {
                 handleChangeStatus={handleChangeStatus}
                 currentStatus={currentStatus}
               />
-              <CrmAddNewProductButton product={product} />
+              <CrmAddNewProductButton />
             </div>
           </div>
 
