@@ -3,22 +3,26 @@ import IconButton from '@mui/material/IconButton'
 import styles from '../ReviewsListItem/reviews-list-item.module.scss'
 import DeleteIcon from '../../../../icons/delete.svg?react'
 import { FC } from 'react'
+import clsx from 'clsx'
 
-type ArchiveButtonProps = {
+type Props = {
   isDeleted: boolean
   onAdd: () => void
 }
 
-const ArchiveButton: FC<ArchiveButtonProps> = ({ isDeleted, onAdd }) => {
+const ArchiveButton: FC<Props> = ({ isDeleted, onAdd }) => {
   return (
     <Tooltip title="Delete">
       <IconButton disabled={!isDeleted} onClick={onAdd}>
         <DeleteIcon
-          className={`${!isDeleted ? styles.iconDisabled : styles.iconDelete}`}
+          className={clsx({
+            [styles.iconDisabled]: !isDeleted,
+            [styles.iconDelete]: isDeleted
+          })}
         />
       </IconButton>
     </Tooltip>
   )
 }
 
-export default ArchiveButton
+export { ArchiveButton }

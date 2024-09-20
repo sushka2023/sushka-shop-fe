@@ -32,6 +32,7 @@ export type Review = {
 
 type ReviewsState = {
   items: Review[]
+  totalReviews: number
   isLoading: boolean
   error: string | null
 }
@@ -47,6 +48,7 @@ const handleRejected = (state: ReviewsState, action: PayloadAction<string>) => {
 
 const initialState: ReviewsState = {
   items: [],
+  totalReviews: 0,
   isLoading: false,
   error: null
 }
@@ -59,7 +61,8 @@ export const reviewsSlice = createSlice({
     [fetchReviews.fulfilled](state, action) {
       state.isLoading = false
       state.error = null
-      state.items = action.payload
+      state.items = action.payload.reviews
+      state.totalReviews = action.payload.total_count
     },
     [fetchReviews.rejected]: handleRejected,
     [submitReview.pending]: handlePending,

@@ -2,9 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Role } from './Role';
-export type UserChangeRole = {
-    id: number;
-    role: Role;
+export type ProductEdit = {
+    description?: string;
 };
 

@@ -7,8 +7,8 @@ import { ModalCustom } from '../../../../components/Modal-custom-btn/ModalCustom
 import { useState } from 'react'
 import axiosInstance from '../../../../axios/settings'
 import { ReviewResponse } from '../../../../types'
-import ArchiveButton from '../ArchiveButton/ArchiveButton'
-import UnArchiveButton from '../UnArchiveButton/UnArchiveButton'
+import { ArchiveButton } from '../ArchiveButton/ArchiveButton'
+import { UnArchiveButton } from '../UnArchiveButton/UnArchiveButton'
 
 type ReviewsListItemProps = {
   item: ReviewResponse

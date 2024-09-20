@@ -9,12 +9,14 @@ import { Typography } from '@mui/material'
 import { ReviewResponse } from '../../types'
 
 const PAGE_SIZE = 5
-
-const PAGE_QTY = 0
+let PAGE_QTY
 
 const CrmReviewsPage = () => {
   const [reviews, setReviews] = useState<ReviewResponse[]>([])
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
+  const [totalReviews, setTotalReviews] = useState<number | undefined>()
+
+  PAGE_QTY = Math.floor(totalReviews / PAGE_SIZE)
 
   const fetchReviews = async () => {
     try {
@@ -22,7 +24,8 @@ const CrmReviewsPage = () => {
       const { data } = await axiosInstance.get(
         `/api/reviews/all_for_crm?limit=${PAGE_SIZE}&offset=${offset}`
       )
-      setReviews(data)
+      setReviews(data.reviews)
+      setTotalReviews(data.total_count)
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message)

@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ProductChangeStatusResponse } from '../models/ProductChangeStatusResponse';
+import type { ProductEdit } from '../models/ProductEdit';
 import type { ProductModel } from '../models/ProductModel';
 import type { ProductPopularResponse } from '../models/ProductPopularResponse';
 import type { ProductResponse } from '../models/ProductResponse';
@@ -144,18 +145,13 @@ export class ProductService {
      * Edit Product
      * Edits an existing product in the database with new data provided in the request body.
      *
-     * This function updates a product's information based on the provided product ID and
-     * the data in the ProductModel. It handles conversion of product_id to integer,
-     * checks for product existence, updates the product, and manages subcategories and images.
+     * This function updates a product's information based on the provided product ID and the data
+     * in the ProductEdit. It handles updates of the product, and manages subcategories and images.
      *
      * Args:
-     * product_id (str): The ID of the product to be edited. It should be convertible to an integer.
-     * body (ProductModel): The new product data to update.
+     * product_id (int): The ID of the product to be edited.
+     * body (ProductEdit): The new product data to update.
      * db (Session): The database session dependency.
-     *
-     * Raises:
-     * HTTPException: If product_id is not an integer.
-     * HTTPException: If the product with the given ID is not found.
      *
      * Returns:
      * ProductResponse: An object containing the updated product information.
@@ -165,8 +161,8 @@ export class ProductService {
      * @throws ApiError
      */
     public static editProductApiProductEditProductIdPatch(
-        productId: string,
-        requestBody: ProductModel,
+        productId: number,
+        requestBody: ProductEdit,
     ): CancelablePromise<ProductResponse> {
         return __request(OpenAPI, {
             method: 'PATCH',

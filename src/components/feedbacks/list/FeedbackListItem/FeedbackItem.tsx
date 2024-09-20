@@ -1,13 +1,20 @@
-import styles from '../Feedbacks.module.scss'
-import { FC } from 'react'
-import { Rating } from './Rating'
-import { Review } from '../../../redux/feedbacks/slice'
+import styles from '../../Feedbacks.module.scss'
+import { FC, useState } from 'react'
+import { Rating } from '../Rating'
+import { Review } from '../../../../redux/feedbacks/slice'
+import { ModalCustom } from '../../../Modal-custom-btn/ModalCustomWindow'
 
 type Props = {
   review: Review
 }
 
 const FeedbackItem: FC<Props> = ({ review }) => {
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleOpenModal = () => {
+    setOpenModal(true)
+  }
+
   const {
     description,
     created_at,
@@ -39,7 +46,21 @@ const FeedbackItem: FC<Props> = ({ review }) => {
         <span className={styles.date}>{formattedDate}</span>
       </div>
       <p className={styles.review}>{description}</p>
-      <img className={styles.feedbackPhoto} src={images[0]?.image_url} alt="" />
+      <img
+        onClick={images[0]?.image_url ? handleOpenModal : undefined}
+        className={styles.feedbackPhoto}
+        src={images[0]?.image_url}
+        alt=""
+      />
+      <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
+        <div>
+          <img
+            style={{ width: '100%', height: '100%' }}
+            src={images[0]?.image_url}
+            alt=""
+          />
+        </div>
+      </ModalCustom>
     </li>
   )
 }

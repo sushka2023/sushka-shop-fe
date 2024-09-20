@@ -2,10 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductModel = {
+export type ProductReviewResponse = {
+    id: number;
     name: string;
     description: string;
-    product_category_id: number;
-    sub_categories_id: Array<number>;
 };
 
