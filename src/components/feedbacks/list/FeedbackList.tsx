@@ -2,8 +2,9 @@ import styles from '../../../pages/feedback-page/FeedbackPage.module.scss'
 import { Review } from '../../../redux/feedbacks/slice'
 import { Typography } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
+import { paginationStyles } from '../helpers/mui-styles'
 
-import FeedbackItem from './FeedbackListItem/FeedbackItem'
+import { FeedbackItem } from './FeedbackListItem/FeedbackItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../redux/store'
 import { useEffect, useState } from 'react'
@@ -11,21 +12,6 @@ import { fetchReviews } from '../../../redux/feedbacks/operations'
 
 const PER_PAGE = 5
 const LIMIT = 5
-
-const paginationStyles = {
-  '& .MuiPagination-ul': {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  '& .MuiPaginationItem-root': {
-    fontFamily: 'Open Sans',
-    fontSize: '22px',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    lineHeight: '120%',
-    color: '#black !important'
-  }
-}
 
 const FeedbackList = () => {
   const [page, setPage] = useState(1)
@@ -41,14 +27,7 @@ const FeedbackList = () => {
   useEffect(() => {
     const OFFSET = (page - 1) * PER_PAGE
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
-  }, [dispatch, page])
-
-  const handleClickPagination = (
-    e: React.ChangeEvent<unknown>,
-    value: number
-  ) => {
-    setPage(value)
-  }
+  }, [page])
 
   return (
     <div className={styles.listWrapper}>
@@ -77,7 +56,7 @@ const FeedbackList = () => {
         count={totalNumberOfPages}
         sx={paginationStyles}
         page={page}
-        onChange={handleClickPagination}
+        onChange={(e: React.ChangeEvent<unknown>, v) => setPage(v)}
         color="primary"
         size="large"
         hidePrevButton

@@ -9,18 +9,18 @@ import { Typography } from '@mui/material'
 import { ReviewResponse } from '../../types'
 
 const PAGE_SIZE = 5
-let PAGE_QTY
 
 const CrmReviewsPage = () => {
   const [reviews, setReviews] = useState<ReviewResponse[]>([])
   const [page, setPage] = useState(1)
   const [totalReviews, setTotalReviews] = useState<number | undefined>()
 
-  PAGE_QTY = Math.floor(totalReviews / PAGE_SIZE)
+  const PAGE_QTY = Math.floor(totalReviews / PAGE_SIZE)
 
   const fetchReviews = async () => {
     try {
-      const offset = page * PAGE_SIZE
+      const offset = (page - 1) * PAGE_SIZE
+
       const { data } = await axiosInstance.get(
         `/api/reviews/all_for_crm?limit=${PAGE_SIZE}&offset=${offset}`
       )

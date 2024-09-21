@@ -65,4 +65,4 @@ const FeedbackItem: FC<Props> = ({ review }) => {
   )
 }
 
-export default FeedbackItem
+export { FeedbackItem }
