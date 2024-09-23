@@ -71,7 +71,7 @@ export const CrmViewProductTable: FC<Props> = ({ prices }) => {
       dispatch(clearProductData())
       dispatch(setProductStatus(''))
     }
-  }, [location.pathname, dispatch])
+  }, [location.pathname])
 
   return (
     <TableContainer component={Paper} sx={{ mt: 5, boxShadow: 'none' }}>

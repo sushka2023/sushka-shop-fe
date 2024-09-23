@@ -4,11 +4,12 @@ import { ProductResponse } from '../../types'
 import styles from './CrmCategoriesBlock.module.scss'
 
 type Props = {
-  product: ProductResponse | undefined
+  product: ProductResponse
 }
 
 export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
   if (!product) return null
+
   return (
     <Fragment>
       <Typography variant="body1" fontSize={14} className={styles.body1View}>
