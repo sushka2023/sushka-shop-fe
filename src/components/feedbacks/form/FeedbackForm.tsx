@@ -103,7 +103,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
           htmlFor="fileInput"
           className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}
         >
-          <span>Додати фото</span>
+          <span style={{ color: 'rgba(86, 115, 67, 0.6)' }}>Додати фото</span>
           <span className={styles.plusIcon}>+</span>
           <input
             className={styles.inputFile}

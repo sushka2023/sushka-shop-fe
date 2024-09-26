@@ -89,6 +89,10 @@
   resize: none;
 }
 
+.feedbackFormTextarea::placeholder {
+  color: rgba(86, 115, 67, 0.6);
+}
+
 .subtitle {
   color: $green-dark-200;
   font-family: $comfortaa;
