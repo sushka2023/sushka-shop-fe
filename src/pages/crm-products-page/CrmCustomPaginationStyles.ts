@@ -46,3 +46,28 @@ export const StyledCustomNoRowsOverlayTypography = styled(Typography)({
   color: '#64748B',
   marginTop: '40px'
 })
+
+export const StyledSelector = {
+  'width': 220,
+  'border': 'none',
+  'fontSize': 16,
+  'fontWeight': 400,
+  '.MuiSelect-icon': {
+    color: '#64748b',
+    right: '10px'
+  },
+  '.MuiSelect-select': {
+    paddingLeft: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    color: '#64748b',
+    bgcolor: '#ffff',
+    borderRadius: '10px'
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    border: 'none'
+  }
+}

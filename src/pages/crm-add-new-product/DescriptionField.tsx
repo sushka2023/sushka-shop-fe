@@ -10,6 +10,7 @@ type Props = {
   maxLength: number
   formErrors: Record<string, string>
   className?: string
+  disabled?: boolean
   handleChangeFormData: (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -30,7 +31,8 @@ const DescriptionField = forwardRef<
       maxLength,
       formErrors,
       handleChangeFormData,
-      className
+      className,
+      disabled
     },
     ref
   ) => {
@@ -38,6 +40,7 @@ const DescriptionField = forwardRef<
       <label
         htmlFor={id}
         className={`${styles.label} ${formErrors[id] ? styles.error : ''}`}
+        style={{ cursor: disabled ? 'auto' : 'pointer' }}
       >
         {label}
         {type === 'textarea' ? (
@@ -49,6 +52,7 @@ const DescriptionField = forwardRef<
             id={id}
             name={id}
             className={`${styles.nameInput} ${formErrors[id] ? styles.errorInput : ''} ${styles[className!]}`}
+            disabled={disabled}
           />
         ) : (
           <input
@@ -60,6 +64,7 @@ const DescriptionField = forwardRef<
             id={id}
             name={id}
             className={`${styles.nameInput} ${formErrors[id] ? styles.errorInput : ''} ${styles[className!]}`}
+            disabled={disabled}
           />
         )}
         {formErrors[id] && (

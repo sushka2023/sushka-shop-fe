@@ -7,7 +7,7 @@ import styles from './LayoutCRM.module.scss'
 import { useDispatch } from 'react-redux'
 import { Report } from 'notiflix/build/notiflix-report-aio'
 import { AppDispatch, RootState } from '../../redux/store'
-import { addData } from '../../redux/crm-add-new-product/slice/product'
+import { addData } from '../../redux/crm-product/createSlice/product'
 
 const LayoutCRM = () => {
   const isLoading = useSelector(

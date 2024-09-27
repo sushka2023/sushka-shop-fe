@@ -75,6 +75,7 @@ export type { ProductResponse } from './models/ProductResponse';
 export type { ProductResponseForOrder } from './models/ProductResponseForOrder';
 export type { ProductReviewResponse } from './models/ProductReviewResponse';
 export { ProductStatus } from './models/ProductStatus';
+export type { ProductStatusDropDown } from './models/ProductStatusDropDown';
 export type { ProductSubCategoryArchiveModel } from './models/ProductSubCategoryArchiveModel';
 export type { ProductSubCategoryEditModel } from './models/ProductSubCategoryEditModel';
 export type { ProductSubCategoryModel } from './models/ProductSubCategoryModel';
