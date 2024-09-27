@@ -7,7 +7,7 @@ import { useAuth } from '../../../hooks/use-auth'
 import { useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
-import { TextField } from '@mui/material'
+import { TextField, Typography } from '@mui/material'
 import { textFieldStyles } from '../helpers/mui-styles'
 import { AppDispatch, RootState } from '../../../redux/store'
 import { useDispatch } from 'react-redux'
@@ -17,6 +17,8 @@ import { FeedbackDoneModal } from './FeedbackDoneModal'
 import { useSelector } from 'react-redux'
 import { CheckOrder } from './CheckOrder/CheckOrder'
 import { submitImage } from '../helpers/helpers'
+import Box from '@mui/material/Box'
+import { SendButton } from './SendButton'
 
 type Props = {
   onSubmitSuccess?: () => void
@@ -114,18 +116,27 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
           />
         </label>
       </div>
-      {fileSelected && <FileInfo file={file} onDelete={handleFileDelete} />}
+      {fileSelected ? (
+        <FileInfo file={file} onDelete={handleFileDelete} />
+      ) : (
+        <Typography className={styles.waitingForPhoto}>
+          Очікуємо на фото вашого замовлення
+        </Typography>
+      )}
       <div className={styles.submitWrapper}>
         <Rating onRate={(value) => setRating(value)} />
-        <button type="submit" className={styles.feedbackFormBtn}>
-          Відправити
-        </button>
+        <SendButton
+          file={fileSelected}
+          rating={rating}
+          text={text}
+          name={name}
+        />
       </div>
     </form>
   )
 
   return (
-    <div className={styles.formContainer}>
+    <Box component="div" className={styles.formContainer}>
       <h3 className={styles.subtitle}>Залишити відгук</h3>
       {isLoggedIn ? (
         posts?.ukr_poshta?.length || posts?.nova_poshta?.length ? (
@@ -135,7 +146,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
         )
       ) : (
         <div className={styles.feedbackUnauth}>
-          Щоб залишити відгук, <br /> вам потрібно
+          Щоб залишити відгук, <br /> вам потрібно&nbsp;
           <span className={styles.authBtn} onClick={() => setIsModalOpen(true)}>
             авторизуватись
           </span>
@@ -148,7 +159,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
       >
         <Auth searchToken={searchToken} setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
-    </div>
+    </Box>
   )
 }
 
