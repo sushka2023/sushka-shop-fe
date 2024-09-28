@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addData } from '../../redux/crm-add-new-product/slice/product'
+import { addData } from '../../redux/crm-product/createSlice/product'
 import {
   MenuItem,
   Select,
@@ -14,7 +14,7 @@ import ArowIcon from '../../icons/arrow.svg?react'
 import DeleteIcon from '../../icons/delete.svg?react'
 import styles from './crmCategories.module.scss'
 import { labelStyle, selectStyle } from './style'
-import { ProductCategoryModel } from '../../types'
+import { ProductCategoryModel, ProductResponse } from '../../types'
 
 type Props = {
   сategories: ProductCategoryModel[] | null
@@ -24,34 +24,75 @@ type Props = {
     categoryValue: number,
     selectedCategory: number
   ) => void
+  product?: ProductResponse
 }
 
 const MuiSelect: React.FC<Props> = ({
   categoryValue,
   сategories,
   type,
-  handleClickRemoveSubCategory
+  handleClickRemoveSubCategory,
+  product
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    сategories && сategories[0].id
+  const [selectedCategory, setSelectedCategory] = useState<number | ''>(
+    categoryValue || (сategories?.[0]?.id ?? '')
   )
+
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    dispatch(addData({ type, value: selectedCategory }))
-  }, [selectedCategory])
+    if (selectedCategory !== '') {
+      dispatch(addData({ type, value: selectedCategory }))
+    }
+  }, [selectedCategory, type])
 
   const handleChange = (e: SelectChangeEvent) => {
     setSelectedCategory(Number(e.target.value))
   }
 
+  const renderInputAdornment = () => {
+    if (!handleClickRemoveSubCategory) return null
+
+    return (
+      <InputAdornment
+        position="start"
+        onClick={() =>
+          handleClickRemoveSubCategory(
+            categoryValue!,
+            selectedCategory as number
+          )
+        }
+      >
+        <DeleteIcon className={styles.iconDel} />
+      </InputAdornment>
+    )
+  }
+
+  const renderMenuItems = () => {
+    if (!сategories?.length) {
+      return <MenuItem value="">Немає категорій</MenuItem>
+    }
+
+    return сategories.map((category) => (
+      <MenuItem key={category.id} value={category.id}>
+        {category.name}
+      </MenuItem>
+    ))
+  }
+
+  const getLabelText = () => {
+    if (type === 'sub_categories') {
+      return categoryValue || product ? 'Саб-категорія товару' : ''
+    }
+    return 'Категорія товару'
+  }
+
   return (
     <FormControl>
       <InputLabel sx={labelStyle} variant="standard">
-        {type === 'sub_categories'
-          ? categoryValue === 1 && 'Саб-категорія товару'
-          : 'Категорія товару'}
+        {getLabelText()}
       </InputLabel>
+
       <Select
         sx={selectStyle}
         onChange={handleChange}
@@ -59,25 +100,9 @@ const MuiSelect: React.FC<Props> = ({
         value={String(selectedCategory)}
         MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
         IconComponent={() => <ArowIcon className={styles.iconArrow} />}
-        startAdornment={
-          type === 'sub_categories' && (
-            <InputAdornment
-              position="start"
-              onClick={() =>
-                handleClickRemoveSubCategory &&
-                handleClickRemoveSubCategory(categoryValue!, selectedCategory!)
-              }
-            >
-              <DeleteIcon className={styles.iconDel} />
-            </InputAdornment>
-          )
-        }
+        startAdornment={renderInputAdornment()}
       >
-        {сategories?.map((category) => (
-          <MenuItem key={category.name} value={category.id}>
-            {category.name}
-          </MenuItem>
-        ))}
+        {renderMenuItems()}
       </Select>
     </FormControl>
   )

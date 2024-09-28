@@ -9,6 +9,6 @@ export type ImageResponse = {
     image_url: string;
     description: string;
     image_type: ImageType;
-    main_image: boolean;
+  main_image: boolean;
 };
 

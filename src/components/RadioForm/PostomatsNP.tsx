@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState, Fragment, useCallback } from 'react'
+import { FC, useEffect, useMemo, useState, Fragment } from 'react'
 
 import { ErrorMessage } from '../Error/Error'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
@@ -78,7 +78,7 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
     return generateOptionsData(warehouses)
   }, [warehouses])
 
-  const onChangeCity = useCallback((value: string | null) => {
+  const onChangeCity = (value: string | null) => {
     setValue('cityPostomats', value)
     setValInputCity(value ?? '')
     clearErrors('cityPostomats')
@@ -90,7 +90,7 @@ export const NovaPoshtaPostomats: FC<FormProps> = ({
     } else {
       setSettleRef(null)
     }
-  }, [])
+  }
 
   const onChangeWarehouse = (value: string | null) => {
     const selectedWarehouse = optionsData.find(

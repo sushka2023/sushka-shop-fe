@@ -2,6 +2,7 @@ import { FC, Ref } from 'react'
 import CrmStatus from '../../components/Crm-status/CrmStatus'
 import ArowIcon from '../../icons/arrow.svg?react'
 import styles from './crmAddNewProduct.module.scss'
+import { ProductStatusDropDown } from '../../types'
 
 type Props = {
   isOpen: boolean
@@ -10,7 +11,7 @@ type Props = {
   handleChangeStatus: (
     type: any,
     newStatusValue: string,
-    newStatusName: 'Новий' | 'Активний' | 'Архівований'
+    newStatusName: ProductStatusDropDown
   ) => void
   currentStatus: string
 }
@@ -34,7 +35,7 @@ const StatusDropdown: FC<Props> = ({
             handleChangeStatus(
               type,
               newStatusValue,
-              newStatusName as 'Новий' | 'Активний' | 'Архівований'
+              newStatusName as ProductStatusDropDown
             )
           }}
           currentStatus={currentStatus}
