@@ -8,6 +8,7 @@ import { Radio } from '../UI/Radio'
 import { Checkbox } from '../UI/Checkbox'
 import { Inputs, PaymentMethodTypes } from '../../pages/order-page/types'
 import { PAYMENT_METHODS } from '../../pages/order-page/constants'
+import PlataIcon from '../../icons/plata_light_bg.svg?react'
 
 const OrderPayment = () => {
   const { control, setValue, orderDetails } = useContext(OrderContext)
@@ -38,6 +39,30 @@ const OrderPayment = () => {
         Оберіть спосіб оплати
       </Typography>
       <RadioGroup defaultValue={PaymentMethodTypes.postpaid}>
+        <Controller
+          key={PaymentMethodTypes.wayforpay}
+          name="paymentType"
+          control={control}
+          render={({ field }) => (
+            <FormControlLabel
+              value={PaymentMethodTypes.wayforpay}
+              label={
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="body1">
+                    Plata by mono (оплата картою, ApplePay, GooglePay)
+                  </Typography>
+                  <PlataIcon width={100} height={20} />
+                </Box>
+              }
+              control={
+                <Radio
+                  checked={field.value === PaymentMethodTypes.wayforpay}
+                  onChange={(e) => handleChangePaymentMethod(e, field)}
+                />
+              }
+            />
+          )}
+        />
         {PAYMENT_METHODS.map(({ method, label }) => (
           <Controller
             key={method}
