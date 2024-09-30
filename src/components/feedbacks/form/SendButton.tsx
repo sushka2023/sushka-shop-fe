@@ -10,7 +10,7 @@ type Props = {
 }
 
 const SendButton: FC<Props> = ({ file, rating, text, name }) => {
-  const isDisabled = !file || rating === 0 || name === '' || text === ''
+  const isDisabled = !file || rating === 0 || name === '' || text.length < 10
 
   return (
     <button

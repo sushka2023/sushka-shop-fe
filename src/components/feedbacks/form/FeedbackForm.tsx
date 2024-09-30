@@ -36,6 +36,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
   const { isLoggedIn } = useAuth()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [searchParams] = useSearchParams()
+  const [, setAreaText] = useState('')
 
   const dispatch = useDispatch<AppDispatch>()
   const auth = useSelector((state: RootState) => state.auth)
@@ -89,6 +90,15 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
     setOpenModal(true)
   }
 
+  const handleTextChange = (text: string) => {
+    setAreaText(text)
+    if (text.length < 10) {
+      console.error('Текст має містити щонайменше 10 символів')
+    } else {
+      setText(text)
+    }
+  }
+
   const renderFormContent = () => (
     <form className={styles.feedbackForm} onSubmit={handleSubmit}>
       <ModalCustom openModal={openModal} setOpenModal={setOpenModal}>
@@ -100,7 +110,10 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
         sx={textFieldStyles}
       />
       <div className={styles.wrapperTextarea}>
-        <CustomTextarea maxLength={MAX_LENGTH} onTextChange={setText} />
+        <CustomTextarea
+          maxLength={MAX_LENGTH}
+          onTextChange={handleTextChange}
+        />
         <label
           htmlFor="fileInput"
           className={`${styles.customFileInput} ${fileSelected ? styles.fileSelected : ''}`}

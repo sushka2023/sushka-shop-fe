@@ -139,6 +139,13 @@
   }
 }
 
+.textAreaError {
+  position: absolute;
+  top: 60px;
+  left: 16px;
+  font-size: 18px;
+  color: $red;
+}
 
 .submitWrapper {
   width: 100%;
