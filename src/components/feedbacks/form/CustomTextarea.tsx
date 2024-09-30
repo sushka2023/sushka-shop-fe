@@ -19,7 +19,7 @@ export const CustomTextarea: FC<Props> = ({ maxLength, onTextChange }) => {
       onTextChange(newText)
     }
     if (newText.length < 10) {
-      setError('Текст має містити хоча б від 10 символів')
+      setError('Текст має містити щонайменше 10 символів')
     } else {
       setError('')
     }
