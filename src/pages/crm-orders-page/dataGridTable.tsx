@@ -2,7 +2,7 @@ import { Box, Typography, Link } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CallIcon from '../../icons/call.svg?react'
 import EditIcon from '../../icons/edit-icon.svg?react'
-import { OrdersCRMResponse, OrdersStatus } from '../../types'
+import { OrdersCRMResponse, OrdersStatuses } from '../../types'
 import { formatter } from '../../helpers/formatterTotalPrice'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { Link as RouterLink } from 'react-router-dom'
@@ -38,7 +38,7 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 140,
       sortable: false,
       renderCell: (params) => {
-        const statusKey = params.value as OrdersStatus
+        const statusKey = params.value as OrdersStatuses
 
         return (
           <Box

@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   FormControl,
+  IconButton,
+  Link,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -24,6 +26,7 @@ import {
   multilineStyle,
   selectStyle
 } from './style'
+import CallIcon from '../../icons/call.svg?react'
 import { getOrderDetails, orderStatusArray } from './utils'
 import { editOrderNotes, editOrderStatus, fetchOrder } from './operations'
 import { ORDER_STATUS } from '../crm-orders-page/constants'
@@ -36,6 +39,7 @@ export enum OrderOperationType {
   update_status = 'update_status'
 }
 
+/* eslint-disable complexity */
 const CrmEditOrderPage = () => {
   const [status, setStatus] = useState(OrdersStatuses.NEW)
   const [notes, setNotes] = useState<string | undefined>('')
@@ -185,12 +189,24 @@ const CrmEditOrderPage = () => {
           title="Доставка"
           icon={<TruckIcon />}
         />
-        <CrmOrderDetails
-          title="Коментар до замовлення"
-          icon={<NotificationIcon />}
-        >
-          <Box>{order?.comment}</Box>
-        </CrmOrderDetails>
+        <Box>
+          <CrmOrderDetails
+            title="Коментар до замовлення"
+            icon={<NotificationIcon />}
+          >
+            <Box>{order?.comment}</Box>
+          </CrmOrderDetails>
+          {order?.call_manager && (
+            <Link
+              href={`tel:${order.phone_number_another_recipient || order.phone_number_anon_user || order.user?.phone_number}`}
+              sx={{ marginLeft: '10px' }}
+            >
+              <IconButton sx={{ padding: '10px' }}>
+                <CallIcon style={{ width: 30, height: 30 }} />
+              </IconButton>
+            </Link>
+          )}
+        </Box>
       </Box>
       <Box>
         <DataGridTable
