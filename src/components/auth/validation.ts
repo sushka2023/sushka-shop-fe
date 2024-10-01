@@ -125,6 +125,25 @@ export const AddressAddSchema = (selectedValue: string) => {
           .notRequired()
           .max(4, 'Поле квартира може містити не більше 4 символів')
       })
+    case 'urkPoshta':
+      return Yup.object().shape({
+        region: Yup.string()
+          .required('Введіть область')
+          .min(2, 'Поле повинно мати щонайменше 2 символи'),
+        cityAddress: Yup.string()
+          .required('Введість місто')
+          .min(2, 'Поле повинно мати щонайменше 2 символи'),
+        postIndex: Yup.string()
+          .required('Введіть індекс')
+          .min(2, 'Поле повинно мати щонайменше 2 символи'),
+        address: Yup.string()
+          .required('Введіть вулицю')
+          .min(2, 'Поле повинно мати щонайменше 2 символи'),
+        house: Yup.string()
+          .required('Введіть будинок')
+          .min(2, 'Поле повинно мати щонайменше 2 символи'),
+        floor: Yup.string().notRequired()
+      })
     default:
       return Yup.object().shape({})
   }

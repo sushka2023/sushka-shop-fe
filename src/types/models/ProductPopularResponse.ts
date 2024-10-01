@@ -3,11 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ProductStatus } from './ProductStatus';
-export type ProductChangeStatusResponse = {
+export type ProductPopularResponse = {
     id: number;
+    name: string;
     product_status: ProductStatus;
-    new_product: boolean;
-    is_deleted: boolean;
     is_popular: boolean;
+    created_at: string;
+    updated_at: string;
 };
 
