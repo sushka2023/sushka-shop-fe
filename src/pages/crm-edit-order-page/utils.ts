@@ -29,12 +29,8 @@ export const getOrderDetails = (
     ],
     DETAILS_INFO: [
       {
-        tag: `ім'я:`,
+        tag: `Отримувач:`,
         value: `${order?.full_name_another_recipient || order?.first_name_anon_user || order?.user?.first_name} ${order?.last_name_anon_user || order?.user?.last_name}`
-      },
-      {
-        tag: `E-mail:`,
-        value: order?.email_anon_user || order?.user?.email
       },
       {
         tag: `Телефон:`,
