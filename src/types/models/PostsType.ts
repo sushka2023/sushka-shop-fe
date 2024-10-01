@@ -5,7 +5,7 @@
 /**
  * Post types.
  */
-export enum PostType {
+export enum PostsType {
     NOVA_POSHTA_WAREHOUSE = 'nova_poshta_warehouse',
     NOVA_POSHTA_ADDRESS = 'nova_poshta_address',
     UKR_POSHTA = 'ukr_poshta',

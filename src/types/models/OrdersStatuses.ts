@@ -5,7 +5,7 @@
 /**
  * Status of the order
  */
-export enum OrdersStatus {
+export enum OrdersStatuses {
     NEW = 'new',
     IN_PROCESSING = 'in processing',
     SHIPPED = 'shipped',

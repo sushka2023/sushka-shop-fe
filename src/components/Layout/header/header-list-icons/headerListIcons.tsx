@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Fragment, useEffect, useRef, useState } from 'react'
@@ -102,12 +101,8 @@ const HeaderListIcons = () => {
           </Link>
         </li>
       </ul>
-      <ModalPortal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        searchToken={searchToken}
-      >
-        <Auth searchToken={searchToken} setIsModalOpen={setIsModalOpen} />
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <Auth setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
     </Fragment>
   )

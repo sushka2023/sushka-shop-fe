@@ -2,7 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type ProductArchiveModel = {
-    id: number;
-};
+/**
+ * Product status.
+ */
+export type ProductStatusDropDown = 'Новий' | 'Активний' | 'Архівований';
+
+
 

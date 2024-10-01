@@ -12,7 +12,8 @@ import type { OrdersCRMResponse } from '../models/OrdersCRMResponse';
 import type { OrdersCRMWithTotalCountResponse } from '../models/OrdersCRMWithTotalCountResponse';
 import type { OrdersCurrentUserWithTotalCountResponse } from '../models/OrdersCurrentUserWithTotalCountResponse';
 import type { OrdersResponseWithMessage } from '../models/OrdersResponseWithMessage';
-import type { OrdersStatus } from '../models/OrdersStatus';
+import type { OrdersStatuses } from '../models/OrdersStatuses';
+import type { OrdersUserCRMWithTotalCountResponse } from '../models/OrdersUserCRMWithTotalCountResponse';
 import type { OrdersWithMessage } from '../models/OrdersWithMessage';
 import type { UpdateOrderStatus } from '../models/UpdateOrderStatus';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -24,7 +25,8 @@ export class OrdersService {
      * The create of order function creates a new order in the database.
      *
      * Args:
-     * order_data: OrderModel: Validate the request body
+     * order_info: OrderModel: Validate the request body
+     * (payment_type: (permitted: "wayforpay", "requisite", "cash_on_delivery_np"))
      * background_tasks: BackgroundTasks: Add a task to the background tasks queue
      * db: Session: Pass the database session to the repository layer
      * current_user (User): the current user attempting to create the order
@@ -83,20 +85,26 @@ export class OrdersService {
      *
      * :param limit: int: Limit the number of orders returned
      * :param offset: int: Indicate the number of records to skip
-     * :param order_status: OrdersStatus: Filter orders by status
+     * :param order_status: OrdersStatuses: Filter orders by status
+     * :param order_id: Optional[int]: Search orders by id
+     * :param sort_order: Literal["ascending", "descending"]: Sorting orders by created date
      * :param db: Session: Pass the database connection to the function
      *
      * :return: A list of orders
      * @param limit
      * @param offset
      * @param orderStatus
+     * @param orderId
+     * @param sortOrder
      * @returns OrdersCRMWithTotalCountResponse Successful Response
      * @throws ApiError
      */
     public static getOrdersForCrmApiOrdersAllForCrmGet(
         limit: number,
         offset: number,
-        orderStatus?: OrdersStatus,
+        orderStatus?: OrdersStatuses,
+        orderId?: number,
+        sortOrder: 'ascending' | 'descending' = 'descending',
     ): CancelablePromise<OrdersCRMWithTotalCountResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -105,6 +113,8 @@ export class OrdersService {
                 'limit': limit,
                 'offset': offset,
                 'order_status': orderStatus,
+                'order_id': orderId,
+                'sort_order': sortOrder,
             },
             errors: {
                 422: `Validation Error`,
@@ -131,6 +141,40 @@ export class OrdersService {
             url: '/api/orders/{order_id}/for_crm',
             path: {
                 'order_id': orderId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Orders By User Id For Crm
+     * The get_order_by_user_id_for_crm function returns all orders by user_id for the CRM.
+     *
+     * :param limit: int: Limit the number of orders returned
+     * :param offset: int: Indicate the number of records to skip
+     * :param user_id: Get the id of the user to get all orders for him
+     * :param db: Session: Pass the database connection to the function
+     *
+     * Return: List of orders for the specific user
+     * @param userId
+     * @param limit
+     * @param offset
+     * @returns OrdersUserCRMWithTotalCountResponse Successful Response
+     * @throws ApiError
+     */
+    public static getOrdersByUserIdForCrmApiOrdersForCrmUserGet(
+        userId: number,
+        limit: number,
+        offset: number,
+    ): CancelablePromise<OrdersUserCRMWithTotalCountResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/orders/for_crm/user',
+            query: {
+                'user_id': userId,
+                'limit': limit,
+                'offset': offset,
             },
             errors: {
                 422: `Validation Error`,

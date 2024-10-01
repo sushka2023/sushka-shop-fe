@@ -11,7 +11,7 @@ import {
 import { useForm, Controller } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { OrdersCRMResponse, OrdersStatus } from '../../types'
+import { OrdersCRMResponse, OrdersStatuses } from '../../types'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
 import PersonIcon from '@mui/icons-material/Person'
 import BagIcon from '../../icons/bag.svg?react'

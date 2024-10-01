@@ -9,7 +9,7 @@ export type ReviewResponse = {
     id: number;
     user_id: number;
     user: UserReviewResponse;
-    product_id: number;
+    product_id?: number;
     rating: Rating;
     description: string;
     created_at: string;

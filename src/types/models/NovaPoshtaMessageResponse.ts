@@ -2,9 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { NovaPoshtaResponse } from './NovaPoshtaResponse';
-export type PostWarehouseResponse = {
+export type NovaPoshtaMessageResponse = {
     message: string;
-    nova_poshta_data: NovaPoshtaResponse;
 };
 
