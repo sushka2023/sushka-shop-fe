@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState, useCallback } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
 import Auth from '../../../auth/Auth'
 import IconSearch from '../../../../icons/search.svg?react'
@@ -9,16 +9,59 @@ import IconFavorite from '../../../../icons/favorite.svg?react'
 import styles from '../Header.module.scss'
 import { RootState } from '../../../../redux/store'
 import BasketCountIcon from '../../../basket-count-icon/BasketCountIcon'
+import { PaperSearchInfo } from './PaperSearchInfo'
+import { getProducts } from './operation'
+
+const TIMER = 1000
 
 const HeaderListIcons = () => {
   const [isActive, setIsActive] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
   const iconRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-
   const [searchParams] = useSearchParams()
   const searchToken = searchParams.get('token')
+
+  const observer = useRef<IntersectionObserver | null>(null)
+  const lastOrderElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (loading || !hasMore) return
+      if (observer.current) observer.current.disconnect()
+      if (node) {
+        observer.current = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            const newOffset = products.length
+            getProducts(
+              searchQuery,
+              newOffset,
+              setProducts,
+              setLoading,
+              setHasMore
+            )
+          }
+        })
+        observer.current.observe(node)
+      }
+    },
+    [loading, hasMore, searchQuery, products]
+  )
+
+  useEffect(() => {
+    if (searchQuery) {
+      const timer = setTimeout(() => {
+        setProducts([])
+        setHasMore(true)
+        getProducts(searchQuery, 0, setProducts, setLoading, setHasMore)
+      }, TIMER)
+
+      return () => clearTimeout(timer)
+    }
+  }, [searchQuery])
 
   useEffect(() => {
     if (searchToken) {
@@ -47,6 +90,10 @@ const HeaderListIcons = () => {
     }
   }, [])
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value)
+  }
+
   return (
     <Fragment>
       <ul className={styles.listIcons}>
@@ -67,6 +114,8 @@ const HeaderListIcons = () => {
                   ? ` ${styles.searchInputIsActive}`
                   : `${styles.searchInput}`
               }
+              value={searchQuery}
+              onChange={handleInputChange}
             />
             <IconSearch
               id="iconSearch"
@@ -75,6 +124,10 @@ const HeaderListIcons = () => {
               }
             />
           </div>
+          <PaperSearchInfo
+            products={products}
+            lastElementRef={lastOrderElementRef}
+          />
         </li>
         <li className={styles.listIconsLine}>
           {isLoggedIn ? (
