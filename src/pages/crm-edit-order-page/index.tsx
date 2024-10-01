@@ -37,7 +37,7 @@ export enum OrderOperationType {
 }
 
 const CrmEditOrderPage = () => {
-  const [status, setStatus] = useState(OrdersStatus.NEW)
+  const [status, setStatus] = useState(OrdersStatuses.NEW)
   const [notes, setNotes] = useState<string | undefined>('')
   const [order, setOrder] = useState<OrdersCRMResponse | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -54,7 +54,7 @@ const CrmEditOrderPage = () => {
   }, [params])
 
   const onSubmit = (data: {
-    status: OrdersStatus | undefined
+    status: OrdersStatuses | undefined
     notes: string | undefined
   }) => {
     editOrderStatus(order?.id!, data?.status!, setIsLoading)
@@ -62,8 +62,8 @@ const CrmEditOrderPage = () => {
   }
 
   const handleChangeStatus = (event: SelectChangeEvent) => {
-    setValue('status', event.target.value as OrdersStatus)
-    setStatus(event.target.value as OrdersStatus)
+    setValue('status', event.target.value as OrdersStatuses)
+    setStatus(event.target.value as OrdersStatuses)
   }
 
   const handleChangeNotes = (event: React.ChangeEvent<HTMLInputElement>) => {
