@@ -46,6 +46,7 @@ const HeroSection = () => {
             to={firstCategoryId}
           >
             <Button
+              onClick={() => window.scrollTo(0, 0)}
               fullWidth
               variant="contained"
               className={styles.sloganButton}
