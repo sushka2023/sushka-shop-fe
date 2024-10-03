@@ -41,36 +41,36 @@ const AddressUP: FC<FormProps> = ({ register, errors }) => {
             borderColor: 'transparent'
           }
         }}
-        placeholder={'Україна'}
-        readOnly={true}
+        placeholder="Україна"
+        readOnly
       />
       <OutlinedInput
         {...register('region')}
         sx={{
           width: '100%'
         }}
-        placeholder={'Введіть область*'}
+        placeholder="Введіть область*"
       />
       <OutlinedInput
         {...register('cityAddress')}
         sx={{
           width: '100%'
         }}
-        placeholder={'Введіть місто*'}
+        placeholder="Введіть місто*"
       />
       <OutlinedInput
         {...register('postIndex')}
         sx={{
           width: '100%'
         }}
-        placeholder={'Введіть індекс*'}
+        placeholder="Введіть індекс*"
       />
       <OutlinedInput
         {...register('address')}
         sx={{
           width: '100%'
         }}
-        placeholder={'Вулиця*'}
+        placeholder="Вулиця*"
       />
       <Box component="div" sx={{ display: 'flex', gap: '15px' }}>
         <OutlinedInput
@@ -78,14 +78,14 @@ const AddressUP: FC<FormProps> = ({ register, errors }) => {
           sx={{
             width: '100%'
           }}
-          placeholder={'Будинок*'}
+          placeholder="Будинок*"
         />
         <OutlinedInput
           {...register('floor')}
           sx={{
             width: '100%'
           }}
-          placeholder={'Квартира'}
+          placeholder="Квартира"
         />
       </Box>
     </Box>
