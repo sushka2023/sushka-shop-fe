@@ -22,9 +22,9 @@ const handleRemoveFromArchive = async (
 ) => {
   try {
     await axiosInstance.put('/api/reviews/unarchive', { id })
-    if (!is_checked) {
-      await axiosInstance.put('/api/reviews/check_review', { id })
-    }
+
+    await axiosInstance.put('/api/reviews/check_review', { id })
+
     onStatusChange()
   } catch (err) {
     console.error(err)
@@ -45,7 +45,6 @@ export const ReviewsListItem = ({
   onStatusChange
 }: ReviewsListItemProps) => {
   const {
-    is_deleted,
     id,
     rating,
     description,
@@ -61,7 +60,7 @@ export const ReviewsListItem = ({
     setOpenModal(true)
   }
 
-  const isDeleteDisabled = !is_deleted
+  const isDeleteDisabled = is_checked
   const date = new Date(created_at)
   const formattedDate = date.toLocaleDateString('uk-UA', {
     day: '2-digit',
@@ -72,7 +71,7 @@ export const ReviewsListItem = ({
   return (
     <div className={styles.item}>
       <span
-        className={`${styles.span} ${!is_deleted ? styles.spanActive : ''}`}
+        className={`${styles.span} ${is_checked ? styles.spanActive : ''}`}
       ></span>
       <div className={styles.wrapper}>
         <div className={styles.infoWrapper}>

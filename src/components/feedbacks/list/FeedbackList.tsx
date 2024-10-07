@@ -29,13 +29,19 @@ const FeedbackList = () => {
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
   }, [page])
 
+  console.log(items)
+
   return (
     <div className={styles.listWrapper}>
       {items?.length > 0 ? (
         <ul className={styles.feedbackList}>
-          {items.map((review: Review) => (
-            <FeedbackItem review={review} key={review.id} />
-          ))}
+          {items.map(
+            (review: Review) =>
+              review.is_checked &&
+              !review.is_deleted && (
+                <FeedbackItem review={review} key={review.id} />
+              )
+          )}
         </ul>
       ) : (
         <Typography

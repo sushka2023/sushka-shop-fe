@@ -9,6 +9,8 @@ export const ReviewsList = ({
   items: ReviewResponse[]
   onStatusChange: () => void
 }) => {
+  console.log(items)
+
   return (
     <ul className={styles.list}>
       {items.map((item: ReviewResponse) => (
