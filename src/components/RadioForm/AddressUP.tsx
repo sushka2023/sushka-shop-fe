@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { OutlinedInput } from '@mui/material'
 import Box from '@mui/material/Box'
 import { FormProps } from './RadioForm'
@@ -19,6 +19,13 @@ const getErrorMessage = (errors: Record<string, ErrorType>): ErrorType => {
 
 const AddressUP: FC<FormProps> = ({ register, errors }) => {
   const errorMessage = getErrorMessage(errors)
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const charCode = event.charCode
+    if (!/^[a-zA-Zа-яА-Яіїєґ]+$/i.test(String.fromCharCode(charCode))) {
+      event.preventDefault()
+    }
+  }
 
   return (
     <Box
@@ -49,6 +56,7 @@ const AddressUP: FC<FormProps> = ({ register, errors }) => {
         sx={{
           width: '100%'
         }}
+        onKeyPress={handleKeyPress}
         placeholder="Введіть область*"
       />
       <OutlinedInput
@@ -56,6 +64,7 @@ const AddressUP: FC<FormProps> = ({ register, errors }) => {
         sx={{
           width: '100%'
         }}
+        onKeyPress={handleKeyPress}
         placeholder="Введіть місто*"
       />
       <OutlinedInput

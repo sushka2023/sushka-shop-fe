@@ -133,7 +133,7 @@ export const AddressAddSchema = (selectedValue: string) => {
         cityAddress: Yup.string()
           .required('Введість місто')
           .min(2, 'Поле повинно мати щонайменше 2 символи'),
-        postIndex: Yup.string()
+        postIndex: Yup.number()
           .required('Введіть індекс')
           .min(2, 'Поле повинно мати щонайменше 2 символи'),
         address: Yup.string()
