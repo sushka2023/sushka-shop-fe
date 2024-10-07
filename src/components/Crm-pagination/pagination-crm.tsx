@@ -2,30 +2,31 @@ import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import Stack from '@mui/material/Stack'
 import { useTheme } from '@mui/material'
-import { ArrowLeft } from '../../pages/crm-clients-page/ArrowLeft'
-import { ArrowRight } from '../../pages/crm-clients-page/ArrowRight'
+import { ArrowLeft } from './ArrowLeft'
+import { Link, useLocation } from 'react-router-dom'
+import { paginationBlock, paginationItems } from './style'
+import { ArrowRight } from './ArrowRight'
 
 type PaginationCRMProps = {
-  page: number
+  page: number | undefined
   pageQty: number
   setPage: (page: number) => void
+  isLoading: boolean
 }
 
-export default function PaginationCRM({
+export function PaginationCRM({
   page,
   pageQty,
-  setPage
+  setPage,
+  isLoading
 }: PaginationCRMProps) {
   const theme = useTheme()
+  const location = useLocation()
 
   return (
     <Stack
       spacing={2}
-      sx={{
-        background: theme.palette.grey[50],
-        alignItems: 'center',
-        p: '20px'
-      }}
+      sx={{ ...paginationBlock, background: theme.palette.grey[50] }}
     >
       <Pagination
         count={pageQty}
@@ -34,18 +35,14 @@ export default function PaginationCRM({
         renderItem={(item) => (
           <PaginationItem
             slots={{ previous: ArrowLeft, next: ArrowRight }}
+            component={Link}
+            to={`?page=${item.page}`}
             {...item}
+            state={{ from: location.pathname + location.search }}
           />
         )}
-        sx={{
-          '& .MuiPaginationItem-root': {
-            color: 'accent.darker'
-          },
-          '& .MuiPaginationItem-root.Mui-selected': {
-            backgroundColor: 'accent.darker',
-            color: 'background.default'
-          }
-        }}
+        disabled={isLoading}
+        sx={paginationItems}
       />
     </Stack>
   )

@@ -24,8 +24,9 @@ import LayoutCRM from './components/LayoutCRM/LayoutCRM'
 import { AccountPage } from './pages/account-page/account-page'
 import { OrderPage } from './pages/order-page'
 import CrmClientsPage from './pages/crm-clients-page/CrmClientsPage'
-import { CrmOrdersPage } from './pages/crm-orders-page'
+import CrmClientAbout from './pages/crm-cleint-about/CrmClientAbout'
 import CrmEditOrderPage from './pages/crm-edit-order-page'
+import { CrmOrdersPage } from './pages/crm-orders-page'
 import CrmReviewsPage from './pages/crm-reviews-page/CrmReviewsPage'
 
 function App() {
@@ -71,10 +72,10 @@ function App() {
 
         <Route
           path="crm"
-          element={<PrivateRouteCrm redirectTo="/" component={<LayoutCRM />} />}
+          element={<PrivateRouteCrm component={<LayoutCRM />} redirectTo="/" />}
         >
           <Route
-            path="dashbord"
+            path="dashboard"
             element={
               <div style={{ marginBottom: '500px' }}>Dashboard page</div>
             }
@@ -87,15 +88,13 @@ function App() {
           <Route path="orders/:params" element={<CrmEditOrderPage />} />
 
           <Route path="clients" element={<CrmClientsPage />} />
-          <Route
-            path="clients/:params"
-            element={
-              <div style={{ marginBottom: '500px' }}>clients params</div>
-            }
-          />
+
+          <Route path="clients/:params" element={<CrmClientAbout />} />
+
           <Route path="opinions" element={<CrmReviewsPage />} />
           <Route path="settings" element={<CrmSettingsPage />} />
-          <Route index element={<Navigate to="dashbord" replace />} />
+
+          <Route index element={<Navigate to="dashboard" replace />} />
         </Route>
       </Routes>
     </Fragment>

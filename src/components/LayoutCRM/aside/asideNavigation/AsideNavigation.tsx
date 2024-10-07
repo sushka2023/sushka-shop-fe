@@ -12,7 +12,7 @@ const AsideNavigation = () => {
       <ul className={styles.asideList}>
         <li>
           <NavLink
-            to="dashbord"
+            to="dashboard"
             className={({ isActive }) => {
               return isActive
                 ? `${styles.active} ${styles.navigationLink}`

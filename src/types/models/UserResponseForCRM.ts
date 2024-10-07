@@ -10,7 +10,7 @@ export type UserResponseForCRM = {
     first_name: string;
     last_name: string;
     role: Role;
-    phone_number?: string;
+    phone_number: string;
     created_at: string;
     updated_at: string;
     is_deleted: boolean;
