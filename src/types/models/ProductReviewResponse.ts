@@ -2,7 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PriceArchiveModel = {
+export type ProductReviewResponse = {
     id: number;
+    name: string;
+    description: string;
 };
 

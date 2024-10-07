@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PriceArchiveModel } from '../models/PriceArchiveModel';
 import type { PriceModel } from '../models/PriceModel';
 import type { PriceResponse } from '../models/PriceResponse';
 import type { TotalPriceModel } from '../models/TotalPriceModel';
@@ -69,66 +68,6 @@ export class PriceService {
         });
     }
     /**
-     * Archive Product
-     * The archive_product function is used to archive a product.
-     * It takes in the id of the product and archives it.
-     * If the product does not exist, it returns a 404 error code with an appropriate message.
-     * If the product has already been archived, it returns a 409 error code with an appropriate message.
-     *
-     * Args:
-     * body: PriceArchiveModel: Get the id of the price to be archived
-     * db: Session: Get the database session
-     *
-     * Returns:
-     * A pricearchivemodel object
-     * @param requestBody
-     * @returns PriceResponse Successful Response
-     * @throws ApiError
-     */
-    public static archiveProductApiPriceArchivePut(
-        requestBody: PriceArchiveModel,
-    ): CancelablePromise<PriceResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/price/archive',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * Archive Product
-     * The archive_product function takes a PriceArchiveModel object as input, and returns the archived price.
-     * The function first checks if the price exists in the database. If it does not exist, an HTTP 404 error is raised.
-     * If it does exist but has already been deleted (is_deleted = True), an HTTP 409 error is raised to indicate that there
-     * is a conflict between what was requested and what currently exists in the database.
-     *
-     * Args:
-     * body: PriceArchiveModel: Get the id of the price to be archived
-     * db: Session: Pass the database session to the function
-     *
-     * Returns:
-     * A price model
-     * @param requestBody
-     * @returns PriceResponse Successful Response
-     * @throws ApiError
-     */
-    public static archiveProductApiPriceUnarchivePut(
-        requestBody: PriceArchiveModel,
-    ): CancelablePromise<PriceResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/price/unarchive',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
      * Total Price
      * The total_price function calculates the total price of a given order.
      * The function takes in an id and returns the total price of that order.
@@ -151,6 +90,46 @@ export class PriceService {
             url: '/api/price/total_price',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Change Price Status And Quantity
+     * The change_price_status_and_quantity function changes status and quantity the specific price
+     * and returns the activated or the deactivated price.
+     * The function first checks if the price exists in the database. If it does not exist, an HTTP 404 error is raised.
+     * If it does exist but already has a status that is specified in the input field, an HTTP 409 error is raised to
+     * indicate that there is a conflict between what was requested and what currently exists in the database.
+     *
+     * Args:
+     * price_id: int: Get the id of the price to be activated
+     * is_active: bool: status of the price to change it (optional)
+     * quantity: int: quantity of the price to change it (optional)
+     * db: Session: Pass the database session to the function
+     *
+     * Returns:
+     * A price model
+     * @param priceId
+     * @param isActive
+     * @param quantity
+     * @returns PriceResponse Successful Response
+     * @throws ApiError
+     */
+    public static changePriceStatusAndQuantityApiPriceChangeStatusPatch(
+        priceId: number,
+        isActive?: boolean,
+        quantity?: number,
+    ): CancelablePromise<PriceResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/price/change_status',
+            query: {
+                'price_id': priceId,
+                'is_active': isActive,
+                'quantity': quantity,
+            },
             errors: {
                 422: `Validation Error`,
             },

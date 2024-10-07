@@ -12,13 +12,18 @@ import { getToken } from '../../utils/cookie/token'
 import { AppDispatch } from '../../redux/store'
 import { AddressAddSchema } from '../auth/validation'
 import { useSnackbar } from '../../hooks/useSnackbar'
+import {
+  getNovaPoshtaData,
+  getOtherData,
+  getUrkPoshtaData
+} from '../RadioForm/data'
 
 type Props = {
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-type User = {
+export type User = {
   posts: {
     id: number
   }
@@ -34,6 +39,9 @@ export type FormValues = {
   house?: string
   floor?: string
   apartment?: string
+  region?: string
+  city?: string
+  postIndex?: string
 }
 
 export const ModalCustomFormRadius: FC<Props> = ({
@@ -77,35 +85,30 @@ export const ModalCustomFormRadius: FC<Props> = ({
   }, [selectedValue])
 
   const getEndpoint = (selectedValue: string) =>
-    selectedValue === 'novaPoshtaAddress'
-      ? '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
-      : '/api/posts/add_nova_poshta_warehouse'
+    selectedValue === 'urkPoshta'
+      ? '/api/posts/create_ukr_poshta_and_associate_with_post'
+      : selectedValue === 'novaPoshtaAddress'
+        ? '/api/posts/create_nova_poshta_address_delivery_and_associate_with_post'
+        : '/api/posts/add_nova_poshta_warehouse'
 
   const getData = (
     values: FormValues,
     selectedValue: string,
     user: User | null
-  ) =>
-    selectedValue === 'novaPoshtaAddress'
-      ? {
-          street: values.address,
-          house_number: values.house,
-          apartment_number: values.apartment ?? '',
-          floor: values.floor ?? 0,
-          city: values.cityAddress
-        }
-      : {
-          post_id: user?.posts.id,
-          nova_poshta_id:
-            selectedValue === 'novaPoshtaBranches'
-              ? values.branches
-              : values.postomats
-        }
+  ) => {
+    switch (selectedValue) {
+      case 'urkPoshta':
+        return getUrkPoshtaData(values)
+      case 'novaPoshtaAddress':
+        return getNovaPoshtaData(values)
+      default:
+        return getOtherData(values, selectedValue, user)
+    }
+  }
 
   const onSubmit: SubmitHandler<FormValues> = async (values) => {
     const endpoint = getEndpoint(selectedValue)
     const data = getData(values, selectedValue, user)
-
     try {
       const response = await axiosInstance.post(endpoint, data)
       dispatch(currentUser({ accessToken, operationType: 'currentUser' }))

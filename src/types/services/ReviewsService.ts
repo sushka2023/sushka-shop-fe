@@ -5,9 +5,11 @@
 import type { ReviewArchiveModel } from '../models/ReviewArchiveModel';
 import type { ReviewCheckModel } from '../models/ReviewCheckModel';
 import type { ReviewModel } from '../models/ReviewModel';
+import type { ReviewProductResponseWithCount } from '../models/ReviewProductResponseWithCount';
 import type { ReviewResponse } from '../models/ReviewResponse';
 import type { ReviewStoreModel } from '../models/ReviewStoreModel';
 import type { ReviewStoreResponse } from '../models/ReviewStoreResponse';
+import type { ReviewStoreResponseWithCount } from '../models/ReviewStoreResponseWithCount';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -22,16 +24,16 @@ export class ReviewsService {
      * db: Session: Access the database
      *
      * Returns:
-     * A list of reviews
+     * A list of store reviews with the total count.
      * @param limit
      * @param offset
-     * @returns ReviewStoreResponse Successful Response
+     * @returns ReviewStoreResponseWithCount Successful Response
      * @throws ApiError
      */
     public static getStoreReviewsApiReviewsGet(
         limit: number,
         offset: number,
-    ): CancelablePromise<Array<ReviewStoreResponse>> {
+    ): CancelablePromise<ReviewStoreResponseWithCount> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/reviews/',
@@ -54,16 +56,16 @@ export class ReviewsService {
      * db: Session: Access the database
      *
      * Returns:
-     * A list of reviews
+     * A list of product reviews with the total count.
      * @param limit
      * @param offset
-     * @returns ReviewResponse Successful Response
+     * @returns ReviewProductResponseWithCount Successful Response
      * @throws ApiError
      */
     public static getProductReviewsApiReviewsProductsGet(
         limit: number,
         offset: number,
-    ): CancelablePromise<Array<ReviewResponse>> {
+    ): CancelablePromise<ReviewProductResponseWithCount> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/reviews/products',
@@ -87,18 +89,18 @@ export class ReviewsService {
      * db: Session: Access the database
      *
      * Returns:
-     * A list of reviews
+     * A list of reviews with the total count.
      * @param limit
      * @param offset
      * @param filterByProductId
-     * @returns ReviewResponse Successful Response
+     * @returns ReviewProductResponseWithCount Successful Response
      * @throws ApiError
      */
     public static getReviewsForCrmApiReviewsAllForCrmGet(
         limit: number,
         offset: number,
         filterByProductId?: boolean,
-    ): CancelablePromise<Array<ReviewResponse>> {
+    ): CancelablePromise<ReviewProductResponseWithCount> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/reviews/all_for_crm',

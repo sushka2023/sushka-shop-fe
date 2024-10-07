@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ImageResponseReview } from './ImageResponseReview';
+import type { ProductReviewResponse } from './ProductReviewResponse';
 import type { Rating } from './Rating';
 import type { UserReviewResponse } from './UserReviewResponse';
 export type ReviewResponse = {
@@ -10,6 +11,7 @@ export type ReviewResponse = {
     user_id: number;
     user: UserReviewResponse;
     product_id?: number;
+    product?: ProductReviewResponse;
     rating: Rating;
     description: string;
     created_at: string;
