@@ -73,6 +73,7 @@ export type { ProductModel } from './models/ProductModel';
 export type { ProductResponse } from './models/ProductResponse';
 export type { ProductResponseForOrder } from './models/ProductResponseForOrder';
 export { ProductStatus } from './models/ProductStatus';
+export type { ProductStatusDropDown } from './models/ProductStatusDropDown';
 export type { ProductSubCategoryArchiveModel } from './models/ProductSubCategoryArchiveModel';
 export type { ProductSubCategoryEditModel } from './models/ProductSubCategoryEditModel';
 export type { ProductSubCategoryModel } from './models/ProductSubCategoryModel';

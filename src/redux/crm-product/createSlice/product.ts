@@ -11,6 +11,7 @@ import {
 import { ProductResponse, ProductSubCategoryResponse } from '../../../types'
 
 export type ProductState = {
+  newProduct: string
   productId: string | null
   name: string | null
   description: string | null
@@ -55,7 +56,8 @@ const INITIAL_STATE: ProductState = {
   isLoadingForCrmSearch: false,
   searchProductForCrm: [],
   searchProductsForCrmPageNumber: 0,
-  searchProductsForCrmTotalCount: 0
+  searchProductsForCrmTotalCount: 0,
+  newProduct: ''
 }
 
 export type AddDataAction = {

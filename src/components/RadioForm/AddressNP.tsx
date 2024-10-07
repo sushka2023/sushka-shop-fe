@@ -1,11 +1,4 @@
-import {
-  FC,
-  Fragment,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState
-} from 'react'
+import { FC, Fragment, useCallback, useEffect, useState } from 'react'
 import { AutocompleteCustom } from '../Autocomplete/AutocompleteCustom'
 import { useNovaPoshtaCity } from '../../hooks/useNovaPoshtaCity'
 import { Box, OutlinedInput, useTheme } from '@mui/material'
@@ -79,38 +72,32 @@ export const AddressNP: FC<FormProps> = ({
     }
   }, [isDisabled])
 
-  const onChangeCity = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
-      if (value === null) {
-        return
-      }
+  const onChangeCity = useCallback((value: string | null) => {
+    if (value === null) {
+      return
+    }
 
-      setValue('cityAddress', value)
-      setValInputCity(value)
-      clearErrors('cityAddress')
+    setValue('cityAddress', value)
+    setValInputCity(value)
+    clearErrors('cityAddress')
 
-      if (CITY_DEFAULT.some((city) => city.name === value)) {
-        setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
-      } else if (novaPoshtaCity.length > 0) {
-        setSettleRef(getCityRef(value, novaPoshtaCity))
-      } else {
-        setSettleRef(null)
-      }
-    },
-    []
-  )
+    if (CITY_DEFAULT.some((city) => city.name === value)) {
+      setSettleRef(getDefaultCityRef(value, CITY_DEFAULT))
+    } else if (novaPoshtaCity.length > 0) {
+      setSettleRef(getCityRef(value, novaPoshtaCity))
+    } else {
+      setSettleRef(null)
+    }
+  }, [])
 
-  const onChangeAddress = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: string | null) => {
-      if (value !== null) {
-        setSelectedWarehouseValue(value)
-        setValue('address', value)
-        setValInputAddress(value)
-        clearErrors('address')
-      }
-    },
-    []
-  )
+  const onChangeAddress = useCallback((value: string | null) => {
+    if (value !== null) {
+      setSelectedWarehouseValue(value)
+      setValue('address', value)
+      setValInputAddress(value)
+      clearErrors('address')
+    }
+  }, [])
 
   const handleCityFetch = async (
     refCity: string | null,

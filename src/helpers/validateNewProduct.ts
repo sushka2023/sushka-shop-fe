@@ -1,5 +1,4 @@
 import * as yup from 'yup'
-
 export const newProductSchema = yup.object().shape({
   name: yup
     .string()
