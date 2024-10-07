@@ -1,29 +1,30 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import { scroller } from 'react-scroll'
+// import { useLocation } from 'react-router-dom'
+// import { scroller } from 'react-scroll'
 import { AppDispatch, RootState } from '../../../../redux/store/index'
 import { fetchAllCategories } from '../../../../redux/products/operation'
 import styles from '../Header.module.scss'
 import HeaderNavList from './HeaderNavList'
 
-const HeaderNav = () => {
+const HeaderNav = ({ closeVisible }: any) => {
   const dispatch = useDispatch<AppDispatch>()
 
   const allCategories = useSelector(
     (state: RootState) => state.items.allCategories
   )
-  const location = useLocation()
-  const isHomePath = location.pathname === '/'
+  // const location = useLocation()
+  // const isHomePath = location.pathname === '/'
 
-  useEffect(() => {
-    if (isHomePath) {
-      scroller.scrollTo(location.hash.slice(1), {
-        smooth: true,
-        duration: 500
-      })
-    }
-  }, [isHomePath, location])
+  // useEffect(() => {
+  //   if (isHomePath) {
+  //     scroller.scrollTo(location.hash.slice(1), {
+  //       smooth: true,
+  //       duration: 500
+  //     })
+  //   }
+  //   console.log('isHomePath')
+  // }, [isHomePath, location])
 
   useEffect(() => {
     if (!allCategories) {
@@ -33,7 +34,10 @@ const HeaderNav = () => {
 
   return (
     <nav className={styles.navWrapper}>
-      <HeaderNavList allCategories={allCategories} />
+      <HeaderNavList
+        allCategories={allCategories}
+        closeVisible={closeVisible}
+      />
     </nav>
   )
 }

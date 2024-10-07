@@ -7,9 +7,10 @@ import CrmLine from './CrmLink'
 
 type Props = {
   allCategories: any[]
+  closeVisible: any
 }
-
-const HeaderNavList: FC<Props> = ({ allCategories }) => {
+//
+const HeaderNavList: FC<Props> = ({ allCategories, closeVisible }) => {
   const location = useLocation()
   const isHomePath = location.pathname === '/'
 
@@ -38,6 +39,9 @@ const HeaderNavList: FC<Props> = ({ allCategories }) => {
             className={styles.listNavLink}
             smooth={true}
             duration={500}
+            spy={true}
+            hashSpy={true}
+            onClick={() => closeVisible()}
           >
             Про нас
           </ScrollLink>

@@ -10,7 +10,7 @@
   justify-content: space-between;
   gap: clamp(1.875rem, -4.74rem + 10.34vw, 4.563rem);
 
-  .menuIcon {
+  .burger {
     display: none;
   }
 }
@@ -40,10 +40,9 @@
 
 @media (max-width: 1024px) {
   .headerWrapper {
-    border: 1px solid red;
     // flex-direction: column;
 
-    .menuIcon {
+    .burger {
       display: block;
       font-size: 30px;
       color: $green-dark-200;
@@ -51,9 +50,45 @@
   }
   .listNav {
     display: none;
+  }
+  .listIconsLine {
+    display: none;
+  }
+
+  .mobileBurger {
+    margin-top: 20px;
+
+    .listNav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 5px;
+
+      .listNavLine {
+        justify-content: left;
+      }
+
+      .listNavLine:nth-child(4) {
+        // border: 1px solid red;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .linkAccount {
+    position: relative;
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+
+    &:hover {
+      color: gold;
+    }
   }
 }
+
+// |||||||||||||||||||
 
 .listNavLine {
   display: flex;
