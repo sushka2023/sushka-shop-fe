@@ -7,10 +7,12 @@ type Props = {
   rating: number
   text: string
   name: string
+  isVerified: boolean | undefined
 }
 
-const SendButton: FC<Props> = ({ file, rating, text, name }) => {
-  const isDisabled = !file || rating === 0 || name === '' || text.length < 10
+const SendButton: FC<Props> = ({ file, rating, text, name, isVerified }) => {
+  const isDisabled =
+    !file || rating === 0 || name === '' || text.length < 10 || !isVerified
 
   return (
     <button

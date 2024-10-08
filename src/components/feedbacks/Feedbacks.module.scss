@@ -109,12 +109,28 @@
   cursor: pointer;
 }
 
+.error {
+  text-align: left;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  color: $red;
+
+  &_accept {
+    font-weight: 700;
+    line-height: 1.4;
+    text-decoration: underline;
+
+  }
+}
+
 .waitingForPhoto {
   color: $green-dark-200;
   font-size: 16px;
   font-family: $open-sans;
-  text-align: right;
+  text-align: left;
 }
+
 
 .feedbackFormBtn {
   width: 250px;

@@ -19,7 +19,6 @@ const FeedbackList = () => {
   const { items, totalReviews } = useSelector(
     (state: RootState) => state.reviews
   )
-
   const totalNumberOfPages = Math.ceil(totalReviews / PER_PAGE)
 
   const dispatch = useDispatch<AppDispatch>()
@@ -28,8 +27,6 @@ const FeedbackList = () => {
     const OFFSET = (page - 1) * PER_PAGE
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
   }, [page])
-
-  console.log(items)
 
   return (
     <div className={styles.listWrapper}>

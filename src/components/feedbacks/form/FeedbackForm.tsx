@@ -4,21 +4,21 @@ import { useState, ChangeEvent, FormEvent, useEffect, FC } from 'react'
 import { FileInfo } from './FileInfo'
 import { CustomTextarea } from './CustomTextarea'
 import { useAuth } from '../../../hooks/use-auth'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
 import { TextField, Typography } from '@mui/material'
 import { textFieldStyles } from '../helpers/mui-styles'
 import { AppDispatch, RootState } from '../../../redux/store'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { submitReview } from '../../../redux/feedbacks/operations'
 import { ModalCustom } from '../../Modal-custom-btn/ModalCustomWindow'
 import { FeedbackDoneModal } from './FeedbackDoneModal'
-import { useSelector } from 'react-redux'
 import { CheckOrder } from './CheckOrder/CheckOrder'
 import { submitImage } from '../helpers/helpers'
 import Box from '@mui/material/Box'
 import { SendButton } from './SendButton'
+import { ErrorMessage } from './ErrorMessage'
 
 type Props = {
   onSubmitSuccess?: () => void
@@ -40,6 +40,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
 
   const dispatch = useDispatch<AppDispatch>()
   const auth = useSelector((state: RootState) => state.auth)
+  const { error } = useSelector((state: RootState) => state.reviews)
   const posts = auth.user?.posts
   const searchToken = Object.fromEntries(searchParams.entries())
 
@@ -65,6 +66,11 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
+    if (error) {
+      console.error('Не можна відправити форму через наявну помилку:', error)
+      return
+    }
+
     if (!file) {
       console.error('File is required')
       return
@@ -81,13 +87,13 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
       if (reviewData.payload?.id) {
         await submitImage(file, reviewData.payload.id)
         onSubmitSuccess?.()
+        setOpenModal(true)
       } else {
-        console.error('No review ID received')
+        console.error('Не вдалося отримати ID відгуку')
       }
     } catch (error) {
-      console.error('Error submitting review:', error)
+      console.error('Помилка при відправленні відгуку:', error)
     }
-    setOpenModal(true)
   }
 
   const handleTextChange = (text: string) => {
@@ -129,6 +135,7 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
           />
         </label>
       </div>
+
       {fileSelected ? (
         <FileInfo file={file} onDelete={handleFileDelete} />
       ) : (
@@ -136,15 +143,26 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
           Очікуємо на фото вашого замовлення
         </Typography>
       )}
+
       <div className={styles.submitWrapper}>
         <Rating onRate={(value) => setRating(value)} />
         <SendButton
+          isVerified={auth.user?.is_active}
           file={fileSelected}
           rating={rating}
           text={text}
           name={name}
         />
       </div>
+      {!auth.user?.is_active && (
+        <Typography className={styles.error}>
+          <Link to="/account" className={styles.error_accept}>
+            Підтвердіть&nbsp;
+          </Link>
+          пошту, щоб залишити відгук
+        </Typography>
+      )}
+      <ErrorMessage apiError={error} />
     </form>
   )
 

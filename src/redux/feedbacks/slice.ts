@@ -34,7 +34,7 @@ type ReviewsState = {
   items: Review[]
   totalReviews: number
   isLoading: boolean
-  error: string | null
+  error: number | null
 }
 
 const handlePending = (state: ReviewsState) => {
@@ -43,7 +43,7 @@ const handlePending = (state: ReviewsState) => {
 
 const handleRejected = (state: ReviewsState, action: PayloadAction<string>) => {
   state.isLoading = false
-  state.error = action.payload
+  state.error = Number(action.payload) || null
 }
 
 const initialState: ReviewsState = {
