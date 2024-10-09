@@ -26,19 +26,14 @@ const FeedbackList = () => {
   useEffect(() => {
     const OFFSET = (page - 1) * PER_PAGE
     dispatch(fetchReviews({ limit: LIMIT, offset: OFFSET }))
-  }, [page])
-
+  }, [page, items.length])
   return (
     <div className={styles.listWrapper}>
       {items?.length > 0 ? (
         <ul className={styles.feedbackList}>
-          {items.map(
-            (review: Review) =>
-              review.is_checked &&
-              !review.is_deleted && (
-                <FeedbackItem review={review} key={review.id} />
-              )
-          )}
+          {items.map((review: Review) => (
+            <FeedbackItem review={review} key={review.id} />
+          ))}
         </ul>
       ) : (
         <Typography

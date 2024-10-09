@@ -6,18 +6,18 @@ import { FC } from 'react'
 import clsx from 'clsx'
 
 type Props = {
-  isDeleted: boolean
-  onRemove: () => void
+  isDisabled: boolean
+  onAdd: () => void
 }
 
-const UnArchiveButton: FC<Props> = ({ isDeleted, onRemove }) => {
+const UnArchiveButton: FC<Props> = ({ isDisabled, onAdd }) => {
   return (
     <Tooltip title="Edit">
-      <IconButton disabled={isDeleted} onClick={onRemove}>
+      <IconButton disabled={isDisabled} onClick={onAdd}>
         <IconPlus
           className={clsx({
-            [styles.iconDisabled]: isDeleted,
-            [styles.iconChange]: !isDeleted
+            [styles.iconDisabled]: isDisabled,
+            [styles.iconChange]: !isDisabled
           })}
         />
       </IconButton>

@@ -1,6 +1,6 @@
 import styles from '../Feedbacks.module.scss'
 import { Rating } from './Rating'
-import { useState, ChangeEvent, FormEvent, useEffect, FC } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import { FileInfo } from './FileInfo'
 import { CustomTextarea } from './CustomTextarea'
 import { useAuth } from '../../../hooks/use-auth'
@@ -37,7 +37,6 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [searchParams] = useSearchParams()
   const [, setAreaText] = useState('')
-
   const dispatch = useDispatch<AppDispatch>()
   const auth = useSelector((state: RootState) => state.auth)
   const { error } = useSelector((state: RootState) => state.reviews)
@@ -84,10 +83,12 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
           name
         })
       )
+
       if (reviewData.payload?.id) {
         await submitImage(file, reviewData.payload.id)
         onSubmitSuccess?.()
         setOpenModal(true)
+        resetForm()
       } else {
         console.error('Не вдалося отримати ID відгуку')
       }
@@ -95,7 +96,16 @@ const FeedbackForm: FC<Props> = ({ onSubmitSuccess }) => {
       console.error('Помилка при відправленні відгуку:', error)
     }
   }
-
+  const resetForm = () => {
+    setName('')
+    setRating(0)
+    setFile(null)
+    setFileSelected(false)
+    setText('')
+    if (formRef.current) {
+      formRef.current.reset()
+    }
+  }
   const handleTextChange = (text: string) => {
     setAreaText(text)
     if (text.length < 10) {
