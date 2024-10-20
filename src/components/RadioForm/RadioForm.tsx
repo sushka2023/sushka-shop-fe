@@ -17,6 +17,7 @@ import {
   FieldValues,
   UseFormSetError
 } from 'react-hook-form'
+import AddressUP from './AddressUP'
 
 type RadioFormProps = {
   register: UseFormRegister<FieldValues>
@@ -142,7 +143,16 @@ export const RadioForm: FC<RadioFormProps> = ({
             }
           }}
         />
-        {selectedValue === 'urkPoshta' && <Typography>Urk</Typography>}
+        {selectedValue === 'urkPoshta' && (
+          <AddressUP
+            selectedValue={selectedValue}
+            errors={errors}
+            setError={setError}
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+          />
+        )}
       </RadioGroup>
     </Fragment>
   )
