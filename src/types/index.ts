@@ -111,6 +111,7 @@ export type { UserResponseForOrder } from './models/UserResponseForOrder';
 export type { UserReviewResponse } from './models/UserReviewResponse';
 export type { UserUpdateData } from './models/UserUpdateData';
 export type { ValidationError } from './models/ValidationError';
+export type { WebhookMessageResponse } from './models/WebhookMessageResponse';
 
 export { AuthService } from './services/AuthService';
 export { BasketService } from './services/BasketService';
@@ -130,3 +131,4 @@ export { ProductSubCategoryService } from './services/ProductSubCategoryService'
 export { ReviewsService } from './services/ReviewsService';
 export { UkrposhtaOfficesService } from './services/UkrposhtaOfficesService';
 export { UsersService } from './services/UsersService';
+export { WebhookService } from './services/WebhookService';

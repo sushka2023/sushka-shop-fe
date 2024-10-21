@@ -1,8 +1,17 @@
 @import '../../styles/base/base.scss';
 
+.item {
+  height: 655px;
+}
+
 .slideElement {
   max-width: 400px;
+  width: 400px;
+  height: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .cardTitle {
@@ -28,9 +37,17 @@
 
 .cardContent {
   border-radius: 10px;
+  height: 100%;
+
   background-color: $white-200;
 }
 
+.imageInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  height: 100%;
+}
 
 .cardFavorite {
   position: absolute;
