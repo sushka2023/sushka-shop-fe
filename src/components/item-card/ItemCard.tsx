@@ -26,12 +26,17 @@ const ItemCard: FC<Props> = ({ item }) => {
   const favorites = useSelector((state: RootState) => state.items.isFavorite)
   const isLoading = useSelector((state: RootState) => state.items.isLoading)
 
+  const sortedItem = {
+    ...item,
+    prices: [...item.prices].sort((a, b) => Number(a.weight) - Number(b.weight))
+  }
+
   const dispatch = useDispatch<AppDispatch>()
 
   const { user } = useAuth()
 
   const toggleFavorite = (favorite: FavoriteItemsResponse) =>
-    favorite.product.id === item.id
+    favorite.product.id === sortedItem.id
 
   useEffect(() => {
     setIsFavorite(favorites.some(toggleFavorite))
@@ -67,46 +72,55 @@ const ItemCard: FC<Props> = ({ item }) => {
   }
 
   return (
-    <li>
+    <li className={styles.item}>
       <div className={styles.slideElement}>
         <div className={styles.cardContent}>
-          <Link to={`/catalog/${item.product_category_id}/${item.id}/details`}>
-            <div className={styles.slideImage}>
-              <img src={item?.images[0]?.image_url} alt="mandarin pastille" />
-              {!isFavorite ? (
-                <IconFavorite
-                  className={styles.cardFavorite}
-                  onClick={(e) => handleClickFavorite(e, item.id)}
+          <Link
+            to={`/catalog/${sortedItem.product_category_id}/${sortedItem.id}/details`}
+          >
+            <div className={styles.imageInfoWrapper}>
+              <div className={styles.slideImage}>
+                <img
+                  src={sortedItem?.images[0]?.image_url}
+                  alt="mandarin pastille"
                 />
-              ) : (
-                <IconFavoriteIsActive
-                  className={styles.cardFavorite}
-                  onClick={(e) => handleClickFavorite(e, item.id)}
-                />
-              )}
-            </div>
-            <div className={styles.cardTitle}>
-              <div className={styles.cardTypography}>
-                <h3 className={styles.cardHeader}>{item.name}</h3>
-                <p className={styles.cardPararaph}>{item.description}</p>
+                {!isFavorite ? (
+                  <IconFavorite
+                    className={styles.cardFavorite}
+                    onClick={(e) => handleClickFavorite(e, sortedItem.id)}
+                  />
+                ) : (
+                  <IconFavoriteIsActive
+                    className={styles.cardFavorite}
+                    onClick={(e) => handleClickFavorite(e, sortedItem.id)}
+                  />
+                )}
               </div>
-              <ul className={styles.listWeight}>
-                {item.prices.map((price) => {
-                  return (
-                    <li className={styles.weightElement} key={price.id}>
-                      <button
-                        className={`${styles.weightElementButton} ${selectedWeight === price.weight ? styles.activeWeightElementButton : ''}`}
-                        onClick={(e) => {
-                          handleWeightClick(e, price.weight, price.price)
-                        }}
-                      >
-                        {gramsToKilograms(price.weight)}
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-              <span className={styles.cardPrice}>{selectedPrice} грн</span>
+              <div className={styles.cardTitle}>
+                <div className={styles.cardTypography}>
+                  <h3 className={styles.cardHeader}>{sortedItem.name}</h3>
+                  <p className={styles.cardPararaph}>
+                    {sortedItem.description}
+                  </p>
+                </div>
+                <ul className={styles.listWeight}>
+                  {sortedItem.prices.map((price) => {
+                    return (
+                      <li className={styles.weightElement} key={price.id}>
+                        <button
+                          className={`${styles.weightElementButton} ${selectedWeight === price.weight ? styles.activeWeightElementButton : ''}`}
+                          onClick={(e) => {
+                            handleWeightClick(e, price.weight, price.price)
+                          }}
+                        >
+                          {gramsToKilograms(price.weight)}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+                <span className={styles.cardPrice}>{selectedPrice} грн</span>
+              </div>
             </div>
           </Link>
         </div>

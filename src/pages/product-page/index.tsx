@@ -342,9 +342,7 @@ const ProductPage = () => {
 
                 <div className={styles.selectPriceWrapper}>
                   {isPromotional && (
-                    <p className={styles.selectOldPrice}>
-                      {selectedOldPrice} ₴
-                    </p>
+                    <p className={styles.selectOldPrice}>{selectedPrice} ₴</p>
                   )}
                   <p
                     className={
@@ -353,7 +351,7 @@ const ProductPage = () => {
                         : styles.selectPrice
                     }
                   >
-                    {selectedPrice} ₴
+                    {selectedOldPrice} ₴
                   </p>
                 </div>
 
