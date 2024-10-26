@@ -21,7 +21,10 @@ export const getOrderDetails = (
         tag: `ім'я:`,
         value: `${order?.first_name_anon_user || order?.user?.first_name} ${order?.last_name_anon_user || order?.user?.last_name}`
       },
-      { tag: `E-mail:`, value: order?.email_anon_user || order?.user?.email },
+      {
+        tag: `E-mail:`,
+        value: order?.email_anon_user || order?.user?.email
+      },
       {
         tag: `Телефон:`,
         value: order?.phone_number_anon_user || order?.user?.phone_number
@@ -38,6 +41,17 @@ export const getOrderDetails = (
           order?.phone_number_another_recipient ||
           order?.phone_number_anon_user ||
           order?.user?.phone_number
+      },
+      {
+        tag: 'Оплата:',
+        value:
+          order?.payment_type === 'cash_on_delivery_np'
+            ? 'Накладний платіж'
+            : 'Plata by Mono'
+      },
+      {
+        tag: 'Статус',
+        value: order?.confirmation_pay ? 'Підтверджено' : 'Не підтверджено'
       }
     ],
     DELIVERY_INFO: [
