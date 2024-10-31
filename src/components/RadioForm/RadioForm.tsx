@@ -1,8 +1,8 @@
 import { Dispatch, FC, Fragment } from 'react'
 import {
+  FormControlLabel,
   Radio,
   RadioGroup,
-  FormControlLabel,
   Typography,
   useTheme
 } from '@mui/material'
@@ -11,11 +11,11 @@ import { NovaPoshtaPostomats } from './PostomatsNP'
 import { AddressNP } from './AddressNP'
 import {
   FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormClearErrors,
   FieldValues,
-  UseFormSetError
+  UseFormClearErrors,
+  UseFormRegister,
+  UseFormSetError,
+  UseFormSetValue
 } from 'react-hook-form'
 import AddressUP from './AddressUP'
 
@@ -58,7 +58,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
@@ -85,7 +84,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto'
             }
@@ -111,7 +109,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
@@ -136,7 +133,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             <Typography sx={{ pointerEvents: 'auto' }}>Укрпошта</Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
