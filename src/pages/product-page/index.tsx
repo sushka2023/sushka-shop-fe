@@ -151,7 +151,7 @@ const ProductPage = () => {
         await addProductToBasket(productId, selectedQuantity, selectedPriceId)
         dispatch(fetchBasketItemsThunk())
 
-        Notify.success('Товар добавлено в кошик!')
+        Notify.success('Товар додано в кошик!')
       } else {
         const orderInfo = {
           id: selectedPriceId,
@@ -187,7 +187,7 @@ const ProductPage = () => {
 
         dispatch(updateCount(productOrders))
 
-        Notify.success('Товар добавлено в кошик!')
+        Notify.success('Товар додано в кошик!')
       }
     } catch (error) {
       console.error('Помилка при додаванні товару до кошика:', error)
