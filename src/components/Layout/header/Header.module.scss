@@ -38,56 +38,6 @@
   margin-left: auto;
 }
 
-@media (max-width: 1024px) {
-  .headerWrapper {
-    // flex-direction: column;
-
-    .burger {
-      display: block;
-      font-size: 30px;
-      color: $green-dark-200;
-    }
-  }
-  .listNav {
-    display: none;
-  }
-  .listIconsLine {
-    display: none;
-  }
-
-  .mobileBurger {
-    margin-top: 20px;
-
-    .listNav {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      margin-top: 5px;
-
-      .listNavLine {
-        justify-content: left;
-      }
-
-      .listNavLine:nth-child(4) {
-        // border: 1px solid red;
-        margin-bottom: 10px;
-      }
-    }
-  }
-
-  .linkAccount {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 20px;
-
-    &:hover {
-      color: gold;
-    }
-  }
-}
-
 // |||||||||||||||||||
 
 .listNavLine {
@@ -203,6 +153,8 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .iconsNavSearch {
+  width: 30px;
+  height: 30px;
   position: absolute;
   top: 0;
   left: 0;
@@ -217,6 +169,8 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .iconsNavSearchIsActive {
+  width: 25px;
+  height: 25px;
   left: 10px;
   top: 50%;
   transform: translate(0, -50%);
@@ -291,4 +245,103 @@ input[type='search']::-webkit-search-cancel-button {
 
 .dropdawnListLink {
   padding: 0px 14px;
+}
+
+@media (max-width: 1024px) {
+  .headerWrapper {
+    gap: 20px;
+
+    a {
+      z-index: 11;
+    }
+
+    .isActive {
+      border: 1px solid red;
+    }
+
+    .burger {
+      display: block;
+      font-size: 30px;
+      color: $green-dark-200;
+    }
+  }
+  .listNav {
+    display: none;
+  }
+  .listIconsLine {
+    display: none;
+  }
+
+  .listIcons {
+    z-index: 11;
+    gap: 10px;
+    margin-right: 20px;
+  }
+
+  // .listIconsLineCart {
+  // Кошик
+  // }
+
+  .mobileBurger {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    background: white;
+    position: absolute;
+    top: 65px;
+    right: 0px;
+    z-index: 1;
+    border: 1px solid red;
+
+    .listNav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 5px;
+
+      .listNavLine {
+        justify-content: left;
+      }
+
+      .listNavLine:nth-child(4) {
+        // border: 1px solid red;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .linkAccount {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+
+    &:hover {
+      color: gold;
+    }
+  }
+
+  .searchInputIsActive {
+    border-radius: 20px;
+    font-size: 16px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  @keyframes slideIn {
+    0% {
+      width: 12px;
+      height: 12px;
+      opacity: 0;
+    }
+
+    100% {
+      width: 248px;
+      height: 32px;
+      opacity: 1;
+    }
+  }
 }

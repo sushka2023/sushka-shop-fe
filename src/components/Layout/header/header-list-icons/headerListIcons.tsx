@@ -1,20 +1,75 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import ModalPortal from '../../../modal-portal/ModalPortal'
 import Auth from '../../../auth/Auth'
-import IconSearch from '../../../../icons/search.svg?react'
 import IconAccount from '../../../../icons/account.svg?react'
 import IconFavorite from '../../../../icons/favorite.svg?react'
 import styles from '../Header.module.scss'
 import { RootState } from '../../../../redux/store'
 import BasketCountIcon from '../../../basket-count-icon/BasketCountIcon'
+import SearchGlobal from './searchGlogal'
+import { ListItem, useTheme } from '@mui/material'
 
-const HeaderListIcons = () => {
-  const [isActive, setIsActive] = useState(false)
+const AccountIcon = ({
+  isLoggedIn,
+  onClick
+}: {
+  isLoggedIn: boolean
+  onClick: () => void
+}) => (
+  <li className={styles.listIconsLine}>
+    {isLoggedIn ? (
+      <Link to="account">
+        <IconAccount className={styles.iconsNav} />
+      </Link>
+    ) : (
+      <IconAccount className={styles.iconsNav} onClick={onClick} />
+    )}
+  </li>
+)
+
+const FavoriteIcon = () => (
+  <li className={styles.listIconsLine}>
+    <Link to="favorite">
+      <IconFavorite className={styles.iconsNav} />
+    </Link>
+  </li>
+)
+
+const CartIcon = ({
+  isActive,
+  openMenu
+}: {
+  isActive: boolean
+  openMenu: boolean
+}) => {
+  const theme = useTheme()
+  return (
+    <ListItem
+      sx={{
+        pl: '0px',
+        pr: '0px',
+        [theme.breakpoints.down(600)]: {
+          display: isActive && !openMenu ? 'none' : 'block'
+        }
+      }}
+    >
+      <Link to="cart">
+        <BasketCountIcon />
+      </Link>
+    </ListItem>
+  )
+}
+
+const HeaderListIcons = ({
+  closeVisible,
+  isActive,
+  setIsActive,
+  openMenu,
+  isLessThan600px
+}: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const iconRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const [searchParams] = useSearchParams()
@@ -26,83 +81,22 @@ const HeaderListIcons = () => {
     }
   }, [searchToken])
 
-  const handleClick = (event: MouseEvent) => {
-    const target = event.target as HTMLElement
-
-    if (iconRef.current?.contains(target)) {
-      setIsActive(true)
-      inputRef.current?.focus()
-    }
-
-    if (!iconRef.current?.contains(target)) {
-      setIsActive(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener('click', handleClick)
-
-    return () => {
-      window.removeEventListener('click', handleClick)
-    }
-  }, [])
+  const handleModalOpen = () => setIsModalOpen(true)
 
   return (
     <Fragment>
       <ul className={styles.listIcons}>
         <li className={styles.listIconsLineContainer}>
-          <div
-            ref={iconRef}
-            id="search"
-            className={
-              isActive ? styles.searchContainerIsActive : styles.searchContainer
-            }
-          >
-            <input
-              ref={inputRef}
-              type="search"
-              placeholder="Пошук"
-              className={
-                isActive
-                  ? ` ${styles.searchInputIsActive}`
-                  : `${styles.searchInput}`
-              }
-            />
-            <IconSearch
-              id="iconSearch"
-              className={
-                isActive ? styles.iconsNavSearchIsActive : styles.iconsNavSearch
-              }
-            />
-          </div>
-        </li>
-        <li className={styles.listIconsLine}>
-          {isLoggedIn ? (
-            <Link to="account">
-              <IconAccount className={styles.iconsNav} />
-            </Link>
-          ) : (
-            <IconAccount
-              className={styles.iconsNav}
-              onClick={() => {
-                return setIsModalOpen(true)
-              }}
-            />
+          {(!isLessThan600px || !openMenu) && (
+            <SearchGlobal isActive={isActive} setIsActive={setIsActive} />
           )}
         </li>
-        <li className={styles.listIconsLine}>
-          <Link to="favorite">
-            <IconFavorite className={styles.iconsNav} />
-          </Link>
-        </li>
-        <li className={styles.listIconsLine}>
-          <Link to="cart">
-            <BasketCountIcon />
-          </Link>
-        </li>
+        <AccountIcon isLoggedIn={isLoggedIn} onClick={handleModalOpen} />
+        <FavoriteIcon />
+        <CartIcon isActive={isActive} openMenu={openMenu} />
       </ul>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth setIsModalOpen={setIsModalOpen} />
+        <Auth setIsModalOpen={setIsModalOpen} closeVisible={closeVisible} />
       </ModalPortal>
     </Fragment>
   )

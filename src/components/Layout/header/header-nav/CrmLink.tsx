@@ -9,11 +9,9 @@ const CrmLink = () => {
   return (
     <React.Fragment>
       {user && (user.role === 'admin' || user.role === 'moderator') && (
-        <li className={styles.listNavLine}>
-          <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
-            CRM
-          </Link>
-        </li>
+        <Link className={`${styles.navLinkCrm} ${styles.linkCrm}`} to="crm">
+          CRM
+        </Link>
       )}
     </React.Fragment>
   )

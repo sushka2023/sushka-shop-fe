@@ -1,0 +1,183 @@
+@import '../../../styles/base/base.scss';
+
+.exampleNav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  // width: 300px;
+}
+
+.exampleBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  // width: 300px;
+  width: 100%;
+  background: #fff;
+}
+
+.exampleButton {
+  outline: none;
+  border: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: transparent;
+  color: #567343;
+}
+
+.exampleUl,
+.exampleLi {
+  margin: 0;
+  padding: 0;
+}
+
+.exampleUl {
+  padding: 25px;
+  position: absolute;
+  top: 100px;
+  width: 230px;
+}
+
+.exampleLi {
+  list-style: none;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.listNavLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  height: 40px;
+  color: $green-dark-200;
+  font-family: $open-sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: $font-weight-600;
+  line-height: normal;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: $yellow-200;
+  }
+}
+
+.listNavLink:active {
+  padding: 10px;
+  color: $white-200;
+  border-radius: 10px;
+  background: $yellow-200;
+}
+
+.navLinkCrm {
+  width: 101px;
+  height: 40px;
+  border-radius: 10px;
+  background: $green-dark-200;
+
+  &.linkCrm {
+    color: $white-200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+// dropdown
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownList {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  left: -10px;
+  width: 200px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
+  background: var(--white, #fff);
+  box-shadow:
+    0px 0px 0px 0px rgb(0 0 0 / 10%),
+    1px 0px 2px 0px rgb(0 0 0 / 10%),
+    4px 2px 4px 0px rgb(0 0 0 / 9%),
+    9px 4px 6px 0px rgb(0 0 0 / 5%),
+    17px 7px 7px 0px rgb(0 0 0 / 1%),
+    26px 11px 8px 0px rgb(0 0 0 / 0%);
+}
+
+.dropdown:hover .dropdownList {
+  display: flex;
+  flex-direction: column;
+  top: 37px;
+}
+
+.dropdownListLine {
+  height: 40px;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  color: $green-dark-200;
+  &:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    background: rgba(86, 115, 67, 0.1);
+  }
+
+  &:active {
+    color: $white-200;
+    border-radius: 10px;
+    background: var(--dark-green, #567343);
+  }
+}
+
+.dropdawnListLink {
+  padding: 0px 14px;
+}
+
+.iconPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex: 40px 0;
+  margin-right: 20px;
+}
+
+.textPlaceholder {
+  border-radius: 5px;
+  width: 200px;
+  height: 20px;
+  flex: 1;
+}
+
+.refresh {
+  padding: 10px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
