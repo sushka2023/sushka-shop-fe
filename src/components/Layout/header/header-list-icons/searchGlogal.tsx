@@ -1,13 +1,12 @@
+import styles from '../Header.module.scss'
+
 import { useEffect, useRef } from 'react'
 import IconSearch from '../../../../icons/search.svg?react'
-import styles from '../Header.module.scss'
 import { Box } from '@mui/material'
 
 const SearchGlobal = ({ isActive, setIsActive }: any) => {
   const iconRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-
-  console.log(isActive)
 
   const handleClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement

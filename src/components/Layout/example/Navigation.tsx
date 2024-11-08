@@ -19,12 +19,22 @@ const variants = {
   }
 }
 
-export const Navigation = ({ toggleOpen }: any) => (
+export const Navigation = ({
+  toggleOpen,
+  isActive,
+  setIsActive,
+  isLessThan600px
+}: any) => (
   <motion.ul className={styles.exampleUl} variants={variants}>
     {/* {itemIds.map((i) => (
       <MenuItem i={i} key={i} />
     ))} */}
-    <MenuItem toggleOpen={toggleOpen} />
+    <MenuItem
+      toggleOpen={toggleOpen}
+      isActive={isActive}
+      setIsActive={setIsActive}
+      isLessThan600px={isLessThan600px}
+    />
   </motion.ul>
 )
 

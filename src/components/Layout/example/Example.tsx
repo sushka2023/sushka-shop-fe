@@ -31,7 +31,13 @@ const sidebar = {
   }
 }
 
-export const Example = ({ isOpen, toggleOpen }: any) => {
+export const Example = ({
+  isOpen,
+  toggleOpen,
+  isActive,
+  setIsActive,
+  isLessThan600px
+}: any) => {
   const location = useLocation()
   const containerRef = useRef(null)
   const { height } = useDimensions(containerRef)
@@ -67,7 +73,12 @@ export const Example = ({ isOpen, toggleOpen }: any) => {
         ref={containerRef}
       >
         <motion.div className={styles.exampleBackground} variants={sidebar} />
-        <Navigation toggleOpen={toggleOpen} />
+        <Navigation
+          toggleOpen={toggleOpen}
+          isActive={isActive}
+          setIsActive={setIsActive}
+          isLessThan600px={isLessThan600px}
+        />
         <MenuToggle toggle={() => toggleOpen()} />
       </motion.div>
     </Fragment>

@@ -37,13 +37,7 @@ const FavoriteIcon = () => (
   </li>
 )
 
-const CartIcon = ({
-  isActive,
-  openMenu
-}: {
-  isActive: boolean
-  openMenu: boolean
-}) => {
+const CartIcon = ({ isActive }: { isActive: boolean }) => {
   const theme = useTheme()
   return (
     <ListItem
@@ -51,7 +45,7 @@ const CartIcon = ({
         pl: '0px',
         pr: '0px',
         [theme.breakpoints.down(600)]: {
-          display: isActive && !openMenu ? 'none' : 'block'
+          display: isActive ? 'none' : 'block'
         }
       }}
     >
@@ -66,7 +60,7 @@ const HeaderListIcons = ({
   closeVisible,
   isActive,
   setIsActive,
-  openMenu,
+  isOpen,
   isLessThan600px
 }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -87,13 +81,13 @@ const HeaderListIcons = ({
     <Fragment>
       <ul className={styles.listIcons}>
         <li className={styles.listIconsLineContainer}>
-          {(!isLessThan600px || !openMenu) && (
+          {(!isLessThan600px || !isOpen) && (
             <SearchGlobal isActive={isActive} setIsActive={setIsActive} />
           )}
         </li>
         <AccountIcon isLoggedIn={isLoggedIn} onClick={handleModalOpen} />
         <FavoriteIcon />
-        <CartIcon isActive={isActive} openMenu={openMenu} />
+        <CartIcon isActive={isActive} />
       </ul>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <Auth setIsModalOpen={setIsModalOpen} closeVisible={closeVisible} />

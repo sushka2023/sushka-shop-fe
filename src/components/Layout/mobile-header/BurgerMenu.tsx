@@ -165,7 +165,7 @@ const BurgerMenu = ({
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
           >
-            <Auth setIsModalOpen={setIsModalOpen} closeVisible={closeVisible} />
+            <Auth setIsModalOpen={setIsModalOpen} toggleOpen={toggleOpen} />
           </ModalPortal>
         </motion.div>
         // </motion.div>

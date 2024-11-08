@@ -125,7 +125,13 @@ const Header = () => {
             // }
           }}
         >
-          <Example isOpen={isOpen} toggleOpen={toggleOpen} />
+          <Example
+            isOpen={isOpen}
+            toggleOpen={toggleOpen}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            isLessThan600px={isLessThan600px}
+          />
         </Box>
       </Box>
     </Container>

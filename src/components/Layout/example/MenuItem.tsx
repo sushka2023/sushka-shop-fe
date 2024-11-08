@@ -18,6 +18,12 @@ import {
   ReviewLink
 } from '../header/header-nav/HeaderNavList'
 import CrmLink from '../header/header-nav/CrmLink'
+import SearchGlobal from '../header/header-list-icons/searchGlogal'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import ModalPortal from '../../modal-portal/ModalPortal'
+import Auth from '../../auth/Auth'
+import useModalOpenOnToken from '../mobile-header/useModalOpenToken'
 
 const variants = {
   open: {
@@ -36,22 +42,35 @@ const variants = {
   }
 }
 
-const LoginButton = ({ onClick }: { onClick: () => void }) => (
-  <Button
-    variant="contained"
-    sx={{
-      width: '230px',
-      borderRadius: '20px',
-      fontSize: '14px',
-      mt: '20px',
-      padding: '6px 10px'
-    }}
-    onClick={onClick}
-  >
-    Увійти до кабінету
-    <PersonOutlineIcon sx={{ fontSize: '26px', pl: '7px' }} />
-  </Button>
-)
+const LoginButton = ({ toggleOpen }: any) => {
+  // Виклик користувацького хука для управління станом модального вікна
+  const [isModalOpen, setIsModalOpen] = useModalOpenOnToken()
+
+  return (
+    <Fragment>
+      <Button
+        variant="contained"
+        sx={{
+          width: '230px',
+          borderRadius: '20px',
+          fontSize: '14px',
+          mt: '20px',
+          padding: '6px 10px'
+        }}
+        onClick={() => {
+          setIsModalOpen(true) // Відкриття модального вікна при натисканні
+        }}
+      >
+        Увійти до кабінету
+        <PersonOutlineIcon sx={{ fontSize: '26px', pl: '7px' }} />
+      </Button>
+      {/* Модальне вікно з авторизацією */}
+      <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <Auth setIsModalOpen={setIsModalOpen} toggleOpen={!toggleOpen} />
+      </ModalPortal>
+    </Fragment>
+  )
+}
 
 const AccountButton = ({ closeVisible }: { closeVisible: () => void }) => (
   <Button
@@ -106,43 +125,48 @@ const FavoriteButton = ({ closeVisible }: { closeVisible: () => void }) => (
   </Button>
 )
 
-// const test = [
-//   <LoginButton key="login-button" onClick={() => console.log('Logging in')} />,
-//   <AccountMenu
-//     key="account-menu"
-//     closeVisible={() => console.log('Closing menu')}
-//   />
-// ]
+export const MenuItem = ({
+  toggleOpen,
+  isActive,
+  setIsActive,
+  isLessThan600px
+}: any) => {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
-// const colors = ['#FF008C', '#D309E1', '#9C1AFF', '#7700FF', '#4400FF']
-
-export const MenuItem = ({ toggleOpen }: any) => {
   return (
     <Fragment>
-      <motion.li
-        className={styles.exampleLi}
-        variants={variants}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <LoginButton onClick={() => console.log('Button clicked')} />
-      </motion.li>
-      <motion.li
-        className={styles.exampleLi}
-        variants={variants}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <AccountButton closeVisible={() => console.log('Closing menu')} />
-      </motion.li>
-      <motion.li
-        className={styles.exampleLi}
-        variants={variants}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <FavoriteButton closeVisible={() => console.log('Closing menu')} />
-      </motion.li>
+      {isLessThan600px && (
+        <motion.li
+          className={styles.exampleLi}
+          variants={variants}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <SearchGlobal isActive={isActive} setIsActive={setIsActive} />
+        </motion.li>
+      )}
+
+      {isLoggedIn && (
+        <Fragment>
+          <motion.li
+            className={styles.exampleLi}
+            variants={variants}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <AccountButton closeVisible={() => console.log('Closing menu')} />
+          </motion.li>
+          <motion.li
+            className={styles.exampleLi}
+            variants={variants}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FavoriteButton closeVisible={() => console.log('Closing menu')} />
+          </motion.li>
+        </Fragment>
+      )}
+
       <motion.li
         className={`${styles.exampleLi} ${styles.listNavLine}`}
         variants={variants}
@@ -151,6 +175,7 @@ export const MenuItem = ({ toggleOpen }: any) => {
       >
         <CatalogLink />
       </motion.li>
+
       <motion.li
         className={`${styles.exampleLi} ${styles.listNavLine}`}
         variants={variants}
@@ -159,6 +184,7 @@ export const MenuItem = ({ toggleOpen }: any) => {
       >
         <ReviewLink />
       </motion.li>
+
       <motion.li
         className={`${styles.exampleLi} ${styles.listNavLine}`}
         variants={variants}
@@ -167,6 +193,7 @@ export const MenuItem = ({ toggleOpen }: any) => {
       >
         <AboutUsLink toggleOpen={toggleOpen} />
       </motion.li>
+
       <motion.li
         className={`${styles.exampleLi} ${styles.listNavLine}`}
         variants={variants}
@@ -175,6 +202,7 @@ export const MenuItem = ({ toggleOpen }: any) => {
       >
         <CooperationLink />
       </motion.li>
+
       <motion.li
         className={`${styles.exampleLi} ${styles.listNavLine}`}
         variants={variants}
@@ -183,6 +211,17 @@ export const MenuItem = ({ toggleOpen }: any) => {
       >
         <CrmLink />
       </motion.li>
+
+      {!isLoggedIn && (
+        <motion.li
+          className={styles.exampleLi}
+          variants={variants}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <LoginButton toggleOpen={toggleOpen} />
+        </motion.li>
+      )}
     </Fragment>
   )
 }
