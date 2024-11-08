@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux'
 //   const location = useLocation()
 //   const isHomePath = location.pathname === '/'
 
-//   if (!allCategories) return null
+//   if (!allCategories) return null @
 
 //   return (
 //     // <ul className={styles.listNav}>
