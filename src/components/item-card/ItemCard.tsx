@@ -76,8 +76,6 @@ const ItemCard: FC<Props> = ({ item }) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     price: PriceResponse
   ) => {
-    console.log(price)
-
     e.preventDefault()
     setSelectedWeight(price.weight)
     setSelectedPrice(price.price)
@@ -151,8 +149,6 @@ const ItemCard: FC<Props> = ({ item }) => {
       throw error
     }
   }
-
-  console.log(item)
 
   return (
     <li>
