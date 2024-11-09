@@ -57,11 +57,11 @@ const CartIcon = ({ isActive }: { isActive: boolean }) => {
 }
 
 const HeaderListIcons = ({
-  closeVisible,
   isActive,
   setIsActive,
   isOpen,
-  isLessThan600px
+  isLessThan600px,
+  toggleOpen
 }: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
@@ -90,7 +90,7 @@ const HeaderListIcons = ({
         <CartIcon isActive={isActive} />
       </ul>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth setIsModalOpen={setIsModalOpen} closeVisible={closeVisible} />
+        <Auth setIsModalOpen={setIsModalOpen} toggleOpen={toggleOpen} />
       </ModalPortal>
     </Fragment>
   )

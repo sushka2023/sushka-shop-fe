@@ -8,7 +8,7 @@ import { Button } from '../../UI/Button'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -24,6 +24,7 @@ import { RootState } from '../../../redux/store'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
 import useModalOpenOnToken from '../mobile-header/useModalOpenToken'
+import { useEffect } from 'react'
 
 const variants = {
   open: {
@@ -66,13 +67,13 @@ const LoginButton = ({ toggleOpen }: any) => {
       </Button>
       {/* Модальне вікно з авторизацією */}
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth setIsModalOpen={setIsModalOpen} toggleOpen={!toggleOpen} />
+        <Auth setIsModalOpen={setIsModalOpen} toggleOpen={toggleOpen} />
       </ModalPortal>
     </Fragment>
   )
 }
 
-const AccountButton = ({ closeVisible }: { closeVisible: () => void }) => (
+const AccountButton = ({ toggleOpen }: { toggleOpen: () => void }) => (
   <Button
     sx={{
       width: 'fit-content',
@@ -82,7 +83,7 @@ const AccountButton = ({ closeVisible }: { closeVisible: () => void }) => (
       padding: '7px 10px'
     }}
   >
-    <Link to="account" className={styles2.linkAccount} onClick={closeVisible}>
+    <Link to="account" className={styles2.linkAccount} onClick={toggleOpen}>
       <PersonOutlineIcon
         sx={{
           fontSize: '26px',
@@ -99,7 +100,7 @@ const AccountButton = ({ closeVisible }: { closeVisible: () => void }) => (
   </Button>
 )
 
-const FavoriteButton = ({ closeVisible }: { closeVisible: () => void }) => (
+const FavoriteButton = () => (
   <Button
     sx={{
       width: 'fit-content',
@@ -109,7 +110,7 @@ const FavoriteButton = ({ closeVisible }: { closeVisible: () => void }) => (
       padding: '7px 10px'
     }}
   >
-    <Link to="favorite" className={styles2.linkAccount} onClick={closeVisible}>
+    <Link to="favorite" className={styles2.linkAccount}>
       <FavoriteBorderIcon
         sx={{
           fontSize: '26px',
@@ -131,7 +132,13 @@ export const MenuItem = ({
   setIsActive,
   isLessThan600px
 }: any) => {
+  const navigate = useNavigate()
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
+
+  useEffect(() => {
+    navigate('/account')
+    toggleOpen()
+  }, [isLoggedIn])
 
   return (
     <Fragment>
@@ -154,7 +161,7 @@ export const MenuItem = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <AccountButton closeVisible={() => console.log('Closing menu')} />
+            <AccountButton toggleOpen={toggleOpen} />
           </motion.li>
           <motion.li
             className={styles.exampleLi}
@@ -162,7 +169,7 @@ export const MenuItem = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <FavoriteButton closeVisible={() => console.log('Closing menu')} />
+            <FavoriteButton />
           </motion.li>
         </Fragment>
       )}

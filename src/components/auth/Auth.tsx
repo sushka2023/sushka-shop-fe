@@ -45,9 +45,11 @@ const Auth: FC<Props> = ({ setIsModalOpen, searchToken, toggleOpen }) => {
 
   const handleUserLogin = () => {
     if (user && isLoggedIn) {
+      console.log('1')
+
+      navigate('/account')
       toggleOpen()
       setIsModalOpen(false)
-      navigate('/account')
     }
   }
 

@@ -5,7 +5,7 @@ body.modalOpen {
 }
 
 .overlay {
-  z-index: 1;
+  z-index: 11;
   position: fixed;
   top: 0;
   left: 0;
@@ -60,7 +60,7 @@ body.modalOpen {
   overflow: hidden;
   top: 50%;
   left: 50%;
-  z-index: 12;
+  z-index: 11;
   width: 600px;
   border-radius: 20px;
   background: $white-200;
