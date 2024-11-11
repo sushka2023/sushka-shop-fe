@@ -1,14 +1,16 @@
 /* eslint-disable max-lines */
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import IconFavorite from '../../icons/favorite.svg?react'
+import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
+
 import styles from './ProductPage.module.scss'
 import IconMinus from '../../icons/minus.svg?react'
 import IconPlus from '../../icons/plus.svg?react'
-import IconHeart from '../../icons/favorite.svg?react'
 import IconArrowleft from '../../icons/arrowleft.svg?react'
 import IconArrowRight from '../../icons/arrowright.svg?react'
 import { ModalProductLimits } from '../../components/modal-product-limits/ModalProductLimits'
-import { ProductResponse } from '../../types'
+import { FavoriteItemsResponse, ProductResponse } from '../../types'
 import axiosInstance from '../../axios/settings'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../redux/store'
@@ -16,6 +18,11 @@ import Notiflix, { Notify } from 'notiflix'
 import { formatWeight } from '../../helpers/formatWeightToString'
 import { fetchBasketItemsThunk } from '../../redux/basket-item-count/operations'
 import { updateCount } from '../../redux/basket-item-count/slice'
+import { getToken } from '../../utils/cookie/token'
+import { addToFavorite, removeFavorite } from '../../redux/products/operation'
+import Auth from '../../components/auth/Auth'
+import ModalPortal from '../../components/modal-portal/ModalPortal'
+import { useAuth } from '../../hooks/use-auth'
 
 Notiflix.Notify.init({
   position: 'center-top'
@@ -49,12 +56,14 @@ const addProductToBasket = async (
 
 const ProductPage = () => {
   const [products, setProducts] = useState<ProductResponse | null>(null)
+  const [isFavorite, setIsFavorite] = useState(false)
   const [selectedWeight, setSelectedWeight] = useState('')
   const [selectedPrice, setSelectedPrice] = useState(0)
   const [selectedPriceId, setSelectedPriceId] = useState(0)
   const [selectedOldPrice, setselectedOldPrice] = useState(0)
   const [selectedQuantity, setSelectedQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [open, setOpen] = useState(false)
 
   const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
@@ -66,12 +75,43 @@ const ProductPage = () => {
     setOpen(!open)
   }
 
+  const { user } = useAuth()
+
+  const favorites = useSelector((state: RootState) => state.items.isFavorite)
+  const isLoading = useSelector((state: RootState) => state.items.isLoading)
+
+  const toggleFavorite = (favorite: FavoriteItemsResponse) =>
+    favorite.product.id === products?.id
+
+  useEffect(() => {
+    setIsFavorite(favorites.some(toggleFavorite))
+  }, [favorites])
+
   useEffect(() => {
     window.scroll({
       top: 0,
       behavior: 'instant'
     })
   }, [])
+
+  const handleClickFavorite = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    product_id: number
+  ) => {
+    e.preventDefault()
+
+    const accessToken = getToken()
+    setIsModalOpen(!accessToken)
+
+    if (isLoading || !user?.id) return
+
+    dispatch(
+      !isFavorite
+        ? addToFavorite({ product_id })
+        : removeFavorite({ product_id })
+    )
+    setIsFavorite(!isFavorite)
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -210,7 +250,7 @@ const ProductPage = () => {
   const isPromotional = products?.prices?.find(
     (price) => price.weight === selectedWeight
   )?.promotional
-
+  console.log(products)
   return (
     <Fragment>
       <div className={styles.container}>
@@ -263,6 +303,12 @@ const ProductPage = () => {
                   })}
                 </ul>
               </div>
+              <ModalPortal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+              >
+                <Auth setIsModalOpen={setIsModalOpen} />
+              </ModalPortal>
 
               <div className={styles.ordertWrapper}>
                 <h2 className={styles.titleProduct}>{products.name}</h2>
@@ -366,7 +412,17 @@ const ProductPage = () => {
                     Купити
                   </button>
                   <button type="button" className={styles.btnFavorite}>
-                    <IconHeart className={styles.iconHeart} />
+                    {!isFavorite ? (
+                      <IconFavorite
+                        className={styles.cardFavorite}
+                        onClick={(e) => handleClickFavorite(e, products.id)}
+                      />
+                    ) : (
+                      <IconFavoriteIsActive
+                        className={styles.cardFavorite}
+                        onClick={(e) => handleClickFavorite(e, products.id)}
+                      />
+                    )}
                   </button>
                 </div>
               </div>
