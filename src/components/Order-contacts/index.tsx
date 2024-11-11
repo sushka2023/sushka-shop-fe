@@ -5,7 +5,7 @@ import {
   FormHelperText,
   InputLabel
 } from '@mui/material'
-import { useState, useContext, Fragment } from 'react'
+import { Fragment, useContext, useState } from 'react'
 import { Typography } from '../../components/UI/Typography'
 import { OutlinedInput } from '../UI/Field'
 import ModalPortal from '../../components/modal-portal/ModalPortal'
@@ -14,9 +14,12 @@ import { Controller } from 'react-hook-form'
 import { OrderContext } from '../../pages/order-page'
 import { OtherRecipient } from './otherRecipient'
 import { wrappStyle } from './style'
+import { useSelector } from 'react-redux'
 
 const OrderContacts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const { isLoggedIn } = useSelector((state) => state.auth)
 
   const {
     otherRecipient,
@@ -51,19 +54,21 @@ const OrderContacts = () => {
         >
           Ваші контактні дані
         </Typography>
-        <Typography fontWeight={400} fontSize="18px">
-          Я вже маю акаунт.
-          <Typography
-            fontWeight={600}
-            fontSize="18px"
-            component="span"
-            sx={{ cursor: 'pointer' }}
-            onClick={() => setIsModalOpen(!isModalOpen)}
-          >
-            {' '}
-            Увійти
+        {!isLoggedIn && (
+          <Typography fontWeight={400} fontSize="18px">
+            Я вже маю акаунт.
+            <Typography
+              fontWeight={600}
+              fontSize="18px"
+              component="span"
+              sx={{ cursor: 'pointer' }}
+              onClick={() => setIsModalOpen(!isModalOpen)}
+            >
+              {' '}
+              Увійти
+            </Typography>
           </Typography>
-        </Typography>
+        )}
         <Box sx={wrappStyle}>
           <Box width="100%" maxWidth="350px">
             <InputLabel>Ім&apos;я*</InputLabel>
