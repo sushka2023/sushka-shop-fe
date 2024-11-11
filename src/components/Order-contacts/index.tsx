@@ -15,11 +15,12 @@ import { OrderContext } from '../../pages/order-page'
 import { OtherRecipient } from './otherRecipient'
 import { wrappStyle } from './style'
 import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 const OrderContacts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const isAuth = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const {
     otherRecipient,
@@ -54,7 +55,7 @@ const OrderContacts = () => {
         >
           Ваші контактні дані
         </Typography>
-        {!isLoggedIn && (
+        {!isAuth && (
           <Typography fontWeight={400} fontSize="18px">
             Я вже маю акаунт.
             <Typography
