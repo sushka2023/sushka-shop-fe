@@ -151,7 +151,7 @@ const ProductPage = () => {
         await addProductToBasket(productId, selectedQuantity, selectedPriceId)
         dispatch(fetchBasketItemsThunk())
 
-        Notify.success('Товар добавлено в кошик!')
+        Notify.success('Товар додано в кошик!')
       } else {
         const orderInfo = {
           id: selectedPriceId,

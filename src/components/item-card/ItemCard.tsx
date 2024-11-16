@@ -3,7 +3,11 @@ import IconFavorite from '../../icons/favorite.svg?react'
 import IconFavoriteIsActive from '../../icons/favoriteactive.svg?react'
 import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FavoriteItemsResponse, ProductResponse } from '../../types'
+import {
+  FavoriteItemsResponse,
+  PriceResponse,
+  ProductResponse
+} from '../../types'
 import { gramsToKilograms } from '../../utils/format-weight/formatWeight'
 import { getToken } from '../../utils/cookie/token'
 import ModalPortal from '../modal-portal/ModalPortal'
@@ -12,6 +16,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addToFavorite, removeFavorite } from '../../redux/products/operation'
 import { AppDispatch, RootState } from '../../redux/store'
 import { useAuth } from '../../hooks/use-auth'
+import axiosInstance from '../../axios/settings'
+import { fetchBasketItemsThunk } from '../../redux/basket-item-count/operations'
+import { Notify } from 'notiflix'
+import { updateCount } from '../../redux/basket-item-count/slice'
+import { formatter } from '../../helpers/formatterTotalPrice'
+
+const PRODUCT_QUANTITY = 1
+const PRODUCT_ORDERS_LS_KEY = 'product-orders'
 
 type Props = {
   item: ProductResponse
@@ -21,7 +33,11 @@ const ItemCard: FC<Props> = ({ item }) => {
   const [isFavorite, setIsFavorite] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedWeight, setSelectedWeight] = useState(item.prices[0].weight)
+  const [selectedOldPrice, setSelectedOldPrice] = useState(
+    item.prices[0].old_price as number
+  )
   const [selectedPrice, setSelectedPrice] = useState(item.prices[0].price)
+  const [selectedPriceId, setSelectedPriceId] = useState(item.prices[0].id)
 
   const favorites = useSelector((state: RootState) => state.items.isFavorite)
   const isLoading = useSelector((state: RootState) => state.items.isLoading)
@@ -58,12 +74,80 @@ const ItemCard: FC<Props> = ({ item }) => {
 
   const handleWeightClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    weight: string,
-    price: number
+    price: PriceResponse
   ) => {
     e.preventDefault()
-    setSelectedWeight(weight)
-    setSelectedPrice(price)
+    setSelectedWeight(price.weight)
+    setSelectedPrice(price.price)
+    setSelectedOldPrice(price.old_price as number)
+    setSelectedPriceId(price.id)
+  }
+
+  const addProductToBasket = async (
+    productId: number,
+    selectedQuantity: number,
+    selectedPriceId: number
+  ) => {
+    const response = await axiosInstance.post(
+      `api/basket_items/add`,
+
+      {
+        product_id: productId,
+        quantity: selectedQuantity,
+        price_id_by_the_user: selectedPriceId
+      }
+    )
+    return response
+  }
+
+  const handleBuyClick = async (productId: number) => {
+    try {
+      if (user) {
+        await addProductToBasket(productId, PRODUCT_QUANTITY, selectedPriceId)
+        dispatch(fetchBasketItemsThunk())
+
+        Notify.success('Товар додано в кошик!')
+      } else {
+        const orderInfo = {
+          id: selectedPrice,
+          productId: productId,
+          price_id_by_the_user: selectedPriceId,
+          quantity: 1
+        }
+
+        const productOrders = JSON.parse(
+          localStorage.getItem(PRODUCT_ORDERS_LS_KEY) ?? '[]'
+        )
+
+        const existingProduct = productOrders.findIndex(
+          (order: {
+            productId: number
+            price_id_by_the_user: number
+            quantity: number
+          }) =>
+            order.productId === orderInfo.productId &&
+            order.price_id_by_the_user === orderInfo.price_id_by_the_user
+        )
+
+        if (existingProduct !== -1) {
+          productOrders[existingProduct].quantity += orderInfo.quantity
+        } else {
+          productOrders.push(orderInfo)
+        }
+
+        localStorage.setItem(
+          PRODUCT_ORDERS_LS_KEY,
+          JSON.stringify(productOrders)
+        )
+
+        dispatch(updateCount(productOrders))
+
+        Notify.success('Товар добавлено в кошик!')
+      }
+    } catch (error) {
+      console.error('Помилка при додаванні товару до кошика:', error)
+      throw error
+    }
   }
 
   return (
@@ -97,7 +181,7 @@ const ItemCard: FC<Props> = ({ item }) => {
                       <button
                         className={`${styles.weightElementButton} ${selectedWeight === price.weight ? styles.activeWeightElementButton : ''}`}
                         onClick={(e) => {
-                          handleWeightClick(e, price.weight, price.price)
+                          handleWeightClick(e, price)
                         }}
                       >
                         {gramsToKilograms(price.weight)}
@@ -106,11 +190,27 @@ const ItemCard: FC<Props> = ({ item }) => {
                   )
                 })}
               </ul>
-              <span className={styles.cardPrice}>{selectedPrice} грн</span>
+              <div className={styles.priceContainer}>
+                <span
+                  className={`${selectedOldPrice > 0 ? styles.newPrice : styles.cardPrice}`}
+                >
+                  {formatter.format(selectedPrice)}
+                </span>
+                {selectedOldPrice > 0 && (
+                  <span className={styles.oldPrice}>
+                    {formatter.format(selectedOldPrice)}
+                  </span>
+                )}
+              </div>
             </div>
           </Link>
         </div>
-        <button className={styles.cardButtom}>Купити</button>
+        <button
+          className={styles.cardButtom}
+          onClick={() => handleBuyClick(item.id)}
+        >
+          Купити
+        </button>
       </div>
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <Auth setIsModalOpen={setIsModalOpen} />
