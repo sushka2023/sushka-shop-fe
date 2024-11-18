@@ -250,7 +250,6 @@ const ProductPage = () => {
   const isPromotional = products?.prices?.find(
     (price) => price.weight === selectedWeight
   )?.promotional
-  console.log(products)
   return (
     <Fragment>
       <div className={styles.container}>
