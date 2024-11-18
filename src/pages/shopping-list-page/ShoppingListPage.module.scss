@@ -3,7 +3,7 @@
 .container {
   @include page-container;
   padding-top: 30px;
-  padding-bottom: 800px;
+  padding-bottom: 144px;
 
   display: flex;
   justify-content: space-between;
@@ -13,7 +13,7 @@
 .shopWrapper {
   max-width: 860px;
   flex-grow: 1;
-  height: 120px;
+  height: 100%;
 }
 
 .shopTitleWrapper {
@@ -52,7 +52,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 30px;
-
+  height: 100%;
   border-radius: 10px;
   border: 1px solid #feeee1;
 }
