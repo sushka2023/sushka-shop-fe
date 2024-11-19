@@ -21,12 +21,11 @@ export enum AuthModeType {
 type Props = {
   setIsModalOpen: (value: boolean) => void
   searchToken?: string | null
-  toggleOpen: any
 }
 
 const CONFIRMED_EMAIL = 'confirmed_email'
 
-const Auth: FC<Props> = ({ setIsModalOpen, searchToken, toggleOpen }) => {
+const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
   const [authMode, setAuthMode] = useState(AuthModeType.login)
   const { user, isLoggedIn, userDataChanged, errors } = useAuth()
   const navigate = useNavigate()
@@ -45,10 +44,7 @@ const Auth: FC<Props> = ({ setIsModalOpen, searchToken, toggleOpen }) => {
 
   const handleUserLogin = () => {
     if (user && isLoggedIn) {
-      console.log('1')
-
       navigate('/account')
-      toggleOpen()
       setIsModalOpen(false)
     }
   }

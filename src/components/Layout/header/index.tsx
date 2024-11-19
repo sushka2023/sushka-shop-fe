@@ -50,7 +50,15 @@ const Header = () => {
   return (
     <Container component="header" id="nav">
       <Box className={styles.headerWrapper}>
-        <Link to="/" className={styles.logoLink}>
+        <Link
+          to="/"
+          className={styles.logoLink}
+          onClick={() => {
+            if (isOpen) {
+              toggleOpen() // Викликається тільки якщо isOpen === true
+            }
+          }}
+        >
           <IconLogo />
         </Link>
         <Box width="100%" sx={{ display: 'flex' }}>

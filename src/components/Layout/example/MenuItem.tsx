@@ -8,7 +8,7 @@ import { Button } from '../../UI/Button'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -23,8 +23,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import ModalPortal from '../../modal-portal/ModalPortal'
 import Auth from '../../auth/Auth'
-import useModalOpenOnToken from '../mobile-header/useModalOpenToken'
-import { useEffect } from 'react'
+import { useState } from 'react'
 
 const variants = {
   open: {
@@ -43,9 +42,8 @@ const variants = {
   }
 }
 
-const LoginButton = ({ toggleOpen }: any) => {
-  // Виклик користувацького хука для управління станом модального вікна
-  const [isModalOpen, setIsModalOpen] = useModalOpenOnToken()
+const LoginButton = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
     <Fragment>
@@ -67,7 +65,7 @@ const LoginButton = ({ toggleOpen }: any) => {
       </Button>
       {/* Модальне вікно з авторизацією */}
       <ModalPortal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <Auth setIsModalOpen={setIsModalOpen} toggleOpen={toggleOpen} />
+        <Auth setIsModalOpen={setIsModalOpen} />
       </ModalPortal>
     </Fragment>
   )
@@ -132,13 +130,7 @@ export const MenuItem = ({
   setIsActive,
   isLessThan600px
 }: any) => {
-  const navigate = useNavigate()
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
-
-  useEffect(() => {
-    navigate('/account')
-    toggleOpen()
-  }, [isLoggedIn])
 
   return (
     <Fragment>
@@ -210,25 +202,25 @@ export const MenuItem = ({
         <CooperationLink />
       </motion.li>
 
-      <motion.li
-        className={`${styles.exampleLi} ${styles.listNavLine}`}
-        variants={variants}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <CrmLink />
-      </motion.li>
-
-      {!isLoggedIn && (
+      {isLoggedIn && (
         <motion.li
-          className={styles.exampleLi}
+          className={`${styles.exampleLi} ${styles.listNavLine}`}
           variants={variants}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          <LoginButton toggleOpen={toggleOpen} />
+          <CrmLink />
         </motion.li>
       )}
+
+      <motion.li
+        className={`${styles.exampleLi} ${isLoggedIn ? styles.loggedIn : ''}`}
+        variants={variants}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <LoginButton />
+      </motion.li>
     </Fragment>
   )
 }

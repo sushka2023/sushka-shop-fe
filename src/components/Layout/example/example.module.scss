@@ -57,10 +57,13 @@
   cursor: pointer;
 }
 
+.loggedIn {
+  display: none;
+}
+
 .listNavLine {
   display: flex;
   align-items: center;
-  justify-content: center;
   width: 85px;
   height: 40px;
   color: $green-dark-200;
