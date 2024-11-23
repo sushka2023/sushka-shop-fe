@@ -1,10 +1,4 @@
 import styles from './sectionYourChoice.module.scss'
-import IconMix from '../../icons/mix.svg?react'
-import IconApple from '../../icons/apple.svg?react'
-import IconBowl from '../../icons/bowl.svg?react'
-import IconBox from '../../icons/box.svg?react'
-import ApllePic from '../../images/aplle-pic.png'
-import FruitMixSecond from '../../images/fruit-mix-2.png'
 import {
   Box,
   Container,
@@ -13,6 +7,13 @@ import {
   Typography,
   useTheme
 } from '@mui/material'
+
+import IconMix from '../../icons/mix.svg?react'
+import IconApple from '../../icons/apple.svg?react'
+import IconBowl from '../../icons/bowl.svg?react'
+import IconBox from '../../icons/box.svg?react'
+import ApllePic from '../../images/aplle-pic.png'
+import FruitMixSecond from '../../images/fruit-mix-2.png'
 
 const ITEMS_LIST = [
   { icon: <IconMix />, text: 'Без цукру та барвників' },

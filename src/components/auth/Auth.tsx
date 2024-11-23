@@ -44,8 +44,8 @@ const Auth: FC<Props> = ({ setIsModalOpen, searchToken }) => {
 
   const handleUserLogin = () => {
     if (user && isLoggedIn) {
-      setIsModalOpen(false)
       navigate('/account')
+      setIsModalOpen(false)
     }
   }
 

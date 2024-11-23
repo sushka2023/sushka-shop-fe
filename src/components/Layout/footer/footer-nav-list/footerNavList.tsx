@@ -17,7 +17,7 @@ const FooterNavList = () => {
   }, [homePath, location])
 
   return (
-    <ul className={styles.footerNavList}>
+    <ul className={styles.footerNavListAbout}>
       <li className={styles.footerNavListLine}>
         <Link to="catalog/11" className={styles.footerListNavLink}>
           Каталог

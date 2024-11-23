@@ -13,6 +13,28 @@
   }
 }
 
+.borderCommon {
+  position: relative;
+  width: 100%;
+  height: clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem);
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.borderTop {
+  @extend .borderCommon;
+  top: 2px;
+  background-image: url('/src/icons/borderslider.svg');
+  margin-top: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
+.borderBottom {
+  @extend .borderCommon;
+  bottom: 2px;
+  background-image: url('/src/icons/bordersecondslider.svg');
+  margin-bottom: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
 .sectionSlider {
   h2 {
     margin-bottom: clamp(1.25rem, 0.357rem + 2.38vw, 2.5rem);
@@ -184,6 +206,4 @@
     width: clamp(8.438rem, -1.563rem + 50vw, 17.188rem);
     height: clamp(13.25rem, 9.807rem + 23.21vw, 20.313rem);
   }
-
-  
 }

@@ -1,13 +1,7 @@
 import styles from './sectionReviews.module.scss'
 import Slider, { Settings } from 'react-slick'
-import ArrowPrev from '../section-slider/arrowPrev'
-import ArrowNext from '../section-slider/arrowNext'
 import { Fragment, useState } from 'react'
-import IconCherry from '../../icons/cherry.svg?react'
-import IconBanana from '../../icons/banana.svg?react'
-import FirstReview from '../../images/review1.png'
-import SecondReview from '../../images/review2.png'
-import ThirdReview from '../../images/review3.png'
+import clsx from 'clsx'
 import {
   Box,
   Container,
@@ -16,6 +10,14 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material'
+
+import ArrowPrev from '../section-slider/arrowPrev'
+import ArrowNext from '../section-slider/arrowNext'
+import IconCherry from '../../icons/cherry.svg?react'
+import IconBanana from '../../icons/banana.svg?react'
+import FirstReview from '../../images/review1.png'
+import SecondReview from '../../images/review2.png'
+import ThirdReview from '../../images/review3.png'
 
 const REVIEWS_CLIENTS = [
   FirstReview,
@@ -63,30 +65,9 @@ const SectionReviews = () => {
     }
   }
 
-  const createBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
-    position: 'relative',
-    [positionWave]: '2px', // динамічний ключ (top або bottom)
-    backgroundImage: `url(${url})`,
-    width: '100%',
-    height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%'
-  })
-
-  const borderTop = createBorderStyle(
-    '/src/icons/bordersliderreview.svg',
-    'top'
-  )
-  const borderBottom = createBorderStyle(
-    '/src/icons/bordersecondsliderreview.svg',
-    'bottom'
-  )
-
   return (
     <Fragment>
-      <Box
-        sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
-      >
+      <Box className={clsx(styles.borderCommon, styles.borderTop)}>
         <Box className={styles.iconCherry}>
           <IconCherry />
         </Box>
@@ -129,12 +110,7 @@ const SectionReviews = () => {
         </Container>
       </Box>
 
-      <Box
-        sx={{
-          ...borderBottom,
-          mb: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)'
-        }}
-      >
+      <Box className={clsx(styles.borderCommon, styles.borderBottom)}>
         <Box className={styles.iconBanana}>
           <IconBanana />
         </Box>
