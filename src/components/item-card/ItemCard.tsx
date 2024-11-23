@@ -151,7 +151,7 @@ const ItemCard: FC<Props> = ({ item }) => {
   }
 
   return (
-    <li>
+    <li className={styles.item}>
       <div className={styles.slideElement}>
         <div className={styles.cardContent}>
           <Link to={`/catalog/${item.product_category_id}/${item.id}/details`}>

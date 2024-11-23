@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './favoritePage.module.scss'
 import ItemCard from '../../components/item-card/ItemCard'
-import { RootState, AppDispatch } from '../../redux/store'
+import { AppDispatch, RootState } from '../../redux/store'
 import { getToken } from '../../utils/cookie/token'
 import { fetchFavoriteItems } from '../../redux/products/operation'
 
@@ -40,7 +40,7 @@ const FavoritePage = () => {
               return <ItemCard item={item.product} key={item.id} />
             })}
             <li className={styles.addNewItem}>
-              <Link className={styles.link} to="/catalog">
+              <Link className={styles.link} to="/catalog/all">
                 <IconAddNewItem className={styles.addNewItemIcon} />
                 <p className={styles.addNewItemText}>
                   Додати товар до улюбленого

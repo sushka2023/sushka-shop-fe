@@ -187,7 +187,7 @@ const ProductPage = () => {
 
         dispatch(updateCount(productOrders))
 
-        Notify.success('Товар добавлено в кошик!')
+        Notify.success('Товар додано в кошик!')
       }
     } catch (error) {
       console.error('Помилка при додаванні товару до кошика:', error)
@@ -342,9 +342,7 @@ const ProductPage = () => {
 
                 <div className={styles.selectPriceWrapper}>
                   {isPromotional && (
-                    <p className={styles.selectOldPrice}>
-                      {selectedOldPrice} ₴
-                    </p>
+                    <p className={styles.selectOldPrice}>{selectedPrice} ₴</p>
                   )}
                   <p
                     className={
@@ -353,7 +351,7 @@ const ProductPage = () => {
                         : styles.selectPrice
                     }
                   >
-                    {selectedPrice} ₴
+                    {selectedOldPrice} ₴
                   </p>
                 </div>
 
