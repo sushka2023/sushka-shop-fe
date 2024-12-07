@@ -1,9 +1,8 @@
 import { Box, Typography, Link } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 import CallIcon from '../../icons/call.svg?react'
-import DeleteIcon from '../../icons/delete.svg?react'
 import EditIcon from '../../icons/edit-icon.svg?react'
-import { OrdersCRMResponse, OrdersStatus } from '../../types'
+import { OrdersCRMResponse, OrdersStatuses } from '../../types'
 import { formatter } from '../../helpers/formatterTotalPrice'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { Link as RouterLink } from 'react-router-dom'
@@ -12,8 +11,6 @@ import { dataGridStyle } from './style'
 import { ORDER_STATUS } from './constants'
 
 const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
-  const formattedTotalPrice = (sum: number) => formatter.format(sum)
-
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: 'id',
@@ -41,7 +38,7 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 140,
       sortable: false,
       renderCell: (params) => {
-        const statusKey = params.value as OrdersStatus
+        const statusKey = params.value as OrdersStatuses
 
         return (
           <Box
@@ -64,7 +61,7 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       width: 150,
       sortable: false,
       renderCell: (params) => (
-        <Typography>{formattedTotalPrice(params.value)}</Typography>
+        <Typography>{formatter.format(params.value)}</Typography>
       )
     },
     {
@@ -79,9 +76,6 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
               <CallIcon style={{ width: 24, height: 24 }} />
             </IconButton>
           </Link>
-          <IconButton sx={{ padding: '10px' }}>
-            <DeleteIcon style={{ width: 24, height: 24 }} />
-          </IconButton>
           <RouterLink to={`/crm/orders/${params.id}`}>
             <IconButton sx={{ padding: '10px' }}>
               <EditIcon style={{ width: 24, height: 24 }} />
@@ -101,7 +95,6 @@ const DataGridTable = ({ rows }: { rows: OrdersCRMResponse[] }) => {
       hideFooterPagination
       disableColumnFilter
       disableColumnMenu
-      autoHeight
     />
   )
 }
