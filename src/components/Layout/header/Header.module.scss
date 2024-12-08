@@ -256,10 +256,6 @@ input[type='search']::-webkit-search-cancel-button {
       z-index: 11;
     }
 
-    .isActive {
-      border: 1px solid red;
-    }
-
     .burger {
       display: block;
       font-size: 30px;
@@ -292,7 +288,6 @@ input[type='search']::-webkit-search-cancel-button {
     top: 65px;
     right: 0px;
     z-index: 1;
-    border: 1px solid red;
 
     .listNav {
       display: flex;
@@ -305,7 +300,6 @@ input[type='search']::-webkit-search-cancel-button {
       }
 
       .listNavLine:nth-child(4) {
-        // border: 1px solid red;
         margin-bottom: 10px;
       }
     }
@@ -356,6 +350,7 @@ input[type='search']::-webkit-search-cancel-button {
     }
     100% {
       width: 150px;
+      // width: 100%;
       height: 32px;
       opacity: 1;
     }

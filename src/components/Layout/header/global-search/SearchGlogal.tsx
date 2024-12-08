@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import IconSearch from '../../../../icons/search.svg?react'
 import { Box } from '@mui/material'
 
-const SearchGlobal = ({ isActive, setIsActive }: any) => {
+const SearchGlobal = ({ isActive, setIsActive, isOpen }: any) => {
   const iconRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -20,6 +20,7 @@ const SearchGlobal = ({ isActive, setIsActive }: any) => {
       setIsActive(false)
     }
   }
+  console.log(isOpen)
 
   useEffect(() => {
     window.addEventListener('click', handleClick)

@@ -1,19 +1,22 @@
-import { motion } from 'framer-motion'
+import { motion, SVGMotionProps } from 'framer-motion'
 
-import styles from './example.module.scss'
+import styles from './BurgerMenu.module.scss'
 
-const Path = (props: any) => (
+const Path = (props: SVGMotionProps<SVGPathElement>) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
-    // stroke="hsl(0, 0%, 18%)"
     stroke="#567343"
     strokeLinecap="round"
     {...props}
   />
 )
 
-export const MenuToggle = ({ toggle }: any) => (
+type MenuToggleProps = {
+  toggle: () => void
+}
+
+export const MenuToggle = ({ toggle }: MenuToggleProps) => (
   <button className={styles.exampleButton} onClick={toggle}>
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path

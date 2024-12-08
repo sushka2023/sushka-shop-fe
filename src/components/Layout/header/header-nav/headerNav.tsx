@@ -1,7 +1,7 @@
 import styles from '../Header.module.scss'
-import HeaderNavList from './HeaderNavList'
+import HeaderNavList from './header-nav-list/HeaderNavList'
 
-const HeaderNav = ({ toggleOpen }: any) => {
+const HeaderNav = ({ toggleOpen }: { toggleOpen: () => void }) => {
   return (
     <nav className={styles.navWrapper}>
       <HeaderNavList toggleOpen={toggleOpen} />
