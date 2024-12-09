@@ -25,7 +25,7 @@ const HeroSection = () => {
   const firstCategoryId = `/catalog/${allCategories && allCategories[0].id}`
 
   return (
-    <Box component="section" sx={{ background: '#0458' }}>
+    <Box component="section">
       <Container
         sx={{
           color: 'secondary.darker'
