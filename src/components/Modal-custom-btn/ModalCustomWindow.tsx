@@ -30,7 +30,6 @@ export const ModalCustom = ({
   return (
     <Modal
       open={openModal}
-      onClose={handleCloseModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
