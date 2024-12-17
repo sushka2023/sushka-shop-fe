@@ -14,57 +14,37 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import EditIcon from '@mui/icons-material/Edit'
 
-type ClientType = {
-  id: number
-  role: string
-  created_at: string
-  phone: string | null
-  email: string
+import { Role, UserReviewResponse } from '../../types'
+import { tableBlock, tableClients } from './style'
+
+export const ROLE_TRANSLATIONS: Record<Role, string> = {
+  admin: 'Адміністратор',
+  moderator: 'Модератор',
+  user: 'Користувач'
 }
 
-const getRoleClassName = (role: string) => {
-  switch (role) {
-    case 'admin':
-      return styles.roleAdmin
-    case 'moderator':
-      return styles.roleModerator
-    case 'user':
-      return styles.roleUser
-    default:
-      return ''
-  }
-}
-
-export default function BasicTable({ clients }: { clients: ClientType[] }) {
+export default function BasicTable({
+  clients
+}: {
+  clients: UserReviewResponse[]
+}) {
   const theme = useTheme()
   const location = useLocation()
   const navigate = useNavigate()
 
   const handleRowClick = (id: number) => {
-    navigate(`/crm/clients/${id}`, { state: { from: location.pathname } })
+    navigate(`/crm/clients/${id}`, {
+      state: { from: location.pathname + location.search }
+    })
   }
 
   return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        borderTopLeftRadius: '10px',
-        borderTopRightRadius: '10px'
-      }}
-    >
-      <Table
-        className={styles.table}
-        sx={{
-          'minWidth': 650,
-          'color': 'illustrations.darker',
-          'th, td': { color: 'inherit' }
-        }}
-        aria-label="simple table"
-      >
+    <TableContainer component={Paper} sx={tableBlock}>
+      <Table sx={tableClients} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ background: theme.palette.grey[50] }}>
             <TableCell>Роль користувача</TableCell>
-            <TableCell align="center">Дата оформлення</TableCell>
+            <TableCell align="center">ПІБ</TableCell>
             <TableCell align="center">Електронна пошта</TableCell>
             <TableCell align="center">Номер телефону</TableCell>
             <TableCell align="center">Змінити</TableCell>
@@ -72,21 +52,26 @@ export default function BasicTable({ clients }: { clients: ClientType[] }) {
         </TableHead>
         <TableBody>
           {clients.map((row) => (
-            <TableRow key={row.id} onClick={() => handleRowClick(row.id)}>
+            <TableRow
+              key={row.id}
+              onClick={() => handleRowClick(row.id)}
+              sx={{
+                '&:hover': {
+                  background: 'rgba(0, 0, 0, 0.04)'
+                }
+              }}
+            >
               <TableCell component="th" scope="row">
-                <Typography
-                  component="span"
-                  className={getRoleClassName(row.role)}
-                >
-                  {row.role}
+                <Typography component="span" className={styles[row.role]}>
+                  {ROLE_TRANSLATIONS[row.role]}
                 </Typography>
               </TableCell>
               <TableCell align="center">
-                {row.created_at.split('T')[0]}
+                {`${row.first_name} ${row.last_name}`}
               </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">
-                {row.phone ? row.phone : 'номер не вказано'}
+                {row.phone_number ? row.phone_number : 'номер не вказано'}
               </TableCell>
               <TableCell align="center">
                 <Tooltip title="Edit">

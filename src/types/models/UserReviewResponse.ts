@@ -10,5 +10,6 @@ export type UserReviewResponse = {
     last_name: string;
     role: Role;
     is_active: boolean;
+    phone_number: string | null
 };
 
