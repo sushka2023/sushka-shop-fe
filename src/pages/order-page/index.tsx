@@ -136,6 +136,7 @@ const OrderPage = () => {
       )
 
       if (sendOrderResponse) {
+        const API_URL = import.meta.env.VITE_API_URL
         const BASE_API_MONO = import.meta.env.VITE_URL_MONO
         const X_TOKEN = import.meta.env.VITE_X_TOKEN
         const ORDER_HISTORY_URL =
@@ -145,7 +146,8 @@ const OrderPage = () => {
           BASE_API_MONO,
           {
             amount: convertToKopecks(calculateTotal(orderList)),
-            redirectUrl: ORDER_HISTORY_URL
+            redirectUrl: ORDER_HISTORY_URL,
+            webHookUrl: `${API_URL}/api/webhook/monobank`
           },
           {
             headers: {
