@@ -84,27 +84,7 @@
   fill: $white-200;
 }
 
-.statusSelector {
-  width: 220px;
-  background-color: #ffffff;
-  border-radius: 10px !important;
-  border: none;
-  padding: 0 14px;
 
-  font-family: Open Sans !important;
-  font-size: 16px !important;
-  font-weight: 400 !important;
-  line-height: 21px !important;
-  letter-spacing: 0em !important;
-  text-align: left !important;
-  color: #64748b !important;
-
-  :global {
-    .MuiOutlinedInput-notchedOutline {
-      border: none;
-    }
-  }
-}
 
 .statusSelectorPopup {
   margin-top: 10px;

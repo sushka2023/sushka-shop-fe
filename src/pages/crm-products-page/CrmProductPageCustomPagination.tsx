@@ -31,9 +31,12 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
   const isNextButtonDisabled = page === Math.floor(count / PAGE_SIZE)
 
   const buttonStyles = (disabled: boolean) => ({
-    backgroundColor: disabled ? '#F1F2F4' : 'transparent',
-    color: disabled ? '#B4BFCD' : '#5D5FEF',
-    borderColor: disabled ? '#B4BFCD' : '#5D5FEF'
+    'backgroundColor': disabled ? '#F1F2F4' : 'transparent',
+    'color': disabled ? '#B4BFCD' : '#5D5FEF',
+    'borderColor': disabled ? '#B4BFCD' : '#5D5FEF',
+    '&:hover': {
+      border: '1px solid transparent'
+    }
   })
 
   return (

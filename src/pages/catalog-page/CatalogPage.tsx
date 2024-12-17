@@ -82,16 +82,18 @@ const CatalogPage = () => {
         <div className={styles.pagination}>
           <ThemeProvider theme={theme}>
             <ScrollLink to="nav">
-              <Pagination
-                count={totalNumberOfPages}
-                color="primary"
-                size="large"
-                hidePrevButton
-                hideNextButton
-                sx={paginationStyles}
-                onClick={handleClickPagination}
-                page={page}
-              />
+              {totalNumberOfPages > 1 && (
+                <Pagination
+                  count={totalNumberOfPages}
+                  color="primary"
+                  size="large"
+                  hidePrevButton
+                  hideNextButton
+                  sx={paginationStyles}
+                  onClick={handleClickPagination}
+                  page={page}
+                />
+              )}
             </ScrollLink>
           </ThemeProvider>
         </div>

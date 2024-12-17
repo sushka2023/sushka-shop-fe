@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PriceArchiveModel = {
-    id: number;
+export type WebhookMessageResponse = {
+    message: string;
 };
 

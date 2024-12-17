@@ -1,8 +1,8 @@
 import { Dispatch, FC, Fragment } from 'react'
 import {
+  FormControlLabel,
   Radio,
   RadioGroup,
-  FormControlLabel,
   Typography,
   useTheme
 } from '@mui/material'
@@ -11,12 +11,13 @@ import { NovaPoshtaPostomats } from './PostomatsNP'
 import { AddressNP } from './AddressNP'
 import {
   FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormClearErrors,
   FieldValues,
-  UseFormSetError
+  UseFormClearErrors,
+  UseFormRegister,
+  UseFormSetError,
+  UseFormSetValue
 } from 'react-hook-form'
+import AddressUP from './AddressUP'
 
 type RadioFormProps = {
   register: UseFormRegister<FieldValues>
@@ -57,7 +58,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
@@ -84,7 +84,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto'
             }
@@ -110,7 +109,6 @@ export const RadioForm: FC<RadioFormProps> = ({
             </Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
@@ -135,14 +133,22 @@ export const RadioForm: FC<RadioFormProps> = ({
             <Typography sx={{ pointerEvents: 'auto' }}>Укрпошта</Typography>
           }
           sx={{
-            pointerEvents: 'none',
             [theme.breakpoints.down('sm')]: {
               pointerEvents: 'auto',
               p: '5px 0'
             }
           }}
         />
-        {selectedValue === 'urkPoshta' && <Typography>Urk</Typography>}
+        {selectedValue === 'urkPoshta' && (
+          <AddressUP
+            selectedValue={selectedValue}
+            errors={errors}
+            setError={setError}
+            register={register}
+            setValue={setValue}
+            clearErrors={clearErrors}
+          />
+        )}
       </RadioGroup>
     </Fragment>
   )

@@ -20,6 +20,7 @@
 }
 
 .fileLabel {
+  width: 180px;
   display: flex;
   align-items: center;
   gap: 9px;
@@ -66,8 +67,8 @@
 }
 
 .fileLineWrrap {
+  width: 275px;
   display: flex;
-  width: 100%;
   height: 30px;
   padding: 5px 10px;
   justify-content: space-between;
@@ -80,18 +81,21 @@
   line-height: 130%;
 }
 
-.fileLine {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-}
-
 .fileContentWrrap {
+  width: 240px;
   display: flex;
   align-items: center;
   gap: 13px;
 }
 
+.fileName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
 .fileName:hover {
     color: #5D5FEF;
     cursor: pointer;
