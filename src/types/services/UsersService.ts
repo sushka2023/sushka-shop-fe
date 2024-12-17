@@ -113,7 +113,6 @@ export class UsersService {
      *
      * Arguments:
      * body (UserChangeRole): object with new role
-     * user (User): the current user
      * db (Session): SQLAlchemy session object for accessing the database
      *
      * Returns:
