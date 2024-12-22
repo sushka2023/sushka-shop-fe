@@ -4,10 +4,11 @@ import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
 import { itemsSlice } from '../products/slice'
 import { authSlice } from '../authentication/slice'
-import { productSlice } from '../crm-add-new-product/slice/product'
-import { categoriesSlice } from '../crm-add-new-product/slice/categories'
+import { productSlice } from '../crm-product/createSlice/product'
+import { categoriesSlice } from '../crm-product/createSlice/categories'
 import { reviewsReducer } from '../feedbacks/slice'
 import { basketItemCountSlice } from '../basket-item-count/slice'
+import { pricesSlice } from '../crm-product/editSlice/editPrice'
 
 const AUTH_PERSIST_CONFIG = {
   key: 'auth',
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
     categoriesSlice.reducer
   ),
   reviews: reviewsReducer,
-  basketCount: basketItemCountSlice.reducer
+  basketCount: basketItemCountSlice.reducer,
+  editProduct: pricesSlice.reducer
 })
 
 const persistedReducer = persistReducer(
@@ -51,5 +53,4 @@ export const store = configureStore({
 export const persister = persistStore(store)
 
 export type RootState = ReturnType<typeof rootReducer>
-
 export type AppDispatch = typeof store.dispatch

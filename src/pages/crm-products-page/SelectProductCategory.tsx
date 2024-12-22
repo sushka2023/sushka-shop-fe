@@ -1,13 +1,10 @@
-import {
-  InputAdornment,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import SortIcon from '../../icons/sort.svg?react'
 import styles from './crmProductsPage.module.scss'
 import ExpandMoreIcon from '../../icons/ExpandMoreIcon.svg?react'
 import { ProductCategoryResponse } from '../../types'
+import { Fragment } from 'react/jsx-runtime'
+import { StyledSelector } from './CrmCustomPaginationStyles'
 
 type SelectProductCategoryProps = {
   category: string
@@ -19,25 +16,27 @@ const SelectProductCategory = ({
   handleCategoryChange,
   mainCategories
 }: SelectProductCategoryProps) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
+    handleCategoryChange(event as SelectChangeEvent<string>)
+  }
+
   return (
     <Select
-      startAdornment={
-        <InputAdornment position="start">
-          <SortIcon />
-        </InputAdornment>
-      }
-      displayEmpty
       value={category}
-      onChange={handleCategoryChange}
+      onChange={handleChange}
+      displayEmpty
+      sx={StyledSelector}
       className={styles.statusSelector}
-      IconComponent={() => (
-        <ExpandMoreIcon className={styles.statusSelectorIcon} />
+      IconComponent={ExpandMoreIcon}
+      renderValue={(selected) => (
+        <Fragment>
+          <SortIcon style={{ marginRight: '8px' }} />
+          {mainCategories?.find(
+            (category) => `${category.id}` === `${selected}`
+          )?.name || 'Категорія'}
+        </Fragment>
       )}
       MenuProps={{ classes: { paper: styles.statusSelectorPopup } }}
-      renderValue={(selected) =>
-        mainCategories?.find((category) => `${category.id}` === `${selected}`)
-          ?.name || 'Категорія'
-      }
     >
       <MenuItem value="">Усі категорії</MenuItem>
       {mainCategories?.map((category) => (

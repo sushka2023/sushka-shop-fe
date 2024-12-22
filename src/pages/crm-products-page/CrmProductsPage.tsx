@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import PlusIcon from '../../icons/plus.svg?react'
 import SearchIcon from '../../icons/search.svg?react'
 import styles from './crmProductsPage.module.scss'
-import { GridPaginationModel } from '@mui/x-data-grid'
+import { GridPaginationModel, GridRowParams } from '@mui/x-data-grid'
 import { SelectChangeEvent } from '@mui/material'
 import { ChangeEvent, useEffect, useState } from 'react'
 import {
   fetchMainCategories,
   fetchProductsForCrm,
   searchProductsForCrm
-} from '../../redux/crm-add-new-product/operation'
+} from '../../redux/crm-product/operation'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../redux/store'
 import { ProductStatus } from '../../types'
@@ -21,7 +21,7 @@ import { columns } from './CrmProductDataGridColumns'
 import useDebounce from '../../hooks/useDebounce'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
 
-export const PAGE_SIZE = 10
+export const PAGE_SIZE = 9
 const DEBOUNCE_DELAY = 300
 export const OPTIONS = [
   { value: '', label: 'Статус' },
@@ -31,6 +31,7 @@ export const OPTIONS = [
 ]
 
 const CrmProductsPage = () => {
+  const navigate = useNavigate()
   const [status, setStatus] = useState('')
   const [category, setCategory] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -61,6 +62,10 @@ const CrmProductsPage = () => {
   }
   const handleStatusChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value)
+  }
+
+  const handleIndex = (index: GridRowParams) => {
+    navigate(`./${index.id}`)
   }
 
   const handlePaginationModelChange = (
@@ -174,30 +179,29 @@ const CrmProductsPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <StyledDataGrid
-            autoHeight
-            rows={searchQuery ? searchProductForCrm : productsForCrm}
-            columns={columns(mainCategories)}
-            paginationModel={paginationModel}
-            slots={{
-              pagination: CustomPagination,
-              noRowsOverlay: CustomNoRowsOverlay
-            }}
-            onPaginationModelChange={handlePaginationModelChange}
-            pageSizeOptions={[PAGE_SIZE]}
-            paginationMode="server"
-            rowCount={
-              searchQuery
-                ? searchProductsForCrmTotalCount
-                : productsForCrmTotalCount
-            }
-            disableRowSelectionOnClick
-            disableColumnFilter
-            loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
-            disableColumnMenu
-          />
-        </div>
+        <StyledDataGrid
+          autoHeight
+          rows={searchQuery ? searchProductForCrm : productsForCrm}
+          columns={columns(mainCategories)}
+          paginationModel={paginationModel}
+          slots={{
+            pagination: CustomPagination,
+            noRowsOverlay: CustomNoRowsOverlay
+          }}
+          onPaginationModelChange={handlePaginationModelChange}
+          pageSizeOptions={[PAGE_SIZE]}
+          paginationMode="server"
+          rowCount={
+            searchQuery
+              ? searchProductsForCrmTotalCount
+              : productsForCrmTotalCount
+          }
+          disableRowSelectionOnClick
+          disableColumnFilter
+          loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
+          disableColumnMenu
+          onRowClick={(index) => handleIndex(index)}
+        />
       </div>
     </section>
   )

@@ -1,16 +1,16 @@
-import { FC, Ref } from 'react'
-import CrmImages from '../../components/Crm-images'
+import { ChangeEvent, FC, Ref } from 'react'
 import DescriptionField from './DescriptionField'
 import styles from './crmAddNewProduct.module.scss'
+import { ProductResponse } from '../../types'
+import { CrmImages } from '../../components/Crm-images/CrmImages'
 
 type Props = {
   formErrors: Record<string, string>
   nameInputRef: Ref<HTMLInputElement>
   descriptionRef: Ref<HTMLTextAreaElement>
+  product: ProductResponse | undefined
   handleChangeFormData: (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void
 }
 
@@ -18,7 +18,8 @@ const DescriptionProduct: FC<Props> = ({
   formErrors,
   nameInputRef,
   descriptionRef,
-  handleChangeFormData
+  handleChangeFormData,
+  product
 }) => {
   return (
     <div className={styles.inputsWrapp}>
@@ -32,6 +33,7 @@ const DescriptionProduct: FC<Props> = ({
           formErrors={formErrors}
           ref={nameInputRef}
           handleChangeFormData={handleChangeFormData}
+          disabled={!!product}
         />
         <DescriptionField
           id="description"
@@ -43,9 +45,10 @@ const DescriptionProduct: FC<Props> = ({
           ref={descriptionRef}
           handleChangeFormData={handleChangeFormData}
           className={'descriptionTextaria'}
+          disabled={!!product}
         />
       </div>
-      <CrmImages />
+      <CrmImages product={product} />
     </div>
   )
 }

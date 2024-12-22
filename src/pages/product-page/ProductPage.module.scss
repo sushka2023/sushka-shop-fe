@@ -6,6 +6,15 @@
   padding-bottom: 200px;
 }
 
+.cardFavorite {
+  position: absolute;
+  top: 40px;
+  right: 34px;
+  fill: #E11D48;
+  animation: heartbeat 0.3s ease-in-out;
+  cursor: pointer;
+}
+
 .titleProduct {
   font-family: $comfortaa;
   font-size: 32px;

@@ -18,7 +18,7 @@ export const fetchReviews = createAsyncThunk<Review[], FetchReviewsParams>(
       return response.data
     } catch (e) {
       const error = e as AxiosError
-      return thunkAPI.rejectWithValue(error?.response?.status)
+      return thunkAPI.rejectWithValue(error?.response)
     }
   }
 )

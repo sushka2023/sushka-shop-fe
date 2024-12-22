@@ -5,7 +5,9 @@
 import type { ProductStatus } from './ProductStatus';
 export type ProductChangeStatusResponse = {
     id: number;
-    is_deleted: boolean;
     product_status: ProductStatus;
+    new_product: boolean;
+    is_deleted: boolean;
+    is_popular: boolean;
 };
 

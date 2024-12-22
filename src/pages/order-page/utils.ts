@@ -1,4 +1,3 @@
-import CryptoJS from 'crypto-js'
 import {
   BasketItemsResponse,
   ProductResponse,
@@ -6,7 +5,7 @@ import {
 } from '../../types'
 import { getLocalStorageData } from '../../utils/local-storage'
 import { createOrder, getBasketItems, getProductForId } from './operation'
-import { OrderDetailsType, RequestPayment } from './types'
+import { OrderDetailsType } from './types'
 
 type CallbackFunction<T> = (value: T) => void
 
@@ -76,7 +75,7 @@ const sendOrder = async (
     callbackLoading(true)
     const orderData = await createOrder(data, user, orderList, postType)
     callback(orderData.data.order_info.id)
-    return callbackIsNotificationModal(true)
+    return orderData.data
   } catch (e) {
     callbackLoading(false)
     callbackError('помилка під час відправки замовлення')
@@ -101,42 +100,8 @@ const pricing = (priceArray: BasketItemsResponse[]) => {
   })
 }
 
-const generateHash = (string: string, key: string) => {
-  return CryptoJS.HmacMD5(string, key).toString(CryptoJS.enc.Hex)
-}
-
-const generateOrderReference = () => {
-  return `ORDER-${new Date().getTime()}`
-}
-
-const generateSignature = (requestData: RequestPayment) => {
-  const {
-    merchantAccount,
-    merchantDomainName,
-    orderReference,
-    orderDate,
-    amount,
-    currency,
-    productName,
-    productCount,
-    productPrice
-  } = requestData
-
-  const signatureString = [
-    merchantAccount,
-    merchantDomainName,
-    orderReference,
-    orderDate,
-    amount,
-    currency,
-    ...productName,
-    ...productCount,
-    ...productPrice
-  ].join(';')
-
-  const SECRET_KEY = import.meta.env.VITE_API_SECRET_KEY
-
-  return generateHash(signatureString, SECRET_KEY)
+const convertToKopecks = (amountInHryvnias: number) => {
+  return amountInHryvnias * 100
 }
 
 export {
@@ -144,6 +109,5 @@ export {
   loadLocalStorageItems,
   sendOrder,
   pricing,
-  generateSignature,
-  generateOrderReference
+  convertToKopecks
 }

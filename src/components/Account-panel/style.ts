@@ -57,6 +57,5 @@ export const stTabsBottomBox = {
 
 export const stContainerTabPanel = {
   backgroundColor: 'pink.lighter',
-  color: 'secondary.darker',
-  fontFamily: 'Comfortaa'
+  color: 'secondary.darker'
 }
