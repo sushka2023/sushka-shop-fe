@@ -3,12 +3,9 @@ import styles from '../../Header.module.scss'
 import { Fragment } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Link as ScrollLink } from 'react-scroll'
+import { HeaderNavProps } from '../headerNav'
 
-type AboutUsLinkProps = {
-  toggleOpen: () => void
-}
-
-export const AboutUsLink = ({ toggleOpen }: AboutUsLinkProps) => {
+export const AboutUsLink = ({ toggleOpen }: HeaderNavProps) => {
   const location = useLocation()
   const isHomePath = location.pathname === '/'
 
@@ -22,7 +19,7 @@ export const AboutUsLink = ({ toggleOpen }: AboutUsLinkProps) => {
           duration={500}
           spy={true}
           hashSpy={true}
-          onClick={toggleOpen}
+          onClick={() => toggleOpen(false)}
         >
           Про нас
         </ScrollLink>

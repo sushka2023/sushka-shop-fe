@@ -13,11 +13,12 @@ const Path = (props: SVGMotionProps<SVGPathElement>) => (
 )
 
 type MenuToggleProps = {
-  toggle: () => void
+  isOpen: boolean
+  toggleOpen: (isOpen: boolean) => void
 }
 
-export const MenuToggle = ({ toggle }: MenuToggleProps) => (
-  <button className={styles.exampleButton} onClick={toggle}>
+export const MenuToggle = ({ isOpen, toggleOpen }: MenuToggleProps) => (
+  <button className={styles.exampleButton} onClick={() => toggleOpen(!isOpen)}>
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path
         variants={{

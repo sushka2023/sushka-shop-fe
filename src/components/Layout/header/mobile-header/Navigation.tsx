@@ -5,18 +5,15 @@ import { motion } from 'framer-motion'
 import { MenuItem } from './menu-item/MenuItem'
 import { MenuItemProps } from './BurgerMenu'
 
-const visibilityVisible = 'visible' as const
-const visibilityHidden = 'hidden' as const
-
 const variants = {
   open: {
     opacity: 1,
-    visibility: visibilityVisible,
+    visibility: 'visible' as const,
     transition: { staggerChildren: 0.07, delayChildren: 0.2 }
   },
   closed: {
     opacity: 0,
-    visibility: visibilityHidden,
+    visibility: 'hidden' as const,
     transition: { staggerChildren: 0.05, staggerDirection: -1 }
   }
 }

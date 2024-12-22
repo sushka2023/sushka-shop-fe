@@ -6,7 +6,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
 
 import { Button } from '../../../../UI/Button'
 
-export const AccountButton = ({ toggleOpen }: { toggleOpen: () => void }) => (
+export const AccountButton = () => (
   <Button
     sx={{
       width: 'fit-content',
@@ -16,7 +16,7 @@ export const AccountButton = ({ toggleOpen }: { toggleOpen: () => void }) => (
       padding: '7px 10px'
     }}
   >
-    <Link to="account" className={styles2.linkAccount} onClick={toggleOpen}>
+    <Link to="account" className={styles2.linkAccount}>
       <PersonOutlineIcon
         sx={{
           fontSize: '26px',

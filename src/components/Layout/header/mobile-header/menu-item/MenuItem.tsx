@@ -21,14 +21,16 @@ const variants = {
     y: 0,
     opacity: 1,
     transition: {
-      y: { stiffness: 1000, velocity: -100 }
+      ease: 'easeInOut',
+      duration: 0.3
     }
   },
   closed: {
     y: 50,
     opacity: 0,
     transition: {
-      y: { stiffness: 1000 }
+      ease: 'easeInOut',
+      duration: 0.3
     }
   }
 }
@@ -44,7 +46,7 @@ export const MenuItem = ({ toggleOpen, isLessThan600px }: MenuItemProps) => {
     },
     {
       key: 'account',
-      component: <AccountButton toggleOpen={toggleOpen} />,
+      component: <AccountButton />,
       condition: isLoggedIn
     },
     {
@@ -79,18 +81,20 @@ export const MenuItem = ({ toggleOpen, isLessThan600px }: MenuItemProps) => {
     },
     {
       key: 'login',
-      component: <LoginButton />,
+      component: <LoginButton toggleOpen={toggleOpen} />,
       condition: true,
-      className: isLoggedIn ? styles.loggedIn : ''
+      className: isLoggedIn ? styles.loggedIn : '',
+      disableClick: true
     }
   ]
 
   return (
     <Fragment>
       {menuItems.map(
-        ({ key, component, condition, className = '' }) =>
+        ({ key, component, condition, className = '', disableClick = false }) =>
           condition && (
             <motion.li
+              onClick={disableClick ? undefined : () => toggleOpen(false)}
               key={key}
               className={`${styles.exampleLi} ${className}`}
               variants={variants}

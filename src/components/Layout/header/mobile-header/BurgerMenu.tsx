@@ -1,8 +1,7 @@
 import styles from './BurgerMenu.module.scss'
 
-import { Fragment, useEffect, useRef, Dispatch, SetStateAction } from 'react'
+import { useEffect, useRef, Dispatch, SetStateAction } from 'react'
 import { motion } from 'framer-motion'
-import { useLocation } from 'react-router-dom'
 
 import { useDimensions } from './use-dimensions'
 import { Navigation } from './Navigation'
@@ -21,7 +20,7 @@ const sidebar = {
   closed: {
     clipPath: 'circle(30px at calc(100% - 40px) 40px)', // точка закриття з права
     transition: {
-      visibility: 'hidden',
+      visibility: '',
       delay: 0.5,
       type: 'spring',
       stiffness: 400,
@@ -32,20 +31,19 @@ const sidebar = {
 
 export type MenuItemProps = {
   isOpen: boolean
-  toggleOpen: () => void
+  toggleOpen: (isOpen: boolean) => void
   isActive: boolean
   setIsActive: Dispatch<SetStateAction<boolean>>
   isLessThan600px: boolean
 }
 
-export const Example = ({
+export const BurgerMenu = ({
   isOpen,
   toggleOpen,
   isActive,
   setIsActive,
   isLessThan600px
 }: MenuItemProps) => {
-  const location = useLocation()
   const containerRef = useRef(null)
   const { height } = useDimensions(containerRef)
 
@@ -61,31 +59,23 @@ export const Example = ({
     }
   }, [isOpen])
 
-  useEffect(() => {
-    if (isOpen) {
-      toggleOpen()
-    }
-  }, [location.pathname])
-
   return (
-    <Fragment>
-      <motion.div
-        className={styles.exampleNav}
-        initial={false}
-        animate={isOpen ? 'open' : 'closed'}
-        custom={height}
-        ref={containerRef}
-      >
-        <motion.div className={styles.exampleBackground} variants={sidebar} />
-        <Navigation
-          isOpen={isOpen}
-          toggleOpen={toggleOpen}
-          isActive={isActive}
-          setIsActive={setIsActive}
-          isLessThan600px={isLessThan600px}
-        />
-        <MenuToggle toggle={() => toggleOpen()} />
-      </motion.div>
-    </Fragment>
+    <motion.div
+      className={styles.exampleNav}
+      initial={closed}
+      animate={isOpen ? 'open' : 'closed'}
+      custom={height}
+      ref={containerRef}
+    >
+      <motion.div className={styles.exampleBackground} variants={sidebar} />
+      <Navigation
+        isOpen={isOpen}
+        toggleOpen={toggleOpen}
+        isActive={isActive}
+        setIsActive={setIsActive}
+        isLessThan600px={isLessThan600px}
+      />
+      <MenuToggle isOpen={isOpen} toggleOpen={toggleOpen} />
+    </motion.div>
   )
 }

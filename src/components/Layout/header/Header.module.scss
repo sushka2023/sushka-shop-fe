@@ -1,9 +1,5 @@
 @import '../../../styles/base/base.scss';
 
-// .containerHeader {
-//   @include page-container;
-// }
-
 .headerWrapper {
   display: flex;
   align-items: center;
@@ -38,8 +34,6 @@
   align-items: center;
   margin-left: auto;
 }
-
-// |||||||||||||||||||
 
 .listNavLine {
   display: flex;
@@ -195,8 +189,6 @@ input[type='search']::-webkit-search-cancel-button {
   }
 }
 
-// dropdown
-
 .dropdown {
   position: relative;
 }
@@ -275,10 +267,6 @@ input[type='search']::-webkit-search-cancel-button {
     margin-right: 25px;
   }
 
-  // .listIconsLineCart {
-  // Кошик
-  // }
-
   .mobileBurger {
     margin-top: 20px;
     width: 100%;
@@ -350,7 +338,6 @@ input[type='search']::-webkit-search-cancel-button {
     }
     100% {
       width: 150px;
-      // width: 100%;
       height: 32px;
       opacity: 1;
     }

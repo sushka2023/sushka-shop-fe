@@ -7,8 +7,7 @@ import { Box, Container, useMediaQuery, useTheme } from '@mui/material'
 import IconLogo from '../../../icons/logo.svg?react'
 import HeaderNav from './header-nav/headerNav'
 import HeaderListIcons from './header-list-icons/headerListIcons'
-import { Example } from './mobile-header/BurgerMenu'
-import { useCycle } from 'framer-motion'
+import { BurgerMenu } from './mobile-header/BurgerMenu'
 
 const Header = () => {
   const theme = useTheme()
@@ -16,7 +15,7 @@ const Header = () => {
   const isLessThan600px = useMediaQuery(theme.breakpoints.down(600))
   const [isActive, setIsActive] = useState(false)
 
-  const [isOpen, toggleOpen] = useCycle(false, true)
+  const [isOpen, toggleOpen] = useState(false)
 
   return (
     <Container component="header" id="nav">
@@ -26,7 +25,7 @@ const Header = () => {
           className={styles.logoLink}
           onClick={() => {
             if (isOpen) {
-              toggleOpen()
+              toggleOpen(false)
             }
           }}
         >
@@ -49,7 +48,7 @@ const Header = () => {
             }
           }}
         >
-          <Example
+          <BurgerMenu
             isOpen={isOpen}
             toggleOpen={toggleOpen}
             isActive={isActive}
