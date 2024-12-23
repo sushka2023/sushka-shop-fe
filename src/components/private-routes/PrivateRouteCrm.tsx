@@ -1,5 +1,5 @@
+import React, { FC, ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
-import { FC, Fragment, ReactNode } from 'react'
 import { useAuth } from '../../hooks/use-auth'
 import { Role } from '../../types'
 
@@ -11,11 +11,15 @@ type Props = {
 const PrivateRouteCrm: FC<Props> = ({ component, redirectTo }) => {
   const { user } = useAuth()
 
-  if ([Role.ADMIN, Role.MODERATOR].includes(user?.role!)) {
-    return <Fragment>{component}</Fragment>
+  if (!user) {
+    return null
   }
 
-  return <Navigate to={redirectTo} replace />
+  if ([Role.ADMIN, Role.MODERATOR].includes(user?.role!)) {
+    return <React.Fragment>{component}</React.Fragment>
+  } else {
+    return <Navigate to={redirectTo} replace />
+  }
 }
 
 export default PrivateRouteCrm

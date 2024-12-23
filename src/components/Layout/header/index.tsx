@@ -1,22 +1,62 @@
+import styles from './Header.module.scss'
+
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Box, Container, useMediaQuery, useTheme } from '@mui/material'
+
 import IconLogo from '../../../icons/logo.svg?react'
 import HeaderNav from './header-nav/headerNav'
 import HeaderListIcons from './header-list-icons/headerListIcons'
-import styles from './Header.module.scss'
+import { BurgerMenu } from './mobile-header/BurgerMenu'
 
 const Header = () => {
+  const theme = useTheme()
+
+  const isLessThan600px = useMediaQuery(theme.breakpoints.down(600))
+  const [isActive, setIsActive] = useState(false)
+  const [isOpen, toggleOpen] = useState(false)
+
   return (
-    <header className={styles.containerHeader} id="nav">
-      <div className={styles.headerWrapper}>
-        <Link to="/" className={styles.logoLink}>
+    <Container component="header" id="nav">
+      <Box className={styles.headerWrapper}>
+        <Link
+          to="/"
+          className={styles.logoLink}
+          onClick={() => {
+            if (isOpen) {
+              toggleOpen(false)
+            }
+          }}
+        >
           <IconLogo />
         </Link>
-        <div className={styles.navBlock}>
-          <HeaderNav />
-          <HeaderListIcons />
-        </div>
-      </div>
-    </header>
+        <Box width="100%" sx={{ display: 'flex' }}>
+          <HeaderNav toggleOpen={toggleOpen} />
+          <HeaderListIcons
+            isOpen={isOpen}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            isLessThan600px={isLessThan600px}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            [theme.breakpoints.up(1025)]: {
+              display: 'none'
+            }
+          }}
+        >
+          <BurgerMenu
+            isOpen={isOpen}
+            toggleOpen={toggleOpen}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            isLessThan600px={isLessThan600px}
+          />
+        </Box>
+      </Box>
+    </Container>
   )
 }
 

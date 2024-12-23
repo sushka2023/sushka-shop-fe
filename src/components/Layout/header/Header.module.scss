@@ -1,19 +1,19 @@
 @import '../../../styles/base/base.scss';
 
-.containerHeader {
-  @include page-container;
-}
-
 .headerWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 73px;
+  gap: clamp(1.875rem, -4.74rem + 10.34vw, 4.563rem);
+  padding-top: 10px;
+
+  .burger {
+    display: none;
+  }
 }
 
 .navBlock {
   display: flex;
-  width: 1360px;
   justify-content: space-between;
 }
 
@@ -30,8 +30,9 @@
 
 .listIcons {
   display: flex;
-  gap: 50px;
+  gap: clamp(1.875rem, -1.202rem + 4.81vw, 3.125rem);
   align-items: center;
+  margin-left: auto;
 }
 
 .listNavLine {
@@ -147,6 +148,8 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .iconsNavSearch {
+  width: 30px;
+  height: 30px;
   position: absolute;
   top: 0;
   left: 0;
@@ -161,6 +164,8 @@ input[type='search']::-webkit-search-cancel-button {
 }
 
 .iconsNavSearchIsActive {
+  width: 25px;
+  height: 25px;
   left: 10px;
   top: 50%;
   transform: translate(0, -50%);
@@ -183,8 +188,6 @@ input[type='search']::-webkit-search-cancel-button {
     fill: $yellow-200;
   }
 }
-
-// dropdown
 
 .dropdown {
   position: relative;
@@ -235,4 +238,108 @@ input[type='search']::-webkit-search-cancel-button {
 
 .dropdawnListLink {
   padding: 0px 14px;
+}
+
+@media (max-width: 1024px) {
+  .headerWrapper {
+    gap: 20px;
+
+    a {
+      z-index: 11;
+    }
+
+    .burger {
+      display: block;
+      font-size: 30px;
+      color: $green-dark-200;
+    }
+  }
+  .listNav {
+    display: none;
+  }
+  .listIconsLine {
+    display: none;
+  }
+
+  .listIcons {
+    z-index: 11;
+    gap: 10px;
+    margin-right: 25px;
+  }
+
+  .mobileBurger {
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+    background: white;
+    position: absolute;
+    top: 65px;
+    right: 0px;
+    z-index: 1;
+
+    .listNav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 5px;
+
+      .listNavLine {
+        justify-content: left;
+      }
+
+      .listNavLine:nth-child(4) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .linkAccount {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 20px;
+
+    &:hover {
+      color: gold;
+    }
+  }
+
+  .searchInputIsActive {
+    border-radius: 20px;
+    font-size: 16px;
+
+    &::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  @keyframes slideIn {
+    0% {
+      width: 12px;
+      height: 12px;
+      opacity: 0;
+    }
+
+    100% {
+      width: 248px;
+      height: 32px;
+      opacity: 1;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  @keyframes slideIn {
+    0% {
+      width: 30px;
+      height: 12px;
+      opacity: 0;
+    }
+    100% {
+      width: 150px;
+      height: 32px;
+      opacity: 1;
+    }
+  }
 }

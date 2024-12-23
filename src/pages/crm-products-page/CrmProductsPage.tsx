@@ -21,7 +21,7 @@ import { columns } from './CrmProductDataGridColumns'
 import useDebounce from '../../hooks/useDebounce'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
 
-export const PAGE_SIZE = 10
+export const PAGE_SIZE = 9
 const DEBOUNCE_DELAY = 300
 export const OPTIONS = [
   { value: '', label: 'Статус' },

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Box, InputAdornment, TextField, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 
-import PaginationCRM from '../../components/crm-pagination/PaginationCRM'
+import { PaginationCRM } from '../../components/Crm-pagination/pagination-crm'
 import axiosInstance from '../../axios/settings'
 import { OrdersCRMResponse } from '../../types'
 import { DataGridTable } from './dataGridTable'
@@ -12,17 +12,19 @@ type OrdersResponse = {
   total_count: number
 }
 
-const ORDERS_QUANTITY = 100
-const ORDERS_PAGE = 0
-const ORDERS_PAGEQTY = 1
+const ORDERS_QUANTITY = 9
+const ORDERS_PAGE = 1
+const ORDERS_PAGEQTY = 0
 
 const CrmOrdersPage = () => {
   const [orders, setOrders] = useState<OrdersCRMResponse[]>([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(ORDERS_PAGE)
   const [pageQty, setPageQty] = useState(ORDERS_PAGEQTY)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    setIsLoading(true)
     const fetchCrmClients = async () => {
       try {
         const { data } = await axiosInstance.get<OrdersResponse>(
@@ -35,6 +37,8 @@ const CrmOrdersPage = () => {
         setOrders(data.orders)
       } catch (error) {
         console.error(error)
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -77,8 +81,13 @@ const CrmOrdersPage = () => {
         />
       </Box>
       <DataGridTable rows={orders} />
-      {page > 1 && (
-        <PaginationCRM page={page} pageQty={pageQty} setPage={setPage} />
+      {orders && pageQty > ORDERS_PAGE && (
+        <PaginationCRM
+          page={page}
+          pageQty={pageQty}
+          setPage={setPage}
+          isLoading={isLoading}
+        />
       )}
     </Box>
   )
