@@ -14,7 +14,6 @@ const Header = () => {
 
   const isLessThan600px = useMediaQuery(theme.breakpoints.down(600))
   const [isActive, setIsActive] = useState(false)
-
   const [isOpen, toggleOpen] = useState(false)
 
   return (
