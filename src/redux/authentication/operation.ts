@@ -131,7 +131,6 @@ export const confirmedEmail = createAsyncThunk<any, confirmedEmailParams>(
       return response.data.message
     } catch (e) {
       const error = e as AxiosError
-
       return thunkAPI.rejectWithValue(error?.response?.status)
     }
   }
