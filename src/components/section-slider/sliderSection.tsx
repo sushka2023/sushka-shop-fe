@@ -2,10 +2,7 @@ import styles from './sliderSection.module.scss'
 import { Fragment, useState } from 'react'
 import Slider, { Settings } from 'react-slick'
 import { Link } from 'react-router-dom'
-import ArrowPrev from './arrowPrev'
-import ArrowNext from './arrowNext'
-import CustomSlider from './customSlider'
-
+import clsx from 'clsx'
 import {
   Box,
   Container,
@@ -14,6 +11,10 @@ import {
   useTheme
 } from '@mui/material'
 import List from '@mui/material/List'
+
+import ArrowPrev from './arrowPrev'
+import ArrowNext from './arrowNext'
+import CustomSlider from './customSlider'
 
 import { Button } from '../UI/Button'
 
@@ -105,27 +106,9 @@ const SlideSection = () => {
     }
   }
 
-  const createBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
-    position: 'relative',
-    [positionWave]: '2px', // динамічний ключ (top або bottom)
-    backgroundImage: `url(${url})`,
-    width: '100%',
-    height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100%'
-  })
-
-  const borderTop = createBorderStyle('/src/icons/borderslider.svg', 'top')
-  const borderBottom = createBorderStyle(
-    '/src/icons/bordersecondslider.svg',
-    'bottom'
-  )
-
   return (
     <Fragment>
-      <Box
-        sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
-      ></Box>
+      <Box className={clsx(styles.borderCommon, styles.borderTop)}></Box>
       <Box
         component="section"
         sx={{
@@ -145,12 +128,7 @@ const SlideSection = () => {
           </Slider>
         </Container>
       </Box>
-      <Box
-        sx={{
-          ...borderBottom,
-          mb: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)'
-        }}
-      ></Box>
+      <Box className={clsx(styles.borderCommon, styles.borderBottom)}></Box>
     </Fragment>
   )
 }

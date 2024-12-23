@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import styles from './sectionFaq.module.scss'
-import { styled } from '@mui/material/styles'
 import { Fragment } from 'react'
+import { styled } from '@mui/material/styles'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import MuiAccordion from '@mui/material/Accordion'
-import Arrow from '../../icons/arrow.svg?react'
 import { Box, Container, Typography } from '@mui/material'
+
+import Arrow from '../../icons/arrow.svg?react'
 import { ACCORDION_DATA } from './accordionData'
 
 const Accordion = styled(MuiAccordion)(() => {
@@ -57,30 +58,17 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => {
   }
 })
 
-const CreateBorderStyle = (url: string, positionWave: 'top' | 'bottom') => ({
-  position: 'relative',
-  [positionWave]: '2px', // динамічний ключ (top або bottom)
-  backgroundImage: `url(${url})`,
-  width: '100%',
-  height: 'clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem)',
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: '100%'
-})
-
-const borderTop = CreateBorderStyle('/src/icons/wave.svg', 'top')
-
 const SectionFaq = () => {
   return (
     <Fragment>
-      <Box
-        sx={{ ...borderTop, mt: 'clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem)' }}
-      ></Box>
+      <Box className={styles.borderTop}></Box>
       <Box
         component="section"
         sx={{
           backgroundColor: 'turquoise.darker',
           color: 'background.default',
-          pb: 'clamp(8.75rem, 6.964rem + 4.76vw, 11.25rem)'
+          pb: 'clamp(8.75rem, 6.964rem + 4.76vw, 11.25rem)',
+          position: 'relative'
         }}
       >
         <Container maxWidth="lg" className={styles.accordionSection}>
@@ -113,6 +101,10 @@ const SectionFaq = () => {
             </Accordion>
           ))}
         </Container>
+        <Box
+          sx={{ backgroundColor: 'turquoise.darker' }}
+          className={styles.borderBottom}
+        ></Box>
       </Box>
     </Fragment>
   )

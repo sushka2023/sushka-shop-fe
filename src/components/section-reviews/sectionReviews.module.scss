@@ -1,3 +1,25 @@
+.borderCommon {
+  position: relative;
+  width: 100%;
+  height: clamp(1.25rem, -0.804rem + 10.27vw, 8.438rem);
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.borderTop {
+  @extend .borderCommon;
+  top: 2px;
+  background-image: url('/src/icons/bordersliderreview.svg');
+  margin-top: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
+.borderBottom {
+  @extend .borderCommon;
+  bottom: 2px;
+  background-image: url('/src/icons/bordersecondsliderreview.svg');
+  margin-bottom: clamp(2.5rem, -0.357rem + 14.29vw, 12.5rem);
+}
+
 .sliderContainer {
   max-width: 1360px;
   margin: 0 auto;
@@ -19,7 +41,7 @@
 
 .iconBanana {
   top: -90px;
-  z-index: -2;
+  z-index: 1;
   position: absolute;
   left: 25px;
   svg {
@@ -28,7 +50,6 @@
 }
 
 @media (max-width: 768px) {
-  // sm breakpoint
   .sliderContainer {
     padding: 20px 0px 30px 0px;
   }

@@ -1,0 +1,50 @@
+@import '../../../../styles/base/base.scss';
+
+.searchContainer {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  margin-bottom: 25px;
+
+  input {
+    width: 100%;
+    height: 100%;
+    font-family: $open-sans;
+    color: $green-dark-200;
+    border-radius: 20px;
+    background: #dde3d9;
+    border: none;
+    cursor: pointer;
+    caret-color: $green-dark-200;
+    padding-left: 40px;
+    padding-right: 12.25px;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: $green-dark-200;
+      font-family: $open-sans;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: $font-weight-400;
+      line-height: 130%;
+    }
+    &:focus {
+      border: none;
+      outline: none;
+    }
+    &:focus::placeholder {
+      content: '';
+    }
+  }
+
+  .iconsNavSearch {
+    width: 24px;
+    height: 24px;
+    left: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    position: absolute;
+    fill: $green-dark-200;
+    stroke: $green-dark-200;
+  }
+}
