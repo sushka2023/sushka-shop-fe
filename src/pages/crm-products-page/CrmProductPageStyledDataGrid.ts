@@ -4,8 +4,8 @@ import { DataGrid } from '@mui/x-data-grid'
 export const StyledDataGrid = styled(DataGrid)({
   'border': 'none',
   'borderRadius': '8px',
-  'height': '100%',
   'cursor': 'pointer',
+  'max-width': '100%',
   '& .MuiDataGrid-columnHeaders': {
     'fontFamily': 'Open Sans, sans-serif',
     'fontSize': '14px',

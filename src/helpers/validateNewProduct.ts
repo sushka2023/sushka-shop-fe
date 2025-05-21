@@ -18,20 +18,19 @@ export const newProductPriceSchema = yup.array().of(
     active: yup.boolean(),
     weight: yup.string().required('Поле з вагою має бути заповненим'),
     availability: yup
-      .number()
-      .nullable()
-      .positive('Значення має бути більше 0')
+      .string()
       .min(1)
-      .required('Поле з кількістю має бути заповненим'),
+      .notRequired()
+      .matches(/^\d+(\.\d+)?$/, 'Некоректний формат числа'),
     price: yup
-      .number()
-      .positive('Значення має бути більше 0')
+      .string()
       .min(1)
-      .required('Поле з ціною має бути заповненим'),
+      .required('Поле з ціною має бути заповненим')
+      .matches(/^\d+(\.\d+)?$/, 'Некоректний формат числа'),
     sale: yup.boolean(),
     priceSale: yup
-      .number()
-      .nullable()
+      .string()
+      .min(1)
       .when('sale', {
         is: true,
         then: (schema) => {
@@ -40,11 +39,7 @@ export const newProductPriceSchema = yup.array().of(
               'Акція активна, поле з акційною ціною має бути заповненим'
             )
             .min(1)
-            .test(
-              'is-positive',
-              'Значення має бути більше 0',
-              (value) => value > 0
-            )
+            .matches(/^\d+(\.\d+)?$/, 'Некоректний формат числа')
         },
         otherwise: (schema) => {
           return schema.nullable()

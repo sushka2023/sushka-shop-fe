@@ -201,10 +201,10 @@ export const addImages = createAsyncThunk<
 })
 
 export type Price = Pick<PriceModel, 'weight' | 'price'> & {
-  availability: number
+  availability: string | null
   active: boolean
   sale: boolean
-  priceSale: number
+  priceSale: string | null
 }
 
 type AddPriceParams = {
@@ -219,9 +219,9 @@ export const addPrice = createAsyncThunk<PriceResponse, AddPriceParams>(
       const response = await axiosInstance.post('api/price/create', {
         product_id: productId,
         weight: price.weight,
-        price: price.price,
-        old_price: price.priceSale,
-        quantity: price.availability,
+        price: parseFloat(price.price as string),
+        old_price: parseFloat(price.priceSale as string),
+        quantity: parseInt(price.availability as string),
         is_active: price.active,
         promotional: price.sale
       })

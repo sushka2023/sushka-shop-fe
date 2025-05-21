@@ -9,7 +9,6 @@ import {
   ProductSubCategoryResponse
 } from '../../types'
 import { Box, IconButton } from '@mui/material'
-import DeleteIcon from '../../icons/delete.svg?react'
 import EditIcon from '../../icons/edit-icon.svg?react'
 import styles from './crmProductsPage.module.scss'
 import { OPTIONS } from './CrmProductsPage'
@@ -96,16 +95,6 @@ export const columns = (
     renderCell: () => {
       return (
         <Box>
-          <IconButton
-            sx={{
-              width: '24px',
-              height: '24px',
-              padding: 0,
-              marginRight: '26px'
-            }}
-          >
-            <DeleteIcon className={styles.deleteIcon} />
-          </IconButton>
           <IconButton
             sx={{
               width: '24px',

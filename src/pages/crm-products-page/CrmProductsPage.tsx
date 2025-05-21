@@ -145,64 +145,62 @@ const CrmProductsPage = () => {
   }, [])
 
   return (
-    <section className={styles.containerBg}>
-      <div className={styles.container}>
-        <div className={styles.spaceBetweenWrapper}>
-          <h1 className={styles.title}>Товари</h1>
-          <div className={styles.flexWrapper}>
-            <div className={styles.selectorWrapper}>
-              <label htmlFor="search" className={styles.searchLabel}>
-                <SearchIcon className={styles.searchIcon} />
-                <input
-                  type="search"
-                  placeholder="Введіть номер або назву"
-                  value={searchQuery}
-                  onChange={searchTextChange}
-                  className={styles.search}
-                />
-              </label>
-              <Link to={'addNewProduct'} className={styles.addNewProduct}>
-                Додати
-                <PlusIcon className={styles.iconPlus} />
-              </Link>
-            </div>
-            <div className={styles.selectorWrapper}>
-              <SelectProductStatus
-                status={status}
-                handleStatusChange={handleStatusChange}
+    <section>
+      <div className={styles.spaceBetweenWrapper}>
+        <h1 className={styles.title}>Товари</h1>
+        <div className={styles.flexWrapper}>
+          <div className={styles.selectorWrapper}>
+            <label htmlFor="search" className={styles.searchLabel}>
+              <SearchIcon className={styles.searchIcon} />
+              <input
+                type="search"
+                placeholder="Введіть номер або назву"
+                value={searchQuery}
+                onChange={searchTextChange}
+                className={styles.search}
               />
-              <SelectProductCategory
-                category={category}
-                handleCategoryChange={handleCategoryChange}
-                mainCategories={mainCategories}
-              />
-            </div>
+            </label>
+            <Link to={'addNewProduct'} className={styles.addNewProduct}>
+              Додати
+              <PlusIcon className={styles.iconPlus} />
+            </Link>
+          </div>
+          <div className={styles.selectorWrapper}>
+            <SelectProductStatus
+              status={status}
+              handleStatusChange={handleStatusChange}
+            />
+            <SelectProductCategory
+              category={category}
+              handleCategoryChange={handleCategoryChange}
+              mainCategories={mainCategories}
+            />
           </div>
         </div>
-        <StyledDataGrid
-          autoHeight
-          rows={searchQuery ? searchProductForCrm : productsForCrm}
-          columns={columns(mainCategories)}
-          paginationModel={paginationModel}
-          slots={{
-            pagination: CustomPagination,
-            noRowsOverlay: CustomNoRowsOverlay
-          }}
-          onPaginationModelChange={handlePaginationModelChange}
-          pageSizeOptions={[PAGE_SIZE]}
-          paginationMode="server"
-          rowCount={
-            searchQuery
-              ? searchProductsForCrmTotalCount
-              : productsForCrmTotalCount
-          }
-          disableRowSelectionOnClick
-          disableColumnFilter
-          loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
-          disableColumnMenu
-          onRowClick={(index) => handleIndex(index)}
-        />
       </div>
+      <StyledDataGrid
+        autoHeight
+        rows={searchQuery ? searchProductForCrm : productsForCrm}
+        columns={columns(mainCategories)}
+        paginationModel={paginationModel}
+        slots={{
+          pagination: CustomPagination,
+          noRowsOverlay: CustomNoRowsOverlay
+        }}
+        onPaginationModelChange={handlePaginationModelChange}
+        pageSizeOptions={[PAGE_SIZE]}
+        paginationMode="server"
+        rowCount={
+          searchQuery
+            ? searchProductsForCrmTotalCount
+            : productsForCrmTotalCount
+        }
+        disableRowSelectionOnClick
+        disableColumnFilter
+        loading={searchQuery ? isLoadingForCrmSearch : isLoadingForCrm}
+        disableColumnMenu
+        onRowClick={(index) => handleIndex(index)}
+      />
     </section>
   )
 }
