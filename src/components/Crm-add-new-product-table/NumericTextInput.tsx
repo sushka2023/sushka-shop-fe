@@ -2,16 +2,16 @@ import { FC } from 'react'
 import styles from './CrmAddNewProduct.module.scss'
 
 type Props = {
-  value: number
+  value: string | null
   onChange: (value: string) => void
   className?: string
 }
 
-const NumberInput: FC<Props> = ({ value, onChange, className }) => {
+const NumericTextInput: FC<Props> = ({ value, onChange, className }) => {
   return (
     <input
       className={`${styles.inputTable} ${value ? styles.inputTableTextEmpty : ''} ${className}`}
-      type="number"
+      type="text"
       value={value || ''}
       onChange={(e) => {
         onChange(e.target.value)
@@ -20,4 +20,4 @@ const NumberInput: FC<Props> = ({ value, onChange, className }) => {
   )
 }
 
-export default NumberInput
+export default NumericTextInput

@@ -1,7 +1,7 @@
 import WeightList from './WeightList'
 import TableCheckbox from './TableCheckbox'
 import WeightColumn from './WeightColumn'
-import NumberInput from './NumberInput'
+import NumberInput from './NumericTextInput'
 import CheckboxColumn from './CheckboxColumn'
 import DeleteIcon from '../../icons/delete.svg?react'
 import styles from './CrmAddNewProduct.module.scss'
@@ -16,7 +16,7 @@ type Props = {
   handleInputChange: (
     id: string,
     columnId: string,
-    value: boolean | string | number
+    value: string | boolean
   ) => void
   toggleWeightList: (id: string) => void
   ARRAY_OPTION_WEIGHT: string[]

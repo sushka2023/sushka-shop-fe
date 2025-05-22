@@ -19,11 +19,11 @@ type Props = {
 const CrmCategoriesBlock: FC<Props> = ({ product }) => {
   const [subCategoriesList, setSubCategoriesList] = useState<number[]>([])
 
-  const mainCategories = useSelector(
-    (state: RootState) => state.allCategories.mainCategories
+  const mainCategories = useSelector((state: RootState) =>
+    state.allCategories.mainCategories?.filter((item) => !item.is_deleted)
   )
-  const subCategories = useSelector(
-    (state: RootState) => state.allCategories.subCategories
+  const subCategories = useSelector((state: RootState) =>
+    state.allCategories.subCategories?.filter((item) => !item.is_deleted)
   )
   const dispatch = useDispatch<AppDispatch>()
 
@@ -60,7 +60,7 @@ const CrmCategoriesBlock: FC<Props> = ({ product }) => {
 
   return (
     <Box mt={6} className={styles.categoriesOptionWrapp}>
-      <MuiSelect сategories={mainCategories} type="main_category" />
+      <MuiSelect сategories={mainCategories || []} type="main_category" />
       <Box className={styles.subCategoriesWrapp}>
         {subCategoriesList.map((categoryValue) => (
           <MuiSelect

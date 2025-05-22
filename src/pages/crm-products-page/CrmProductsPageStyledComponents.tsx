@@ -21,6 +21,7 @@ export const StyledProductNumberCell = ({ children }: PropsWithChildren) => {
 export const StyledCategoryTextCell = ({ children }: PropsWithChildren) => {
   return (
     <span
+      title={children as string}
       style={{
         fontFamily: 'Open Sans',
         fontSize: '16px',
@@ -28,7 +29,10 @@ export const StyledCategoryTextCell = ({ children }: PropsWithChildren) => {
         lineHeight: '21px',
         letterSpacing: '0em',
         textAlign: 'left',
-        color: '#64748B'
+        color: '#64748B',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
       }}
     >
       {children}

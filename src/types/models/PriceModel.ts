@@ -5,9 +5,9 @@
 export type PriceModel = {
     product_id: number;
     weight: string;
-    price: number;
+    price: string | null;
     old_price?: number;
-    quantity: number;
+    quantity: number | null;
     is_active: boolean;
     promotional: boolean;
 };

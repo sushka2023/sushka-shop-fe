@@ -19,23 +19,23 @@ const ARRAY_OPTION_WEIGHT = [
   '1000'
 ]
 
+const DEFAULT_DATA = {
+  id: uuidv4(),
+  active: false,
+  weight: ARRAY_OPTION_WEIGHT[0],
+  availability: null,
+  price: null,
+  sale: false,
+  priceSale: null
+}
+
 export type ProductItem = {
   id: string
 } & Price
 
 const CrmAddNewProductTable = () => {
   const [openRows, setOpenRows] = useState<Record<string, boolean>>({})
-  const [data, setData] = useState<ProductItem[]>([
-    {
-      id: uuidv4(),
-      active: false,
-      weight: ARRAY_OPTION_WEIGHT[0],
-      availability: 0,
-      price: 0,
-      sale: false,
-      priceSale: 0
-    }
-  ])
+  const [data, setData] = useState<ProductItem[]>([DEFAULT_DATA])
   const dispatch = useDispatch<AppDispatch>()
   const productId = useSelector(
     (state: RootState) => state.newProduct.productId
@@ -52,37 +52,17 @@ const CrmAddNewProductTable = () => {
   const handleInputChange = (
     id: string,
     columnId: string,
-    value: string | number | boolean
+    value: string | boolean
   ) => {
-    let formattedValue = value
-
-    if (
-      columnId === 'price' ||
-      columnId === 'priceSale' ||
-      columnId === 'availability'
-    ) {
-      formattedValue = value === '' ? '' : parseFloat(value as string)
-    }
-
     setData((currentData) =>
       currentData.map((row) =>
-        row.id === id ? { ...row, [columnId]: formattedValue } : row
+        row.id === id ? { ...row, [columnId]: value } : row
       )
     )
   }
 
   useEffect(() => {
-    setData([
-      {
-        id: uuidv4(),
-        active: false,
-        weight: ARRAY_OPTION_WEIGHT[0],
-        availability: 0,
-        price: 0,
-        sale: false,
-        priceSale: 0
-      }
-    ])
+    setData([DEFAULT_DATA])
   }, [productId])
 
   useEffect(() => {
@@ -90,16 +70,7 @@ const CrmAddNewProductTable = () => {
   }, [data, dispatch])
 
   const addNewRow = () => {
-    const newRow: ProductItem = {
-      id: uuidv4(),
-      active: false,
-      weight: ARRAY_OPTION_WEIGHT[0],
-      availability: 0,
-      price: 0,
-      sale: false,
-      priceSale: 0
-    }
-    setData((currentData) => [...currentData, newRow])
+    setData((currentData) => [...currentData, DEFAULT_DATA])
   }
 
   const toggleWeightList = (id: string) => {
@@ -140,7 +111,7 @@ const CrmAddNewProductTable = () => {
           <th
             className={`${styles.tableHeaderText} ${styles.tableHeaderTextAvailability}`}
           >
-            Наявність (шт)*
+            Наявність (шт)
           </th>
           <th
             className={`${styles.tableHeaderText} ${styles.tableHeaderTextPrice}`}

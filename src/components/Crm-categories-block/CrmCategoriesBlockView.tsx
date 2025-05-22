@@ -15,9 +15,11 @@ export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
       <Typography variant="body1" fontSize={14} className={styles.body1View}>
         Категорія товару
       </Typography>
-      <Box mt={1.3} className={styles.boxCategoryNameView}>
-        {product.product_category.name}
-      </Box>
+      {!product.product_category.is_deleted && (
+        <Box mt={1.3} className={styles.boxCategoryNameView}>
+          {product.product_category.name}
+        </Box>
+      )}
       <Typography
         variant="body1"
         fontSize={14}
@@ -32,13 +34,13 @@ export const CrmCategoriesBlockView: FC<Props> = ({ product }) => {
         pt={1}
         maxWidth={1000}
       >
-        {product.sub_categories!.map(
-          (elem: { name: string }, index: number) => (
-            <Grid item sm={4} md={3} key={index}>
-              <Box className={styles.boxCategoryNameView}>{elem.name}</Box>
+        {product
+          .sub_categories!.filter((el) => !el.is_deleted)
+          .map((el) => (
+            <Grid item sm={4} md={3} key={el.id}>
+              <Box className={styles.boxCategoryNameView}>{el.name}</Box>
             </Grid>
-          )
-        )}
+          ))}
       </Grid>
     </Fragment>
   )

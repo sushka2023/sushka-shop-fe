@@ -1,9 +1,5 @@
 @import '../../styles/base/base.scss';
 
-.container {
-  padding: 44px 36px 49px 30px;
-}
-
 .spaceBetweenWrapper {
   display: flex;
   justify-content: space-between;
@@ -56,6 +52,8 @@
 }
 
 .searchIcon {
+  width: 30px;
+  height: 30px;
   stroke: $CRM-grey;
   fill: $CRM-grey;
   position: absolute;
