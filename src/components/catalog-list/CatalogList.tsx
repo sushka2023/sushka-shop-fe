@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchFavoriteItems, fetchItems } from '../../redux/products/operation'
-import ItemCard from '../item-card/ItemCard'
-import styles from './catalog-list.module.scss'
 import { RootState, AppDispatch } from '../../redux/store/index'
 import { useAuth } from '../../hooks/use-auth'
+import { ProductItem } from '../product-item/ProductItem'
+import { Box } from '@mui/material'
+import { productsListStyle } from './style'
 
 const CatalogList = () => {
   const { pathname } = useLocation()
@@ -22,6 +23,7 @@ const CatalogList = () => {
   useEffect(() => {
     dispatch(
       fetchItems({
+        limit: 9,
         offset,
         operationType: operationType || 'fetch',
         sortValue,
@@ -36,11 +38,16 @@ const CatalogList = () => {
   }, [category, pathname, offset])
 
   return (
-    <ul className={styles.catalogList}>
+    <Box sx={productsListStyle}>
       {allProducts.map((item) => (
-        <ItemCard item={item} key={item.id} />
+        <Box
+          key={item.id}
+          sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}
+        >
+          <ProductItem item={item} height={655} />
+        </Box>
       ))}
-    </ul>
+    </Box>
   )
 }
 

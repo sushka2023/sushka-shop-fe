@@ -7,10 +7,12 @@ import {
   ProductWithTotalResponse
 } from '../../types'
 import axiosInstance from '../../axios/settings'
+import { buildQuery } from '../../utils/build-query'
 
 type FetchItemOperationType =
   | 'loadMore'
   | 'fetch'
+  | 'fetchPopular'
   | FetchAllCategoriesOperationType
   | null
 
@@ -21,11 +23,13 @@ type FetchItemsResponse = {
 }
 
 type FetchItemsParams = {
-  offset: number
-  sortValue: string
+  limit: number
+  offset?: number
+  sortValue?: string
   operationType: FetchItemOperationType
-  category: string | null | undefined
-  weight: string
+  category?: string | null | undefined
+  weight?: string
+  isPopular?: boolean
 }
 
 export const fetchItems = createAsyncThunk<
@@ -33,10 +37,20 @@ export const fetchItems = createAsyncThunk<
   FetchItemsParams
 >(
   'api/product',
-  async ({ offset, sortValue, operationType, category, weight }, thunkAPI) => {
+  async (
+    { limit, offset, sortValue, operationType, category, weight, isPopular },
+    thunkAPI
+  ) => {
     try {
       const response = await axiosInstance.get<ProductWithTotalResponse>(
-        `api/product/all?limit=9&offset=${offset}&sort=${sortValue}${category ? `&pr_category_id=${category}` : ''}${weight ? `&weight=${weight}` : ''}`
+        `api/product/all?${buildQuery({
+          limit,
+          offset,
+          weight,
+          is_popular: isPopular,
+          sort: sortValue,
+          pr_category_id: category
+        })}`
       )
       return {
         data: response.data.products,
