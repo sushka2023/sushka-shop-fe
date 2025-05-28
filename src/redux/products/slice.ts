@@ -21,6 +21,7 @@ enum SortValue {
 
 export type ItemsState = {
   items: ProductResponse[]
+  popularItems: ProductResponse[]
   isLoading: boolean
   operation: FetchItemOperationType | FetchAllCategoriesOperationType | null
   error: any | null
@@ -34,6 +35,7 @@ export type ItemsState = {
 
 const INITIAL_STATE: ItemsState = {
   items: [],
+  popularItems: [],
   isLoading: false,
   operation: null,
   error: null,
@@ -91,6 +93,9 @@ export const itemsSlice = createSlice({
             break
           case 'fetch':
             state.items = action.payload.data
+            break
+          case 'fetchPopular':
+            state.popularItems = action.payload.data
             break
           default:
             break

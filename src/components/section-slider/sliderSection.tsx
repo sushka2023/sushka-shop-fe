@@ -14,11 +14,16 @@ import List from '@mui/material/List'
 
 import ArrowPrev from './arrowPrev'
 import ArrowNext from './arrowNext'
-import CustomSlider from './customSlider'
 
 import { Button } from '../UI/Button'
+import { ProductResponse } from '../../types'
+import { ProductItem } from '../product-item/ProductItem'
 
-const SlideSection = () => {
+type Props = {
+  data: ProductResponse[]
+}
+
+const SlideSection = ({ data }: Props) => {
   const [activeSlide, setActiveSlide] = useState(0)
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -27,53 +32,72 @@ const SlideSection = () => {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: isSmallScreen ? 2 : 3,
+    slidesToShow: 3,
     slidesToScroll: 1,
     prevArrow: <ArrowPrev />,
     nextArrow: <ArrowNext />,
-    appendDots: (dots) => {
-      return (
-        <Box
-          sx={{
-            bottom: '0px',
-            left: '0px',
-            zIndex: 1,
-            [theme.breakpoints.down('md')]: {
-              bottom: '-15px'
-            },
-            [theme.breakpoints.down('sm')]: {
-              bottom: '-25px'
-            }
-          }}
-        >
-          <List sx={{ m: '0px' }}> {dots} </List>
-        </Box>
-      )
-    },
-    customPaging: (i) => {
-      return (
-        <Box
-          sx={{
-            width: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
-            height: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
-            borderRadius: '17px',
-
-            background:
-              activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)'
-          }}
-        ></Box>
-      )
-    },
+    centerMode: false,
+    variableWidth: false,
+    appendDots: (dots) => (
+      <Box
+        sx={{
+          bottom: isSmallScreen ? '-25px' : '0px',
+          left: 0,
+          zIndex: 1
+        }}
+      >
+        <List sx={{ m: 0 }}>{dots}</List>
+      </Box>
+    ),
+    customPaging: (i) => (
+      <Box
+        sx={{
+          width: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
+          height: 'clamp(0.625rem, 0.006rem + 1.65vw, 1.063rem)',
+          borderRadius: '17px',
+          background: activeSlide === i ? 'white' : 'rgba(255, 255, 255, 0.60)'
+        }}
+      />
+    ),
     beforeChange: (_, next) => {
       setActiveSlide(next)
-    }
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
 
-  const renderSlide = (index: number) => {
-    if (index === 4) {
+  const renderSlide = (item: ProductResponse, index: number) => {
+    if (index === data.length - 1) {
       return (
-        <Box className={styles.lastSlider}>
-          <Link style={{ width: '100%', maxWidth: '300px' }} to="catalog/11">
+        <Box
+          className={styles.lastSlider}
+          sx={{
+            px: 1,
+            boxSizing: 'border-box'
+          }}
+        >
+          <Link style={{ width: '100%' }} to="catalog/11">
             <Button
               fullWidth
               variant="contained"
@@ -102,7 +126,16 @@ const SlideSection = () => {
         </Box>
       )
     } else {
-      return <CustomSlider index={index + 1} width={400} height="auto" />
+      return (
+        <Box
+          sx={{
+            px: 1,
+            boxSizing: 'border-box'
+          }}
+        >
+          <ProductItem item={item} height={655} />
+        </Box>
+      )
     }
   }
 
@@ -120,12 +153,13 @@ const SlideSection = () => {
           <Typography sx={{ color: 'background.default' }} variant="h2">
             Популярні товари
           </Typography>
-
-          <Slider {...settings} className={styles.sliderContainer}>
-            {Array.from({ length: 5 }, (_, index) => {
-              return <Box key={index}>{renderSlide(index)}</Box>
-            })}
-          </Slider>
+          {data.length > 0 && (
+            <Slider {...settings} className={styles.sliderContainer}>
+              {data.map((item, index) => (
+                <Box key={item.id}>{renderSlide(item, index)}</Box>
+              ))}
+            </Slider>
+          )}
         </Container>
       </Box>
       <Box className={clsx(styles.borderCommon, styles.borderBottom)}></Box>

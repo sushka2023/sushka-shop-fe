@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { setOffset, setOperation } from '../../redux/products/slice'
 import { RootState, AppDispatch } from '../../redux/store/index'
-import { ProductCategoryModel } from '../../types/index'
 import styles from './Categories.module.scss'
 
 type Props = {
@@ -41,7 +40,7 @@ const CategoriesButtons: React.FC<Props> = ({ setPage }) => {
 
   return (
     <ul className={`${styles.list}`}>
-      {allCategories?.map((category: ProductCategoryModel) => (
+      {allCategories?.map((category) => (
         <li key={category.id}>
           <button
             type="button"

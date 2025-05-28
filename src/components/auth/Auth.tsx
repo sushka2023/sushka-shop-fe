@@ -21,7 +21,7 @@ export enum AuthModeType {
 type Props = {
   setIsModalOpen: (value: boolean) => void
   searchToken?: { confirmed_email?: string } | null
-  toggleOpen: (isOpen: boolean) => void
+  toggleOpen?: (isOpen: boolean) => void
 }
 
 const CONFIRMED_EMAIL = 'confirmed_email'

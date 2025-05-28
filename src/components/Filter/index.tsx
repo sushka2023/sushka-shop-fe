@@ -34,6 +34,7 @@ const Filter = () => {
   const handleClickApply = () => {
     dispatch(
       fetchItems({
+        limit: 9,
         offset,
         sortValue,
         operationType: 'fetch',

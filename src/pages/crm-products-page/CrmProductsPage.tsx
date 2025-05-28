@@ -18,8 +18,8 @@ import SelectProductCategory from './SelectProductCategory'
 import CustomPagination from './CrmProductPageCustomPagination'
 import { StyledDataGrid } from './CrmProductPageStyledDataGrid'
 import { columns } from './CrmProductDataGridColumns'
-import useDebounce from '../../hooks/useDebounce'
 import CustomNoRowsOverlay from './CustomNoRowsOverlay'
+import useDebounce from '../../hooks/useDebounce'
 
 export const PAGE_SIZE = 9
 const DEBOUNCE_DELAY = 300

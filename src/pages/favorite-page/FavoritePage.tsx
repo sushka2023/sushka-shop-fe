@@ -6,10 +6,12 @@ import ErrorDog from '../../images/error-dog.png'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './favoritePage.module.scss'
-import ItemCard from '../../components/item-card/ItemCard'
 import { AppDispatch, RootState } from '../../redux/store'
 import { getToken } from '../../utils/cookie/token'
 import { fetchFavoriteItems } from '../../redux/products/operation'
+import { ProductItem } from '../../components/product-item/ProductItem'
+import { Box } from '@mui/material'
+import { productsListStyle } from '../../components/catalog-list/style'
 
 const FavoritePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -35,19 +37,27 @@ const FavoritePage = () => {
       <div className={styles.container}>
         <h2 className={styles.title}>Улюблене</h2>
         {accessToken ? (
-          <ul className={styles.list}>
-            {favoriteItems?.map((item) => {
-              return <ItemCard item={item.product} key={item.id} />
-            })}
-            <li className={styles.addNewItem}>
+          <Box sx={{ ...productsListStyle, marginTop: '40px' }}>
+            {favoriteItems.map((item) => (
+              <Box
+                key={item.id}
+                sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}
+              >
+                <ProductItem item={item.product} height={655} />
+              </Box>
+            ))}
+            <Box
+              className={styles.addNewItem}
+              sx={{ maxWidth: '400px', width: '100%', margin: '0 auto' }}
+            >
               <Link className={styles.link} to="/catalog/all">
                 <IconAddNewItem className={styles.addNewItemIcon} />
                 <p className={styles.addNewItemText}>
                   Додати товар до улюбленого
                 </p>
               </Link>
-            </li>
-          </ul>
+            </Box>
+          </Box>
         ) : (
           <div className={styles.errorWrapp}>
             <img className={styles.dogImg} src={ErrorDog} alt="error dog" />
