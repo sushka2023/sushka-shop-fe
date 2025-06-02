@@ -4,33 +4,19 @@ import { Box, IconButton, Popover } from '@mui/material'
 import { ChangeEvent, useRef, useState } from 'react'
 import { OutlinedInput } from '../../../UI/Field'
 import { SearchResult } from './SearchResult'
-import axiosInstance from '../../../../axios/settings'
-import { ProductResponse, ProductWithTotalResponse } from '../../../../types'
-import axios from 'axios'
+import { ProductResponse } from '../../../../types'
+import { inputStyle, popoverStyle, searchIconStyle } from './style'
+import { getSearchValue } from '../../../../redux/products/operation'
 
 const Search = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [searchValue, setSearchValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [searchResult, setSearchResult] = useState<ProductResponse[] | null>(
     null
   )
-  const [error, setError] = useState<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  const getSearchValue = async (value: string) => {
-    try {
-      const result = await axiosInstance.get<ProductWithTotalResponse>(
-        `/api/product/search/?limit=10&offset=0&search_query=${value}`
-      )
-      return result.data.products
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        throw new Error(e.response?.data?.detail || e.message || 'Axios error')
-      }
-      throw new Error('Невідома помилка')
-    }
-  }
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -38,6 +24,8 @@ const Search = () => {
 
   const handleClose = () => {
     setAnchorEl(null)
+    setSearchValue('')
+    setSearchResult(null)
   }
 
   const handleChangeValue = async (
@@ -77,17 +65,11 @@ const Search = () => {
 
   return (
     <Fragment>
-      <IconButton onClick={handleClick} sx={{ padding: 0 }} disableRipple>
-        <IconSearch
-          style={{ width: 30, height: 30, fill: 'green', stroke: 'green' }}
-        />
+      <IconButton onClick={handleClick} disableRipple sx={searchIconStyle}>
+        <IconSearch style={{ fill: 'currentcolor', stroke: 'currentcolor' }} />
       </IconButton>
       <Popover
-        sx={{
-          '.MuiPaper-rounded': {
-            borderRadius: '8px'
-          }
-        }}
+        sx={popoverStyle}
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleClose}
@@ -96,17 +78,12 @@ const Search = () => {
           horizontal: 'left'
         }}
       >
-        <Box>
+        <Box padding={1}>
           <OutlinedInput
             fullWidth
             value={searchValue}
             onChange={(e) => handleChangeValue(e)}
-            sx={{
-              '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                backgroundColor: 'secondary.lighter',
-                padding: 1
-              }
-            }}
+            sx={inputStyle}
           />
           <SearchResult
             data={searchResult}

@@ -46,11 +46,17 @@ const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
           borderRadius: '0.5rem'
         },
         ['&:hover .MuiOutlinedInput-notchedOutline']: {
-          borderColor: theme.palette.turquoise.main
+          borderColor: theme.palette.turquoise.main,
+          [theme.breakpoints.down('sm')]: {
+            borderRadius: '1.25rem'
+          }
         },
         [`&.Mui-focused`]: {
           [`& .MuiOutlinedInput-notchedOutline`]: {
-            borderColor: theme.palette.turquoise.main
+            borderColor: theme.palette.turquoise.main,
+            [theme.breakpoints.down('sm')]: {
+              borderRadius: '1.25rem'
+            }
           }
         }
       }

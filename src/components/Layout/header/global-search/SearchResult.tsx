@@ -1,7 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import { ProductResponse } from '../../../../types'
 import { Typography } from '../../../UI/Typography'
 import { Link } from 'react-router-dom'
+import { elementImageStyle, elementTextStyle, listElementStyle } from './style'
 
 type Props = {
   data: ProductResponse[] | null
@@ -10,7 +11,13 @@ type Props = {
 }
 
 const SearchResult = ({ data, error, isLoading }: Props) => {
-  if (isLoading) return <Box>loading...</Box>
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" marginTop={2}>
+        <CircularProgress size={25} />
+      </Box>
+    )
+  }
 
   if (error) {
     return (
@@ -21,44 +28,21 @@ const SearchResult = ({ data, error, isLoading }: Props) => {
   }
 
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" gap={1}>
       {data?.map(({ id, product_category_id, images, name }) => (
         <Box
           key={id}
           component={Link}
           to={`/catalog/${product_category_id}/${id}/details`}
-          sx={{
-            'display': 'flex',
-            'alignItems': 'center',
-            'width': '220px',
-            'color': 'secondary.darker',
-            '&:hover': {
-              color: 'secondary.main'
-            }
-          }}
+          sx={listElementStyle}
         >
           <Box
             component="img"
             src={images[0]?.image_url}
             alt="product item"
-            sx={{
-              width: '60px',
-              height: '60px',
-              objectFit: 'contain'
-            }}
+            sx={elementImageStyle}
           />
-          <Typography
-            variant="body1"
-            sx={{
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              WebkitLineClamp: 1,
-              fontWeight: 500,
-              color: 'currentcolor'
-            }}
-          >
+          <Typography variant="body1" sx={elementTextStyle}>
             {name}
           </Typography>
         </Box>
