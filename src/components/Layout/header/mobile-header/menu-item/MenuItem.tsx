@@ -14,7 +14,6 @@ import { AccountButton } from './AccountButton'
 import { FavoriteButton } from './FavoriteButton'
 import { LoginButton } from './LoginButton'
 import { MenuItemProps } from '../BurgerMenu'
-import SearchBurger from '../../global-search/SearchBurger'
 
 const variants = {
   open: {
@@ -35,15 +34,10 @@ const variants = {
   }
 }
 
-export const MenuItem = ({ toggleOpen, isLessThan600px }: MenuItemProps) => {
+export const MenuItem = ({ toggleOpen }: MenuItemProps) => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
 
   const menuItems = [
-    {
-      key: 'search',
-      component: <SearchBurger />,
-      condition: isLessThan600px
-    },
     {
       key: 'account',
       component: <AccountButton />,

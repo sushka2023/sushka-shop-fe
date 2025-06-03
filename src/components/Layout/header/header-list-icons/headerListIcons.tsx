@@ -10,7 +10,7 @@ import { RootState } from '../../../../redux/store'
 import { AccountIcon } from './AccountIcon'
 import { FavoriteIcon } from './FavoritIcon'
 import { CartIcon } from './CartIcon'
-import SearchGlobal from '../global-search/SearchGlogal'
+import { Search } from '../global-search'
 
 type MenuItemProps = {
   isOpen: boolean
@@ -21,7 +21,6 @@ type MenuItemProps = {
 
 const HeaderListIcons = ({
   isActive,
-  setIsActive,
   isOpen,
   isLessThan600px
 }: MenuItemProps) => {
@@ -43,13 +42,7 @@ const HeaderListIcons = ({
     <Fragment>
       <ul className={styles.listIcons}>
         <li className={styles.listIconsLineContainer}>
-          {(!isLessThan600px || !isOpen) && (
-            <SearchGlobal
-              isActive={isActive}
-              setIsActive={setIsActive}
-              isOpen={isOpen}
-            />
-          )}
+          {(!isLessThan600px || !isOpen) && <Search />}
         </li>
         <AccountIcon isLoggedIn={isLoggedIn} onClick={handleModalOpen} />
         <FavoriteIcon />

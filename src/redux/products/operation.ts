@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
   FavoriteItemsModel,
@@ -122,5 +122,19 @@ export const fetchFavoriteItems = createAsyncThunk(
     }
   }
 )
+
+export const getSearchValue = async (value: string) => {
+  try {
+    const result = await axiosInstance.get<ProductWithTotalResponse>(
+      `/api/product/search/?limit=10&offset=0&search_query=${value}`
+    )
+    return result.data.products
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      throw new Error(e.response?.data?.detail || e.message || 'Axios error')
+    }
+    throw new Error('Невідома помилка')
+  }
+}
 
 export type { FetchItemOperationType, FetchAllCategoriesOperationType }
